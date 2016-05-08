@@ -1,1 +1,0 @@
-# Undeploying verticle deployments
