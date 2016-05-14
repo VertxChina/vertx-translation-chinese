@@ -27,7 +27,7 @@ Vert.X中提供了一个使用[JDBCClient](http://vertx.io/docs/apidocs/io/vertx
 
         compile io.vertx:vertx-auth-jdbc:3.2.1
 
-如果要创建一个数据库实例，你首先需要一个[JDBCClient](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html)的实例，要知道如何创建这个实例可按照文档中的内容实施。
+如果要创建一个客户端实例，你首先需要一个[JDBCClient](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html)的实例，要知道如何创建这个实例可按照文档中的内容实施。
 
 一旦你创建了一个[JDBCClient](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html)实例后，就可以按下边代码创建[JDBCAuth](http://vertx.io/docs/apidocs/io/vertx/ext/auth/jdbc/JDBCAuth.html)实例：
 
