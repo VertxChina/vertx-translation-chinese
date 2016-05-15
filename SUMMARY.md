@@ -22,7 +22,7 @@ This is the summary of my book.
     * [Vert.x JWT Auth](auth/JWTAuth.md)
     * [Vert.x Shiro Auth](auth/ShiroAuth.md)
     * [Vert.x MongoDB Auth](auth/MongoDBAuth.md)
-    * [Vert.x OAuth 2](auth/oauth2.md)
+    * [Vert.x OAuth 2](auth/Oauth2.md)
 * [Vert.x Reactive](reactive/Reactive.md)
     * [Vert.x Rx](reactive/Rx.md)
     * [Vert.x Reactive streams](reactive/Reactivestreams.md)
