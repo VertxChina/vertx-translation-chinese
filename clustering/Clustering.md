@@ -34,10 +34,10 @@ Vert.x的集群管理器必须实现[ClusterManager](http://vertx.io/docs/apidoc
 
 基于[Hazelcast](http://hazelcast.org)实现，是一个默认的集群管理器
 
-[文档手册]|(/clustering/Hazelcast.md)，[源代码](https://github.com/vert-x3/vertx-hazelcast)
+[文档手册](/clustering/Hazelcast.md)，[源代码](https://github.com/vert-x3/vertx-hazelcast)
 
 #### JGroups
 
 基于[JGroups](http://jgroups.org)实现的，目前还处于**技术预览版**
 
-[文档手册]|(/clustering/JGroups.md)，[源代码](https://github.com/vert-x3/vertx-jgroups)
+[文档手册](/clustering/JGroups.md)，[源代码](https://github.com/vert-x3/vertx-jgroups)
