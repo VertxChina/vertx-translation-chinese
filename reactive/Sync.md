@@ -32,7 +32,9 @@ Vert.x 借助[Quasar ](http://docs.paralleluniverse.co/quasar/)库来实现fiber
 Vert.x用到了Quasar 库，这个库借助字节码增强(bytecode instrumentation)的技术实现了fiber 。(字节码增强的)工作是在运行时(run-time)使用java agent 技术完成的。
 
 为了使这个特性正常工作，需要在启动JVM 时指定quasar-core jar包为java agent jar包：
-```-javaagent:/path/to/quasar/core/quasar-core.jar```
+```
+-javaagent:/path/to/quasar/core/quasar-core.jar
+```
 
 如果你用的是`vertx `命令行工具，可以在执行`vertx `前设置环境变量`ENABLE_VERTX_SYNC_AGENT `为`ture`，这样可以启用agent 的配置。
 
