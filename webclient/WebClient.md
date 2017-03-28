@@ -38,7 +38,7 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
 
 - Gradle（在您的`build.gradle`文件中）：
 
-  ```groovy
+  ```gradle
   dependencies {
 
     compile 'io.vertx:vertx-web-client:3.4.1'
