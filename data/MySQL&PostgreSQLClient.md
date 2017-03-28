@@ -1,5 +1,7 @@
-#Vert.x MySQL / PostgreSQL client
-**<font size="6">在异步的MySQL/ PostgreSQL的客户是负责为那些需要用MySQL或PostgreSQL数据库进行交互的应用程序Vert.x的接口。</font>**  
+# Vert.x MySQL/PostgreSQL client
+
+**异步的MySQL/PostgreSQL的客户是负责为那些需要用MySQL或PostgreSQL数据库进行交互的应用程序Vert.x的接口。**  
+
 它采用毛里西奥·利尼亚雷斯异步驱动程序在非阻塞的方式下与MySQL或PostgreSQL数据库进行交互
 ###使用MySQL和PostgreSQL客户端
 本节将介绍如何配置你的项目能够使用MySQL/ PostgreSQL的客户端应用程序。
