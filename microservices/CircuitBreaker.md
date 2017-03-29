@@ -125,7 +125,7 @@ breaker.executeWithFallback(
 ```
 熔断状态中都会调用失败回调，或者设置 **[isFallbackOnFailure](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreakerOptions.html#isFallbackOnFailure--)**，其结果是失败回调函数的输出。失败回调函数将 **[Throwable](http://vertx.io/docs/apidocs/java/lang/Throwable.html)** 对象作为参数，并返回预期类型的​​对象。
 
-失败回调可以直接设置在 **[CircuitBreaker](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreaker.html)**上：
+失败回调可以直接设置在 **[CircuitBreaker](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreaker.html)** 上：
 
 ```java
 CircuitBreaker breaker = CircuitBreaker.create("my-circuit-breaker", vertx,
@@ -196,7 +196,7 @@ breaker.execute(
 
 # 将熔断器指标推送到Hystrix仪表板
 
-Netflix Hystrix带有一个仪表板，用于显示熔断器的当前状态。 Vert.x断路器可以发布其指标，以供Hystrix仪表板使用。 Hystrix仪表板需要一个发送指标的SSE流。此流由Vert.x Web 中 **[HystrixMetricHandler](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/HystrixMetricHandler.html)**提供：
+Netflix Hystrix带有一个仪表板，用于显示熔断器的当前状态。 Vert.x断路器可以发布其指标，以供Hystrix仪表板使用。 Hystrix仪表板需要一个发送指标的SSE流。此流由Vert.x Web 中 **[HystrixMetricHandler](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/HystrixMetricHandler.html)** 提供：
 
 ```java
 CircuitBreaker breaker = CircuitBreaker.create("my-circuit-breaker", vertx);
@@ -213,7 +213,7 @@ vertx.createHttpServer()
   .listen(8080);
 ```
 
-在Hystrix仪表板中，配置流网址，如：http://localhost:8080/metrics。仪表板将使用Vert.x熔断器的指标。
+在Hystrix仪表板中，配置流网址，如：http://localhost:8080/metrics  仪表板将使用Vert.x熔断器的指标。
 
 请注意，这些指标量是由Vert.x Web 使用事件总线通知收集的。如果您不使用默认通知地址，则需要在创建时指定。
 
@@ -243,7 +243,7 @@ String result = ar.result();
 ```
 
 
-如果您使用Hystrix的异步支持，请注意，在vert.x线程中不会调用回调函数，并且必须在执行前保留对上下文的引用（使用**[getOrCreateContext](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--)**，并且在回调中，使用runOnContext切换回事件循环。如果没有这个，您将失去Vert.x并发模型，并且必须自行管理同步和排序：
+如果您使用Hystrix的异步支持，请注意，在vert.x线程中不会调用回调函数，并且必须在执行前保留对上下文的引用（使用 **[getOrCreateContext](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--)** ，并且在回调中，使用runOnContext切换回事件循环。如果没有这个，您将失去Vert.x并发模型，并且必须自行管理同步和排序：
 
 ```java
 vertx.runOnContext(v -> {
