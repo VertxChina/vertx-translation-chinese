@@ -77,7 +77,7 @@ Web Client配置选项继承自Http Client配置选项，使用时可根据实�
 WebClient client = WebClient.wrap(httpClient);
 ```
 
-# 发送请求
+## 发送请求
 
 ### 无请求体的简单请求
 
@@ -148,7 +148,7 @@ request.addQueryParam("param1", "param1_value");
 request.uri("/some-uri?param1=param1_value&param2=param2_value");
 ```
 
-### 填充请求体
+## 填充请求体
 
 如需要发送请求体，可使用相同的API并在最后加上`sendXXX`方法发送相应的请求体。
 
