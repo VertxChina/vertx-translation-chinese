@@ -69,7 +69,7 @@ options.setKeepAlive(false);
 WebClient client = WebClient.create(vertx, options);
 ```
 
-Web Client配置选项继承自Http Client配置选项，所以您可选择其中一个。
+Web Client配置选项继承自Http Client配置选项，使用时可根据实际情况选择。
 
 如已在程序中创建Http Client，可用以下方式复用：
 
@@ -152,7 +152,7 @@ request.uri("/some-uri?param1=param1_value&param2=param2_value");
 
 如需要发送请求体，可使用相同的API并在最后加上`sendXXX`方法发送相应的请求体。
 
-例如用[sendBuffer](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendBuffer-io.vertx.core.buffer.Buffer-io.vertx.core.Handler-)方法发送一个buffer缓冲体
+例如用[sendBuffer](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendBuffer-io.vertx.core.buffer.Buffer-io.vertx.core.Handler-)方法发送一个缓冲体
 
 ```java
 client
@@ -163,4 +163,40 @@ client
     }
   });
 ```
+
+有时候我们并不希望将所有内容全部读入内存，因为文件太大或您希望同时处理多个请求，希望每个请求仅使用最小的内存。出于此目的，Web客户端可用[sendStream](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendStream-io.vertx.core.streams.ReadStream-io.vertx.core.Handler-)方法发送流式数据`ReadStream<Buffer>`（例如[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)便是一个`ReadStream<Buffer>`）
+
+```java
+client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .sendStream(stream, resp -> {});
+```
+
+Web客户端会为您设置好传输泵以平滑传输流。此时会使用分块传输因为流长度未知。
+
+如已知流的大小，可设置HTTP协议头中的`content-length`属性
+
+```java
+fs.open("content.txt", new OpenOptions(), fileRes -> {
+  if (fileRes.succeeded()) {
+    ReadStream<Buffer> fileStream = fileRes.result();
+
+    String fileLen = "1024";
+
+    // 用POST方法发送文件
+    client
+      .post(8080, "myserver.mycompany.com", "/some-uri")
+      .putHeader("content-length", fileLen)
+      .sendStream(fileStream, ar -> {
+        if (ar.succeeded()) {
+          // Ok
+        }
+      });
+  }
+});
+```
+
+此时POST方法不会使用分块传输。
+
+### Json体
 
