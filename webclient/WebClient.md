@@ -79,9 +79,9 @@ WebClient client = WebClient.wrap(httpClient);
 
 # 发送请求
 
-### 无消息体的简单请求
+### 无请求体的简单请求
 
-一般情况下，HTTP GET，OPTIONS以及HEAD请求没有消息体，可用以下方式发送无消息体的HTTP Requests（HTTP请求）：
+一般情况下，HTTP GET，OPTIONS以及HEAD请求没有请求体，可用以下方式发送无请求体的HTTP Requests（HTTP请求）：
 
 ```java
 WebClient client = WebClient.create(vertx);
