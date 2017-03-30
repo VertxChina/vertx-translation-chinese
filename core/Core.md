@@ -1,6 +1,15 @@
-# Vert.x Core
+# Vert.x Core Manual
 
-**注解表**
+## 注解表
+
+_\*：有些地方没有翻译的维持原词汇_
+
+* Client：客户端
+* Server：服务端
+
+## **引用**
+
+## **正文**
 
 Vert.X内部的一个Java API的集合称为**Vert.X Core**
 
