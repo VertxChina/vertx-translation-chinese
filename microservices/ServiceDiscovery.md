@@ -4,13 +4,13 @@
 
 <hr>
 
-This component provides an infrastructure to publish and discover various resources, such as service proxies, HTTP endpoints, data sources…​
+This component provides an infrastructure to publish and discover various resources, such as service proxies, HTTP endpoints, data sources…
 
 Vert.x Service Discovery，提供了一个基础的软件框架，用来发布和发现各种类型的资源，比如服务代理、HTTP应用、datasources等等。
 
 These resources are called services. A service is a discoverable functionality. It can be qualified by its type, metadata, and location. So a service can be a database, a service proxy, a HTTP endpoint and any other resource you can imagine as soon as you can describe it, discover it and interact with it. It does not have to be a vert.x entity, but can be anything. Each service is described by a Record.
 
-这些资源都可以称为服务，服务就是一个可以被发现和访问的功能，可以通过它的类型、元数据和位置来进行描述。所以，服务可以是一个数据库、一个服务代理、一个HTTP应用，以及任何你能想到的可描述、可发现、可交互的资源。它不一定是vert.x实体，它可以是任何组件。在Vert.x Service Discovery中，每一个服务都被叫做一个[Record](http://vertx.io/docs/apidocs/io/vertx/servicediscovery/Record.html) 。
+这些资源都可以称为服务，服务就是一个可以被发现和访问的功能，可以通过它的类型、元数据和位置来进行描述。所以，服务可以是一个数据库、一个服务代理、一个HTTP应用，以及任何你能想到的可描述、可发现、可交互的资源。它不一定是vert.x实体，它可以是任何组件。在Vert.x Service Discovery中，服务通过[服务记录](http://vertx.io/docs/apidocs/io/vertx/servicediscovery/Record.html)  来进行描述。
 
 The service discovery implements the interactions defined in service-oriented computing. And to some extent, also provides the dynamic service-oriented computing interactions. So, applications can react to arrival and departure of services.
 
@@ -55,7 +55,7 @@ The process can be simplified using service type where you can directly retrieve
 
 As stated above, the central piece of information shared by the providers and consumers are records.
 
-从上面可以看出，服务提供者和服务消费者，通过record共享关键的信息。
+从上面可以看出，服务提供者和服务消费者，通过服务记录来共享关键的信息。
 
 Providers and consumers must create their own ServiceDiscovery instance. These instances are collaborating in the background (distributed structure) to keep the set of services in sync.
 
@@ -72,16 +72,17 @@ To use the Vert.x service discovery, add the following dependency to the depende
 要使用Vert.x的Service Discovery，请将下列依赖加入到依赖配置中文件。
 
 
-Maven (in your pom.xml):
++ Maven (pom.xml文件中):
 
-<dependency>
-<groupId>io.vertx</groupId>
-<artifactId>vertx-service-discovery</artifactId>
-<version>3.4.1</version>
-</dependency>
-Gradle (in your build.gradle file):
+        <dependency>
+           <groupId>io.vertx</groupId>
+           <artifactId>vertx-service-discovery</artifactId>
+           <version>3.4.1</version>
+        </dependency>
 
-compile 'io.vertx:vertx-service-discovery:3.4.1'
++ Gradle (在 build.gradle 文件中):
+
+         compile 'io.vertx:vertx-service-discovery:3.4.1'
 
 
 Overall concepts
@@ -107,15 +108,29 @@ A record is published when the provider is ready to be used, and withdrawn when 
 Service Provider and publisher
 A service provider is an entity providing a service. The publisher is responsible for publishing a record describing the provider. It may be a single entity (a provider publishing itself) or a different entity.
 
+### 服务提供者和发布者
+服务提供者是提供服务的实体，而发布者的职责是发布服务记录，通过该服务记录来描述服务提供者的信息，服务提供者和发布者可以是同一个实体，也可以是不同的实体。
+
+
 Service Consumer
 Service consumers search for services in the service discovery. Each lookup retrieves 0..n Record. From these records, a consumer can retrieve a ServiceReference, representing the binding between the consumer and the provider. This reference allows the consumer to retrieve the service object (to use the service), and release the service.
 
 It is important to release service references to cleanup the objects and update the service usages.
 
+###服务消费者
+服务消费者在Service Discovery中搜索服务，每次搜索得到的结果是0..n条服务记录（Record），通过这些服务记录，消费者可以获得服务引用（ServiceReference），服务引用的作用是绑定服务消费者和服务提供者，然后通过服务引用，消费者可以得到服务对象来使用服务，也可以通过服务引用释放服务对象。
+
+在使用完服务后，必须释放服务引用，才能清理服务对象和更新服务使用状态。
+
 Service object
 The service object is the object that gives access to a service. It can come in various forms, such as a proxy, a client, and may even be non-existent for some service types. The nature of the service object depends on the service type.
 
 Notice that because of the polyglot nature of Vert.x, the service object can differ if you retrieve it from Java, Groovy or another language.
+
+###服务对象
+服务对象为服务消费者提供了一条获取服务的通道，它有各种实现方式，比如一个代理对象、一个客户端对象、甚至某些类型的服务可能不存在这样一个服务对象。服务对象的表现有赖于服务的类型。
+
+由于Vert.x的多语言特性，因此当你从Java、Groovy或其他语言中获取服务对象的时候，可能会有差异。
 
 Service types
 Services are just resources, and there are a lot of different kinds of services. They can be functional services, databases, REST APIs, and so on. The Vert.x service discovery has the concept of service types to handle this heterogeneity. Each type defines:
@@ -126,6 +141,12 @@ the nature of the service object (service proxy, HTTP client, message consumer�
 
 Some service types are implemented and provided by the service discovery component, but you can add your own.
 
+###服务类型
+服务就是资源，有很多各种各样的服务，比如功能性的服务组件、数据库、REST API等等。Vert.x的服务发现组件，通过服务类型的概念，来处理这种差异。每种类型都需要定义：
++ 如何定位服务（URI、event bus地址、IP/DNS  ...） - location
++ 提供服务的对象的性质（服务代理、HTTP client、message消费 ...） - client
+  服务发现组件提供了一些现成的服务类型，但你也可以添加自己的服务类型
+
 Service events
 Every time a service provider is published or withdrawn, an event is fired on the event bus. This event contains the record that has been modified.
 
@@ -133,30 +154,52 @@ In addition, in order to track who is using who, every time a reference is retri
 
 More details on these events below.
 
+###服务事件
+每当服务提供者发布一个服务或者撤回一个服务时，都会在event bus中触发一个事件，这个事件包含了一条服务记录，记录着被修改的服务信息。
+
+此外，为了能跟踪到谁在使用什么服务，每当通过getReference获取一个服务引用或者释放一个服务引用时，都会有一个事件发送到event bus中，用来跟踪服务的使用情况。
+
+关于服务事件的更详细内容参考后续章节。
+
 Backend
 The service discovery uses a Vert.x distributed data structure to store the records. So, all members of the cluster have access to all the records. This is the default backend implementation. You can implement your own by implementing the ServiceDiscoveryBackend SPI. For instance, we provide an implementation based on Redis.
 
 Notice that the discovery does not require Vert.x clustering. In single-node mode, the structure is local. It can be populated with `ServiceImporter`s.
 
+###服务后台
+Service Discovery组件使用Vert.x的分布式数据组件来存储服务记录，所以，集群中所有的成员都可以访问到所有的服务记录，这是服务后台的默认实现。你也可以实现自己的服务后台，只要实现`ServiceDiscoveryBackend`接口就可以了。比如，Vert.x还通过实现该接口提供了基于Redis的服务后台。
+
+此外，服务发现并不仅限于Vert.x集群，带单节点模式下，数据是存储在本地的，可以通过`ServiceImporter`来导入。
+
 Creating a service discovery instance
 Publishers and consumers must create their own ServiceDiscovery instance to use the discovery infrastructure:
 
-ServiceDiscovery discovery = ServiceDiscovery.create(vertx);
+## 创建Service Discovery实例
+服务发布和服务消费，都必须通过创建一个私有的`ServiceDiscovery`来使用服务发现框架。
 
-// Customize the configuration
-discovery = ServiceDiscovery.create(vertx,
-    new ServiceDiscoveryOptions()
-        .setAnnounceAddress("service-announce")
-        .setName("my-name"));
+```java
+    ServiceDiscovery discovery = ServiceDiscovery.create(vertx);
+      
+    // Customize the configuration
+    discovery = ServiceDiscovery.create(vertx,
+        new ServiceDiscoveryOptions()
+            .setAnnounceAddress("service-announce")
+            .setName("my-name"));
+    
+    // Do something...
+    
+    discovery.close();
+```
 
-// Do something...
-
-discovery.close();
 By default, the announce address (the event bus address on which service events are sent is: vertx.discovery .announce. You can also configure a name used for the service usage (see section about service usage).
 
 When you don’t need the service discovery object anymore, don’t forget to close it. It closes the different discovery importers and exporters you have configured and releases the service references.
 
 You should avoid sharing the service discovery instance, so service usage would represent the right "usages".
+
+服务事件默认情况下发送到event bus中的地址是`vertx.discovery .announce`，你可以自己配置一个（查看服务使用章节）
+
+当你不再需要`Service Discovery`对象时，不要忘记close掉它，它会把你配置的各种服务发现中用到的输入输出都关闭掉，并且释放服务引用。
 
 Publishing services
 Once you have a service discovery instance, you can publish services. The process is the following:
@@ -168,6 +211,16 @@ publish this record
 keep the published record that is used to un-publish a service or modify it.
 
 To create records, you can either use the Record class, or use convenient methods from the service types.
+
+##发布服务
+有了Service Discovery实例，就可以发布服务了，发布的流程如下：
+1. 为服务提供者创建一个服务记录
+2. 发布这个服务记录
+3. 保存这个发布记录的引用，后面可以用来取消发布或者修改发布
+
+创建服务记录，可以通过`Record` 类，或者服务类型所提供的快捷方法。
+
+```java
 
 Record record = new Record()
     .setType("eventbus-service-proxy")
@@ -194,11 +247,20 @@ discovery.publish(record, ar -> {
     // publication failed
   }
 });
+```
+
 It is important to keep a reference on the returned records, as this record has been extended by a registration id.
+
+一定要保持一个指向服务记录对象的引用，因为这个返回的服务记录，会带有一个注册Id。
+
 
 Withdrawing services
 To withdraw (un-publish) a record, use:
 
+## 取消发布的服务
+要取消一个已发布的服务，可以用如下方式：
+
+```java
 discovery.unpublish(record.getRegistration(), ar -> {
   if (ar.succeeded()) {
     // Ok
@@ -206,10 +268,18 @@ discovery.unpublish(record.getRegistration(), ar -> {
     // cannot un-publish the service, may have already been removed, or the record is not published
   }
 });
+```
+
+
 Looking for services
 This section explains the low-level process to retrieve services, each service type provide convenient method to aggregates the different steps.
 
 On the consumer side, the first thing to do is to lookup for records. You can search for a single record or all the matching ones. In the first case, the first matching record is returned.
+
+##查找服务
+*本节讲述的是最基本的获取服务的方法，每种服务类型，都提供了快捷的方法，来简化获取服务的步骤。*
+
+在服务消费端，第一步要做的事情就是查找服务记录，可以查找并获取一条服务记录，也也可以获取一批满足条件的记录，如果是获取一条记录，那么将返回第一条满足条件的服务记录。
 
 Consumer can pass a filter to select the service. There are two ways to describe the filter:
 
@@ -217,15 +287,35 @@ A function taking a Record as parameter and returning a boolean (it’s a predic
 
 This filter is a JSON object. Each entry of the given filter is checked against the record. All entries must exactly match the record. The entry can use the special * value to denote a requirement on the key, but not on the value.
 
+服务消费者通过传递一个过滤器来选择服务，有两种形式的过滤器：
+1. 一个接收`Record`对象的函数，这个函数返回一个布尔值（就是一个`predicate`）
+2. 过滤器是一个JSON对象，对象中的每个条目，将会用来过滤服务记录，服务记录必须满足所有的条目要求。这些条目，可以使用 * 号来代表必须存在某个key值，而不管value值
+
 Let’s see an example of a JSON filter:
 
 { "name" = "a" } => matches records with name set to "a"
 { "color" = "*" } => matches records with "color" set
 { "color" = "red" } => only matches records with "color" set to "red"
 { "color" = "red", "name" = "a"} => only matches records with name set to "a", and color set to "red"
+
+让我们看一些JSON过滤器的例子
+
+```java
+{ "name" = "a" } => 匹配所有名称为"a"的记录
+{ "color" = "*" } => 匹配所有设置了 "color" 的记录
+{ "color" = "red" } => 匹配所有"color" 值为 "red"的记录
+{ "color" = "red", "name" = "a"} => 匹配所有名称为 "a", 并且"color"值为"red"的记录
+```
+
 If the JSON filter is not set (null or empty), it accepts all records. When using functions, to accept all records, you must return true regardless the record.
 
 Here are some examples:
+
+如果JSON过滤器设置为空，那将获取到所有的服务记录。当使用函数形式时，要获取所有的服务记录，你只需要返回true，不管是`Record`参数是什么。
+
+下面是一些例子：
+
+```java
 
 discovery.getRecord(r -> true, ar -> {
   if (ar.succeeded()) {
@@ -298,15 +388,26 @@ discovery.getRecords(new JsonObject().put("some-label", "some-value"), ar -> {
     // lookup failed
   }
 });
+
+```
+
 You can retrieve a single record or all matching records with getRecords. By default, record lookup does include only records with a status set to UP. This can be overridden:
 
 when using JSON filter, just set status to the value you want (or * to accept all status)
 
 when using function, set the includeOutOfService parameter to true in getRecords .
 
+你可以获取一条服务记录，也可以通过`getRecords`方法获取所有匹配到的服务记录。默认情况下，服务查找只会包含状态为`UP`的服务，可以通过如下方式覆盖默认设置：
++ 当使用JSON过滤器，设置`status`属性为你想要的值（或者 * 来接收所有的状态）
++ 当使用函数过滤器，将`getRecords`方法的参数`includeOutOfService`设置为`true`
+
 Retrieving a service reference
 Once you have chosen the Record, you can retrieve a ServiceReference and then the service object:
 
+## 获取服务引用
+当你选择好了服务记录后，你就可以获得到一个`ServiceReference`，然后得到服务对象。
+
+```java
 ServiceReference reference1 = discovery.getReference(record1);
 ServiceReference reference2 = discovery.getReference(record2);
 
@@ -319,11 +420,20 @@ MessageConsumer consumer = reference2.getAs(MessageConsumer.class);
 // When done with the service
 reference1.release();
 reference2.release();
+```
 Don’t forget to release the reference once done.
 
 The service reference represents a binding with the service provider.
 
 When retrieving a service reference you can pass a JsonObject used to configure the service object. It can contain various data about the service object. Some service types do not need additional configuration, some require configuration (as data sources):
+
+使用完后，不要忘记释放服务引用。
+
+服务引用代表了一个绑定的服务提供者。
+
+获取服务引用的时候，可以传递一个`JsonObject`对象来配置服务对象，可以包括用来配置服务对象的各种参数。某些服务类型不需要额外的配置，有些需要（比如数据库对象）。
+
+```java
 
 ServiceReference reference = discovery.getReferenceWithConfiguration(record, conf);
 
@@ -335,12 +445,22 @@ JDBCClient client = reference.getAs(JDBCClient.class);
 
 // When done with the service
 reference.release();
+
+```
+
 In the previous examples, the code uses getAs. The parameter is the type of object you expect to get. If you are using Java, you can use get. However in the other language you must pass the expected type.
+
+在前面的示例中，代码中使用的是`getAs`方法，参数是你期望获得的对象类型，如果你使用Java语言，那么可以直接用`get`，而其他语言中，你必须传递对象类型。
+
 
 Types of services
 A said above, the service discovery has the service type concept to manage the heterogeneity of the different services.
 
 These types are provided by default:
+
+##服务类型
+前面提到，服务发现使用了服务类型的概念，来封装各种服务的差异性。
+目前提供了几种默认的服务类型：
 
 HttpEndpoint - for REST API’s, the service object is a HttpClient configured on the host and port (the location is the url).
 
@@ -354,15 +474,33 @@ RedisDataSource - for Redis data sources, the service object is a RedisClient (t
 
 MongoDataSource - for Mongo data sources, the service object is a MongoClient (the configuration of the client is computed from the location, metadata and consumer configuration).
 
++ `HttpEndpoint` - 为REST API服务提供的类型，服务对象的类型是一个配置好了host和port的`HttpClient`（其location表现为一个url）
++ `EventBusService` - 服务代理，服务对象是一个代理，它的类型是所代理的接口（其location表现为一个event bus的address地址）
++ `MessageSource` - 消息源服务，服务对象的类型是一个`MessageConsumer`（其location表现为一个event bus的address地址）
++ `JDBCDataSource` - JDBC服务，服务对象的类型是一个`JDBCClient`（该Client的配置参数，将从location、元数据和服务消费者传递的参数中获取）
++ `RedisDataSource` - Redis服务，服务对象的类型是一个`RedisClient`（该client的配置参数，将从location、元数据和服务消费者传递的参数中获取）
++ `MongoDataSource` - Mongo数据库服务，服务对象的类型一个`MongoClient`（该client的配置参数，将从location、元数据和服务消费者传递的参数中获取）
+
+
 This section gives details about service types in general and describes how to use the default service types.
+
+本节将详细介绍一下服务类型，以及如何使用服务发现框架已提供的几种服务类型。
 
 Services with no type
 Some records may have no type (ServiceType.UNKNOWN). It is not possible to retrieve a reference for these records, but you can build the connection details from the location and metadata of the Record.
 
 Using these services does not fire service usage events.
 
+###无类型的服务
+某些服务记录也可以不带有类型（`ServiceType.UNKNOWN`），通过这种服务记录，是无法获取到服务引用的，但是你可以通过服务记录（`Record`）的`location`和`metadata`来创建连接的细节。
+
+使用这种服务，将不会产生服务使用的事件。
+
 Implementing your own service type
 You can create your own service type by implementing the ServiceType SPI:
+
+###自定义的服务类型
+通过实现`ServiceType`接口，可以自定义服务类型：
 
 (optional) Create a public interface extending ServiceType. This interface is only used to provide helper methods to ease the usage of your type such as createRecord methods, getX where X is the type of service object you retrieve and so on. Check HttpEndpoint or MessageSource for example
 
@@ -374,6 +512,13 @@ Create a META-INF/services/io.vertx.servicediscovery.spi.ServiceType file that i
 
 Creates a jar containing the service type interface (step 1), the implementation (step 2 and 3) and the service descriptor file (step 4). Put this jar in the classpath of your application. Here you go, your service type is now available.
 
+1. （可选）创建一个继承了`ServiceType`的`public`接口，在这个接口中，仅需要提供一些工具类，来简化自定义类型的使用，比如提供`createRecord`方法，`getX`，这里的`X`指的是将返回的服务对象的类型，等等。可以查看`HttpEndpoint`、`MessageSource`等实例。
+2. 创建一个实现了`ServiceType`接口或者第一步定义的接口的类，这个类必须有一个`name`方法和一个用来创建`ServiceReference`的方法，这个name方法返回的名称，要和关联到自定义类型的`Record`的`type`属性一致。
+3. 创建一个继承`io.vertx.ext.discovery.types.AbstractServiceReference`的类。你可以对类进行参数化，添加上你要返回的服务对象的类型信息，你必须实现`AbstractServiceReference#retrieve()`这个方法，在这个方法中创建服务对象，这个方法只会被调用一次，如果你的服务对象需要释放资源，那另外还需要覆写 `AbstractServiceReference#close()`方法。
+4. 创建`META-INF/services/io.vertx.servicediscovery.spi.ServiceType`文件，并把这个文件打包到自定义类型的jar包中，在这个文件中，需要标明第二步中所创建类的全限定名。
+5. 将第一步的服务接口、第二步第三步的实现类以及第四步中的服务描述文件打包成一个jar，将这个jar放到你应用的`classpath`中，然后，这个自定义类型就可以使用了。
+
+
 HTTP endpoints
 A HTTP endpoint represents a REST API or a service accessible using HTTP requests. The HTTP endpoint service objects are HttpClient configured with the host, port and ssl.
 
@@ -382,6 +527,16 @@ Publishing a HTTP endpoint
 To publish a HTTP endpoint, you need a Record. You can create the record using HttpEndpoint.createRecord.
 
 The next snippet illustrates hot to create a Record from HttpEndpoint:
+
+##HTTP Endpoint
+一个HTTP Endpoint，就是一个REST API或可以通过HTTP请求访问的服务。HTTP终点服务对象，是一个配置了host、port和ssl的`HttpClient`对象。
+
+###发布一个HTTP Endpoint
+要发布一个HTTP Endpoint，你需要一个`Record`对象，你可以通过调用`HttpEndpoint.createRecord`创建这样一个服务记录对象。
+
+下面的代码片段，展示了如何用`HttpEndpoint`创建一个`Record`。
+
+```java
 
 Record record1 = HttpEndpoint.createRecord(
   "some-http-service", // The service name
@@ -402,11 +557,20 @@ Record record2 = HttpEndpoint.createRecord(
   "/api", // the root of the service
   new JsonObject().put("some-metadata", "some value")
 );
+```
+
 When you run your service in a container or on the cloud, it may not know its public IP and public port, so the publication must be done by another entity having this info. Generally it’s a bridge.
+
+当你在容器或云上部署你的服务时，可能你不能确定公开的IP地址和端口，所以，服务的发布，必须通过其他拥有这些信息的实体来进行，通常是一个桥接对象。
 
 Consuming a HTTP endpoint
 
 Once a HTTP endpoint is published, a consumer can retrieve it. The service object is a HttpClient with a port and host configured:
+
+### 消费一个HTTP Endpoint服务
+一旦一个HTTP Endpoint服务发布好了，服务消费者就可以获取到这个服务。服务对象是一个`HttpClient`实例，并且已经配置好了host和port参数。
+
+```java
 
 discovery.getRecord(new JsonObject().put("name", "some-http-service"), ar -> {
   if (ar.succeeded() && ar.result() != null) {
@@ -426,7 +590,14 @@ discovery.getRecord(new JsonObject().put("name", "some-http-service"), ar -> {
     });
   }
 });
+
+```
+
 You can also use the HttpEndpoint.getClient method to combine lookup and service retrieval in one call:
+
+你也可以使用`HttpEndpoint.getClient`这个方法，一步就完成服务查找和服务获取。
+
+```java
 
 HttpEndpoint.getClient(discovery, new JsonObject().put("name", "some-http-service"), ar -> {
   if (ar.succeeded()) {
@@ -443,9 +614,19 @@ HttpEndpoint.getClient(discovery, new JsonObject().put("name", "some-http-servic
     });
   }
 });
+
+```
+
 In this second version, the service object is released using ServiceDiscovery.releaseServiceObject, so you don’t need to keep the service reference.
 
 Since Vert.x 3.4.0, another client has been provided. This higher-level client, named WebClient tends to be easier to use. You can retrieve a WebClient instances using:
+
+在第二种写法中，服务对象的释放，是通过`ServiceDiscovery.releaseServiceObject`这个方法，因此在这种情况下，你是不需要持有一个服务引用的。
+
+从Vert.x 3.4.0开始，提供了另外一种客户端，一个更高层一些的叫做`WebClient`的客户端，更方便使用，你可以通过如下方式来获取一个`WebClient`客户端：
+
+
+```java
 
 discovery.getRecord(new JsonObject().put("name", "some-http-service"), ar -> {
   if (ar.succeeded() && ar.result() != null) {
@@ -466,7 +647,14 @@ discovery.getRecord(new JsonObject().put("name", "some-http-service"), ar -> {
       });
   }
 });
+
+```
+
 And, if you prefer the approach using the service type:
+
+另外一种写法，使用服务类型的方式：
+
+```java
 
 HttpEndpoint.getWebClient(discovery, new JsonObject().put("name", "some-http-service"), ar -> {
   if (ar.succeeded()) {
@@ -484,15 +672,28 @@ HttpEndpoint.getWebClient(discovery, new JsonObject().put("name", "some-http-ser
       });
   }
 });
+
+```
+
 Event bus services
 Event bus services are service proxies. They implement async-RPC services on top of the event bus. When retrieving a service object from an event bus service, you get a service proxy of the right type. You can access helper methods from EventBusService.
 
 Notice that service proxies (service implementations and service interfaces) are developed in Java.
 
+## Event bus服务
+Event bus服务是一种服务代理，是基于event bus实现的一种异步RPC服务。当从一个Event bus服务中获取一个服务对象时，你实际上得到的一个某个类的服务代理，你也可以使用`EventBusService`的工具方法来获得服务代理。
+
+注意：服务代理（服务实现和服务接口）都需要用Java语言开发。
+
+
 Publishing an event bus service
 
 To publish an event bus service, you need to create a Record:
 
+### 发布一个event bus 服务
+要发布一个event bus服务，你需要创建一个`Record`对象
+
+```java
 Record record = EventBusService.createRecord(
     "some-eventbus-service", // The service name
     "address", // the service address,
@@ -504,7 +705,14 @@ Record record = EventBusService.createRecord(
 discovery.publish(record, ar -> {
   // ...
 });
+
+```
+
 You can also pass the service interface as class:
+
+你也可以直接传递服务接口类
+
+```java
 
 Record record = EventBusService.createRecord(
 "some-eventbus-service", // The service name
@@ -515,11 +723,21 @@ MyService.class // the service interface
 discovery.publish(record, ar -> {
 // ...
 });
+
+```
+
 Consuming an event bus service
 
 To consume an event bus service you can either retrieve the record and then get the reference, or use the EventBusService interface that combines the two operations in one call.
 
 When using the reference, you would do something like:
+
+### 消费event bus 服务
+要消费event bus服务，你可以通过获取到服务记录，然后获取服务引用的方式，也可以直接使用`EventBusService`接口，将两步合并成一次方法调用。
+
+当使用服务引用的方式，你需要如下方式：
+
+```java
 
 discovery.getRecord(new JsonObject().put("name", "some-eventbus-service"), ar -> {
 if (ar.succeeded() && ar.result() != null) {
@@ -532,8 +750,14 @@ MyService service = reference.getAs(MyService.class);
 reference.release();
 }
 });
+
+```
+
 With the EventBusService class, you can get the proxy as follows:
 
+当使用`EventBusService`类时，你可以通过如下方式获得代理对象：
+
+```java
 EventBusService.getProxy(discovery, MyService.class, ar -> {
 if (ar.succeeded()) {
 MyService service = ar.result();
@@ -542,10 +766,18 @@ MyService service = ar.result();
 ServiceDiscovery.releaseServiceObject(discovery, service);
 }
 });
+
+```
+
 Message source
 A message source is a component sending messages on the event bus on a specific address. Message source clients are MessageConsumer.
 
 The location or a message source service is the event bus address on which messages are sent.
+
+##消息源服务
+消息源服务，就是通过event bus发送消息到某个地址的组件，消息源服务的client是`MessageConsumer`。
+
+消息源服务的`location`是消息所发送的event bus 地址。
 
 Publishing a message source
 
@@ -554,6 +786,13 @@ As for the other service types, publishing a message source is a 2-step process:
 create a record, using MessageSource
 
 publish the record
+
+### 发布一个消息源服务
+和其他服务类型一样，发布一个消息源服务包含两个步骤：
+1. 使用`MessageSource`创建一条服务记录
+2. 发布这条记录
+
+```java
 
 Record record = MessageSource.createRecord(
     "some-message-source-service", // The service name
@@ -569,9 +808,17 @@ record = MessageSource.createRecord(
     "some-address", // The event bus address
     "examples.MyData" // The payload type
 );
+```
+
 In the second record, the type of payload is also indicated. This information is optional.
 
 In java, you can use Class parameters:
+
+在第二个record创建时，同时指明了消息体的类型，这不是必须的。
+
+如果使用Java，你可以使用`Class`参数
+
+```java
 
 Record record1 = MessageSource.createRecord(
 "some-message-source-service", // The service name
@@ -585,11 +832,21 @@ Record record2 = MessageSource.createRecord(
 JsonObject.class, // The message payload type
 new JsonObject().put("some-metadata", "some value")
 );
+```
+
 Consuming a message source
 
 On the consumer side, you can retrieve the record and the reference, or use the MessageSource class to retrieve the service is one call.
 
 With the first approach, the code is the following:
+
+###消费消息源服务
+
+在服务消费端，你可以获取服务记录和服务引用，也可以使用`MessageSource`类提供的方法直接获取。
+
+第一种方式，代码示例如下：
+
+```java
 
 discovery.getRecord(new JsonObject().put("name", "some-message-source-service"), ar -> {
   if (ar.succeeded() && ar.result() != null) {
@@ -609,8 +866,13 @@ discovery.getRecord(new JsonObject().put("name", "some-message-source-service"),
     reference.release();
   }
 });
-When, using MessageSource, it becomes:
 
+```
+
+When, using MessageSource, it becomes:
+如果使用`MessageSource`，代码如下：
+
+```java
 MessageSource.<JsonObject>getConsumer(discovery, new JsonObject().put("name", "some-message-source-service"), ar -> {
   if (ar.succeeded()) {
     MessageConsumer<JsonObject> consumer = ar.result();
@@ -627,8 +889,14 @@ MessageSource.<JsonObject>getConsumer(discovery, new JsonObject().put("name", "s
 
   }
 });
+
+```
+
 JDBC Data source
 Data sources represents databases or data stores. JDBC data sources are a specialization for databases accessible using a JDBC driver. The client of a JDBC data source service is a JDBCClient.
+
+## JDBC服务
+数据源指的是数据库或数据存储。JDBC数据源通过JDBC驱动访问数据库，JDBC数据源服务对象是一个`JDBCClient`
 
 Publishing a JDBC service
 
@@ -637,6 +905,13 @@ As for the other service types, publishing a JDBC data source is a 2-step proces
 create a record, using JDBCDataSource
 
 publish the record
+
+###发布JDBC服务
+和其他服务类型一样，发布JDBC数据源共两个步骤
+1. 用`JDBCDataSource`创建一个服务记录
+2. 发布服务记录
+
+```java
 
 Record record = JDBCDataSource.createRecord(
     "some-data-source-service", // The service name
@@ -647,11 +922,21 @@ Record record = JDBCDataSource.createRecord(
 discovery.publish(record, ar -> {
   // ...
 });
+
+```
+
 As JDBC data sources can represent a high variety of databases, and their access is often different, the record is rather unstructured. The location is a simple JSON object that should provide the fields to access the data source (JDBC url, username…​). The set of fields may depend on the database but also on the connection pool used in front.
+
+JDBC数据源，可以代理了各种类型的数据库，而这些数据库的访问方式经常是很不一样，服务记录很难有统一结构。location信息有一个简单的JSON对象组成，对象中带有访问数据源的各种属性（JDBC url、username...），这些属性依赖于数据库，同时也依赖于所使用的连接池。
 
 Consuming a JDBC service
 
 As stated in the previous section, how to access a data source depends on the data source itself. To build the JDBCClient, you can merge configuration: the record location, the metadata and a json object provided by the consumer:
+
+###消费一个JDBC服务
+如前所述，如何访问数据源，有赖于数据源本身。要创建一个`JDBCClient`，你需要同时提供：服务记录location信息、元数据以及服务消费者提供的一个json对象。
+
+```java
 
 discovery.getRecord(
     new JsonObject().put("name", "some-data-source-service"),
@@ -671,7 +956,14 @@ discovery.getRecord(
         reference.release();
       }
     });
+    
+```    
+    
 You can also use the JDBCClient class to the lookup and retrieval in one call:
+
+你也可以使用`JDBCClient`类的方法，来查询和获取服务对象
+
+```java
 
 JDBCDataSource.<JsonObject>getJDBCClient(discovery,
     new JsonObject().put("name", "some-data-source-service"),
@@ -687,8 +979,14 @@ JDBCDataSource.<JsonObject>getJDBCClient(discovery,
     
       }
     });
+    
+```
+    
 Redis Data source
 Redis data sources are a specialization for Redis persistence databases. The client of a Redis data source service is a RedisClient.
+
+## Redis数据源
+Redis数据源服务，是专门为Redis提供的服务类型，Redis数据源服务的服务对象是一个`RedisClient`。
 
 Publishing a Redis service
 
@@ -697,6 +995,13 @@ Publishing a Redis data source is a 2-step process:
 create a record, using RedisDataSource
 
 publish the record
+
+### 发布一个Redis服务
+发布一个Redis服务共两个步骤：
+1. 使用`RedisDataSource`创建一条服务记录
+2. 发布这个服务记录
+
+```java
 
 Record record = RedisDataSource.createRecord(
   "some-redis-data-source-service", // The service name
@@ -707,11 +1012,21 @@ Record record = RedisDataSource.createRecord(
 discovery.publish(record, ar -> {
   // ...
 });
+
+```
+
 The location is a simple JSON object that should provide the fields to access the Redis data source (url, port…​).
+
+这里location是一个JSON对象，需要提供访问Redis数据源的属性（url、port...）
 
 Consuming a Redis service
 
 As stated in the previous section, how to access a data source depends on the data source itself. To build the RedisClient, you can merge configuration: the record location, the metadata and a json object provided by the consumer:
+
+###消费Redis服务
+如前所述，如何访问数据源有赖于数据源本身，要创建一个`RedisClient`，你需要同时提供：服务记录的location信息、元数据以及由消费者提供的一个json对象。
+
+```java
 
 discovery.getRecord(
   new JsonObject().put("name", "some-redis-data-source-service"), ar -> {
@@ -728,7 +1043,14 @@ discovery.getRecord(
       reference.release();
     }
   });
+  
+```
+  
 You can also use the RedisDataSource class to the lookup and retrieval in one call:
+
+你也可以使用`RedisDataSource`这个类，来查询和获取服务对象。
+
+```java
 
 RedisDataSource.getRedisClient(discovery,
   new JsonObject().put("name", "some-redis-data-source-service"),
@@ -743,6 +1065,9 @@ RedisDataSource.getRedisClient(discovery,
     
     }
   });
+  
+```
+
 Mongo Data source
 Mongo data sources are a specialization for MongoDB databases. The client of a Mongo data source service is a MongoClient.
 
@@ -754,6 +1079,16 @@ create a record, using MongoDataSource
 
 publish the record
 
+##Mongo数据源服务
+Mongo数据源是专门为MongoDb数据库提供的一种服务类型，Mongo数据源服务的服务对象是一个`MongoClient`。
+
+###发布Mongo服务
+发布一个Mongo数据源服务共两步：
+1. 使用`MongoDataSource`创建一条服务记录
+2. 发布这条服务记录
+
+```java
+
 Record record = MongoDataSource.createRecord(
   "some-data-source-service", // The service name
   new JsonObject().put("connection_string", "some mongo connection"), // The location
@@ -763,11 +1098,21 @@ Record record = MongoDataSource.createRecord(
 discovery.publish(record, ar -> {
   // ...
 });
+
+```
+
 The location is a simple JSON object that should provide the fields to access the Redis data source (url, port…​).
+
+location是一个JSON对象，包含了访问Mongo数据源的所有属性（url、port....）
 
 Consuming a Mongo service
 
 As stated in the previous section, how to access a data source depends on the data source itself. To build the MongoClient, you can merge configuration: the record location, the metadata and a json object provided by the consumer:
+
+###消费Mongo服务
+如前所述，如何访问数据源，有赖于数据源本身，要创建一个`MongoClient`，你需要同时提供：服务记录location信息、元数据以及服务消费者提供的一个json对象。
+
+```java
 
 discovery.getRecord(
   new JsonObject().put("name", "some-data-source-service"),
@@ -787,7 +1132,14 @@ discovery.getRecord(
       reference.release();
     }
   });
+  
+```
+
 You can also use the MongoDataSource class to the lookup and retrieval in one call:
+
+也可以调用`MongoDataSource`类的方法，来完成服务对象的查找和获取
+
+```java
 
 MongoDataSource.<JsonObject>getMongoClient(discovery,
   new JsonObject().put("name", "some-data-source-service"),
@@ -803,6 +1155,9 @@ MongoDataSource.<JsonObject>getMongoClient(discovery,
     
     }
   });
+  
+```
+  
 Listening for service arrivals and departures
 Every time a provider is published or removed, an event is published on the vertx.discovery.announce address. This address is configurable from the ServiceDiscoveryOptions.
 
