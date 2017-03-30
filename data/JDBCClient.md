@@ -2,11 +2,11 @@
 
 英文原文：[vertx-jdbc-client](http://vertx.io/docs/vertx-jdbc-client/java/) 
 
-### 使用Vertx.x JDBC client，可以让我们的Vertx.x应用程序通过异步的方式，与任何只要支持JDBC的数据库进行交互。
+**使用 Vert.x JDBC client，可以让我们的 Vert.x 应用程序通过异步的方式，与任何只要支持 JDBC 的数据库进行交互。**
 
-Vertx.x JDBC client 的接口定义为[`JDBCClient`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html)
+Vert.x JDBC client 的接口定义为[`JDBCClient`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html)
 
-要使用Vertx.x JDBC client，需要添加下面的依赖：
+要使用Vert.x JDBC client，需要添加下面的依赖：
 
 - Maven (在 `pom.xml` 文件中):
 
@@ -24,13 +24,13 @@ Vertx.x JDBC client 的接口定义为[`JDBCClient`](http://vertx.io/docs/apidoc
 compile 'io.vertx:vertx-jdbc-client:3.4.1'
 ```
 
-## 创建 Vertx.x JDBC client 对象
+## 创建 Vert.x JDBC client 对象
 
-接下来，我们一起来看下创建 Vertx.x JDBC client 对象的几种方式。
+接下来，我们一起来看下创建 Vert.x JDBC client 对象的几种方式。
 
 ### 默认使用共享的数据源
 
-大部分情况下，我们希望在不同的 Vertx.x JDBC client 对象之间，共享一个数据源。
+大部分情况下，我们希望在不同的 Vert.x JDBC client 对象之间，共享一个数据源。
 
 考虑这样一种情况：我们在部署 verticle 时，设置了 verticle 拥有多个实例化的对象，但是我们希望每个 verticle   的对象能够共享同一个数据源，而不是单独为每个 verticle 的对象设置不同的数据源。
 
@@ -42,27 +42,27 @@ JDBCClient client = JDBCClient.createShared(vertx, config);
 
 只有在第一次调用 [`JDBCClient.createShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-)方法的时候，才会真正的根据config参数创建一个数据源。
 
-之后再调用此方法，只会返回一个新的 Vertx.x JDBC client 对象，但使用的是相同的数据源。这时config参数也就不再有作用。
+之后再调用此方法，只会返回一个新的 Vert.x JDBC client 对象，但使用的是相同的数据源。这时config参数也就不再有作用。
 
 ### 指定数据源名称
 
-我们还可以像下面这样，在创建一个 Vertx.x JDBC client 对象的时候指定数据源的名称。
+我们还可以像下面这样，在创建一个 Vert.x JDBC client 对象的时候指定数据源的名称。
 
 ```java
 JDBCClient client = JDBCClient.createShared(vertx, config, "MyDataSource");
 ```
 
-如果不同的 Vertx.x JDBC client 对象使用了相同的Vert.x 对象和相同的数据源名称，那么它们将共享数据源。
+如果不同的 Vert.x JDBC client 对象使用了相同的Vert.x 对象和相同的数据源名称，那么它们将共享数据源。
 
 同样的（与默认使用共享的数据源），只有在第一次调用[`JDBCClient.createShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-)方法的时候，才会真正的根据config 参数创建一个数据源。
 
-之后再调用此方法，只会返回一个新的 Vertx.x JDBC client 对象，但使用的是相同的数据源。这时 config 参数也就不再有作用。
+之后再调用此方法，只会返回一个新的 Vert.x JDBC client 对象，但使用的是相同的数据源。这时 config 参数也就不再有作用。
 
-当我们希望不同含义的 Vertx.x JDBC client 对象拥有不同的数据源时，可以采用这种方式来创建它的对象。比如它们要与不同的数据源进行交互。
+当我们希望不同含义的 Vert.x JDBC client 对象拥有不同的数据源时，可以采用这种方式来创建它的对象。比如它们要与不同的数据源进行交互。
 
-### 创建不共享数据源的 Vertx.x JDBC client 对象
+### 创建不共享数据源的 Vert.x JDBC client 对象
 
-在大部分情况下，我们会希望在不同的 Vertx.x JDBC client 对象之间共享数据源。但有时候，却恰恰相反。
+在大部分情况下，我们会希望在不同的 Vert.x JDBC client 对象之间共享数据源。但有时候，却恰恰相反。
 
 这时，可以调用[`JDBCClient.createNonShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createNonShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-) 。
 
@@ -74,7 +74,7 @@ JDBCClient client = JDBCClient.createNonShared(vertx, config);
 
 ### 指定数据源
 
-如果我们已经存在一个数据源，也可以在创建 Vertx.x JDBC client 对象的时候就直接指定它：
+如果我们已经存在一个数据源，也可以在创建 Vert.x JDBC client 对象的时候就直接指定它：
 
 ```java
 JDBCClient client = JDBCClient.create(vertx, dataSource);
@@ -82,17 +82,17 @@ JDBCClient client = JDBCClient.create(vertx, dataSource);
 
 ## 关闭客户端
 
-我们可以较长时间的持有 Vertx.x JDBC client 对象（比如在 verticle 的整个生命周期里），可一旦不再使用它后，就应该关闭它。
+我们可以较长时间的持有 Vert.x JDBC client 对象（比如在 verticle 的整个生命周期里），可一旦不再使用它后，就应该关闭它。
 
-在多个 Vertx.x JDBC client 对象共享数据源的情况下，这个数据源对象维护着一个引用计数器。一旦此数据源最后一个引用关闭后，这个数据源也就关闭了。
+在多个 Vert.x JDBC client 对象共享数据源的情况下，这个数据源对象维护着一个引用计数器。一旦此数据源最后一个引用关闭后，这个数据源也就关闭了。
 
 ### 在 verticles 中自动关闭
 
-我们在 verticles 中创建的 Vertx.x JDBC client 对象，会在这些 verticle 卸载的时候自动关闭。
+我们在 verticles 中创建的 Vert.x JDBC client 对象，会在这些 verticle 卸载的时候自动关闭。
 
 ## 获取数据库连接
 
-在创建 Vertx.x JDBC client 对象后，我们可以通过[`getConnection`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#getConnection-io.vertx.core.Handler-) 方法来获取一个数据库连接。
+在创建 Vert.x JDBC client 对象后，我们可以通过[`getConnection`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#getConnection-io.vertx.core.Handler-) 方法来获取一个数据库连接。
 
 此方法从连接池中获取一个数据库连接，并返回给回调方法
 
@@ -106,11 +106,11 @@ client.getConnection(res -> {
       if (res2.succeeded()) {
 
         ResultSet rs = res2.result();
-        // Do something with results
+        // 用结果集results进行其他操作
       }
     });
   } else {
-    // Failed to get connection - deal with it
+    // 获取连接失败 - 处理失败的情况
   }
 });
 ```
