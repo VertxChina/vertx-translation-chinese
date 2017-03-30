@@ -150,3 +150,17 @@ request.uri("/some-uri?param1=param1_value&param2=param2_value");
 
 ### 填充请求体
 
+如需要发送请求体，可使用相同的API并在最后加上`sendXXX`方法发送相应的请求体。
+
+例如用[sendBuffer](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendBuffer-io.vertx.core.buffer.Buffer-io.vertx.core.Handler-)方法发送一个buffer缓冲体
+
+```java
+client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .sendBuffer(buffer, ar -> {
+    if (ar.succeeded()) {
+      // Ok
+    }
+  });
+```
+
