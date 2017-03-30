@@ -25,6 +25,7 @@ Vert.X Core提供了下列功能
 * 事件总线
 * 共享数据（Shared Data）——本地哈希表和分布式集群哈希表
 * 周期性、延迟性行为
-* 
+* 部署和撤销【Undeploying】Verticle实例
+
 
 
