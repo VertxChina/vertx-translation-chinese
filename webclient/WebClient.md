@@ -20,9 +20,9 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
 
 # 使用Web客户端
 
-为使用Vert.x Web客户端，您需要加入以下依赖到build描述文件中的依赖组中：
+如需使用Vert.x Web客户端，请先加入以下依赖：
 
-- Maven（在您的 `pom.xml`）：
+- Maven（在 `pom.xml`文件中）：
 
   ```xml
   <dependency>
@@ -36,7 +36,7 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
   </dependency>
   ```
 
-- Gradle（在您的`build.gradle`文件中）：
+- Gradle（在`build.gradle`文件中）：
 
   ```json
   dependencies {
@@ -46,5 +46,34 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
   }
   ```
 
-  ​
+
+
+# 对Vert.x Core HTTP客户端的回顾
+
+Vert.x Web客户端使用Vert.x Core的API，如您对此还不熟悉，请先熟悉[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)的一些基本概念。
+
+# 创建Web客户端
+
+您可使用缺省设置创建一个[WebClient](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClient.html)：
+
+```java
+WebClient client = WebClient.create(vertx);
+```
+
+您亦可使用配置选项来创建客户端：
+
+```java
+WebClientOptions options = new WebClientOptions()
+  .setUserAgent("My-App/1.2.3");
+options.setKeepAlive(false);
+WebClient client = WebClient.create(vertx, options);
+```
+
+Web Client配置选项继承自Http Client配置选项，所以您可选择其中一个。
+
+如已在程序中创建Http Client，可用以下方式复用：
+
+```java
+WebClient client = WebClient.wrap(httpClient);
+```
 
