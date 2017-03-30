@@ -77,3 +77,76 @@ Web Client配置选项继承自Http Client配置选项，所以您可选择其�
 WebClient client = WebClient.wrap(httpClient);
 ```
 
+# 发送请求
+
+### 无消息体的简单请求
+
+一般情况下，HTTP GET，OPTIONS以及HEAD请求没有消息体，可用以下方式发送无消息体的HTTP Requests（HTTP请求）：
+
+```java
+WebClient client = WebClient.create(vertx);
+
+// 发送GET请求
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .send(ar -> {
+    if (ar.succeeded()) {
+      // 获取响应
+      HttpResponse<Buffer> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+
+//发送HEAD请求
+client
+  .head(8080, "myserver.mycompany.com", "/some-uri")
+  .send(ar -> {
+    if (ar.succeeded()) {
+      // 获取响应
+      HttpResponse<Buffer> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+您可用以下链式方式添加查询参数
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .addQueryParam("param", "param_value")
+  .send(ar -> {});
+```
+
+在请求URI中的参数将会被预填充
+
+```java
+HttpRequest<Buffer> request = client.get(8080, "myserver.mycompany.com", "/some-uri?param1=param1_value&param2=param2_value");
+
+// 添加param3（参数3）
+request.addQueryParam("param3", "param3_value");
+
+// 覆盖param2（参数2）
+request.setQueryParam("param2", "another_param2_value");
+```
+
+设置请求URI将会自动清除已有的查询参数
+
+```java
+HttpRequest<Buffer> request = client.get(8080, "myserver.mycompany.com", "/some-uri");
+
+// 添加param1（参数1）
+request.addQueryParam("param1", "param1_value");
+
+// 覆盖param1（参数1）同时新增param2（参数2）
+request.uri("/some-uri?param1=param1_value&param2=param2_value");
+```
+
+### 填充请求体
+
