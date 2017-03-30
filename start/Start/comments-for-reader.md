@@ -1,6 +1,6 @@
 # Rules for Translation
 
-## 翻译基本规则
+## 基本规则
 
 * 
 
