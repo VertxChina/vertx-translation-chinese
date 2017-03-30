@@ -10,7 +10,7 @@ Vertx.x JDBC client 的接口定义为[`JDBCClient`](http://vertx.io/docs/apidoc
 
 - Maven (在 `pom.xml` 文件中):
 
-```
+```xml
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-jdbc-client</artifactId>
@@ -48,7 +48,7 @@ JDBCClient client = JDBCClient.createShared(vertx, config);
 
 我们还可以像下面这样，在创建一个 Vertx.x JDBC client 对象的时候指定数据源的名称。
 
-```
+```java
 JDBCClient client = JDBCClient.createShared(vertx, config, "MyDataSource");
 ```
 
@@ -76,7 +76,7 @@ JDBCClient client = JDBCClient.createNonShared(vertx, config);
 
 如果我们已经存在一个数据源，也可以在创建 Vertx.x JDBC client 对象的时候就直接指定它：
 
-```
+```java
 JDBCClient client = JDBCClient.create(vertx, dataSource);
 ```
 
@@ -223,7 +223,7 @@ JDBCClient client = JDBCClient.createShared(vertx, config);
 
 时间类型 (TIME, DATE, TIMESTAMP) 可以自动转换。需要注意的是，我们可以选择性的使用 UUID 的转换。虽然大部分数据库都支持UUIDs，可并不是所有都支持。比如说 MySQL 就不支持。这种情况下，建议使用VARCHAR(36) 的字段。对于其他支持 UUID 的数据库来说，使用下面的参数后，可以对 UUID 进行自动类型转换。
 
-```
+```json
 { "castUUID": true }
 ```
 
