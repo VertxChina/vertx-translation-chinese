@@ -327,3 +327,23 @@ get.copy()
   }
 ```
 
+## 超时
+
+您可通过[timeout](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#timeout-long-)方法设置超时时间。
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .timeout(5000)
+  .send(ar -> {
+    if (ar.succeeded()) {
+      // Ok
+    } else {
+      // 此处可填入超时处理部分代码
+    }
+  });
+```
+
+若请求在设定时间内没返回任何数据，则一个超时异常将会传递给响应处理代码。
+
+# 处理HTTP响应
