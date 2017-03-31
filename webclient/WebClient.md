@@ -347,3 +347,25 @@ client
 若请求在设定时间内没返回任何数据，则一个超时异常将会传递给响应处理代码。
 
 # 处理HTTP响应
+
+Web Client请求发送之后，返回的结果将会被包装在异步结果[HttpResponse](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpResponse.html)中。
+
+当响应被成功接收到之后，相应的回调函数将会被触发
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .send(ar -> {
+    if (ar.succeeded()) {
+
+      HttpResponse<Buffer> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+> 警告 *缺省状况下，响应会被完全缓冲读入内存，请用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流*
+
