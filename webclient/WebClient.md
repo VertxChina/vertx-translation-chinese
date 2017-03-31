@@ -504,7 +504,7 @@ client
   .ssl(true)
   .send(ar -> {
     if (ar.succeeded()) {
-      // Obtain response
+      // 获取响应
       HttpResponse<Buffer> response = ar.result();
 
       System.out.println("Received response with status code" + response.statusCode());
@@ -514,14 +514,14 @@ client
   });
 ```
 
-或使用create方法以及URI绝对路径参数
+或使用URI绝对路径参数的方法
 
 ```java
 client
   .getAbs("https://myserver.mycompany.com:4043/some-uri")
   .send(ar -> {
     if (ar.succeeded()) {
-      // Obtain response
+      // 获取响应
       HttpResponse<Buffer> response = ar.result();
 
       System.out.println("Received response with status code" + response.statusCode());
@@ -532,3 +532,76 @@ client
 ```
 
 # RxJava API
+
+RxJava的[HttpRequest](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html)提供了原版API的响应式版本，[rxSend](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#rxSend--)方法返回一个可被订阅的`Single<HttpResponse<Buffer>>`，故单个`Single`可被多次订阅。
+
+```java
+Single<HttpResponse<Buffer>> single = client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .rxSend();
+
+// 发送一次请求，并处理其响应，rx通常通过订阅触发各种响应
+single.subscribe(response -> {
+  System.out.println("Received 1st response with status code" + response.statusCode());
+}, error -> {
+  System.out.println("Something went wrong " + error.getMessage());
+});
+
+// 再次发送请求
+single.subscribe(response -> {
+  System.out.println("Received 2nd response with status code" + response.statusCode());
+}, error -> {
+  System.out.println("Something went wrong " + error.getMessage());
+});
+```
+
+获取到的`Single`可与其它RxJava API自然组合成链式处理
+
+```java
+Single<String> url = client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .rxSend()
+  .map(HttpResponse::bodyAsString);
+
+// 用flatMap将返回值内的链接作为参数传入lambda，在lambda中将其设置成发送请求，并返回Single，再下一步订阅中予以触发
+url
+  .flatMap(u -> client.getAbs(u).rxSend())
+  .subscribe(response -> {
+    System.out.println("Received response with status code" + response.statusCode());
+  }, error -> {
+    System.out.println("Something went wrong " + error.getMessage());
+  });
+```
+
+之前的例子可写成
+
+```java
+Single<HttpResponse<JsonObject>> single = client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .putHeader("some-header", "header-value")
+  .addQueryParam("some-param", "param value")
+  .as(BodyCodec.jsonObject())
+  .rxSend();
+single.subscribe(resp -> {
+  System.out.println(resp.statusCode());
+  System.out.println(resp.body());
+});
+```
+
+当发送请求体为`Observable<Buffer>`时，应使用[sendStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#sendStream-rx.Observable-io.vertx.core.Handler-)
+
+```java
+Observable<Buffer> body = getPayload();
+
+Single<HttpResponse<Buffer>> single = client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .rxSendStream(body);
+single.subscribe(resp -> {
+  System.out.println(resp.statusCode());
+  System.out.println(resp.body());
+});
+```
+
+当订阅时，`body`将会被订阅，其内容将会被用于请求中。
+
+> 原文上次编辑于2017-03-15 15:54:14 欧洲中部时间
