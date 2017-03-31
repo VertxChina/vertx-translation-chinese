@@ -492,3 +492,43 @@ WebClient client = WebClient.create(vertx, new WebClientOptions().setFollowRedir
 ```java
 WebClient client = WebClient.create(vertx, new WebClientOptions().setMaxRedirects(5));
 ```
+# 使用HTTPS
+
+Vert.x Web客户端可用与[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)相同方式配置HTTPS协议。
+
+您可对每个请求单独设置
+
+```java
+client
+  .get(443, "myserver.mycompany.com", "/some-uri")
+  .ssl(true)
+  .send(ar -> {
+    if (ar.succeeded()) {
+      // Obtain response
+      HttpResponse<Buffer> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+或使用create方法以及URI绝对路径参数
+
+```java
+client
+  .getAbs("https://myserver.mycompany.com:4043/some-uri")
+  .send(ar -> {
+    if (ar.succeeded()) {
+      // Obtain response
+      HttpResponse<Buffer> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+# RxJava API
