@@ -289,4 +289,41 @@ request.putHeader("other-header", "foo");
 ```
 
 ## 重用请求
-a
+[send](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#send-io.vertx.core.Handler-)可被重复多次调用，使得配置以及重用[HttpRequest](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html)对象变得更加便捷
+
+```java
+HttpRequest<Buffer> get = client.get(8080, "myserver.mycompany.com", "/some-uri");
+get.send(ar -> {
+  if (ar.succeeded()) {
+    // Ok
+  }
+});
+
+// 再次发送同样的请求
+get.send(ar -> {
+  if (ar.succeeded()) {
+    // Ok
+  }
+});
+
+```
+
+当您需要更改请求时，可用[copy](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#copy--)方法复制一份请求的拷贝
+
+```java
+HttpRequest<Buffer> get = client.get(8080, "myserver.mycompany.com", "/some-uri");
+get.send(ar -> {
+  if (ar.succeeded()) {
+    // Ok
+  }
+});
+
+// 获取同样的请求
+get.copy()
+  .putHeader("an-header", "with-some-value")
+  .send(ar -> {
+  if (ar.succeeded()) {
+    // Ok
+  }
+```
+
