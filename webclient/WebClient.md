@@ -267,3 +267,25 @@ client
 
 > 请注意 *当前版本并不支持分块文件编码，该功能可能在将来版本中予以支持。*
 
+## 填充请求头
+
+您可使用以下方式填充请求头：
+
+```java
+HttpRequest<Buffer> request = client.get(8080, "myserver.mycompany.com", "/some-uri");
+MultiMap headers = request.headers();
+headers.set("content-type", "application/json");
+headers.set("other-header", "foo");
+```
+
+此处Headers是一个[MultiMap](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html)对象，提供了增加，设置以及删除头属性操作的入口。HTTP头的某些特定属性允许设置多个值。
+
+您亦可通过putHeader方法写入头属性
+
+```java
+HttpRequest<Buffer> request = client.get(8080, "myserver.mycompany.com", "/some-uri");
+request.putHeader("content-type", "application/json");
+request.putHeader("other-header", "foo");
+```
+
+## 重用请求
