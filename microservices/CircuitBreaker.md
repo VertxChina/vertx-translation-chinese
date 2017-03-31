@@ -1,6 +1,15 @@
 # Vert.x Circuit Breaker
 
-> Note: Circuit Breaker -> 熔断器，下同 
+
+## 中英文对照表
+| 英文              | 中文           | 
+| -------------    |:-------------:| 
+| Circuit Breaker  | 熔断器         | 
+
+---
+
+## 正文
+
 
 Vert.x 熔断器是 Vert.x [熔断模式](https://martinfowler.com/bliki/CircuitBreaker.html)的实现。
 
@@ -18,7 +27,7 @@ Vert.x 熔断器是 Vert.x [熔断模式](https://martinfowler.com/bliki/Circuit
 
 ---
 
-## 使用 vert.x 熔断器
+## 使用 Vert.x 熔断器
 使用 Vert.x 熔断器，只需要在依赖中增加以下代码片段：
 
 - Maven (在 `pom.xml` 文件中):  
@@ -155,6 +164,8 @@ breaker.execute(
 
 可以指定熔断器在生效之前的尝试次数，使用 [`setMaxRetries`](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreakerOptions.html#setMaxRetries-int-)。如果将其设置为高于0的值，则您的代码在最终失败之前进行尝试多次执行。如果代码在其中一个重试中成功，则处理程序将得到通知，并且跳过剩余的重试。此配置仅当熔断器未生效时工作。
 
+---
+
 ## 回调
 你能够配置熔断生效/关闭时回调。  
 
@@ -192,14 +203,15 @@ breaker.execute(
 - `node`: 节点的标志符（如果运行在单节点模式是 `local`）
 
 
+---
+
 ## 半开状态
 当熔断器在熔断状态中，对其调用会立即失败，不会执行实际操作。经过适当的时间（[`setResetTimeout`](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreakerOptions.html#setResetTimeout-long-) 设置），熔断器决定是否恢复状态，此时进入半开状态，在这种状态下，允许下一次熔断器的调用实际调用如果成功，熔断器将复位并返回到关闭状态，回归正常的模式，但是如果这次调用失败，则熔断器返回到熔断状态，直到下次半开状态。
 
+---
 
+## 将熔断器指标(metrics)推送到Hystrix仪表板
 
-## 将熔断器指标推送到Hystrix仪表板
-
-> Note: metrics -> 指标，下同
 
 Netflix Hystrix带有一个仪表板，用于显示熔断器的当前状态。 Vert.x断路器可以发布其指标，以供Hystrix仪表板使用。 Hystrix仪表板需要一个发送指标的SSE流。此流由Vert.x Web 中 [`HystrixMetricHandler`](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/HystrixMetricHandler.html) 提供：
 
@@ -221,6 +233,8 @@ vertx.createHttpServer()
 在Hystrix仪表板中，配置流网址，如：[`http://localhost:8080/metrics`](http://localhost:8080/metrics)  仪表板将使用Vert.x熔断器的指标。
 
 请注意，这些指标量是由Vert.x Web使用事件总线通知收集的。如果您不使用默认通知地址，则需要在创建时指定。
+
+---
 
 ## 使用 Netflix Hystrix
 
