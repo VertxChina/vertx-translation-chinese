@@ -26,13 +26,9 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
 
   ```xml
   <dependency>
-
     <groupId>io.vertx</groupId>
-
     <artifactId>vertx-web-client</artifactId>
-
     <version>3.4.1</version>
-
   </dependency>
   ```
 
@@ -40,9 +36,7 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
 
   ```gradle
   dependencies {
-
     compile 'io.vertx:vertx-web-client:3.4.1'
-
   }
   ```
 
