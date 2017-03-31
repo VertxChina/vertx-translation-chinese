@@ -369,3 +369,126 @@ client
 
 > 警告 *缺省状况下，响应会被完全缓冲读入内存，请用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流*
 
+## 响应解码
+
+缺省状况下，响应以缓冲形式提供，并不提供任何形式的解码。
+
+可用[BodyCodec](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html)将响应定制成以下类型：
+
+- 普通字符串
+- Json对象
+- 将Json映射成POJO
+- 写入流
+
+可用响应体解码器对二进制数据流解码，以节省您在响应处理中的代码。
+
+使用[BodyCodec.jsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--)将结果解码为Json对象：
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .as(BodyCodec.jsonObject())
+  .send(ar -> {
+    if (ar.succeeded()) {
+      HttpResponse<JsonObject> response = ar.result();
+
+      JsonObject body = response.body();
+
+      System.out.println("Received response with status code" + response.statusCode() + " with body " + body);
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+在Java，Groovy以及Kotlin语言中，Json对象可被解码映射成POJO
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .as(BodyCodec.json(User.class))
+  .send(ar -> {
+    if (ar.succeeded()) {
+      HttpResponse<User> response = ar.result();
+
+      User user = response.body();
+
+      System.out.println("Received response with status code" + response.statusCode() + " with body " +
+        user.getFirstName() + " " + user.getLastName());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+当响应结果较大时，可用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流。响应体解码器将响应结果写入流并在最后发出成功或失败的信号。
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .as(BodyCodec.pipe(writeStream))
+  .send(ar -> {
+    if (ar.succeeded()) {
+
+      HttpResponse<Void> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+最后，如您对响应结果不感兴趣，可用[BodyCodec.none](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#none--)废弃响应体
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .as(BodyCodec.none())
+  .send(ar -> {
+    if (ar.succeeded()) {
+
+      HttpResponse<Void> response = ar.result();
+
+      System.out.println("Received response with status code" + response.statusCode());
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+若无法预知响应内容类型，您依旧可以在获取结果之后，用`bodyAsXXX()`方法将其转换成特定的类型
+
+```java
+client
+  .get(8080, "myserver.mycompany.com", "/some-uri")
+  .send(ar -> {
+    if (ar.succeeded()) {
+
+      HttpResponse<Buffer> response = ar.result();
+
+      // 将结果解码为Json对象
+      JsonObject body = response.bodyAsJsonObject();
+
+      System.out.println("Received response with status code" + response.statusCode() + " with body " + body);
+    } else {
+      System.out.println("Something went wrong " + ar.cause().getMessage());
+    }
+  });
+```
+
+> 警告 *这种方式仅对响应结果为缓冲体有效。*
+
+## 处理30x重定向
+
+缺省状况下，客户端将会依照30x状态码自动重定向，您可使用[WebClientOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html)予以配置：
+
+```java
+WebClient client = WebClient.create(vertx, new WebClientOptions().setFollowRedirects(false));
+```
+
+客户端将会执行最多达`16`次重定向，该参数亦可在[WebClientOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html)配置：
+
+```java
+WebClient client = WebClient.create(vertx, new WebClientOptions().setMaxRedirects(5));
+```
