@@ -200,3 +200,70 @@ fs.open("content.txt", new OpenOptions(), fileRes -> {
 
 ### Json体
 
+有时您需要在请求体中使用Json格式，可使用[sendJsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJsonObject-io.vertx.core.json.JsonObject-io.vertx.core.Handler-)方法发送[JsonObject](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)
+
+```java
+client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .sendJsonObject(new JsonObject()
+    .put("firstName", "Dale")
+    .put("lastName", "Cooper"), ar -> {
+    if (ar.succeeded()) {
+      // Ok
+    }
+  });
+```
+
+在Java，Groovy以及Kotlin语言中，您亦可使用[sendJson](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJson-java.lang.Object-io.vertx.core.Handler-)方法发送POJO（Plain Old Java Object），该方法会自动调用[Json.encode](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-)将POJO映射为Json
+
+```java
+client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .sendJson(new User("Dale", "Cooper"), ar -> {
+    if (ar.succeeded()) {
+      // Ok
+    }
+  });
+```
+
+> 请注意  *[Json.encode](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-)方法使用Jackson的mapper将POJO映射成Json*。
+
+### 表单提交
+
+您可使用[sendForm](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendForm-io.vertx.core.MultiMap-io.vertx.core.Handler-)方法发送http表单。
+
+```java
+MultiMap form = MultiMap.caseInsensitiveMultiMap();
+form.set("firstName", "Dale");
+form.set("lastName", "Cooper");
+
+// 用URL编码方式提交表单
+client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .sendForm(form, ar -> {
+    if (ar.succeeded()) {
+      // Ok
+    }
+  });
+```
+
+缺省情况下，提交表单的请求头中的`content-type`属性值为`application/x-www-form-urlencoded`，您亦可将其设置为`multipart/form-data`
+
+```java
+MultiMap form = MultiMap.caseInsensitiveMultiMap();
+form.set("firstName", "Dale");
+form.set("lastName", "Cooper");
+
+// 用分块方式编码提交表单
+client
+  .post(8080, "myserver.mycompany.com", "/some-uri")
+  .putHeader("content-type", "multipart/form-data")
+  .sendForm(form, ar -> {
+    if (ar.succeeded()) {
+      // Ok
+    }
+  });
+```
+
+> 请注意 *当前版本并不支持分块文件编码，该功能可能在将来版本中予以支持。*
+
