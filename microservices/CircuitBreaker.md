@@ -23,7 +23,7 @@ Vert.x 熔断器是 Vert.x [熔断模式](https://martinfowler.com/bliki/Circuit
 
 
 
-熔断器要旨是保护 Vert.x 的 **非阻塞** 和 **异步** 的行为以便受益于Vert.x 执行模型。
+熔断器要旨是保护 Vert.x 的 **非阻塞** 和 **异步** 的行为，以便受益于Vert.x 执行模型。
 
 ---
 
@@ -34,15 +34,15 @@ Vert.x 熔断器是 Vert.x [熔断模式](https://martinfowler.com/bliki/Circuit
 
 ```xml
 <dependency>
-	<groupId>io.vertx</groupId>
-	<artifactId>vertx-circuit-breaker</artifactId>
-	<version>3.4.1</version>
+  <groupId>io.vertx</groupId>
+  <artifactId>vertx-circuit-breaker</artifactId>
+  <version>3.4.1</version>
 </dependency>
 ```
 
 - Gradle (在 `build.gradle` 文件中):
 
-```xml
+```groovy
 compile 'io.vertx:vertx-circuit-breaker:3.4.1'
 ```
 
@@ -74,7 +74,7 @@ breaker.execute(future -> {
   // 处理结果
 });
 ```
-执行块中接收Future作为参数，以表示操作和结果的成功或失败。 例如在下面的例子中，对应的结果就是REST调用的输出：
+执行块中接收 `Future` 作为参数，以表示操作和结果的成功或失败。 例如在下面的例子中，对应的结果就是REST调用的输出：
 
 ```java
 CircuitBreaker breaker = CircuitBreaker.create("my-circuit-breaker", vertx,
@@ -193,8 +193,8 @@ breaker.execute(
 
 当熔断器决定尝试复位的时候（ half-open 状态），我们也可以注册 [`halfOpenHandler`](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreaker.html#halfOpenHandler-io.vertx.core.Handler-) 的回调从而得到回调通知。
 
-## Event bus 通知
-每次熔断器状态发生变化时，会在Event bus上发布事件。事件发送的地址可以使用 [`setNotificationAddress`](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreakerOptions.html#setNotificationAddress-java.lang.String-) 进行配置。如果将null传递给此方法，则通知将被禁用。默认情况下，使用的地址是 `vertx.circuit-breaker`。
+## Event Bus 通知
+每次熔断器状态发生变化时，会在Event Bus上发布事件。事件发送的地址可以使用 [`setNotificationAddress`](http://vertx.io/docs/apidocs/io/vertx/circuitbreaker/CircuitBreakerOptions.html#setNotificationAddress-java.lang.String-) 进行配置。如果将  `null` 传递给此方法，则通知将被禁用。默认情况下，使用的地址是 `vertx.circuit-breaker`。
 每次事件信息包含以下：
 
 - `state`: 熔断器的新状态 （`OPEN`，`CLOSED`，`HALF_OPEN`） 
@@ -232,13 +232,13 @@ vertx.createHttpServer()
 
 在Hystrix仪表板中，配置流网址，如：[`http://localhost:8080/metrics`](http://localhost:8080/metrics)  仪表板将使用Vert.x熔断器的指标。
 
-请注意，这些指标量是由Vert.x Web使用事件总线通知收集的。如果您不使用默认通知地址，则需要在创建时指定。
+请注意，这些指标量是由Vert.x Web使用 Event Bus 事件通知收集的。如果您不使用默认通知地址，则需要在创建时指定。
 
 ---
 
 ## 使用 Netflix Hystrix
 
-Hystrix提供了熔断器模式的实现。可以在Vert.x中使用Hystrix提供的熔断器或组合使用。本节介绍在vert.x应用程序中使用Hystrix的技巧。
+[Hystrix](https://github.com/Netflix/Hystrix)提供了熔断器模式的实现。可以在Vert.x中使用Hystrix提供的熔断器或组合使用。本节介绍在Vert.x应用程序中使用Hystrix的技巧。
 
 首先，您需要将Hystrix添加到你的依赖中。详细信息请参阅Hystrix页面。然后，您需要使用 `Command` 隔离“受保护的”调用。你可以这样执行它：
 
@@ -248,32 +248,32 @@ String result = someCommand.execute();
 ```
 
 
-但是，命令执行是阻塞的，所以必须在executeBlocking中使用，或者在worker verticle中调用：
+但是，命令执行是阻塞的，必须结合 `executeBlocking` 方法执行，或者在worker verticle中调用：
 
 ```java
-HystrixCommand < String > someCommand = getSomeCommandInstance();
-vertx. < String > executeBlocking(
-    future - > future.complete(someCommand.execute()),
-    ar - > {
-        // back on the event loop
-        String result = ar.result();
-    }
+HystrixCommand<String> someCommand = getSomeCommandInstance();
+vertx.<String>executeBlocking(
+  future -> future.complete(someCommand.execute()),
+  ar -> {
+    // 回到Event Loop线程中
+    String result = ar.result();
+  }
 );
 ```
 
 
-如果您使用Hystrix的异步支持，请注意，对应的回调函数不会在Vert.x线程中执行，并且必须在执行前保留对上下文的引用（使用 [`getOrCreateContext`](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--) ，并且在回调中，执行 runOnContext 函数将当前线程切换回Event Loop线程。如果不这样做的话，您将失去Vert.x并发模型的优势，并且必须自行管理线程同步和执行顺序：
+如果您使用Hystrix的异步支持，请注意，对应的回调函数不会在Vert.x线程中执行，并且必须在执行前保留对上下文的引用（使用 [ `getOrCreateContext` ](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--) ，并且在回调中，执行 `runOnContext` 函数将当前线程切换回Event Loop线程。如果不这样做的话，您将失去Vert.x并发模型的优势，并且必须自行管理线程同步和执行顺序：
 
 ```java
-vertx.runOnContext(v - > {
-    Context context = vertx.getOrCreateContext();
-    HystrixCommand < String > command = getSomeCommandInstance();
-    command.observe().subscribe(result - > {
-        context.runOnContext(v2 - > {
-            // Back on context (event loop or worker)
-            String r = result;
-        });
+vertx.runOnContext(v -> {
+  Context context = vertx.getOrCreateContext();
+  HystrixCommand<String> command = getSomeCommandInstance();
+  command.observe().subscribe(result -> {
+    context.runOnContext(v2 -> {
+      // 回到Vert.x Context下(Event Loop线程或Worker线程)
+      String r = result;
     });
+  });
 });
 ```
 > 最后更新时间 2017-03-15 15:54:14 CET 
