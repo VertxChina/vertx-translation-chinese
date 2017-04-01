@@ -557,7 +557,7 @@ Single<String> url = client
   .rxSend()
   .map(HttpResponse::bodyAsString);
 
-// 用flatMap将返回值内的链接作为参数传入lambda，在lambda中将其设置成发送请求，并返回Single，再下一步订阅中予以触发
+// 用flatMap将返回值内的链接作为参数传入lambda，在lambda中将其设置成发送请求，并返回Single，在下一步订阅中予以触发
 url
   .flatMap(u -> client.getAbs(u).rxSend())
   .subscribe(response -> {
