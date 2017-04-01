@@ -259,7 +259,22 @@ Rx化的 API 是 Vert.x API 的一个代码自动生成版本，就像 Vert.x �
 Vertx vertx = io.vertx.rxjava.core.Vertx.vertx();
 ```
 
-### As a Verticle
+#### As a Verticle
+通过继承 [AbstractVerticle](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/AbstractVerticle.html) 类，它会做一些包装（你将获得一个 RxJava Verticle）：
+```
+class MyVerticle extends io.vertx.rxjava.core.AbstractVerticle {
+  public void start() {
+    // Use Rxified Vertx here
+  }
+}
+```
+
+部署一个 RxJava verticle 不需要特别的部署器，使用 Java 部署器即可。
+
+### Api examples
+让我们通过研究一些样例来了解相关 API 吧。
+
+#### EventBus message stream
 
 
 
