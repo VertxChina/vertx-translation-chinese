@@ -957,8 +957,8 @@ discovery.getRecord(
       }
     });
     
-```    
-    
+```
+
 You can also use the JDBCClient class to the lookup and retrieval in one call:
 
 你也可以使用`JDBCClient`类的方法，来查询和获取服务对象
@@ -981,7 +981,7 @@ JDBCDataSource.<JsonObject>getJDBCClient(discovery,
     });
     
 ```
-    
+
 Redis Data source
 Redis data sources are a specialization for Redis persistence databases. The client of a Redis data source service is a RedisClient.
 
@@ -1045,7 +1045,7 @@ discovery.getRecord(
   });
   
 ```
-  
+
 You can also use the RedisDataSource class to the lookup and retrieval in one call:
 
 你也可以使用`RedisDataSource`这个类，来查询和获取服务对象。
@@ -1157,7 +1157,9 @@ MongoDataSource.<JsonObject>getMongoClient(discovery,
   });
   
 ```
-  
+
+
+
 Listening for service arrivals and departures
 Every time a provider is published or removed, an event is published on the vertx.discovery.announce address. This address is configurable from the ServiceDiscoveryOptions.
 
@@ -1168,6 +1170,17 @@ UP : the service is available, you can start using it
 DOWN : the service is not available anymore, you should not use it anymore
 
 OUT_OF_SERVICE : the service is not running, you should not use it anymore, but it may come back later.
+
+
+
+## 监听服务的上线与下线
+每当服务发布或者取消发布，都会发布一个事件到`vertx.discovery.announce`这个地址。这个地址可以通过`ServiceDiscoveryOptions`配置。
+
+收到的`Record`中有个`status`字段，用来表示服务的状态：
++ UP：服务已经可以使用了
++ DOWN：服务不再可用
++ OUT_OF_SERVICE：服务目前不可用，但是过段时间会继续提供服务。
+
 
 Listening for service usage
 Every time a service reference is retrieved (bind) or released (release), an event is published on the vertx .discovery.usage address. This address is configurable from the ServiceDiscoveryOptions.
@@ -1186,12 +1199,32 @@ This id is configurable from the ServiceDiscoveryOptions. By default it’s "loc
 
 You can disable the service usage support by setting the usage address to null with setUsageAddress.
 
+##监听服务的使用
+每当有一个服务引用被绑定或者被释放，都会有一个事件发送到`vertx.discovery.usage`这个地址，这个地址可以通过`ServiceDiscoveryOptions`配置。
+
+通过这个事件，可以监听服务的使用和服务的绑定图谱。
+通过事件收到的信息是一个`JsonObject`对象，这个对象中包含：
++ 在`record`属性中，包含了服务记录信息
++ 在`type`属性中记录了事件的类型，类型分为`bind`和`release`
++ 在`id`属性中记录了服务发现的id（要么是服务发现的名称或节点id）
+
+这个`id`可以通过`ServiceDiscoveryOptions`配置，默认情况下，在单节点时它的值是`localhost`，在集群模式时是节点的id。
+
+也可以通过`setUsageAddress`方法，设置事件发送地址为`null`，这样就可以禁用服务使用情况的监听功能。
+
 Service discovery bridges
 Bridges let you import and export services from / to other discovery mechanism such as Docker, Kubernates, Consul…​ Each bridge decides how the services are imported and exported. It does not have to be bi-directional.
 
 You can provide your own bridge by implementing the ServiceImporter interface and register it using registerServiceImporter.
 
 The second parameter can provide an optional configuration for the bridge.
+
+## 服务发现连接器
+通过连接器，可以从其他服务发现框架中导入和导出服务，比如Docker，Kubernates，Consul...，每种类型的连接器，决定了服务如何导入和导出，并且不一定都是双向的。
+
+要想自定义连接器，你可以通过实现`ServiceImporter`接口，然后再使用`registerServiceImporter`注册一下。
+
+可以通过第二个参数，传递一些可选的配置信息给连接器。
 
 When the bridge is registered the
 
@@ -1201,8 +1234,18 @@ When the service discovery is stopped, the bridge is stopped. The close method i
 
 Notice than in a cluster, only one member needs to register the bridge as the records are accessible by all members.
 
+当连接器注册后，`io.vertx.servicediscovery.spi.ServiceImporter`这个方法将会被调用，这样你可以对连接器进行一些配置。当连接器配置好了，已经准备导入导出初始的服务时，必须`complete`所传递的`Future`。如果连接器的启动方法是`blocking`的，那么就必须使用一个`executeBlocking`的构造器，并且`complete`所传传递的`Future`对象.
+
+当服务发现被关闭了，那连接器也就关闭了。在关闭的时候，`close`方法会被调用，这样可以在这个方法中对资源进行清理释放，移除导入/导出的服务....这个方法必须调用所传递的`Future`的`complete`方法，来通知调用者关闭操作已经完成。
+
+需要提醒的是，在一个集群中，只需要有一个节点注册了服务连接器，集群中所有成员就都能使用了。
+
 Additional bridges
 In addition of the bridges supported by this library, Vert.x Service Discovery provides additional bridges you can use in your application.
+
+##可用的服务发现连接器
+
+`Service Discovery`除了支持连接器机制以外，还提供了一些现成的连接器。
 
 Consul bridge
 This discovery bridge imports services from Consul into the Vert.x service discovery.
@@ -1217,21 +1260,47 @@ This bridge uses the HTTP API for Consul. It does not export to Consul and does 
 
 The service type is deduced from tags. If a tag matches a known service type, this service type will be used. If not, the service is imported as unknown. Only http-endpoint is supported for now.
 
+### Consul 连接器
+`Consul`连接器可以将`Consul`中定义的服务导入到`Vert.x`的服务发现框架中。
+
+这个连接器可以连接`Consul agent`（服务器），并且会进行周期性的扫描，来更新服务情况：
++ 新的服务被导入
++ 在`Consul`中，维护模式的服务或者已经被删除的服务将被移除。
+
+这个连接器使用的是`Consul`的HTTP API接口，它不能将服务导出到`Consul`，并且也不支持服务的修改。
+
+服务的类型是通过`tags`推断出来的，如果有一个`tag`和已知的服务类型一样，那么就使用这种服务类型，如果没有匹配的，那么服务导入后将标记为`unknown`类型。目前暂时只支持`http-endpoint`类型。
+
+
 Using the bridge
 
 To use this Vert.x discovery bridge, add the following dependency to the dependencies section of your build descriptor:
 
-Maven (in your pom.xml):
+####连接器的使用
+要使用该服务发现连接器，需要将如下的依赖包加入到依赖配置文件中
 
+Maven (in your pom.xml):
++ Maven（在pox.xml文件中）
+
+```xml
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-bridge-consul</artifactId>
   <version>3.4.1</version>
 </dependency>
+```
+
 Gradle (in your build.gradle file):
 
++ Gradle（在build.gradle文件中）
+```groovy
 compile 'io.vertx:vertx-service-discovery-bridge-consul:3.4.1'
+```
+
 Then, when creating the service discovery registers this bridge as follows:
+然后，在创建服务发现对象的时候，像下面这样注册连接器：
+
+```java
 
 ServiceDiscovery.create(vertx)
     .registerServiceImporter(new ConsulServiceImporter(),
@@ -1239,6 +1308,8 @@ ServiceDiscovery.create(vertx)
             .put("host", "localhost")
             .put("port", 8500)
             .put("scan-period", 2000));
+```            
+
 You can configure the:
 
 agent host using the host property, it defaults to localhost
@@ -1247,6 +1318,11 @@ agent port using the port property, it defaults to 8500
 
 scan period using the scan-period property. The time is set in ms, and is 2000 ms by default
 
+你可以做一些配置：
++ `host`属性，配置`agent`的地址，默认是`localhost`
++ `port`属性，配置`agent`的端口，默认的端口是 8500
++ `scan-period`属性，配置扫描的频率，扫描的单位是微秒（ms），默认是2000微秒
+
 Kubernetes bridge
 This discovery bridge imports services from Kubernetes (or Openshift v3) into the Vert.x service discovery.
 
@@ -1254,20 +1330,38 @@ Kubernetes services are mapped to Record. This bridge only supports the importat
 
 Record are created from Kubernetes Service. The service type is deduced from the service.type label. If not set, the service is imported as unknown. Only http-endpoint are supported for now.
 
+## Kubernetes 连接器
+`Kubernetes`连接器可以从`Kubernetes`中导入服务（或者 Openshift v3）到`Vert.x`的服务发现组件中。
+
+`Kubernetes`的所有服务，都将映射为一条`Record`（服务记录），连接器只支持将服务从`Kubernetes`中导入到`Vert.x`中（反过来不行）。
+
+`Kubernetes`的服务，导入后都会创建对应的服务记录，服务类型是通过`service.type.lable`推断出来的，如果该属性没有设置，那么服务类型被设置为`unknown`，目前暂时只支持`http-endpoint`类型。
+
 Using the bridge
 
 To use this Vert.x discovery bridge, add the following dependency to the dependencies section of your build descriptor:
 
-Maven (in your pom.xml):
+###连接器的使用
+要使用该服务发现连接器，需要将如下的依赖包加入到依赖配置文件中
 
+Maven (in your pom.xml):
++ Maven（在pox.xml文件中）
+
+```xml
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-bridge-kubernetes</artifactId>
   <version>3.4.1</version>
 </dependency>
+```
+
 Gradle (in your build.gradle file):
 
++ Gradle（在build.gradle文件中）
+```groovy
 compile 'io.vertx:vertx-service-discovery-bridge-kubernetes:3.4.1'
+```
+
 Configuring the bridge
 
 The bridge is configured using:
@@ -1277,6 +1371,14 @@ the oauth token (using the content of /var/run/secrets/kubernetes.io/serviceacco
 the namespace in which the service are searched (defaults to default).
 
 Be aware that the application must have access to Kubernetes and must be able to read the chosen namespace.
+
+###连接器的配置
+连接器的配置项有：
++ `oauth token`（默认是使用`/var/run/secrets/kubernetes.io/serviceaccount/token`中的内容）
++ 服务搜索的命名空间（默认是`default`）
+
+请注意，应用程序必须能够访问`Kubernetes`并且能够读取所选择的命名空间。
+
 
 The Service to Record mapping
 
@@ -1294,11 +1396,27 @@ the location is deduced from the first port of the service
 
 For HTTP endpoints, the ssl (https) attribute is set to true if the service has the ssl label set to true.
 
+###服务记录的映射
+服务记录按照如下的步骤进行创建
++ 从`service.type.label`中推断出服务类型，如果没有设置，那么服务类型被设置为`unknown`
++ 服务记录的名称就是服务的名称
++ 服务的标签，都被映射为服务记录的元数据
++ 此外还会加上：`kubernetes.uuid, kubernetes.namespace, kubernetes.name`
++ `location`信息将从服务的第一个端口推断出来
+
+对`HTTP endpoints`，如果服务带有`ssl`标签的话，那么服务记录的`ssl(https)`属性将被设置为`true`。
+
 Dynamics
 
 The bridge imports all services on start and removes them on stop. In between it watches the Kubernetes services and add the new ones and removes the deleted ones.
 
 Unresolved directive in index.adoc - include::zookeeper-bridge.adoc[]
+
+###动态性
+该连接器，将会在启动的时候导入所有的服务，在停止的时候，移除所有的服务。在运行期间，将监听`Kubernetes`的服务，动态的导入新加入的服务，移除被删除的服务。
+
+目前 index.adoc - include::zookeeper-bridge.adoc[]指令尚未解决。
+
 
 Docker Links bridge
 This discovery bridge imports services from Docker Links into the Vert.x service discovery.
@@ -1307,33 +1425,66 @@ When you link a Docker container to another Docker container, Docker injects a s
 
 As the links are created when the container starts, the imported records are created when the bridge starts and do not change afterwards.
 
+##Docker Links连接器
+`Docker Links`连接器可以从`Docker Links`中导入服务到`Vert.x`的服务发现组件中。
+
+当你链接一个Docker容器到另外一个Docker容器的时候，Docker将会注入一组环境变量，该连接器将分析这些环境变量，并且针对每个link，生成一个服务记录。服务记录的类型从`service.type.lable`属性中推断，如果没有设置，那么服务类型将被设置为`unknown`，目前暂时只支持`http-endpoint`。
+
+由于Docker容器只在启动的时候创建连接，所以这个连接器只会在启动的时候导入服务记录，然后此后就都不改变了。
+
 Using the bridge
 
 To use this Vert.x discovery bridge, add the following dependency to the dependencies section of your build descriptor:
 
 Maven (in your pom.xml):
 
+###连接器的使用
+要使用该服务发现连接器，需要将如下的依赖包加入到依赖配置文件中
+
++ Maven（在pox.xml文件中）
+
+```xml
+
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-bridge-docker-links</artifactId>
   <version>3.4.1</version>
 </dependency>
-Gradle (in your build.gradle file):
 
+```
+
+Gradle (in your build.gradle file):
++ Gradle（在build.gradle文件中）
+```groovy
 compile 'io.vertx:vertx-service-discovery-bridge-docker-links:3.4.1'
+```
+
 Then, when creating the service discovery, registers this bridge as follows:
 
+然后，在创建服务发现对象的时候，像下面这样注册连接器：
+```java
 ServiceDiscovery.create(vertx)
     .registerServiceImporter(new DockerLinksServiceImporter(), new JsonObject());
+```
+    
 The bridge does not need any further configuration.
+这种连接器不需要任何进一步的配置。
 
 Additional backends
 In addition of the backend supported by this library, Vert.x Service Discovery provides additional backends you can use in your application.
+
+##其他后端
+服务发现框架还支持其他的后端存储机制，`Vert.x`服务发现框架提供了一些现成的后端存储组件。
 
 Redis backend
 The service discovery has a plug-able backend using the ServiceDiscoveryBackend SPI.
 
 This is an implementation of the SPI based on Redis.
+
+###Redis后端
+服务发现框架，通过`ServiceDiscoveryBackend` SPI，提供了一种可插拔的后端扩展机制。
+
+并且实现了一个基于Redis的SPI
 
 Using the Redis backend
 
@@ -1341,15 +1492,29 @@ To use the Redis backend, add the following dependency to the dependencies secti
 
 Maven (in your pom.xml):
 
+####使用Redis后端
+要使用Redis后端，需要将如下的依赖包加入到依赖配置文件中：
+
++ Maven（在pom.xml文件中）
+```xml
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-backend-redis</artifactId>
   <version>3.4.1</version>
 </dependency>
+
+```
+
 Gradle (in your build.gradle file):
 
++ Gradle（在build.gradle文件中）
+```groovy
 compile 'io.vertx:vertx-service-discovery-backend-redis:3.4.1'
+```
+
 Be aware that you can have only a single implementation of the SPI in your classpath. If none, the default backend is used.
+
+湖之一，你只能在`classpath`中指定一个SPI的实现，如果没有指定，那么将使用默认的后端。
 
 Configuration
 
@@ -1357,10 +1522,19 @@ The backend is based on the vertx-redis-client. The configuration is the client 
 
 Here is an example:
 
+###配置
+后端是基于`vertx-redis-client`，所以配置项内容和redis client的配置项内容一样。
+
+下面是一个示例：
+
+```java
 ServiceDiscovery.create(vertx, new ServiceDiscoveryOptions()
     .setBackendConfiguration(
         new JsonObject()
             .put("host", "127.0.0.1")
             .put("key", "records")
     ));
+```
+    
+    
 Last updated 2017-03-15 15:54:14 CET
