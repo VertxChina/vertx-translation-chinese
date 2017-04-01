@@ -2,9 +2,9 @@
 
 
 ## 中英文对照表
-| 英文              | 中文           | 
-| -------------    |:-------------:| 
-| Circuit Breaker  | 熔断器         | 
+
+
+- Circuit Breaker：熔断器
 
 ---
 
@@ -23,7 +23,7 @@ Vert.x 熔断器是 Vert.x [熔断模式](https://martinfowler.com/bliki/Circuit
 
 
 
-熔断器要旨是保护 Vert.x 的 **非阻塞** 和 **异步** 的行为，以使Vert.x 执行模型从中受益。
+熔断器要旨是保护 Vert.x 的 **非阻塞** 和 **异步** 的行为以便受益于Vert.x 执行模型。
 
 ---
 
