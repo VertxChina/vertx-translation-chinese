@@ -262,7 +262,7 @@ vertx.<String>executeBlocking(
 ```
 
 
-如果您使用Hystrix的异步支持，请注意，对应的回调函数不会在Vert.x线程中执行，并且必须在执行前保留对上下文的引用（使用 [ `getOrCreateContext` ](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--) ，并且在回调中，执行 `runOnContext` 函数将当前线程切换回Event Loop线程。如果不这样做的话，您将失去Vert.x并发模型的优势，并且必须自行管理线程同步和执行顺序：
+如果您使用Hystrix的异步支持，请注意，对应的回调函数不会在Vert.x线程中执行，并且必须在执行前保留对上下文的引用（使用 [ `getOrCreateContext` ](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--) )，并且在回调中，执行 `runOnContext` 函数将当前线程切换回Event Loop线程。如果不这样做的话，您将失去Vert.x并发模型的优势，并且必须自行管理线程同步和执行顺序：
 
 ```java
 vertx.runOnContext(v -> {
