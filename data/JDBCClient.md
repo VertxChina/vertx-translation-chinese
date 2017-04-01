@@ -1,6 +1,6 @@
 # Vert.x JDBC Client
 
-英文原文：[Vert.x JDBC Client](http://vertx.io/docs/vertx-jdbc-client/java/) 
+> 原文档：[Vert.x JDBC Client](http://vertx.io/docs/vertx-jdbc-client/java/) 
 
 **使用 Vert.x JDBC Client，可以让我们的 Vert.x 应用程序通过异步的方式，与任何支持 JDBC 的数据库进行交互。**
 
@@ -54,9 +54,9 @@ JDBCClient client = JDBCClient.createShared(vertx, config, "MyDataSource");
 
 如果不同的 Vert.x JDBC client 对象使用了相同的Vert.x 对象和相同的数据源名称，那么它们将共享数据源。
 
-同样的（与默认使用共享的数据源），只有在第一次调用[`JDBCClient.createShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-)方法的时候，才会真正的根据config 参数创建一个数据源。
+同样的（与默认使用共享的数据源），只有在第一次调用[`JDBCClient.createShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-)方法的时候，才会真正的根据 `config` 参数创建一个数据源。
 
-之后再调用此方法，只会返回一个新的 Vert.x JDBC Client 对象，但使用的是相同的数据源。这时 config 参数也就不再有作用。
+之后再调用此方法，只会返回一个新的 Vert.x JDBC Client 对象，但使用的是相同的数据源。这时 `config` 参数也就不再有作用。
 
 当我们希望不同含义的 Vert.x JDBC Client 对象拥有不同的数据源时，可以采用这种方式来创建它的对象。比如它们要与不同的数据源进行交互。
 
@@ -70,7 +70,7 @@ JDBCClient client = JDBCClient.createShared(vertx, config, "MyDataSource");
 JDBCClient client = JDBCClient.createNonShared(vertx, config);
 ```
 
-每次调用此方法，就相当于在调用[`JDBCClient.createShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-)时加上了具有唯一名称的数据源参数。
+每次调用此方法，就相当于在调用 [`JDBCClient.createShared`](http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-) 方法时加上了具有唯一名称的数据源参数。
 
 ### 指定数据源
 
@@ -165,15 +165,15 @@ client.getConnection(res -> {
 
 - `max_statements`
 
-  预处理SQL语句最小缓存数，默认 `0`.
+  预处理SQL语句最小缓存数，默认 `0`
 
 - `max_statements_per_connection`
 
-  每个数据库连接的最大预处理SQL缓存数，默认`0`. 
+  每个数据库连接的最大预处理SQL缓存数，默认`0`
 
 - `max_idle_time`
 
-   空闲连接保留时间，默认`0` (代表一直保留).
+   空闲连接保留时间，默认`0` (代表一直保留)
 
 其它连接池实现：
 
@@ -233,6 +233,6 @@ JDBCClient client = JDBCClient.createShared(vertx, config);
 
 Vert.x JDBC Client 也可以作为 OSGI 应用程序。但是，必须首先部署它所有的依赖。但有些连接池要求必须从 classpath 加载 JDBC 驱动，这样的就不能作为 OSGI 应用程序。
 
-===
+---
 
-英文原文更新于2017-03-15 15:54:14 CET
+[原文档](http://vertx.io/docs/vertx-jdbc-client/java/)更新于2017-03-15 15:54:14 CET
