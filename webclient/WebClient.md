@@ -2,7 +2,7 @@
 
 Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP2客户端。
 
-Web客户端使得发送HTTP请求以及从Web服务器接收HTTP响应变得更加便捷，同时提供了额外的高级功能，例如：
+Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更加便捷，同时提供了额外的高级功能，例如：
 
 - Json体的编码和解码
 
@@ -14,13 +14,13 @@ Web客户端使得发送HTTP请求以及从Web服务器接收HTTP响应变得更
 
 - 提交表单
 
-Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)，而是基于该客户端，继承并扩展了它的设置以及便利的特性，例如请求连接池（Pooling），HTTP/2的支持，流水线／管线的支持等……当您需要对HTTP请求和响应做细微粒度控制时，您应当使用[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
+制作Web Client的目的并非为了替换Vert.x Core中的[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)，而是基于该客户端，扩展并保留其便利的设置和特性，例如请求连接池（Pooling），HTTP/2的支持，流水线／管线的支持等……当您需要对HTTP请求和响应做细微粒度控制时，您应当使用[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
 
-另外Web客户端并未提供WebSocket API，此时您应当使用[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
+另外Web Client并未提供WebSocket API，此时您应当使用[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
 
-# 使用Web客户端
+# 使用Web Client
 
-如需使用Vert.x Web客户端，请先加入以下依赖：
+如需使用Vert.x Web Client，请先加入以下依赖：
 
 - Maven（在 `pom.xml`文件中）：
 
@@ -42,11 +42,11 @@ Web客户端的出现并未完全替代Vert.x Core中的[HttpClient](http://vert
 
 
 
-# 对Vert.x Core HTTP客户端的回顾
+# 对Vert.x Core HTTP Client的回顾
 
-Vert.x Web客户端使用Vert.x Core的API，如您对此还不熟悉，请先熟悉[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)的一些基本概念。
+Vert.x Web Client使用Vert.x Core的API，如您对此还不熟悉，请先熟悉[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)的一些基本概念。
 
-# 创建Web客户端
+# 创建Web Client
 
 您可使用缺省设置创建一个[WebClient](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClient.html)：
 
@@ -158,7 +158,7 @@ client
   });
 ```
 
-有时候我们并不希望将所有内容全部读入内存，因为文件太大或您希望同时处理多个请求，希望每个请求仅使用最小的内存。出于此目的，Web客户端可用[sendStream](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendStream-io.vertx.core.streams.ReadStream-io.vertx.core.Handler-)方法发送流式数据`ReadStream<Buffer>`（例如[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)便是一个`ReadStream<Buffer>`）
+有时候我们并不希望将所有数据一次性全部读入内存，因为文件太大或希望同时处理多个请求，希望每个请求仅使用最小的内存。出于此目的，Web Client可用[sendStream](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendStream-io.vertx.core.streams.ReadStream-io.vertx.core.Handler-)方法发送流式数据`ReadStream<Buffer>`（例如[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)便是一个`ReadStream<Buffer>`）
 
 ```java
 client
@@ -166,7 +166,7 @@ client
   .sendStream(stream, resp -> {});
 ```
 
-Web客户端会为您设置好传输泵以平滑传输流。此时会使用分块传输因为流长度未知。
+Web Client会为您设置好传输泵以平滑传输流。此时会使用分块传输因为流长度未知。
 
 如已知流的大小，可设置HTTP协议头中的`content-length`属性
 
@@ -488,7 +488,7 @@ WebClient client = WebClient.create(vertx, new WebClientOptions().setMaxRedirect
 ```
 # 使用HTTPS
 
-Vert.x Web客户端可用与[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)相同方式配置HTTPS协议。
+Vert.x Web Client可用与[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)相同方式配置HTTPS协议。
 
 您可对每个请求单独设置
 
