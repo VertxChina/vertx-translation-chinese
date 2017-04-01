@@ -1,6 +1,6 @@
 # Vert.x JDBC Client
 
-英文原文：[vertx-jdbc-client](http://vertx.io/docs/vertx-jdbc-client/java/) 
+英文原文：[Vert.x JDBC Client](http://vertx.io/docs/vertx-jdbc-client/java/) 
 
 **使用 Vert.x JDBC client，可以让我们的 Vert.x 应用程序通过异步的方式，与任何只要支持 JDBC 的数据库进行交互。**
 
@@ -180,9 +180,9 @@ client.getConnection(res -> {
 - BoneCP
 - Hikari
 
-类似于 C3P0，上面的连接池也可以通过传递一个 JsonObject 对象来配置参数。考虑这样一种情况，应用程序要运行在一个 vert.x 环境中，但我们却不想通过 *fat jar* 的方式来部署。且在没有权限把 JDBC 驱动包加到 vert.x lib目录下的时候，建议使用 BoneCP，并在命令行上加上`-cp`标示。
+类似于 C3P0，上面的连接池也可以通过传递一个 JsonObject 对象来配置参数。考虑这样一种情况，应用程序要运行在一个 Vert.x 环境中，但我们却不想通过 *fat jar* 的方式来部署。且在没有权限把 JDBC 驱动包加到 Vert.x lib目录下的时候，建议使用 BoneCP，并在命令行上加上`-cp`标示。
 
-如果想要配置 C3P0 更多的参数，我们可以在编译路径下添加文件`c3p0.properties`。
+如果想要配置 C3P0 更多的参数，我们可以在类路径下添加文件`c3p0.properties`。
 
 例如：
 
@@ -221,7 +221,7 @@ JDBCClient client = JDBCClient.createShared(vertx, config);
 - number
 - string
 
-时间类型 (TIME, DATE, TIMESTAMP) 可以自动转换。需要注意的是，我们可以选择性的使用 UUID 的转换。虽然大部分数据库都支持UUIDs，可并不是所有都支持。比如说 MySQL 就不支持。这种情况下，建议使用VARCHAR(36) 的字段。对于其他支持 UUID 的数据库来说，使用下面的参数后，可以对 UUID 进行自动类型转换。
+时间类型 (TIME, DATE, TIMESTAMP) 可以自动转换。需要注意的是，我们可以选择性的使用 UUID 的转换。虽然大部分数据库都支持 UUID，可并不是所有都支持。比如说 MySQL 就不支持。这种情况下，建议使用VARCHAR(36) 的字段。对于其他支持 UUID 的数据库来说，使用下面的参数后，可以对 UUID 进行自动类型转换。
 
 ```json
 { "castUUID": true }
@@ -231,6 +231,6 @@ JDBCClient client = JDBCClient.createShared(vertx, config);
 
 ## 作为 OSGI 应用程序
 
-Vert.x JDBC client 也可以作为 OSGI 应用程序。但是，必须首先部署它所有的依赖。但有些连接池要求必须从编译路径加载 JDBC 驱动，这样的就不能作为 OSGI 应用程序。
+Vert.x JDBC client 也可以作为 OSGI 应用程序。但是，必须首先部署它所有的依赖。但有些连接池要求必须从类路径加载 JDBC 驱动，这样的就不能作为 OSGI 应用程序。
 
 英文原文更新于2017-03-15 15:54:14 CET
