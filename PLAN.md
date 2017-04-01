@@ -2,9 +2,9 @@
 
 2017-3-28  
 
-**Core、Web：** silentbalanceyh负责翻译、chengzhao， kkkoko校对 
+**Core、Web：** silentbalanceyh负责翻译、chengenzhao， kkkoko校对 
  
-**WebClient：** chengzhao负责翻译  zlf负责校对  
+**WebClient：** chengenzhao负责翻译  zlf负责校对  
 
 **Microservices：** troopson@163.com，me.yan.xia@qq.com
 负责翻译和校对  
