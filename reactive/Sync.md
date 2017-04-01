@@ -1,5 +1,8 @@
-# Vert.x Sync
+# Vert.x Sync - Draft
 [源文档](http://vertx.io/docs/vertx-sync/java/)
+
+## 中英文对照表
+* kernel thread：内核线程
 
 Vertx-sync 是一组工具集，其特点是在不阻塞内核线程的同时，允许用户以同步的方式接收事件、执行异步操作。
 
@@ -14,7 +17,7 @@ Vertx-sync 可以让你在熟悉的同步风格下继续使用异步 API 。
 
 在此，通往自由之路的功臣乃`fibers `(译者注：这个词国内有译作纤程，类似协程-coroutine)。Fiber 是超轻量级的线程，并不是对应于底层的那种内核线程，它们被阻塞时不会导致内核线程也被阻塞。
 
-Vert.x 借助[Quasar ](http://docs.paralleluniverse.co/quasar/)库来实现 fiber 。
+Vert.x 借助[ Quasar ](http://docs.paralleluniverse.co/quasar/)库来实现 fiber 。
 > 注意：Vertx-sync 当前只适用于 Java 。
 
 ---
@@ -47,9 +50,9 @@ Vert.x 的领域里，很多操作都会接受一个`Handler<AsyncResult<T>> `�
 
 Vertx-sync 可以让你用同步的方式拿到这种一次性的异步操作的结果。
 
-这是通过调用[Sync.awaitResult ](http://vertx.io/docs/apidocs/io/vertx/ext/sync/Sync.html#awaitResult-java.util.function.Consumer-)方法达成的。
+这是通过调用[ Sync.awaitResult ](http://vertx.io/docs/apidocs/io/vertx/ext/sync/Sync.html#awaitResult-java.util.function.Consumer-)方法达成的。
 
-运行这个方法时，需将想要执行的异步操作以[Consumer](http://vertx.io/docs/apidocs/java/util/function/Consumer.html)的形式指定为其参数；handler  参数会在运行时传给此 consumer 。
+运行这个方法时，需将想要执行的异步操作以[ Consumer ](http://vertx.io/docs/apidocs/java/util/function/Consumer.html)的形式指定为其参数；handler  参数会在运行时传给此 consumer 。
 
 看下面的例子：
 ```
@@ -67,7 +70,7 @@ System.out.println("Received reply " + reply.body());
 ---
 
 ## 获得一次性的事件
-Vertx-sync 也能以同步的方式获得一次性的事件，例如定时器的触发，或者 end handler(关于 end handler 的例子可以参见 Vert.x 核心包文档中   HTTP 服务器与客户端 一节) 的执行。这是通过[Sync.awaitEvent ](http://vertx.io/docs/apidocs/io/vertx/ext/sync/Sync.html#awaitEvent-java.util.function.Consumer-)方法达成的。
+Vertx-sync 也能以同步的方式获得一次性的事件，例如定时器的触发，或者 end handler(关于 end handler 的例子可以参见 Vert.x 核心包文档中   HTTP 服务器与客户端 一节) 的执行。这是通过[ Sync.awaitEvent ](http://vertx.io/docs/apidocs/io/vertx/ext/sync/Sync.html#awaitEvent-java.util.function.Consumer-)方法达成的。
 
 看下面的例子：
 ```
