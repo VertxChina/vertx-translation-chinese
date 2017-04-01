@@ -1,4 +1,4 @@
-# Vert.x Reactive streams
+# Vert.x Reactive streams - Draft
 
 **[源文档](http://vertx.io/docs/vertx-reactive-streams/java/)**
 
@@ -9,7 +9,7 @@
 * write stream(n.)：可写流
 * subscribe(v.)：注册
 
-**为了支持在 JVM 上进行非阻塞的带背压机制的异步流处理，[Reactive Streams](http://www.reactive-streams.org/)做了一些初创性的工作来提供这样一份标准。**
+**为了支持在 JVM 上进行非阻塞的带背压机制的异步流处理，[ Reactive Streams ](http://www.reactive-streams.org/)做了一些初创性的工作来提供这样一份标准。**
 
 这个库提供了 Vert.x 上 reactive streams 的实现。
 
@@ -33,7 +33,7 @@ compile 'io.vertx:vertx-reactive-streams:3.4.1'
 ```
 
 ## Reactive Read Stream
-我们为 Vert.x 的 `ReadStream`接口提供了实现类[ReactiveReadStream](http://vertx.io/docs/apidocs/io/vertx/ext/reactivestreams/ReactiveReadStream.html)，它同样也实现了 reactive streams 的`订阅者`角色。
+我们为 Vert.x 的 `ReadStream`接口提供了实现类[ ReactiveReadStream ](http://vertx.io/docs/apidocs/io/vertx/ext/reactivestreams/ReactiveReadStream.html)，它同样也实现了 reactive streams 的`订阅者`角色。
 
 你可以把这个类的实例传递给任意的 reactive streams `发布者`（例如来自 Akka 的发布者），随后你就可以像从其他任意的 Vert.x `ReadStream`中一样读取数据（例如使用一个 `Pump` 把数据从这个流泵到一个 `WriteStream`）。
 
@@ -51,7 +51,7 @@ pump.start();
 ```
 
 ## Reactive Write Stream
-同样的，我们为 `WriteStream` 接口提供了实现类[ReactiveWriteStream](http://vertx.io/docs/apidocs/io/vertx/ext/reactivestreams/ReactiveWriteStream.html)，也是 reactive streams 的`发布者`角色的实现。拿到任意的 reactive streams `订阅者`（例如来自 Akka 的订阅者）之后，你就可以像处理其他任意的 Vert.x `WriteStream`一样，往其中写入数据（例如使用一个 `Pump` 把从 `ReadStream` 来的数据泵入其中）。
+同样的，我们为 `WriteStream` 接口提供了实现类[ ReactiveWriteStream ](http://vertx.io/docs/apidocs/io/vertx/ext/reactivestreams/ReactiveWriteStream.html)，也是 reactive streams 的`发布者`角色的实现。拿到任意的 reactive streams `订阅者`（例如来自 Akka 的订阅者）之后，你就可以像处理其他任意的 Vert.x `WriteStream`一样，往其中写入数据（例如使用一个 `Pump` 把从 `ReadStream` 来的数据泵入其中）。
 
 在手动处理 Vert.x 可读流的背压时，你会用到 `pause`，`resume`，`writeQueueFull` 这些方法；它们会在内部被自动转换成 reactive streams 中背压机制传播方面的方法（在请求更多数据项时）。
 
