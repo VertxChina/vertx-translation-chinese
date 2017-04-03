@@ -105,19 +105,19 @@ _注意：本文大部分内容专用于Java语言——若有需要可以切换
 Vertx vertx = Vertx.vertx();
 ```
 
-如果您要使用Verticle——
+如您使用Verticles，在Verticle中会有一个内置的vertx对象，您可直接使用该内置对象，无需重新创建。
 
 _注意：大部分应用将只会需要一个Vert.x实例，但如果您有需要也有可能创建多个Vert.x实例，如：隔离客户端和服务器的不同分组或事件总线。_
 
 #### 创建Vertx对象时指定配置项
 
-如果默认的（选项）不适合您，可以在创建Vertx对象时指定配置项：
+如果您对缺省的配置不满意，可在创建Vertx对象的同时指定配置项：
 
 ```java
 Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(40));
 ```
 
-[VertxOptions](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html)对象有很多设置，它允许您配置一些类似集群、高可用、池大小等其他各种设置，Javadoc中描述了所有设置的细节。
+[VertxOptions](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html)对象有很多配置，它允许您配置一些类似集群、高可用、池大小等其他各种配置，Javadoc中描述了所有配置的细节。
 
 #### 创建集群的Vert.x对象
 
@@ -135,7 +135,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(40));
 request.response().putHeader("Content-Type", "text/plain").write("some text").end();
 ```
 
-这是贯穿Vert.x的API中的一个通用模式，所以您要习惯它。
+这是贯穿Vert.x的API中的一个通用模式，所以请适应这种代码风格。
 
 这样的链式调用会让您编写一些稍微冗长的代码。当然，如果您不喜欢Fluent的方式，我们不强制您使用这种方式（编码），如果您更喜欢下边这种方式编写代码，您可以开心地忽略Fluent：
 
@@ -197,7 +197,7 @@ server.requestHandler(request -> {
 * 发送消息给接收者并等待回复
 * ...其他很多情况
 
-在上述所有情况下，当您的线程正在等待结果时它不能做任何事情——此时，这些线程实际上是无用的。
+在上述所有情况下，当您的线程正在等待结果时它不能做任何事情——此时，这些线程并无实际用处。
 
 这意味着如果您想使用阻塞式API处理大量并发，则您需要大量线程来防止应用程序停止/挂起【Halt】。
 
