@@ -9,14 +9,14 @@
 * Reactor：反应堆
 * Options：配置项，作为参数时候翻译成选项
 * Context：上下文环境
-* Undeploy：撤销（对应部署）
-* Unregister：注销（对应注册）
+* Undeploy：撤销（反部署，对应部署）
+* Unregister：注销（反注册，对应注册）
 * Destroyed：销毁
 * Handler/Handle：处理器/处理，有些特定处理器未翻译，如Completion Handler等。
 * Block：阻塞
 * Out of Box：标准环境（开箱即用）
 * Timer：计时器
-* Worker Pool：工作线程池，大部分地方未翻译
+* Worker Pool：工作者线程池，大部分地方未翻译
 * Sender：发送者
 * Consumer：消费者
 * Receiver/Recipient：接收者
@@ -95,9 +95,9 @@ _注意：本文大部分内容专用于Java语言——若有需要可以切换
 
 除非您可以与[Vert.x](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html)对象交流，否则在Vert.x大陆中您不能做太多的事情。
 
-它（Vert.x对象）是Vert.x的控制中心，也是您如何去做几乎一切事情（的基础），包括创建客户端和服务器、获取事件总线的引用、设置定时器等其他很多事情。
+它（Vert.x对象）是Vert.x的控制中心，也是您做几乎一切事情（的基础），包括创建客户端和服务器、获取事件总线的引用、设置定时器等其他很多事情。
 
-那么您怎么去获取一个（Vert.x）实例呢？
+那么您当如何获取一个（Vert.x）实例呢？
 
 如果您（的应用）嵌入了Vert.x，您可以通过下边代码简单创建一个实例：
 
