@@ -166,9 +166,9 @@ client
   .sendStream(stream, resp -> {});
 ```
 
-Web Client会为您设置好传输泵以平滑传输流。此时会使用分块传输因为流长度未知。
+Web Client会为您设置好传输泵以平滑传输流。如果流长度未知则使用分块传输。
 
-如已知流的大小，可设置HTTP协议头中的`content-length`属性
+如已知流的大小，可在HTTP协议头中设置`content-length`属性
 
 ```java
 fs.open("content.txt", new OpenOptions(), fileRes -> {
