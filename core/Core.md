@@ -235,7 +235,7 @@ _注意：即使一个Vertx实例维护了多个Event Loop，任何特定的处�
 
 ### 黄金法则——不要阻塞Event Loop
 
-我们已经知道，Vert.x的API都是非阻塞式的并且不会阻塞Event Loop，但是如果您在自己的处理器中阻塞了Event Loop，那么这不是很有帮助。
+尽管我们已经知道，Vert.x的API都是非阻塞式的并且不会阻塞Event Loop，但是这并不能帮您避免如果**您执意**在自己的处理器中阻塞Event Loop的情况发生。
 
 如果这样做，该Event Loop在被阻塞时就不能做任何事情。如果您阻塞了Vertx实例中的所有Event Loop，那么您的应用就会完全停止！
 
