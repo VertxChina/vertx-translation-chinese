@@ -1,6 +1,6 @@
 # Vert.x Web
 
-Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP2客户端。
+Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP/2客户端。
 
 Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更加便捷，同时提供了额外的高级功能，例如：
 
