@@ -65,7 +65,7 @@ Core中的功能相当底层——您在此不会找到诸如数据库访问、�
 
 **Vert.x Core**很小且轻量级，您可仅使用您所需部分，它可整体嵌入现存的应用——在使用时，我们并不会强迫您用特定的方式构造您的应用。
 
-您亦可在其它Vert.x支持的语言中使用Core。很酷的是——我们并不强迫您在书写诸如JavaScript或Ruby时直接调用Java API，毕竟不同的语言有不同的代码风格，若强行Ruby开发人员遵循Java的代码风格会很怪异，所以我们根据Java API自动生成了适应不同语言代码风格的API。
+您亦可在其它Vert.x支持的语言中使用Core。很酷的是——我们并不强迫您在书写诸如JavaScript或Ruby时直接调用Java API，毕竟不同的语言有不同的代码风格，若强行让Ruby开发人员遵循Java的代码风格会很怪异，所以我们根据Java API自动生成了适应不同语言代码风格的API。
 
 从现在开始文中我们使用core代表**Vert.x Core**。
 
@@ -95,7 +95,7 @@ dependencies {
 
 _注意：本文大部分内容专用于Java语言——若有需要可以切换到语言特定部分（手册中）。_
 
-除非您可以与[Vert.x](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html)对象交流，否则在Vert.x大陆中您不能做太多的事情。
+除非您拿到[Vert.x](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html)对象，否则在Vert.x领域中您做不了太多的事情。
 
 它（Vert.x对象）是Vert.x的控制中心，也是您做几乎一切事情（的基础），包括创建客户端和服务器、获取事件总线的引用、设置定时器等其他很多事情。
 
