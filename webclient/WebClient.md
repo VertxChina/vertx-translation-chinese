@@ -1,5 +1,10 @@
 # Vert.x Web
 
+## 中英对照表
+
+* Response Codec：响应编解码器（编码及解码工具）
+* Body Codec：响应体编解码器
+
 Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP/2客户端。
 
 Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更加便捷，同时提供了额外的高级功能，例如：
@@ -363,7 +368,7 @@ client
 
 > 警告 *缺省状况下，响应会被完全缓冲读入内存，请用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流*
 
-## 响应解码
+## 响应编解码器
 
 缺省状况下，响应以缓冲形式提供，并不提供任何形式的解码。
 
@@ -374,7 +379,7 @@ client
 - 将Json映射成POJO
 - WriteStream
 
-响应体解码器对二进制数据流解码，以节省您在响应处理中的代码。
+响应体编解码器对二进制数据流解码，以节省您在响应处理中的代码。
 
 使用[BodyCodec.jsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--)将结果解码为Json对象：
 
@@ -415,7 +420,7 @@ client
   });
 ```
 
-当响应结果较大时，请使用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)。响应体解码器将响应结果压入`WriteStream`并在最后发出成功或失败的信号。
+当响应结果较大时，请使用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)方法。响应体编解码器将响应结果压入`WriteStream`并在最后发出成功或失败的信号。
 
 ```java
 client
