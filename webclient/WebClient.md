@@ -374,7 +374,7 @@ client
 - 将Json映射成POJO
 - WriteStream
 
-可用响应体解码器对二进制数据流解码，以节省您在响应处理中的代码。
+响应体解码器对二进制数据流解码，以节省您在响应处理中的代码。
 
 使用[BodyCodec.jsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--)将结果解码为Json对象：
 
@@ -415,7 +415,7 @@ client
   });
 ```
 
-当响应结果较大时，可用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流。响应体解码器将响应结果写入流并在最后发出成功或失败的信号。
+当响应结果较大时，请使用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)。响应体解码器将响应结果压入`WriteStream`并在最后发出成功或失败的信号。
 
 ```java
 client
