@@ -12,6 +12,7 @@
 * handler：（事件）处理器
 * timer：定时器
 * subscription(n.)：订阅
+* unmarshall：重组
 
 ## Vert.x API for RxJava
 
@@ -275,6 +276,213 @@ class MyVerticle extends io.vertx.rxjava.core.AbstractVerticle {
 让我们通过研究一些样例来了解相关 API 吧。
 
 #### EventBus message stream
+很自然地，[MessageConsumer](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/MessageConsumer.html) 类提供了相关的 `Observable<Message<T>>`：
+```
+EventBus eb = vertx.eventBus();
+MessageConsumer<String> consumer = eb.<String>consumer("the-address");
+Observable<Message<String>> observable = consumer.toObservable();
+Subscription sub = observable.subscribe(msg -> {
+  // 获得消息
+});
+
+// 10秒后注销
+vertx.setTimer(10000, id -> {
+  sub.unsubscribe();
+});
+```
+
+[MessageConsumer](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/MessageConsumer.html) 类提供了 [Message](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/Message.html) 的流，如果需要，还可以通过 [body](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/Message.html#body--) 方法获得消息体组成的新流：
+```
+EventBus eb = vertx.eventBus();
+MessageConsumer<String> consumer = eb.<String>consumer("the-address");
+Observable<String> observable = consumer.bodyStream().toObservable();
+```
+
+RxJava 的 map/reduce 组合风格在这里是相当有用的：
+```
+Observable<Double> observable = vertx.eventBus().
+    <Double>consumer("heat-sensor").
+    bodyStream().
+    toObservable();
+
+observable.
+    buffer(1, TimeUnit.SECONDS).
+    map(samples -> samples.
+        stream().
+        collect(Collectors.averagingDouble(d -> d))).
+    subscribe(heat -> {
+      vertx.eventBus().send("news-feed", "Current heat is " + heat);
+    });
+```
+
+#### 定时器
+定时器任务可以通过 [timerStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/Vertx.html#timerStream-long-) 来创建：
+```
+vertx.timerStream(1000).
+    toObservable().
+    subscribe(
+        id -> {
+          System.out.println("Callback after 1 second");
+        }
+    );
+```
+
+周期性的任务可以通过 [periodicStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/Vertx.html#periodicStream-long-) 来创建：
+```
+vertx.periodicStream(1000).
+    toObservable().
+    subscribe(
+        id -> {
+          System.out.println("Callback every second");
+        }
+    );
+```
+
+通过注销操作可以取消对 observable 的订阅：
+```
+vertx.periodicStream(1000).
+    toObservable().
+    subscribe(new Subscriber<Long>() {
+      public void onNext(Long aLong) {
+        // 回调
+        unsubscribe();
+      }
+      public void onError(Throwable e) {}
+      public void onCompleted() {}
+    });
+```
+
+#### Http client requests
+[toObservable](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpClientRequest.html#toObservable--) 方法提供了带有 [HttpClientResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html) 对象的一次性回调，请求错误同样会在 observable 中反映处理。
+```
+HttpClient client = vertx.createHttpClient(new HttpClientOptions());
+HttpClientRequest request = client.request(HttpMethod.GET, 8080, "localhost", "/the_uri");
+request.toObservable().subscribe(
+    response -> {
+      // 处理响应
+    },
+    error -> {
+      // 无法连接
+    }
+);
+request.end();
+```
+
+通过 [toObservable](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpClientResponse.html#toObservable--) 方法可以将响应当成 `Observable<Buffer>` 来处理：
+```
+request.toObservable().
+    subscribe(
+        response -> {
+          Observable<Buffer> observable = response.toObservable();
+          observable.forEach(
+              buffer -> {
+                // 处理 buffer
+              }
+          );
+        }
+    );
+```
+
+`flatMap ` 操作也能获得同样的流：
+```
+request.toObservable().
+    flatMap(HttpClientResponse::toObservable).
+    forEach(
+        buffer -> {
+          // Process buffer
+        }
+    );
+```
+
+通过静态方法 [RxHelper.unmarshaller](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-) ，我们也能将 `Observable<Buffer>` 重组为对象。这个方法创建了一个 `Rx.Observable.Operator`（Rx 操作符）供重组操作使用：
+```
+request.toObservable().
+    flatMap(HttpClientResponse::toObservable).
+    lift(io.vertx.rxjava.core.RxHelper.unmarshaller(MyPojo.class)).
+    forEach(
+        pojo -> {
+          // Process pojo
+        }
+    );
+```
+
+#### Http server requests
+[requestStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpServer.html#requestStream--) 对到达的每个请求都提供了回调：
+```
+Observable<HttpServerRequest> requestObservable = server.requestStream().toObservable();
+requestObservable.subscribe(request -> {
+  // 处理请求
+});
+```
+
+[HttpServerRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html) 可以被适配为 `Observable<Buffer>`：
+```
+Observable<HttpServerRequest> requestObservable = server.requestStream().toObservable();
+requestObservable.subscribe(request -> {
+  Observable<Buffer> observable = request.toObservable();
+});
+```
+
+方法 [RxHelper.unmarshaller](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-) 可以用来解析 json 请求并将其映射为对象：
+```
+Observable<HttpServerRequest> requestObservable = server.requestStream().toObservable();
+requestObservable.subscribe(request -> {
+  Observable<MyPojo> observable = request.
+      toObservable().
+      lift(io.vertx.rxjava.core.RxHelper.unmarshaller(MyPojo.class));
+});
+```
+
+#### Websocket client
+当 websocket 连接上或失败时，[websocketStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpClient.html#websocketStream-io.vertx.core.http.RequestOptions-) 对此提供了一次性的回调：
+```
+HttpClient client = vertx.createHttpClient(new HttpClientOptions());
+client.websocketStream(8080, "localhost", "/the_uri").toObservable().subscribe(
+    ws -> {
+      // Use the websocket
+    },
+    error -> {
+      // Could not connect
+    }
+);
+```
+
+[WebSocket](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/WebSocket.html) 对象可以轻松地转换为 `Observable<Buffer>`：
+```
+socketObservable.subscribe(
+    socket -> {
+      Observable<Buffer> dataObs = socket.toObservable();
+      dataObs.subscribe(buffer -> {
+        System.out.println("Got message " + buffer.toString("UTF-8"));
+      });
+    }
+);
+```
+
+#### Websocket server
+每当有新连接到达时，[websocketStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpServer.html#websocketStream--) 都会提供一次回调：
+```
+Observable<ServerWebSocket> socketObservable = server.websocketStream().toObservable();
+socketObservable.subscribe(
+    socket -> System.out.println("Web socket connect"),
+    failure -> System.out.println("Should never be called"),
+    () -> {
+      System.out.println("Subscription ended or server closed");
+    }
+);
+```
+
+[ServerWebSocket](http://vertx.io/docs/apidocs/io/vertx/core/http/ServerWebSocket.html) 对象可以轻松地转换为 `Observable<Buffer>`：
+```
+socketObservable.subscribe(
+    socket -> {
+      Observable<Buffer> dataObs = socket.toObservable();
+      dataObs.subscribe(buffer -> {
+        System.out.println("Got message " + buffer.toString("UTF-8"));
+      });
+    }
+);
+```
 
 
 
