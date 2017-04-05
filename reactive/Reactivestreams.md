@@ -8,6 +8,7 @@
 * read stream(n.)：可读流
 * write stream(n.)：可写流
 * subscribe(v.)：注册
+* back pressure：背压机制
 
 **为了支持在 JVM 上进行非阻塞的带背压机制的异步流处理，[ Reactive Streams ](http://www.reactive-streams.org/)做了一些初创性的工作来提供这样一份标准。**
 
@@ -15,7 +16,7 @@
 
 在处理流式数据方面，Vert.x 有自己的机制；通过这三个类：`io.vertx.core.streams.ReadStream`，`io.vertx.core.streams.WriteStream` 和 `io.vertx.core.streams.Pump`，可以在将数据从一个流泵到另一个流时，实现流量控制。更多关于 Vert.x 流方面的信息请查阅 Vert.x core 部分的手册。
 
-这个库为可读流、可写流都提供了实现，这两者分别扮演了 reactive streams 中订阅者和发布者的角色；这使得我们能够以对待 Vert.x 中读写流的方式处理任意 reactive streams 的订阅者和发布者。
+这个库为可读流、可写流都提供了实现，这两者分别扮演了 reactive streams 中发布者和订阅者的角色；这使得我们能够以对待 Vert.x 中读写流的方式处理任意 reactive streams 的发布者和订阅者。
 
 ## 使用 Vert.x Reactive Streams
 要使用 Vert.x Reactive Streams，需要在构建描述符中添加如下依赖：
@@ -38,7 +39,7 @@ compile 'io.vertx:vertx-reactive-streams:3.4.1'
 你可以把这个类的实例传递给任意的 reactive streams `发布者`（例如来自 Akka 的发布者），随后你就可以像从其他任意的 Vert.x `ReadStream`中一样读取数据（例如使用一个 `Pump` 把数据从这个流泵到一个 `WriteStream`）。
 
 这里有个例子，从某个其他的 reactive streams 实现中（例如 Akka）获得一个发布者，并将其数据泵入到服务端的 HTTP 响应体中。其间，背压机制是自动执行的。
-```
+```java
 ReactiveReadStream<Buffer> rrs = ReactiveReadStream.readStream();
 
 // 在另外的发布者上注册订阅者
@@ -57,7 +58,7 @@ pump.start();
 
 这里有个例子，从其他的 reactive streams 实现拿到订阅者之后，将服务端的请求体泵入其中。其间背压机制将自动运行。
 
-```
+```java
 ReactiveWriteStream<Buffer> rws = ReactiveWriteStream.writeStream(vertx);
 
 // 在可写流上注册另外的订阅者
