@@ -19,7 +19,7 @@
 
 ## Vert.x API for RxJava
 
-[RxJava](https://github.com/ReactiveX/RxJava)是 JVM 上一个流行的库，用于组合异步的、使用可观察序列的、基于事件的程序。
+[RxJava](https://github.com/ReactiveX/RxJava) 是 JVM 上一个流行的库，用于组合异步的、使用可观察序列的、基于事件的程序。
 
 Vert.x 与 RxJava 集成起来很自然；它使得无论什么时候，只要我们能使用流和异步结果，就能使用 observable 。
 
@@ -50,7 +50,7 @@ fs.open("/data.txt", new OpenOptions(), result -> {
 });
 ```
 
-这样的 observable 是所谓**热的** observable，即不管是否有订阅，它们都会产生通知^[1]^。
+这样的 observable 是所谓**热的** observable，即不管是否有订阅，它们都会产生通知[1]。
 
 同样的，将一个 `Observable` 转变为 Vert.x `ReadStream` 也是可以的。
 
@@ -158,13 +158,13 @@ single.
 ### Scheduler support
 有时候 reactive 扩展库需要执行一些可调度的操作，例如 `Observable#timer` 方法将创建一个能周期性发射事件的定时器并返回之。缺省情况下，这些可调度的操作由 RxJava 管理，这意味着定时器的线程并非 Vert.x 线程，因此（这些操作）并不是在 Vert.x event loop 线程上执行的。
 
-当 RxJava 的方法与需要调度器交互时，RxHelper 类实现了一个有额外的 `rx.Scheduler` 参数的重载方法 [RxHelper.scheduler](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#scheduler-io.vertx.core.Vertx-)，其返回的调度器可供 RxJava 的方法使用。
+RxHelper 类实现了有 `rx.Scheduler` 参数的重载方法 [RxHelper.scheduler](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#scheduler-io.vertx.core.Vertx-)，其返回的调度器可供 RxJava 的方法使用。
 ```
 Scheduler scheduler = RxHelper.scheduler(vertx);
 Observable<Long> timer = Observable.timer(100, 100, TimeUnit.MILLISECONDS, scheduler);
 ```
 
-对于阻塞型的被调度操作，可以通过 [RxHelper.blockingScheduler](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#blockingScheduler-io.vertx.core.Vertx-) 方法获得适用的调度器：
+对于阻塞型的可调度操作，可以通过 [RxHelper.blockingScheduler](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#blockingScheduler-io.vertx.core.Vertx-) 方法获得适用的调度器：
 ```
 Scheduler scheduler = RxHelper.blockingScheduler(vertx);
 Observable<Integer> obs = blockingObservable.observeOn(scheduler);
