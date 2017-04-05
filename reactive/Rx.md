@@ -4,6 +4,8 @@
 ## 中英文对照表
 * observable sequences：可观察序列
 * Rxified：Rx化
+* Operator：操作符
+* lift：变换
 * flow：流
 * read stream：可读流
 * write stream：可写流
@@ -48,7 +50,7 @@ fs.open("/data.txt", new OpenOptions(), result -> {
 });
 ```
 
-这样的 observables 是所谓**热的** observables，即不管是否有订阅，它们都会产生通知^(1)^。
+这样的 observable 是所谓**热的** observable，即不管是否有订阅，它们都会产生通知^[1]^。
 
 同样的，将一个 `Observable` 转变为 Vert.x `ReadStream` 也是可以的。
 
@@ -154,9 +156,9 @@ single.
 > 注意：类似 `rx*` 的方法替换了以前版本中 `*Observable` 的方法，这样一个语义上的改变是为了与 RxJava 保持一致。
 
 ### Scheduler support
-reactive 扩展有时候需要调度操作，例如 `Observable#timer` 方法将创建一个能周期性发射事件的定时器并返回之。缺省情况下，被调度的操作由 RxJava 管理，这意味着定时器的线程并不是 Vert.x 的线程，因此并不是在 Vert.x event loop 线程上执行的。
+有时候 reactive 扩展库需要执行一些可调度的操作，例如 `Observable#timer` 方法将创建一个能周期性发射事件的定时器并返回之。缺省情况下，这些可调度的操作由 RxJava 管理，这意味着定时器的线程并非 Vert.x 线程，因此（这些操作）并不是在 Vert.x event loop 线程上执行的。
 
-当 RxJava 的方法与需要调度器交互时，这是一个需要额外的 `rx.Scheduler` 参数的重载方法，[RxHelper.scheduler](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#scheduler-io.vertx.core.Vertx-) 方法返回的调度器能在这里派上用场。
+当 RxJava 的方法与需要调度器交互时，RxHelper 类实现了一个有额外的 `rx.Scheduler` 参数的重载方法 [RxHelper.scheduler](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#scheduler-io.vertx.core.Vertx-)，其返回的调度器可供 RxJava 的方法使用。
 ```
 Scheduler scheduler = RxHelper.scheduler(vertx);
 Observable<Long> timer = Observable.timer(100, 100, TimeUnit.MILLISECONDS, scheduler);
@@ -196,7 +198,7 @@ Observable<Long> timer = Observable.interval(100, 100, TimeUnit.MILLISECONDS, sc
 ```
 
 ### Json unmarshalling
-方法 [RxHelper.unmarshaller](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-) 创建了一个 `rx.Observable.Operator` 对象，这个操作符的作用是将 json 格式的 `Observable<Buffer>` 转换为对象的 observable：
+方法 [RxHelper.unmarshaller](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-) 创建了一个 `rx.Observable.Operator` 对象，这个操作符的作用是将 `Observable<Buffer>` 变换为对象的 observable：
 ```
 fileSystem.open("/data.txt", new OpenOptions(), result -> {
   AsyncFile file = result.result();
@@ -225,7 +227,7 @@ fileSystem.open("/data.txt", new OpenOptions(), result -> {
 ### Deploying a Verticle
 Rx化的 API 不能部署一个已经存在的 Verticle 实例，辅助类的 [RxHelper.observableFuture](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#observableFuture--) 方法为此提供了一个解决方案。
 
-工作在 [RxHelper.deployVerticle](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#deployVerticle-io.vertx.rxjava.core.Vertx-io.vertx.core.Verticle-) 方法里完成，它部署一个 `Verticle ` 并返回部署 ID 的 `Observable<String>`。
+工作在 [RxHelper.deployVerticle](http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#deployVerticle-io.vertx.rxjava.core.Vertx-io.vertx.core.Verticle-) 方法里完成，它部署一个 `Verticle ` 并返回包含部署 ID 的 `Observable<String>`。
 ```
 Observable<String> deployment = RxHelper.deployVerticle(vertx, verticle);
 
