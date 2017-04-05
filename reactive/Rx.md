@@ -2,6 +2,7 @@
 [源文档](http://vertx.io/docs/vertx-rx/java/#_vert_x_api_for_rxjava)
 
 ## 中英文对照表
+* observable sequences：可观察序列
 * Rxified：Rx化
 * flow：流
 * read stream：可读流
@@ -16,9 +17,9 @@
 
 ## Vert.x API for RxJava
 
-[RxJava](https://github.com/ReactiveX/RxJava)是 JVM 上一个流行的
+[RxJava](https://github.com/ReactiveX/RxJava)是 JVM 上一个流行的库，用于组合异步的、使用可观察序列的、基于事件的程序。
 
-Vert.x 与 RxJava 的集成很自然，它使得我们无论什么时候，只要能使用流和异步结果，就能使用 observable 。
+Vert.x 与 RxJava 集成起来很自然；它使得无论什么时候，只要我们能使用流和异步结果，就能使用 observable 。
 
 要使用 Vert.x 的 RxJava API，有两种方式：
 * 通过原始的 Vert.x API 辅以[ RxHelper ](http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html)类，这个辅助类提供了用于 Vert.x core API 和 RxJava API 之间互相转化的静态方法。
