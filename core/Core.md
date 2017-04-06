@@ -1445,12 +1445,12 @@ Buffer可以从字符串或字节数组初始化，或者创建空的Buffer。
 Buffer buff = Buffer.buffer();
 ```
 
-从字符串创建一个Buffer，这个Buffer中的字符串必须可用UTF-8编码：
+从字符串创建一个Buffer，这个Buffer中的字符串将使用UTF-8编码：
 
 ```java
 Buffer buff = Buffer.buffer("some string");
 ```
-从字符串创建一个BUffer，这个字符串可以用指定的编码方式编码，例如：
+从字符串创建一个Buffer，这个字符串可以用指定的编码方式编码，例如：
 
 ```java
 Buffer buff = Buffer.buffer("some string", "UTF-16");
@@ -1463,9 +1463,9 @@ byte[] bytes = new byte[] {1, 3, 5};
 Buffer buff = Buffer.buffer(bytes);
 ```
 
-创建一个带有初始化尺寸的Buffer。若您知道您的Buffer会写入一定量的数据，您可以创建Buffer并指定它的尺寸。这使得这个Buffer初始化时分配了更多的内存，比数据写入时重新调整尺寸效率更高。
+创建一个带有初始化容量的Buffer。若您知道您的Buffer会写入一定量的数据，您可以创建Buffer并指定它的容量。这使得这个Buffer初始化时分配了更多的内存，比数据写入时重新调整容量效率更高。
 
-注意以这种方式创建的Buffer是空的，它也不会创建一个填满了0的Buffer。
+注意以这种方式创建的Buffer是空的，除非指定容量，不然创建的 Buffer 不会以0填充。
 
 ```java
 Buffer buff = Buffer.buffer(10000);
@@ -1515,9 +1515,9 @@ for (int i = 0; i < buff.length(); i += 4) {
 
 #### 使用无符号数据
 
-可使用`getUnsignedXXX`，`appendUnsignedXXX`和`setUnsignedXXX`方法将无符号正数从Buffer中读取或追加/设置到Buffer。这对实现优化网络协议和最小化带宽消耗而实现的编解码器是很有用的。
+可使用`getUnsignedXXX`，`appendUnsignedXXX`和`setUnsignedXXX`方法将无符号正数从Buffer中读取或追加/设置到Buffer。在实现一个优化的网络协议以达到最小化带宽消耗的编解码器时，这是很有用的。
 
-下边例子中，值200倍设置到一个仅占用一个字节的固定位置：
+下边例子中，使用一个字节在指定位置写入200：
 
 ```java
 Buffer buff = Buffer.buffer(128);
@@ -1537,11 +1537,11 @@ System.out.println(buff.getUnsignedByte(pos));
 
 #### 分片Buffer
 
-一个分片Buffer是基于原始Buffer的一个新的Buffer，如，它不会拷贝底层数据。使用[slice](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#slice--)创建一个分片Buffer。
+一个分片Buffer是基于原始Buffer的一个新的Buffer，换言之，它并不拷贝底层数据。使用[slice](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#slice--)创建一个分片Buffer。
 
 #### Buffer重用
 
-将Buffer写入到一个Socket或其他类似位置后，Buffer就不可被重用了。
+将Buffer写入到一个Socket或其他类似地方后，Buffer就不可被重用了。
 
 ### 编写TCP服务器和客户端
 
