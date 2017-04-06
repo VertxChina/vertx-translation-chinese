@@ -1,6 +1,12 @@
 # Vert.x Web
 
-Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP2客户端。
+## 中英对照表
+
+* Pump：泵（平滑流式数据读入内存的机制，防止一次性将大量数据读入内存导致内存溢出）
+* Response Codec：响应编解码器（编码及解码工具）
+* Body Codec：响应体编解码器
+
+Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP/2客户端。
 
 Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更加便捷，同时提供了额外的高级功能，例如：
 
@@ -109,7 +115,7 @@ client
   });
 ```
 
-您可用以下链式方式添加查询参数
+您可用以下链式方式向请求URI添加查询参数
 
 ```java
 client
@@ -166,9 +172,9 @@ client
   .sendStream(stream, resp -> {});
 ```
 
-Web Client会为您设置好传输泵以平滑传输流。此时会使用分块传输因为流长度未知。
+Web Client会为您设置好传输泵以平滑传输流。如果流长度未知则使用分块传输。
 
-如已知流的大小，可设置HTTP协议头中的`content-length`属性
+如已知流的大小，可在HTTP协议头中设置`content-length`属性
 
 ```java
 fs.open("content.txt", new OpenOptions(), fileRes -> {
@@ -363,7 +369,7 @@ client
 
 > 警告 *缺省状况下，响应会被完全缓冲读入内存，请用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流*
 
-## 响应解码
+## 响应编解码器
 
 缺省状况下，响应以缓冲形式提供，并不提供任何形式的解码。
 
@@ -372,9 +378,9 @@ client
 - 普通字符串
 - Json对象
 - 将Json映射成POJO
-- 写入流
+- WriteStream
 
-可用响应体解码器对二进制数据流解码，以节省您在响应处理中的代码。
+响应体编解码器对二进制数据流解码，以节省您在响应处理中的代码。
 
 使用[BodyCodec.jsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--)将结果解码为Json对象：
 
@@ -415,7 +421,7 @@ client
   });
 ```
 
-当响应结果较大时，可用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流。响应体解码器将响应结果写入流并在最后发出成功或失败的信号。
+当响应结果较大时，请使用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)方法。响应体编解码器将响应结果压入`WriteStream`并在最后发出成功或失败的信号。
 
 ```java
 client
