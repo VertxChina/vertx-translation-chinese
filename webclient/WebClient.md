@@ -1,4 +1,8 @@
-# Vert.x Web
+# Vert.x Web Client
+
+- [原文档][1]
+- [组件源码][2]
+- [组件示例][3]
 
 ## 中英对照表
 
@@ -6,11 +10,13 @@
 * Response Codec：响应编解码器（编码及解码工具）
 * Body Codec：响应体编解码器
 
-Vert.x Web Client（Web客户端）是一个异步的HTTP和HTTP/2客户端。
+## 组件介绍
 
-Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更加便捷，同时提供了额外的高级功能，例如：
+Vert.x Web Client（Web客户端）是一个异步的 HTTP 和 HTTP/2 客户端。
 
-- Json体的编码和解码
+Web Client使得发送 HTTP 请求以及从 Web 服务器接收 HTTP 响应变得更加便捷，同时提供了额外的高级功能，例如：
+
+- JSON体的编码和解码
 
 - 请求和响应泵
 
@@ -20,11 +26,11 @@ Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更�
 
 - 提交表单
 
-制作Web Client的目的并非为了替换Vert.x Core中的[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)，而是基于该客户端，扩展并保留其便利的设置和特性，例如请求连接池（Pooling），HTTP/2的支持，流水线／管线的支持等……当您需要对HTTP请求和响应做细微粒度控制时，您应当使用[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
+制作Web Client的目的并非为了替换Vert.x Core中的 [`HttpClient`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)，而是基于该客户端，扩展并保留其便利的设置和特性，例如请求连接池（Pooling），HTTP/2的支持，流水线／管线的支持等。当您需要对 HTTP 请求和响应做细微粒度控制时，您应当使用 [`HttpClient`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
 
-另外Web Client并未提供WebSocket API，此时您应当使用[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
+另外Web Client并未提供 WebSocket API，此时您应当使用 [`HttpClient`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)。
 
-# 使用Web Client
+## 使用Web Client
 
 如需使用Vert.x Web Client，请先加入以下依赖：
 
@@ -46,15 +52,13 @@ Web Client使得发送HTTP请求以及从Web服务器接收HTTP响应变得更�
   }
   ```
 
+## 对Vert.x Core HTTP Client的回顾
 
+Vert.x Web Client使用Vert.x Core的API，如您对此还不熟悉，请先熟悉 [`HttpClient`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html) 的一些基本概念。
 
-# 对Vert.x Core HTTP Client的回顾
+## 创建Web Client
 
-Vert.x Web Client使用Vert.x Core的API，如您对此还不熟悉，请先熟悉[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)的一些基本概念。
-
-# 创建Web Client
-
-您可使用缺省设置创建一个[WebClient](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClient.html)：
+您可使用缺省设置创建一个 [`WebClient`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClient.html)：
 
 ```java
 WebClient client = WebClient.create(vertx);
@@ -69,9 +73,9 @@ options.setKeepAlive(false);
 WebClient client = WebClient.create(vertx, options);
 ```
 
-Web Client配置选项继承自Http Client配置选项，使用时可根据实际情况选择。
+Web Client配置选项继承自 `HttpClient` 配置选项，使用时可根据实际情况选择。
 
-如已在程序中创建Http Client，可用以下方式复用：
+如已在程序中创建 `HttpClient`，可用以下方式复用：
 
 ```java
 WebClient client = WebClient.wrap(httpClient);
@@ -148,11 +152,11 @@ request.addQueryParam("param1", "param1_value");
 request.uri("/some-uri?param1=param1_value&param2=param2_value");
 ```
 
-## 填充请求体
+### 填充请求体
 
-如需要发送请求体，可使用相同的API并在最后加上`sendXXX`方法发送相应的请求体。
+如需要发送请求体，可使用相同的API并在最后加上 `sendXXX` 方法发送相应的请求体。
 
-例如用[sendBuffer](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendBuffer-io.vertx.core.buffer.Buffer-io.vertx.core.Handler-)方法发送一个缓冲体
+例如用 [`sendBuffer`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendBuffer-io.vertx.core.buffer.Buffer-io.vertx.core.Handler-) 方法发送一个缓冲体：
 
 ```java
 client
@@ -164,7 +168,7 @@ client
   });
 ```
 
-有时候我们并不希望将所有数据一次性全部读入内存，因为文件太大或希望同时处理多个请求，希望每个请求仅使用最小的内存。出于此目的，Web Client可用[sendStream](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendStream-io.vertx.core.streams.ReadStream-io.vertx.core.Handler-)方法发送流式数据`ReadStream<Buffer>`（例如[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)便是一个`ReadStream<Buffer>`）
+有时候我们并不希望将所有数据一次性全部读入内存，因为文件太大或希望同时处理多个请求，希望每个请求仅使用最小的内存。出于此目的，Web Client可用 [`sendStream`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendStream-io.vertx.core.streams.ReadStream-io.vertx.core.Handler-) 方法发送流式数据 `ReadStream<Buffer>`（例如 [`AsyncFile`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html) 便是一个 `ReadStream<Buffer>`）：
 
 ```java
 client
@@ -172,9 +176,9 @@ client
   .sendStream(stream, resp -> {});
 ```
 
-Web Client会为您设置好传输泵以平滑传输流。如果流长度未知则使用分块传输。
+Web Client会为您设置好传输泵以平滑传输流。如果流长度未知则使用分块传输（chunked transfer）。
 
-如已知流的大小，可在HTTP协议头中设置`content-length`属性
+如已知流的大小，可在HTTP协议头中设置 `content-length` 属性
 
 ```java
 fs.open("content.txt", new OpenOptions(), fileRes -> {
@@ -198,9 +202,9 @@ fs.open("content.txt", new OpenOptions(), fileRes -> {
 
 此时POST方法不会使用分块传输。
 
-### Json体
+#### JSON体
 
-有时您需要在请求体中使用Json格式，可使用[sendJsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJsonObject-io.vertx.core.json.JsonObject-io.vertx.core.Handler-)方法发送[JsonObject](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)
+有时您需要在请求体中使用JSON格式，可使用 [`sendJsonObject`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJsonObject-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法发送 [`JsonObject`](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)：
 
 ```java
 client
@@ -214,7 +218,7 @@ client
   });
 ```
 
-在Java，Groovy以及Kotlin语言中，您亦可使用[sendJson](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJson-java.lang.Object-io.vertx.core.Handler-)方法发送POJO（Plain Old Java Object），该方法会自动调用[Json.encode](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-)将POJO映射为Json
+在Java，Groovy以及Kotlin语言中，您亦可使用 [`sendJson`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJson-java.lang.Object-io.vertx.core.Handler-) 方法发送POJO（Plain Old Java Object），该方法会自动调用 [`Json.encode`](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-) 方法将 POJO 映射为 JSON：
 
 ```java
 client
@@ -226,11 +230,11 @@ client
   });
 ```
 
-> 请注意  *[Json.encode](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-)方法使用Jackson的mapper将POJO映射成Json*。
+> 请注意： *[`Json.encode`](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-) 方法使用Jackson的 mapper将 POJO 映射成 JSON*。
 
-### 表单提交
+#### 表单提交
 
-您可使用[sendForm](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendForm-io.vertx.core.MultiMap-io.vertx.core.Handler-)方法发送http表单。
+您可使用 [`sendForm`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendForm-io.vertx.core.MultiMap-io.vertx.core.Handler-) 方法发送HTTP表单。
 
 ```java
 MultiMap form = MultiMap.caseInsensitiveMultiMap();
@@ -247,7 +251,7 @@ client
   });
 ```
 
-缺省情况下，提交表单的请求头中的`content-type`属性值为`application/x-www-form-urlencoded`，您亦可将其设置为`multipart/form-data`
+缺省情况下，提交表单的请求头中的 `content-type` 属性值为 `application/x-www-form-urlencoded`，您亦可将其设置为 `multipart/form-data`：
 
 ```java
 MultiMap form = MultiMap.caseInsensitiveMultiMap();
@@ -265,9 +269,9 @@ client
   });
 ```
 
-> 请注意 *当前版本并不支持分块文件编码，该功能可能在将来版本中予以支持。*
+> 请注意：*当前版本并不支持分块文件编码（multipart files，即文件上传），该功能可能在将来版本中予以支持。*
 
-## 填充请求头
+### 填充请求头
 
 您可使用以下方式填充请求头：
 
@@ -278,9 +282,9 @@ headers.set("content-type", "application/json");
 headers.set("other-header", "foo");
 ```
 
-此处Headers是一个[MultiMap](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html)对象，提供了增加，设置以及删除头属性操作的入口。HTTP头的某些特定属性允许设置多个值。
+此处 Headers 是一个 [`MultiMap`](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html) 对象，提供了增加、设置以及删除头属性操作的入口。HTTP头的某些特定属性允许设置多个值。
 
-您亦可通过putHeader方法写入头属性
+您亦可通过 `putHeader` 方法写入头属性：
 
 ```java
 HttpRequest<Buffer> request = client.get(8080, "myserver.mycompany.com", "/some-uri");
@@ -288,8 +292,9 @@ request.putHeader("content-type", "application/json");
 request.putHeader("other-header", "foo");
 ```
 
-## 重用请求
-[send](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#send-io.vertx.core.Handler-)可被重复多次调用，使得配置以及重用[HttpRequest](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html)对象变得更加便捷
+### 重用请求
+
+[`send`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#send-io.vertx.core.Handler-) 方法可被重复多次调用，这使得配置以及重用 [`HttpRequest`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html) 对象变得更加便捷：
 
 ```java
 HttpRequest<Buffer> get = client.get(8080, "myserver.mycompany.com", "/some-uri");
@@ -308,7 +313,7 @@ get.send(ar -> {
 
 ```
 
-当您需要更改请求时，可用[copy](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#copy--)方法复制一份请求的拷贝
+当您需要更改请求时，可用 [`copy`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#copy--) 方法复制一份请求的拷贝：
 
 ```java
 HttpRequest<Buffer> get = client.get(8080, "myserver.mycompany.com", "/some-uri");
@@ -327,9 +332,9 @@ get.copy()
   }
 ```
 
-## 超时
+### 超时
 
-您可通过[timeout](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#timeout-long-)方法设置超时时间。
+您可通过 [`timeout`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#timeout-long-) 方法设置超时时间。
 
 ```java
 client
@@ -346,11 +351,11 @@ client
 
 若请求在设定时间内没返回任何数据，则一个超时异常将会传递给响应处理代码。
 
-# 处理HTTP响应
+## 处理HTTP响应
 
-Web Client请求发送之后，返回的结果将会被包装在异步结果[HttpResponse](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpResponse.html)中。
+Web Client请求发送之后，返回的结果将会被包装在异步结果 [`HttpResponse`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpResponse.html) 中。
 
-当响应被成功接收到之后，相应的回调函数将会被触发
+当响应被成功接收到之后，相应的回调函数将会被触发。
 
 ```java
 client
@@ -367,22 +372,22 @@ client
   });
 ```
 
-> 警告 *缺省状况下，响应会被完全缓冲读入内存，请用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)将响应写入流*
+> 警告：缺省状况下，响应会被完全缓冲读入内存，请用 [`BodyCodec.pipe`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-) 方法将响应写入流。
 
-## 响应编解码器
+### 响应编解码器
 
 缺省状况下，响应以缓冲形式提供，并不提供任何形式的解码。
 
-可用[BodyCodec](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html)将响应定制成以下类型：
+可用 [`BodyCodec`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html) 将响应定制成以下类型：
 
 - 普通字符串
-- Json对象
-- 将Json映射成POJO
-- WriteStream
+- JSON对象
+- 将JSON映射成POJO
+- [`WriteStream`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)
 
 响应体编解码器对二进制数据流解码，以节省您在响应处理中的代码。
 
-使用[BodyCodec.jsonObject](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--)将结果解码为Json对象：
+使用 [`BodyCodec.jsonObject`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--) 将结果解码为JSON对象：
 
 ```java
 client
@@ -401,7 +406,7 @@ client
   });
 ```
 
-在Java，Groovy以及Kotlin语言中，Json对象可被解码映射成POJO
+在Java，Groovy以及Kotlin语言中，JSON对象可被解码映射成POJO：
 
 ```java
 client
@@ -421,7 +426,7 @@ client
   });
 ```
 
-当响应结果较大时，请使用[BodyCodec.pipe](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-)方法。响应体编解码器将响应结果压入`WriteStream`并在最后发出成功或失败的信号。
+当响应结果较大时，请使用 [`BodyCodec.pipe`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-) 方法。响应体编解码器将响应结果压入 `WriteStream` 并在最后发出成功或失败的信号。
 
 ```java
 client
@@ -439,7 +444,7 @@ client
   });
 ```
 
-最后，如您对响应结果不感兴趣，可用[BodyCodec.none](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#none--)废弃响应体
+最后，如您对响应结果不感兴趣，可用 [`BodyCodec.none`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#none--) 废弃响应体。
 
 ```java
 client
@@ -457,7 +462,7 @@ client
   });
 ```
 
-若无法预知响应内容类型，您依旧可以在获取结果之后，用`bodyAsXXX()`方法将其转换成特定的类型
+若无法预知响应内容类型，您依旧可以在获取结果之后，用 `bodyAsXXX()` 方法将其转换成特定的类型
 
 ```java
 client
@@ -477,26 +482,27 @@ client
   });
 ```
 
-> 警告 *这种方式仅对响应结果为缓冲体有效。*
+> 警告：这种方式仅对响应结果为缓冲体有效。
 
-## 处理30x重定向
+### 处理30x重定向
 
-缺省状况下，客户端将会依照30x状态码自动重定向，您可使用[WebClientOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html)予以配置：
+缺省状况下，客户端将会依照30x状态码自动重定向，您可使用 [`WebClientOptions`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html) 予以配置：
 
 ```java
 WebClient client = WebClient.create(vertx, new WebClientOptions().setFollowRedirects(false));
 ```
 
-客户端将会执行最多达`16`次重定向，该参数亦可在[WebClientOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html)配置：
+客户端将会执行最多达`16`次重定向，该参数亦可在 [`WebClientOptions`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html) 配置：
 
 ```java
 WebClient client = WebClient.create(vertx, new WebClientOptions().setMaxRedirects(5));
 ```
-# 使用HTTPS
 
-Vert.x Web Client可用与[HttpClient](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html)相同方式配置HTTPS协议。
+## 使用HTTPS
 
-您可对每个请求单独设置
+Vert.x Web Client可用与 [`HttpClient`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html) 相同方式配置HTTPS协议。
+
+您可对每个请求单独设置：
 
 ```java
 client
@@ -514,7 +520,7 @@ client
   });
 ```
 
-或使用绝对路径
+或使用绝对路径：
 
 ```java
 client
@@ -531,9 +537,9 @@ client
   });
 ```
 
-# RxJava API
+## RxJava API
 
-RxJava的[HttpRequest](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html)提供了原版API的响应式版本，[rxSend](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#rxSend--)方法返回一个可被订阅的`Single<HttpResponse<Buffer>>`，故单个`Single`可被多次订阅。
+RxJava的 [`HttpRequest`](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html) 提供了原版API的响应式版本，[`rxSend`](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#rxSend--) 方法返回一个可被订阅的 `Single<HttpResponse<Buffer>>`，故单个 `Single` 可被多次订阅。
 
 ```java
 Single<HttpResponse<Buffer>> single = client
@@ -555,7 +561,7 @@ single.subscribe(response -> {
 });
 ```
 
-获取到的`Single`可与其它RxJava API自然组合成链式处理
+获取到的 `Single` 可与其它RxJava API自然组合成链式处理
 
 ```java
 Single<String> url = client
@@ -588,7 +594,7 @@ single.subscribe(resp -> {
 });
 ```
 
-当发送请求体为`Observable<Buffer>`时，应使用[sendStream](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#sendStream-rx.Observable-io.vertx.core.Handler-)
+当发送请求体为 `Observable<Buffer>` 时，应使用 [`sendStream`](http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#sendStream-rx.Observable-io.vertx.core.Handler-)：
 
 ```java
 Observable<Buffer> body = getPayload();
@@ -602,6 +608,12 @@ single.subscribe(resp -> {
 });
 ```
 
-当订阅时，`body`将会被订阅，其内容将会被用于请求中。
+当订阅时，`body` 将会被订阅，其内容将会被用于请求中。
 
-> 原文上次编辑于2017-03-15 15:54:14 欧洲中部时间
+---
+
+> [原文](http://vertx.io/docs/vertx-web-client/java/)上次编辑于2017-03-15 15:54:14 欧洲中部时间
+
+[1]: http://vertx.io/docs/vertx-web-client/java/
+[2]: https://github.com/vert-x3/vertx-web/tree/master/vertx-web-client
+[3]: https://github.com/vert-x3/vertx-examples/tree/master/web-client-examples
