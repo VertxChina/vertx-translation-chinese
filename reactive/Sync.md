@@ -86,8 +86,7 @@ System.out.println("Timer has now fired");
 
 ## 事件流
 
-## 事件流
-很多时候，Vert.x 的 Handler 接收到的是事件流，例如 Event Bus 消息的消费者(Consumer)、HTTP 服务端里的 HTTP 服务端请求(server request)。
+很多时候，Vert.x 的 `Handler` 接收到的是事件流，例如 Event Bus 消息的消费者(Consumer)、HTTP 服务端里的 HTTP 服务端请求(server request)。
 
 Vert.x Sync 使你能以同步的方式从这种流中接收事件。
 
@@ -114,7 +113,7 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-## 使用`FiberHandler `
+## 使用 `FiberHandler`
 
 如果你想在一般的 Handler 中使用 Fiber —— 例如 HTTP 服务端的请求处理器（request handler） ，那得首先把这个一般的 Handler 转换为 Fiber Handler 。
 
@@ -149,4 +148,3 @@ vertx.createHttpServer().requestHandler(fiberHandler(req -> {
 [1]: http://vertx.io/docs/vertx-sync/java/
 [2]: https://github.com/vert-x3/vertx-sync
 [3]: https://github.com/vert-x3/vertx-examples/tree/master/sync-examples
-
