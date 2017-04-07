@@ -23,8 +23,8 @@ Vert.x Config 提供了一种配置 Vert.x 应用的方式。
 
 本组件基于如下几个概念：
 
-- **Config Retriever** 是一系列配置仓库(Configuration Store)的配置，由 Vert.x 实例化并管理
-- **Configuration Store** 定义了配置项的数据源和它的语法（默认是 JSON）
+- **Config Retriever** 由Vert.x 应用实例化以及使用；它配置了一系列的配置仓库
+- **Configuration Store** 定义了配置项的数据源和语法（默认是 JSON）
 
 配置文件最终会以 JSON 对象(`JsonObject`)的形式取出。
 
@@ -260,7 +260,7 @@ JsonObject last = retriever.getCachedConfig();
 
 ## 使用流的方式读取配置
 
-[`ConfigRetriever `](http://vertx.io/docs/apidocs/io/vertx/config/ConfigRetriever.html) 提供流(Stream)的方式去获取配置。对应的流是是 [`JsonObject`](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html) 类型的可读流([`ReadStream`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html))。你可以注册相应的处理器(`Handler`)，来获得下面的事件通知：
+[`ConfigRetriever `](http://vertx.io/docs/apidocs/io/vertx/config/ConfigRetriever.html) 提供流(Stream)的方式去获取配置。对应的流是 [`JsonObject`](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html) 类型的可读流([`ReadStream`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html))。你可以注册相应的处理器(`Handler`)，来获得下面的事件通知：
 
 - 检索到新的配置
 - 获取新配置时发生错误
@@ -301,20 +301,20 @@ future.setHandler(ar -> {
 });
 ```
 
-## 拓展 Config Retriever
+## 扩展 Config Retriever
 
-你可以通过以下SPI对其进行拓展：
+你可以通过以下SPI对其进行扩展：
 
 - 实现 [`ConfigProcessor`](http://vertx.io/docs/apidocs/io/vertx/config/spi/ConfigProcessor.html) SPI，用来增加对新格式的支持
 - 实现 [`ConfigStoreFactory`](http://vertx.io/docs/apidocs/io/vertx/config/spi/ConfigStoreFactory.html) SPI，用来增加对配置仓库（读取配置的位置）的支持
 
 ## 额外的配置格式
 
-除了上文所提到的一系列现成的格式支持以外，Vert.x Config 也提供额外的格式支持，并可以在你的应用中使用。
+除了上文所提到的一系列现成的格式支持以外，Vert.x Config 也提供额外的格式支持组件，并可以在你的应用中使用。
 
 ### HOCON 配置格式
 
-HOCON 配置格式组件是对 Vert.x Config 的拓展，并且提供 [HOCON](https://github.com/typesafehub/config/blob/master/HOCON.md)) 格式的支持。
+HOCON 配置格式组件是对 Vert.x Config 的扩展，并且提供 [HOCON](https://github.com/typesafehub/config/blob/master/HOCON.md)) 格式的支持。
 
 此格式支持 includes, json, properties, macros等。
 
@@ -365,7 +365,7 @@ ConfigRetriever retriever = ConfigRetriever.create(vertx,
 
 ### YAML 配置格式
 
-YAML 配置格式组件是对 Vert.x Config 的拓展，并且提供 YAML 格式的支持。
+YAML 配置格式组件是对 Vert.x Config 的扩展，并且提供 YAML 格式的支持。
 
 #### 使用 YAML 配置格式
 
@@ -417,7 +417,7 @@ ConfigRetriever retriever = ConfigRetriever.create(vertx,
 
 ### Git 配置仓库
 
-Git 配置仓库组件是对 Vert.x Config 的拓展，支持从 Git 仓库(repository)中获取配置。
+Git 配置仓库组件是对 Vert.x Config 的扩展，支持从 Git 仓库(repository)中获取配置。
 
 #### 使用 Git 配置仓库
 
@@ -480,7 +480,7 @@ Vert.x Config会周期性的去检查变更并更新本地仓库。
 
 ### Kubernetes ConfigMap 配置仓库
 
-Kubernetes ConfigMap 配置仓库组件是对 Vert.x Config 的拓展。它提供了对 [Kubernetes ConfigMap](https://kubernetes.io/docs/user-guide/configmap/) 和 [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) 的支持。
+Kubernetes ConfigMap 配置仓库组件是对 Vert.x Config 的扩展。它提供了对 [Kubernetes ConfigMap](https://kubernetes.io/docs/user-guide/configmap/) 和 [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) 的支持。
 
 #### 使用 Kubernetes ConfigMap 配置仓库
 
@@ -549,7 +549,7 @@ ConfigRetriever retriever = ConfigRetriever.create(vertx,
 
 ### Redis 配置仓库
 
-Redis 配置仓库组件是对 Vert.x Config 的拓展，支持从 Redis 服务器中获取配置。
+Redis 配置仓库组件是对 Vert.x Config 的扩展，支持从 Redis 服务器中获取配置。
 
 #### 使用 Redis 配置仓库
 
@@ -602,7 +602,7 @@ ConfigRetriever retriever = ConfigRetriever.create(vertx,
 
 ### ZooKeeper 配置仓库
 
-ZooKeeper 配置仓库组件是对 Vert.x Config 的拓展，支持从 ZooKeeper 服务器中获得配置。
+ZooKeeper 配置仓库组件是对 Vert.x Config 的扩展，支持从 ZooKeeper 服务器中获得配置。
 
 此组件底层使用 [Apache Curator](http://curator.apache.org/) 作为访问 ZooKeeper 的客户端。
 
@@ -648,7 +648,7 @@ ConfigRetriever retriever = ConfigRetriever.create(vertx,
     new ConfigRetrieverOptions().addStore(store));
 ```
 
-使用此配置仓库通常需要配置 [Apache Curator](http://curator.apache.org/) 客户端以及存储我们配置内容的 ZNode 路径。此节点的数据格式可以是 JSON 或者其它任意支持的类型。
+使用此配置仓库通常需要配置 [Apache Curator](http://curator.apache.org/) 客户端以及存储我们配置内容的 ZNode 路径（`path`）。此节点的数据格式可以是 JSON 或者其它任意支持的类型。
 
 此配置仓库需要传入一系列参数：`configuration` 属性包含连接 ZooKeeper 服务器的地址和包含我们所配置的节点 `path` 路径。
 
@@ -659,7 +659,7 @@ ConfigRetriever retriever = ConfigRetriever.create(vertx,
 
 ### Spring Config Server 配置仓库
 
-Spring Config Server 配置仓库组件是对 Vert.x Config 的拓展，支持从 Spring Config Server 中获得配置。
+Spring Config Server 配置仓库组件是对 Vert.x Config 的扩展，支持从 Spring Config Server 中获得配置。
 
 #### 使用 Spring Config Server 配置仓库
 
