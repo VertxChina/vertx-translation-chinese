@@ -1,16 +1,16 @@
 # Vert.x Redis
 
-> 原文档：[Vert.x-redis](http://vertx.io/docs/vertx-redis-client/java/)
+> 原文档：[Vert.x Redis](http://vertx.io/docs/vertx-redis-client/java/)
 
 **Vert.x Redis Client 是 Vert.x 配套的 Redis 客户端实现。**
 
-您可以通过 Vert.x Redis Client 来对 Redis 中的数据进行保存、获取、搜索和删除。Redis 是一个基于BSD协议开源的高性能Key-Value数据库。Redis 可以存储 strings, hashes, lists, sets 和 sorted sets，所以通常被用做结构化数据存储服务器。要使用本组件，您必须有一个运行中的 Redis 服务器实例。
+您可以通过 Vert.x Redis Client 来对 Redis 中的数据进行保存、获取、搜索和删除。Redis 是一个基于BSD协议开源的高性能Key-Value数据库。它可以存储字符串、哈希(hashes)、列表、无序集合(sets)和有序集合(sorted sets)，所以通常被用做结构化数据存储服务器。要使用本组件，您必须有一个运行中的 Redis 实例。
 
-Redis 有丰富的 API，总结如下：
+Redis 有着丰富的 API，总结如下：
 
-- Cluster - 与集群相关的命令。要使用这些命令，Redis 服务器的版本必须  >=3.0.0
-- Connection - 切换 DB，连接，断开连接，授权相关的命令
-- Hashes - 操作hash相关的命令
+- Cluster - 与集群相关的命令。要使用这些命令，Redis 服务器的版本必须 >=3.0.0
+- Connection - 切换 DB、建立连接、断开连接、授权相关的命令
+- Hashes - 操作 hash 相关的命令
 - HyperLogLog - 使用 HyperLogLog 算法来快速计算元素基数的相关命令
 - Keys - 操作 Redis key 的相关命令
 - List - 操作 List 的相关命令
@@ -22,9 +22,9 @@ Redis 有丰富的 API，总结如下：
 - Strings - 操作字符串的相关命令
 - Transactions - 处理事务的相关命令
 
-## 使用 Vert.x-Redis
+## 使用 Vert.x Redis
 
-要使用  Vert.x Redis 客户端，需要添加下列依赖：
+要使用 Vert.x Redis 客户端，需要添加下列依赖：
 
 - Maven (在 `pom.xml` 文件中):
 
@@ -38,7 +38,7 @@ Redis 有丰富的 API，总结如下：
 
 - Gradle (在 `build.gradle` 文件中):
 
-```json
+```groovy
 compile 'io.vertx:vertx-redis-client:3.4.1'
 ```
 
@@ -82,7 +82,7 @@ redis.get("mykey", res -> {
 });
 ```
 
-要想了解更多 Redis 命令，请参考：[redis documentation](http://redis.io/commands)。
+要想了解更多 Redis 命令，请参考 [Redis 官方文档](http://redis.io/commands)。
 
 ## 发布／订阅模式
 
@@ -127,7 +127,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 ### hgetall 命令
 
-hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以使用 JSON 的语法来进行交互，这在与 EventBus 通信时十分方便。
+`hgetall` 命令返回的结果将被转换成 JSON 对象。这样，您就可以使用 JSON 的语法来进行交互，这在与 Event Bus 通信时十分方便。
 
 ### mset 命令
 
@@ -164,10 +164,13 @@ hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以
 
 ### zadd 命令
 
-调用 [`zaddMany`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#zaddMany-java.lang.String-java.util.Map-io.vertx.core.Handler-) 方法，可以同时在 hash 中设置多个值。需要注意 key 和 value 都将被转换成字符串。
+调用 [`zaddMany`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#zaddMany-java.lang.String-java.util.Map-io.vertx.core.Handler-) 方法可以同时向有序表中添加多个member。需要注意 key 和 value 都将被转换成字符串。
+
+> 译者注：在 Vert.x Redis Client 中，`zadd` 方法和 `zaddMany` 方法都对应 Redis 中的 `zadd` 命令。不同之处在于，`zaddMany` 方法可以添加多个 score-member。
+
+> 译者注：实际在 `zaddMany` 方法中，传入的是 `Map<String, Double>` 类型的参数。
 
 ```json
-// 译者注：实际在 zaddMany 方法中，传入的是Map结构的参数。
 {
   score: "member",
   otherScore: "other member"
@@ -199,14 +202,14 @@ hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以
 
 ## Eval 和 Evalsha 命令
 
-Eval 和 Evalsha 命令十分特殊，因为它们可以返回任意类型。Vert.x 基于 Java 语言，而 Java 是强类型语言。而我们又避免使用  `Object` 类型。因为Vert.x 也是多语言的，而多语言之间的类型转换，实现起来十分的复杂和困难。所以，我们会用 `JsonArray`来包装 Eval 和 Evalsha 命令的返回值，即便是像下面这样简单的脚本：
+`eval` 和 `evalsha` 命令十分特殊，因为它们可以返回任意类型。Vert.x 基于 Java 语言，而 Java 是强类型语言，并且我们又要避免使用 `Object` 类型，这使得返回任意类型变得比较困难。避免使用 `Object` 类型的原因是因为 Vert.x 也是多语言的，而不同语言之间的类型转换实现起来十分的复杂和困难。所以，我们会用 `JsonArray` 来包装 `eval` 和 `evalsha` 命令的返回值，即便是像下面这样简单的脚本：
 
 ```javascript
 return 10
 ```
 
-执行上面的脚本，将返回一个  `JsonArray`对象，且下标为 0 的值为 10。
+执行上面的脚本，将返回一个 `JsonArray` 对象，且下标为 0 的值为 10。
 
 ---
 
-[原文](http://vertx.io/docs/vertx-redis-client/java/)更新于2017-03-15 15:54:14 CET
+> [原文档](http://vertx.io/docs/vertx-redis-client/java/)更新于2017-03-15 15:54:14 CET
