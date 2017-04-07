@@ -164,7 +164,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 ### zadd 命令
 
-调用 [`zaddMany`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#zaddMany-java.lang.String-java.util.Map-io.vertx.core.Handler-) 方法可以同时向有序表中添加多个member。需要注意 key 和 value 都将被转换成字符串。
+调用 [`zaddMany`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#zaddMany-java.lang.String-java.util.Map-io.vertx.core.Handler-) 方法可以同时向有序集合中添加多个member。需要注意 key 和 value 都将被转换成字符串。
 
 > 译者注：在 Vert.x Redis Client 中，`zadd` 方法和 `zaddMany` 方法都对应 Redis 中的 `zadd` 命令。不同之处在于，`zaddMany` 方法可以添加多个 score-member。
 
