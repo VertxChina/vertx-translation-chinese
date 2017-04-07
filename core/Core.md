@@ -221,7 +221,7 @@ server.requestHandler(request -> {
 
 您之前也许听说过它——例如Node.js实现了这种模式。
 
-一个标准的反应堆实现中，有一个单独的Event Loop会轮询执行，当所有事件到达时将这些事件传递给所有处理器。
+在一个标准反应堆实现中，有一个独立的Event Loop会轮询执行，当有事件到达时将这些事件传递给所有处理器。
 
 一个线程的麻烦就是它在任何一个时间只能在一个单一的核上运行，如果您希望单线程反应堆应用（如您的Node.js应用）扩展到多核服务器上，则不得不启动并且管理许多不同的进程。
 
@@ -297,15 +297,15 @@ vertx.executeBlocking(future -> {
 
 默认情况，如果executeBlocking在同一个上下文环境中（如：同一个Verticle实例）被调用了多次，那么这些不同的executeBlocking代码块会顺序执行（一个接一个）。
 
-若您不需要关心您调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)的顺序，可以将`ordered`参数的值设为false。这样任何executeBlocking都会在一个worker Pool \(1\)中并行执行。
+若您不需要关心您调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)的顺序，可以将`ordered`参数的值设为false。这样任何executeBlocking都会在一个Worker Pool \(1\)中并行执行。
 
 另外一种运行阻塞式代码的方法是使用[Worker Verticle](http://vertx.io/docs/vertx-core/java/#worker_verticles)。
 
-一个Worker Verticle始终会使用worker Pool中的某个线程来执行。
+一个Worker Verticle始终会使用Worker Pool中的某个线程来执行。
 
-默认的阻塞式代码会在Vert.x的blocking code pool中执行，通过[setWorkerPoolSize](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setWorkerPoolSize-int-)配置。
+默认的阻塞式代码会在Vert.x的Worker Pool中执行，通过[setWorkerPoolSize](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setWorkerPoolSize-int-)配置。
 
-若有不同的目的，可以创建额外的pool：
+出于不同的目的，可创建新的线程池：
 
 ```java
 WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool");
@@ -319,7 +319,7 @@ executor.executeBlocking(future -> {
 });
 ```
 
-这个`worker executor` \(2\)在不需要的时候必须被关闭：
+这个`worker executor` \(2\)在不需要的时候必需被关闭：
 
 ```java
 executor.close();
@@ -327,7 +327,7 @@ executor.close();
 
 当使用同一个名字创建了许多worker时，它们将共享同一个pool，所有的worker executor调用了`closed()`被关闭过后，这个worker pool会被销毁。
 
-在一个Verticle中创建了一个`executor`时，Verticle实例被销毁的时候Vert.x将会自动关闭这个`executor`。
+如果`executor`在Verticle中创建，那么Verticle实例销毁的同时Vert.x将会自动关闭这个`executor`。
 
 worker executor可以在创建的时候配置：
 
