@@ -44,7 +44,7 @@ compile 'io.vertx:vertx-redis-client:3.4.1'
 
 ## 连接 Redis 服务器
 
-要连接到 Redis 服务器，需要配置一些参数。配置参数包装在 `RedisOptions` 对象中，有以下这些参数：
+要连接到 Redis 服务器，需要配置一些参数。配置参数包装在 [`RedisOptions`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisOptions.html) 对象中，有以下这些参数：
 
 - `host`: 默认是 `localhost`
 - `port`:  默认是 `6379`
@@ -66,7 +66,7 @@ Vert.x Redis 客户端在连接 Redis 服务器失败时，会尝试重连。所
 - `auth`
 - `select`
 
-如果您不这样做，而是手动调用  `auth` or `select` 方法，那么当出现 socket 错误的时候，Vert.x Redis 客户端将不知道如何修复错误。
+如果您不这样做，而是手动调用  [`auth`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#auth-java.lang.String-io.vertx.core.Handler-) 或者 [`select`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#select-int-io.vertx.core.Handler-) 方法，那么当出现 socket 错误的时候，Vert.x Redis 客户端将不知道如何修复错误。
 
 ## 执行命令
 
