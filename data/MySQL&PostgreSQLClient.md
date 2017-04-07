@@ -139,13 +139,13 @@ client.getConnection(res -> {
 
 获取的连接，是接口 [`SQLConnection`](http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html) 的一个实现。但是 [`SQLConnection`](http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html) 是一个通用接口，不只是在此客户端中有用到。
 
-### 注意 date 和 timestamps
+### 注意日期和时间戳
 
 只要您从数据库从获取时间格式的数据，此客户端都将会隐式将它们转换成  ISO 8601（`yyyy-MM-ddTHH:mm:ss.SSS`）格式的字符串。MySQL 会舍弃毫秒，所以您会看到 `.000`。
 
 ### 注意最后插入的数据id
 
-在表中插入新数据时，您也许希望获得数据库的自增长id。JDBC API 通常都会让您从数据库连接中得到最后一个插入的 id。在 MySQL 中，可以按照  JDBC API 描述的方式获得最后插入的 id。在 PostgreSQL 中，需要使用 ["RETURNING" clause](http://www.postgresql.org/docs/current/static/sql-insert.html)，可以选择使用其中一种方式来获取返回列。
+在表中插入新数据时，您也许希望获得数据库的自增长id。JDBC API 通常都会让您从数据库连接中得到最后一个插入的 id。在 MySQL 中，可以按照  JDBC API 描述的方式获得最后插入的 id。在 PostgreSQL 中，需要使用 ["RETURNING" clause](http://www.postgresql.org/docs/current/static/sql-insert.html)，可以选择使用其中的一个 `query` 方法来获取返回的列。
 
 ### 注意存储过程
 
