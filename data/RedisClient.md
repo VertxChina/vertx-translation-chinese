@@ -2,9 +2,9 @@
 
 > 原文档：[Vert.x-redis](http://vertx.io/docs/vertx-redis-client/java/)
 
-**Vert.x-redis 是 Vert.x 使用的 redis 客户端。**
+**Vert.x Redis Client 是 Vert.x 配套的 Redis 客户端实现。**
 
-使用 Vert.x-redis，可以在 Redis 中进行数据的保存，获取，搜索和删除。Redis 是一个开源，BSD许可，优秀的键值对存储器。Redis 可以存储 strings, hashes, lists, sets 和 sorted sets，所以通常被用做结构化数据存储服务器。要使用 Vert.x-redis，您必须首先有一个 Redis 服务器。
+您可以通过 Vert.x Redis Client 来对 Redis 中的数据进行保存、获取、搜索和删除。Redis 是一个基于BSD协议开源的高性能Key-Value数据库。Redis 可以存储 strings, hashes, lists, sets 和 sorted sets，所以通常被用做结构化数据存储服务器。要使用本组件，您必须有一个运行中的 Redis 服务器实例。
 
 Redis 有丰富的 API，总结如下：
 
@@ -131,7 +131,7 @@ hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以
 
 ### mset 命令
 
-此命令可以同时在 hash 中设置多个值。需要注意 key 和 value 都将被转换成字符串。
+您可以向 `mset` 命令传入一个 JSON 对象以在 hash 中设置多个值。需要注意 key 和 value 都将被转换成字符串。
 
 ```json
 {
@@ -142,7 +142,7 @@ hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以
 
 ### msetnx 命令
 
-此命令可以同时在 hash 中设置多个值（译者注：msetnx 命令，必须当且仅当所有给定 key 都不存在）。需要注意 key 和 value 都将被转换成字符串。
+您可以向 `msetnx` 命令传入一个 JSON 对象以在 hash 中设置多个值（译者注：msetnx 命令，必须当且仅当所有给定 key 都不存在）。需要注意 key 和 value 都将被转换成字符串。
 
 ```json
 {
@@ -153,7 +153,7 @@ hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以
 
 ### hmset 命令
 
-此命令可以同时在 hash 中设置多个值（译者注：hmset 命令，如果给定 key 不存在，将创建新的 key）。需要注意 key 和 value 都将被转换成字符串。
+您可以向 `hmset` 命令传入一个 JSON 对象以在 hash 中设置多个值（译者注：hmset 命令，如果给定 key 不存在，将创建新的 key）。需要注意 key 和 value 都将被转换成字符串。
 
 ```json
 {
@@ -164,9 +164,10 @@ hgetall 命令返回的结果将被转换成 JSON 对象。这样，您就可以
 
 ### zadd 命令
 
-此命令可以同时在 hash 中设置多个值。需要注意 key 和 value 都将被转换成字符串。
+调用 [`zaddMany`](http://vertx.io/docs/apidocs/io/vertx/redis/RedisClient.html#zaddMany-java.lang.String-java.util.Map-io.vertx.core.Handler-) 方法，可以同时在 hash 中设置多个值。需要注意 key 和 value 都将被转换成字符串。
 
 ```json
+// 译者注：实际在 zaddMany 方法中，传入的是Map结构的参数。
 {
   score: "member",
   otherScore: "other member"
