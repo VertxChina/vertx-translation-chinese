@@ -351,7 +351,7 @@ _注意：这个配置信息在worker pool创建的时候设置。_
 
 **1.all**
 
-[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)需要多个future参数（最多6个），当所有的future都成功完成时返回_succeeded_，如果有一个future执行失败则返回_failed_：
+[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当所有的future都成功完成；是_失败的_当超过一个future执行失败：
 
 ```java
 Future<HttpServer> httpServerFuture = Future.future();
@@ -371,7 +371,7 @@ CompositeFuture.all(httpServerFuture, netServerFuture).setHandler(ar -> {
 });
 ```
 
-这些操作同时运行，所有返回结果合并完成时，附在返回future上的处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（传入一个future被标记成failure），则返回的future会被标记成failed。当所有的操作都成功时，返回的future被标记成success。
+这些操作同时运行，所有返回结果合并完成时，附在返回future上的处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（传入一个future被标记成failure），则返回的future会被标记为失败。当所有的操作都成功时，返回的future将会成功完成。
 
 您可以传入一个future的列表（默认为空）：
 
@@ -381,7 +381,7 @@ CompositeFuture.all(Arrays.asList(future1, future2, future3));
 
 **2.any**
 
-不同于`all`的合并会等待所有的future要么全成功（或其中一个失败），`any`的合并会等待第一个成功的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)需要多个future参数（最多6个），当任何一个future成功完成则返回_succeeded_，所有的future都失败则返回_failed_：
+不同于`all`的合并会等待所有的future全成功（或任一失败），`any`的合并会等待第一个成功执行的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当任一future成功完成；是_失败的_当所有的future都执行失败：
 
 ```java
 CompositeFuture.any(future1, future2).setHandler(ar -> {
@@ -403,9 +403,9 @@ CompositeFuture.any(Arrays.asList(f1, f2, f3));
 
 **3.join**
 
-`join`的合并会等待所有的future完成，不论是一个成功还是一个失败都可。
+`join`的合并会等待所有的future完成，无论成败。
 
-[CompositeFuture.join](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#join-io.vertx.core.Future-io.vertx.core.Future-)需要多个future参数（最多6个），当所有的future都成功时返回一个_succeeded_的future，当所有的future都完成时，至少有一个future失败则返回_failed_。
+[CompositeFuture.join](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#join-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当全部future成功完成；是_失败的_当任一future执行失败。
 
 ```java
 CompositeFuture.join(future1, future2, future3).setHandler(ar -> {
