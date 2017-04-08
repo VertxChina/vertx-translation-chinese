@@ -381,7 +381,7 @@ CompositeFuture.all(Arrays.asList(future1, future2, future3));
 
 **2.any**
 
-不同于`all`的合并会等待所有的future全成功（或任一失败），`any`的合并会等待第一个成功执行的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当任一future成功完成；是_失败的_当所有的future都执行失败：
+不同于`all`的合并会等待所有的future成功执行（或任一失败），`any`的合并会等待第一个成功执行的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当任一future成功完成；是_失败的_当所有的future都执行失败：
 
 ```java
 CompositeFuture.any(future1, future2).setHandler(ar -> {
