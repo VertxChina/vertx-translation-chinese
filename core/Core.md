@@ -474,9 +474,9 @@ fut1.compose(v -> {
 
 ### Verticles
 
-标准环境的Vert.x提供了一个简单的、可扩展的、类似Actor-Model的部署模型和并发模型，您可以按自己的方式保存和编写。
+Vert.x提供了一个简单便捷的、可扩展的、类似Actor-Model的部署和并发模型机制，您可以用此模型机制来保管您自己的代码组件。
 
-**这个模型是可选的，如果您不想这样做，Vert.x不强制您用这种方式创建您的应用程序。**
+**这个模型是可选的，如果您不想这样做，Vert.x不会强迫您用这种方式创建您的应用程序。**
 
 这个模型不能说是严格的Actor-Model的实现，但它确实有相似之处，特别是在并发、扩展和部署等方面。
 
@@ -486,7 +486,7 @@ Verticle是由Vert.x部署和运行的代码块，默认情况一个Vert.x实例
 
 您可以将Verticle想成[Actor Model](https://en.wikipedia.org/wiki/Actor_model)中的Actor。
 
-一个应用程序通常是由同一时间运行在同一个Vert.x实例中的许多Verticle实例组合而成。不同的Verticle实例可通过发送消息给event bus来相互通信。
+一个应用程序通常是由同一时间运行在同一个Vert.x实例中的许多Verticle实例组合而成。不同的Verticle实例通过事件总线发送消息相互通信。
 
 #### 编写Verticle
 
