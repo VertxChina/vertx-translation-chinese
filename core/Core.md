@@ -7,6 +7,7 @@
 * Primitive：基本（描述类型）
 * Writing：编写（有些地方译为开发）
 * Reactor：反应堆
+* Multi-Reactor：多反应堆
 * Options：配置项，作为参数时候翻译成选项
 * Context：上下文环境
 * Undeploy：撤销（反部署，对应部署）
@@ -217,7 +218,7 @@ server.requestHandler(request -> {
 
 当没有东西被阻塞住时，一个Event Loop可在短时间内传递大量的事件。例如，一个单独的**Event Loop**可以很快处理数千个HTTP请求。
 
-我们称之为[反应堆【Reactor】模式](https://en.wikipedia.org/wiki/Reactor_pattern)。
+我们称之为[反应堆模式](https://en.wikipedia.org/wiki/Reactor_pattern)。
 
 您之前也许听说过它——例如Node.js实现了这种模式。
 
@@ -229,7 +230,7 @@ server.requestHandler(request -> {
 
 与Node.js不同，这意味着单个Vertx进程可以跨服务器扩展。
 
-我们将这种模式称为多反应堆模式【Multi-Reactor】，将它和单线程反应堆模式进行区分。
+我们将这种模式称为多反应堆模式，区别于单线程反应堆模式。
 
 _注意：即使一个Vertx实例维护了多个Event Loop，任何特定的处理器永远不会同时执行，大部分情况下（除开_[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)之_外）它们总是在完全相同的Event Loop中被调用。_
 
@@ -260,7 +261,7 @@ _注意：即使一个Vertx实例维护了多个Event Loop，任何特定的处�
 
 **这个数学题并不难，将留给读者作为练习。**
 
-如果您的应用程序没有响应，可能是一个迹象，表明您在某个地方阻塞了Event Loop。为了帮助您诊断类似问题，若Vert.x检测到Event Loop有一段时间没有响应，将会自动记录这种警告。若您在日志中看到类似警告，那么您需要进行调查。
+如果您的应用程序没有响应，可能是一个迹象，表明您在某个地方阻塞了Event Loop。为了帮助您诊断类似问题，若Vert.x检测到Event Loop有一段时间没有响应，将会自动记录这种警告。若您在日志中看到类似警告，那么您需要检查您的代码。
 
 ```
 Thread vertx-eventloop-thread-3 has been blocked for 20458 ms
@@ -278,11 +279,11 @@ Vert.x还将提供堆栈跟踪，以精确定位发生阻塞的位置。
 
 事实是，很多，也非所有的库，特别是在JVM生态系统中有很多同步API，这些API中许多方法都是阻塞式的。一个很好的例子就是JDBC API——它本质上是同步的，无论多么努力地去尝试，Vert.x都不能像魔法小精灵撒尘变法一样将它转换成异步API。
 
-我们不会将所有的内容重写成异步方式，所以我们为您提供一种在Vert.x应用中安全使用"传统"阻塞API的方法。
+我们不会将所有的内容重写成异步方式，所以我们为您提供一种在Vert.x应用中安全调用"传统"阻塞API的方法。
 
-如之前讨论，您不能在Event Loop中直接调用阻塞式操作，因为这样做会阻止Event Loop执行其他有用的任务。那么您能怎么做？
+如之前讨论，您不能在Event Loop中直接调用阻塞式操作，因为这样做会阻止Event Loop执行其他有用的任务。那您该怎么做？
 
-可以通过调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)方法来指定阻塞式代码的执行和阻塞式代码执行过后结果处理器的异步回调。
+可以通过调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)方法来指定阻塞式代码的执行以及阻塞式代码执行后处理结果的异步回调。
 
 ```java
 vertx.executeBlocking(future -> {
@@ -295,7 +296,7 @@ vertx.executeBlocking(future -> {
 });
 ```
 
-默认情况，如果executeBlocking在同一个上下文环境中（如：同一个Verticle实例）被调用了多次，那么这些不同的executeBlocking代码块会顺序执行（一个接一个）。
+默认情况下，如果executeBlocking在同一个上下文环境中（如：同一个Verticle实例）被调用了多次，那么这些不同的executeBlocking代码块会顺序执行（一个接一个）。
 
 若您不需要关心您调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)的顺序，可以将`ordered`参数的值设为false。这样任何executeBlocking都会在一个Worker Pool \(1\)中并行执行。
 
@@ -429,7 +430,7 @@ CompositeFuture.join(Arrays.asList(future1, future2, future3));
 
 **1.compose**
 
-和`all`以及`any`实现的并发合并不同，[compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)用于链式化【chaining】future（顺序合并）。
+和`all`以及`any`实现的并发合并不同，[compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)方法作用于链式future（顺序合并）。
 
 ```java
 FileSystem fs = vertx.fileSystem();
@@ -454,22 +455,22 @@ fut1.compose(v -> {
         startFuture);
 ```
 
-这里例子中，有三个操作被链式化：
+这里例子中，有三个操作被串起来了：
 
 1. 一个文件被创建（`fut1`）
 2. 一些东西被写入到文件（`fut2`）
 3. 文件被移走（`startFuture`）
 
-如果这三个步骤全部成功，则最终的future（`startFuture`）返回_succeeded_，然而任何一步失败，则最终future返回_failed_。
+如果这三个步骤全部成功，则最终的future（`startFuture`）返回_成功_，其中任何一步失败，则最终future返回_失败_。
 
-使用例子：
+例子中使用了：
 
-* [compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)：当前future完成时，执行返回future的函数。当返回的future完成时，它会完成该合并。
-* [compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)：当前future完成时，执行完成下一个future的处理器。
+* [compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)：当前future完成时，执行相关代码，并返回future。当返回的future完成时，合并完成。
+* [compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)：当前future完成时，执行相关代码，并完成下一个future的处理。
 
 在第二个例子中，处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）应该完成下一个（`next`）future过后来报告成功或者失败。
 
-您可以使用[completer](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#completer--)来完成一个带操作结果（自定义）或失败的future，它避免使用传统方式编写：如果成功则完成future，否则就失败【if success then complete the future else fail the future】。
+您可以使用[completer](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#completer--)方法来串起一个带操作结果的或失败的future，它可使您避免用传统方式编写代码：如果成功则完成future，否则就失败。
 
 ### Verticles
 
