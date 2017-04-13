@@ -352,7 +352,7 @@ _注意：这个配置信息在worker pool创建的时候设置。_
 
 **1.all**
 
-[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），该方法将返回一个_成功的_future，当所有的future都成功完成；返回一个_失败的_future当任一个future执行失败：
+[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），该方法将返回一个_成功的_future，当所有的future都成功完成；返回一个_失败的_future，当任一个future执行失败：
 
 ```java
 Future<HttpServer> httpServerFuture = Future.future();
