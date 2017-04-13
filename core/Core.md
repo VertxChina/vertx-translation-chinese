@@ -352,7 +352,7 @@ _注意：这个配置信息在worker pool创建的时候设置。_
 
 **1.all**
 
-[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当所有的future都成功完成；是_失败的_当超过一个future执行失败：
+[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），该方法将返回一个_成功的_future，当所有的future都成功完成；返回一个_失败的_future当任一个future执行失败：
 
 ```java
 Future<HttpServer> httpServerFuture = Future.future();
@@ -372,7 +372,7 @@ CompositeFuture.all(httpServerFuture, netServerFuture).setHandler(ar -> {
 });
 ```
 
-这些操作同时运行，所有返回结果合并完成时，附在返回future上的处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（传入一个future被标记成failure），则返回的future会被标记为失败。当所有的操作都成功时，返回的future将会成功完成。
+所有被合并的future中的操作同时运行，当结果future返回时，附在返回future上的处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（传入一个future被标记成failure），则返回的future会被标记为失败。当所有的操作都成功时，返回的future将会成功完成。
 
 您可以传入一个future的列表（默认为空）：
 
