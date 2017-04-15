@@ -197,7 +197,7 @@ consumer.subscribe("test", ar -> {
     System.out.println("Consumer subscribed");
   }
 });
-```  
+```
 
 加入某个 consumer group 的消费者，可以通过 [`unsubscribe`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#unsubscribe--) 方法退出该消费组，从而不再接受到相关消息：
 
@@ -222,7 +222,7 @@ consumer.unsubscribe(ar -> {
 
 您可以通过 [`assign`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#assign-java.util.Set-io.vertx.core.Handler-) 方法请求分配指定的分区：
 
-````java
+```java
 consumer.handler(record -> {
   System.out.println("key=" + record.key() + ",value=" + record.value() +
     ",partition=" + record.partition() + ",offset=" + record.offset());
