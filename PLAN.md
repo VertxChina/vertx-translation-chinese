@@ -1,14 +1,15 @@
 # Vert.x 官方文档翻译工作计划
 
-## 2017-04-07
+## 2017-04-15
 
-- [ ] **Vert.x Core**：初稿翻译完成，需要校对
+- [ ] **Vert.x Core**：初稿翻译完成，正在进行校对
 - [ ] **Vert.x Web**：翻译正在进行
 - [x] **Vert.x Web Client**：已翻译校对完成
 - [x] **Vert.x Microservices**
   - [x] **Vert.x Circuit Breaker**：已翻译校对完成
   - [x] **Vert.x Service Discovery**：已翻译校对完成
   - [x] **Vert.x Config**：已翻译校对完成
+- [x] **Vert.x Kafka Client**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
 - [x] **Vert.x Service Proxy**：已重新翻译
 - [ ] **Vert.x Data Access**
