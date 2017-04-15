@@ -1,33 +1,57 @@
 # Vert.x Kafka Client
 
-这个组件包装Kafka的Client以Vert.x的方式从[Apache Kafka](https://kafka.apache.org/)集群上消费或者发送消息.  
+- [原文档][1]
+- [组件源码][2]
+- [组件示例][3]
 
-作为Consumer,API以异步的方式订阅消费指定的topic以及相关的partition，或者将消息转换成Vert.x stream的方式,从而支持pause和resume.  
+## 中英文对照表
 
-作为Producer,API提供发送信息到指定topic以及分区的方法,且可以包装成stream.  
+- consumer：消费者
+- consumer group：消费组（[Kafka中的设计](https://kafka.apache.org/documentation/#intro_consumers)）
+- partition：分区（[Kafka中的设计](https://kafka.apache.org/documentation/#intro_topics)）
+- producer: 生产者
+- offset：偏移量
 
-WARNING: 此组件处于技术预览阶段,API可能会发生一些变更.  
+## 组件介绍
 
-== 使用 Vert.x Kafka client
-由于Kafka组件还有没有正式发布，所以要想尝鲜的话需要自己手动添加 _仓库_ 以及相关的 _依赖_ 到你的构建工具配置文件里.  
+此组件提供了 Kafka Client 的集成，可以以 Vert.x 的方式从 [Apache Kafka](https://kafka.apache.org/) 集群上消费或者发送消息。
 
-=== Maven 
-``` html
+对于消费者(consumer)，API以异步的方式订阅消费指定的 topic 以及相关的分区(partition)，或者将消息以 Vert.x Stream 的方式读取（甚至可以支持暂停(pause)和恢复(resume)操作）。  
+
+对于生产者(producer)，API提供发送信息到指定 topic 以及相关的分区(partition)的方法，类似于向 Vert.x Stream 中写入数据。  
+
+> 警告：此组件处于技术预览阶段，因此在之后版本中API可能还会发生一些变更。
+
+## 使用 Vert.x Kafka Client
+
+要使用 Vert.x Kafka Client 组件，需要添加以下依赖：
+
+- Maven（在 `pom.xml`文件中）：
+
+```xml
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-kafka-client</artifactId>
   <version>3.4.1</version>
 </dependency>
-```  
-
-=== Gradle  
 ```
-compile io.vertx:vertx-kafka-client:3.4.1
-```  
 
-== 创建Kafka Client
-创建consumers和producers以及使用他们的方法其实与原生的Kafka Client非常相似,Vert.x只是做了一层异步封装.  
-kafka的consumer与producer需要设置一些配置文件,具体可以参考Kafka官方文档,[consumer](:https://kafka.apache.org/documentation/#newconsumerconfigs),[producer](https://kafka.apache.org/documentation/#producerconfigs),我们可以通过一个Map来包装这些配置，然后传入到相应的静态*create*方法里,[KafkaConsumer](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html[KafkaConsumer) [KafkaProducer](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html).  
+- Gradle（在`build.gradle`文件中）：
+
+```groovy
+compile 'io.vertx:vertx-kafka-client:3.4.1'
+```
+
+## 创建 Kafka Client
+
+创建 Consumer 和 Producer 以及使用它们的方法其实与原生的 Kafka Client 库非常相似，Vert.x 只是做了一层异步封装。
+
+我们需要对 Consumer 与 Producer 进行一些相关的配置，具体可以参考 Apache Kafka 的官方文档：
+
+- [Consumer Configs](https://kafka.apache.org/documentation/#newconsumerconfigs)
+- [Producer Configs](https://kafka.apache.org/documentation/#producerconfigs)
+
+我们可以通过一个 Map 来包装这些配置，然后将其传入到 [`KafkaConsumer`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html) 接口或 [`KafkaProducer`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html) 接口中的 `create` 静态方法里来创建 `KafkaConsumer` 或 `KafkaProducer`：
 
 ``` java
 Map<String, String> config = new HashMap<>();
@@ -41,8 +65,10 @@ config.put("enable.auto.commit", "false");
 // 创建一个Kafka Consumer
 KafkaConsumer<String, String> consumer = KafkaConsumer.create(vertx, config);
 ```
-上面的例子,[../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html](KafkaConsumer) 展示了如何通过map来包装一个kafka的配置并且实例化一个Consumer节点，这些参数指定了也指明了如何反序列化消息的key与value.  
-同样的Producer也可以这样创建.  
+
+在上面的例子中，我们在创建 [`KafkaConsumer`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html) 实例时传入了一个 Map 实例，用于指定要连接的 Kafka 节点列表（只有一个）以及如何对接收到的消息进行解析以得到 key 与 value。
+
+我们可以用类似的方法来创建 Producer：
 
 ```java
 Map<String, String> config = new HashMap<>();
@@ -55,7 +81,8 @@ config.put("acks", "1");
 KafkaProducer<String, String> producer = KafkaProducer.create(vertx, config);
 ```
 
-另外也可以使用[Properties](../../apidocs/java/util/Properties.html)  
+另外也可以使用 [`Properties`](http://vertx.io/docs/apidocs/java/util/Properties.html) 来代替 Map：
+
 ```java
 Properties config = new Properties();
 config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -68,19 +95,22 @@ config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 KafkaConsumer<String, String> consumer = KafkaConsumer.create(vertx, config);
 ```  
 
-消息的key,value序列化格式也可以作为create方法的第三个,第四个参数直接传进去，而不是设置在Properties里.
+消息的 key 和 value 的序列化格式也可以作为 [`create`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#create-io.vertx.core.Vertx-java.util.Properties-java.lang.Class-java.lang.Class-) 方法的参数直接传进去，而不是在相关配置中指定：
+
 ```java
 Properties config = new Properties();
 config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 config.put(ProducerConfig.ACKS_CONFIG, "1");
 
-// 注意这里的第三,四个参数
+// 注意这里的第三和第四个参数
 KafkaProducer<String, String> producer = KafkaProducer.create(vertx, config, String.class, String.class);
 ```
-这里有一个[KafkaProducer](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html)例子使用了[Properties](../../apidocs/java/util/Properties.html)作为参数---构建了一个特定kafka节点,并且设置了消息确认模式以及key,value的反序列化方式[KafkaProducer.create](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#create-io.vertx.core.Vertx-java.util.Properties-java.lang.Class-java.lang.Class).  
 
-== 通过Consumer消费Topic
-通过Consumer的[subscribe](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#subscribe-java.util.Set)方法,我们可以订阅一个或多个topic进行消费,当然了你需要注册一个[Handler](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#handler-io.vertx.core.Handler)来处理消息,这个很Vert.x  
+在这里，我们在创建 [`KafkaProducer`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html) 实例的时候传入了一个 [`Properties`](http://vertx.io/docs/apidocs/java/util/Properties.html) 实例，用于指定要连接的 Kafka 节点列表（只有一个）和消息确认模式。消息 key 和 value 的解析方式作为参数传入 [`KafkaProducer.create`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#create-io.vertx.core.Vertx-java.util.Properties-java.lang.Class-java.lang.Class-) 方法中。
+
+## 消费感兴趣 Topic 的消息并加入消费组
+
+我们可以通过 `KafkaConsumer` 的的 [subscribe](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#subscribe-java.util.Set-) 方法来订阅一个或多个 topic 进行消费，同时加入到某个消费组（consumer group）中（在创建消费者实例时通过配置指定）。当然你需要通过 [`handler`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#handler-io.vertx.core.Handler-) 方法注册一个 `Handler` 来处理接收的消息：
 
 ```java
 consumer.handler(record -> {
@@ -98,7 +128,9 @@ consumer.subscribe(topics);
 // 订阅单个主题
 consumer.subscribe("a-single-topic");
 ```
-另外如果想知道消息是否成功被消费掉,可以再加一个接受 *AsyncResult* 参数的Handler.
+
+另外如果想知道消息是否成功被消费掉，可以在调用 `subscribe` 方法时绑定一个 `Handler`：
+
 ```java
 consumer.handler(record -> {
   System.out.println("Processing key=" + record.key() + ",value=" + record.value() +
@@ -130,9 +162,10 @@ consumer.subscribe("a-single-topic", ar -> {
 });
 ```
 
-由于Kafka的消费者会组成一个组,同一个组只有一个consumer可以消费特定的partition,同时此consumer组也可以连入其他的consumer,这样可以实现partitions分配给组内其他consumer继续去消费.  
+由于Kafka的消费者会组成一个消费组(consumer group)，同一个组只有一个消费者可以消费特定的 partition，同时此消费组也可以接纳其他的消费者，这样可以实现 partition 分配给组内其它消费者继续去消费。
 
-如果组内的一个consumer挂了,kafka集群会自动把partitions重新分配给组内其他consumer,或者新加入一个consumer去消费该partitions.你可以在[KafkaConsumer](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html)里注册一个Handler用于侦听partitions是否被删除或者分配.[partitionsRevokedHandler](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#partitionsRevokedHandler-io.vertx.core.Handler),[partitionsAssignedHandler](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#partitionsAssignedHandler-io.vertx.core.Handler).
+如果组内的一个消费者挂了，kafka 集群会自动把 partition 重新分配给组内其他消费者，或者新加入一个消费者去消费对应的 partition。您可以通过 [`partitionsRevokedHandler`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#partitionsRevokedHandler-io.vertx.core.Handler-) 和 [`partitionsAssignedHandler`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#partitionsAssignedHandler-io.vertx.core.Handler-) 方法在 [`KafkaConsumer`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html) 里注册一个 `Handler` 用于监听对应的 partition 是否被删除或者分配。
+
 ```java
 consumer.handler(record -> {
   System.out.println("Processing key=" + record.key() + ",value=" + record.value() +
@@ -166,11 +199,15 @@ consumer.subscribe("test", ar -> {
 });
 ```  
 
-加入consumer组的consumer,可以随时退出该组,通过[unsubscribe](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#unsubscribe)方法避免消费分配给该组的消息.
+加入某个 consumer group 的消费者，可以通过 [`unsubscribe`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#unsubscribe--) 方法退出该消费组，从而不再接受到相关消息：
+
 ```java
 consumer.unsubscribe();
+```
 
-// 侦听执行结果
+当然你也可以在 `unsubscribe` 方法中传入一个 `Handler` 用于监听执行结果状态：
+
+```java
 consumer.unsubscribe(ar -> {
 
   if (ar.succeeded()) {
@@ -179,10 +216,13 @@ consumer.unsubscribe(ar -> {
 });
 ```
 
-== 从topic的特定partitions里接受消息
-组内的consumer可以消费topic指定的partition,如果一个consumer并不是属于任何consumer组,则不能依赖kafka的re-balancing机制去消费消息.[assign](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#assign-java.util.Set-io.vertx.core.Handler)API可以指定特定的topic以及partition.
+## 从 Topic 的特定分区里接收消息
+
+消费组内的消费者可以消费某个 topic 指定的 partition。如果某个消费者并不属于任何消费组，那么整个程序就不能依赖 Kafka 的 re-balancing 机制去消费消息。
+
+您可以通过 [`assign`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#assign-java.util.Set-io.vertx.core.Handler-) 方法请求分配指定的分区：
+
 ````java
-----
 consumer.handler(record -> {
   System.out.println("key=" + record.key() + ",value=" + record.value() +
     ",partition=" + record.partition() + ",offset=" + record.offset());
@@ -213,10 +253,12 @@ consumer.assign(topicPartitions, done -> {
   }
 });
 ```
-上面的[assignment](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#assignment-io.vertx.core.Handler-[assignment)方法可以列出当前分配的Topic以及partitions.
 
-== 获取Topic以及partition信息
-调用[partitionsFor](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#partitionsFor-java.lang.String-io.vertx.core.Handler)方法,可以获取指定topic的partitions信息
+上面的 [`assignment`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#assignment-io.vertx.core.Handler-) 方法可以列出当前分配的 topic partition。
+
+## 获取 Topic 以及分区信息
+
+您可以通过  [`partitionsFor`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#partitionsFor-java.lang.String-io.vertx.core.Handler-) 方法获取指定 topic 的 partition 信息：
 
 ```java
 
@@ -228,7 +270,8 @@ consumer.partitionsFor("test", ar -> {
   }
 });
 ```
-[listTopics](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#listTopics-io.vertx.core.Handler)可以列出consumer下的所有topic,以及对应的partitions信息
+
+另外，[`listTopics`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#listTopics-io.vertx.core.Handler-) 方法可以列出消费者下的所有 topic 以及对应的 partition 信息：
 
 ```java
 consumer.listTopics(ar -> {
@@ -244,14 +287,13 @@ consumer.listTopics(ar -> {
 });
 ```
 
-==手动提交偏移量
-Kafka的consumer可以手动提交最新读取消息的offset.  
+## 手动提交偏移量
 
-如果希望consumer在读取topic一批消息后自动提交offset的话,需要在创建consumer时设置`enable.auto.commit`为 `true`.  
-手动[提交](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#commit-io.vertx.core.Handler)offset通常用于消息_at least once (至少一次)_分发,确保消息没有被消费前不会执行提交.
+在 Apache Kafka 中，消费者负责处理最新读取消息的偏移量（offset）。Consumer 会在每次从某个 topic partition 中读取一批消息的时候自动执行提交偏移量的操作。需要在创建 `KafkaConsumer` 时将 `enable.auto.commit` 配置项设为 `true` 来开启自动提交。
+
+我们可以通过 [`commit`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#commit-io.vertx.core.Handler-) 方法进行手动提交。手动提交偏移量通常用于确保消息分发的 *at least once* 语义，以确保消息没有被消费前不会执行提交。
 
 ```java
-//手动执行commit
 consumer.commit(ar -> {
 
   if (ar.succeeded()) {
@@ -260,8 +302,9 @@ consumer.commit(ar -> {
 });
 ```
 
-== 从topic指定的位置开始消费
-Apache Kafka的消息不同于传统的消息队列,消息是按顺序持久化在磁盘上的,所以可以从指定的topic以及partition位置开始消费过去的消息.可以通过[seek](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seek-io.vertx.kafka.client.common.TopicPartition-long)方法设置offset位置.
+## 分区偏移量定位
+
+Apache Kafka 中的消息是按顺序持久化在磁盘上的，所以消费者可以在某个 partition 内部进行偏移量定位(seek)操作，并从任意指定的 topic 以及 partition 位置开始消费消息。我们可以通过 [`seek`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seek-io.vertx.kafka.client.common.TopicPartition-long-) 方法来更改读取位置对应的偏移量：
 
 ```java
 TopicPartition topicPartition = new TopicPartition()
@@ -276,14 +319,15 @@ consumer.seek(topicPartition, 10, done -> {
   }
 });
 ```
-当consumer需要从stream的开始处读取消息时,可以使用[seekToBeginning](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToBeginning-io.vertx.kafka.client.common.TopicPartition).  
+
+当消费者需要从 Stream 的起始位置读取消息时，可以使用 [seekToBeginning](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToBeginning-io.vertx.kafka.client.common.TopicPartition-) 方法将 `offset` 位置设置到 partition 的起始端：
 
 ```java
 TopicPartition topicPartition = new TopicPartition()
   .setTopic("test")
   .setPartition(0);
 
-// 从partition的开始处重新读取
+// 将offset挪到分区起始端
 consumer.seekToBeginning(Collections.singleton(topicPartition), done -> {
 
   if (done.succeeded()) {
@@ -292,7 +336,7 @@ consumer.seekToBeginning(Collections.singleton(topicPartition), done -> {
 });
 ```
 
-最后我们也可以用[seekToEnd](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToEnd-io.vertx.kafka.client.common.TopicPartition)去设置从stream的末尾处开始读取消息.
+最后我们也可以通过 [`seekToEnd`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToEnd-io.vertx.kafka.client.common.TopicPartition-) 方法将 `offset` 位置设置到 partition 的末端：
 
 ```java
 
@@ -300,7 +344,7 @@ TopicPartition topicPartition = new TopicPartition()
   .setTopic("test")
   .setPartition(0);
 
-// 从partition的末尾处开始去读
+// 将offset挪到分区末端
 consumer.seekToEnd(Collections.singleton(topicPartition), done -> {
 
   if (done.succeeded()) {
@@ -309,8 +353,9 @@ consumer.seekToEnd(Collections.singleton(topicPartition), done -> {
 });
 ```
 
-== Offset lookup
-Kafka 0.10.1.1 有了新的API *beginningOffsets*,这个跟上面的[seekToBeginning](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToBeginning-io.vertx.kafka.client.common.TopicPartition)有一个地方不同,虽然他们都会从offset的开始处消费消息,但是*beginningOffsets*不会更改offset,你可以想象成只读模式.  
+## 偏移量查询
+
+你可以利用 Kafka 0.10.1.1 引入的新的API `beginningOffsets` 来获取给定分区的起始偏移量。这个跟上面的 [`seekToBeginning`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToBeginning-io.vertx.kafka.client.common.TopicPartition-) 方法有一个地方不同：[`beginningOffsets`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#beginningOffsets-java.util.Set-io.vertx.core.Handler-) 方法不会更改 offset 的值，仅仅是读取（只读模式）。
 
 ``` java
 Set<TopicPartition> topicPartitions = new HashSet<>();
@@ -326,7 +371,7 @@ consumer.beginningOffsets(topicPartitions, done -> {
   }
 });
 
-// 消费单个topic以及partition
+// partition offset 查询辅助方法
 consumer.beginningOffsets(topicPartition, done -> {
   if(done.succeeded()) {
     Long beginningOffset = done.result();
@@ -336,7 +381,7 @@ consumer.beginningOffsets(topicPartition, done -> {
 });
 ```
 
-与此对应的API还有*endOffsets*,从partition的末尾开始消费,但是不会修改offset,这个也跟[seekToEnd](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToEnd-io.vertx.kafka.client.common.TopicPartition)不一样.  
+与此对应的API还有 [`endOffsets`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#endOffsets-java.util.Set-io.vertx.core.Handler-) 方法，用于获取给定分区末端的偏移量值。与 [`seekToEnd`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#seekToEnd-io.vertx.kafka.client.common.TopicPartition-) 方法相比，[`endOffsets`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#endOffsets-java.util.Set-io.vertx.core.Handler-) 方法不会更改 offset 的值，仅仅是读取（只读模式）。
 
 ``` java
 Set<TopicPartition> topicPartitions = new HashSet<>();
@@ -361,7 +406,7 @@ consumer.endOffsets(topicPartition, done -> {
 });
 ```
 
-Kafka 0.10.1.1还提供了一个根据Timestamp来定位offset的API *offsetsForTimes*, 调用此API可以返回 *>=* 给定timestamp的offset,因为kafka的offset的低位就是timestamp,所以kafka很容易定位此类offset.
+Kafka 0.10.1.1 还提供了一个根据时间戳(timestamp)来定位 offset 的API方法 `offsetsForTimes`，调用此API可以返回大于等于给定时间戳的 offset。因为 Kafka 的 offset 低位就是时间戳，所以 Kafka 很容易定位此类offset。
 
 ```java
 Map<TopicPartition, Long> topicPartitionsWithTimestamps = new HashMap<>();
@@ -394,8 +439,12 @@ consumer.offsetsForTimes(topicPartition, timestamp, done -> {
   }
 });
 ```
-== 流控
-Consumer可以对消息流进行流控,如果我们读到一批消息,需要花点时间进行处理则可以暂时*pause*消息的流入(这里实际上是把消息全部缓存到内存里了),等我们处理了差不多了,可以再通过*resume*继续消费缓存起来的消息.具体可以参考[pause](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html),[resume](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html).
+
+## 流量控制
+
+Consumer 可以对消息流进行流量控制。如果我们读到一批消息，需要花点时间进行处理则可以暂时暂停（`pause`）消息的流入（这里实际上是把消息全部缓存到内存里了）；等我们处理了差不多了，可以再继续消费缓存起来的消息（`resume`）。
+
+我们可以利用 [`pause`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#pause--) 方法和 [`resume`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#resume--) 方法来进行流量控制：
 
 ```java
 TopicPartition topicPartition = new TopicPartition()
@@ -429,9 +478,11 @@ consumer.handler(record -> {
 });
 ```
 
-== 关闭Consumer
-关闭Consumer只需要调用*close*方法就可以了,他会自动的关闭与kafka的连接同时释放相关资源.  
-由于close行为是异步,你并不知道什么时候close行为已经完成或者失败了,这时你需要注册一个handler来侦听关闭完成的行为.
+## 关闭 Consumer
+
+关闭 Consumer 只需要调用 `close` 方法就可以了，它会自动的关闭与 Kafka 的连接，同时释放相关资源。
+
+由于 `close` 方法是异步的，你并不知道关闭操作什么时候完成或失败，这时你需要注册一个处理器(`Handler`)来监听关闭完成的消息。当关闭操作彻底完成以后，注册的 `Handler` 将会被调用。
 
 ```java
 consumer.close(res -> {
@@ -443,12 +494,13 @@ consumer.close(res -> {
 });
 ```
 
-== 发送消息到一个Topic
-使用[KafkaProducer](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#write-io.vertx.kafka.client.producer.KafkaProducerRecord)发送一个消息(records)到一个指定的topic.  
-这是发送消息最简单的方式,这里忽略了key和partition,kafka内部默认消息以*round robin*方式发送到topic的所有partitions上.  
+## 发送消息到某个 Topic
+
+您可以利用 [`write`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#write-io.vertx.kafka.client.producer.KafkaProducerRecord-) 方法来向某个 topic 发送消息(records)。
+
+最简单的发送消息的方式是仅仅指定目的 topic 以及相应的值而省略消息的 key 以及分区。在这种情况下，消息会以轮询(round robin)的方式发送到对应 topic 的所有分区上。
 
 ```java
-
 for (int i = 0; i < 5; i++) {
 
   // 这里指定了topic和 message value,以round robin方式发送的目标partition
@@ -458,10 +510,10 @@ for (int i = 0; i < 5; i++) {
   producer.write(record);
 }
 ```
-你可以通过一个handler来接受发送的结果,这个结果其实就是一个*metadata*,包含了topic,partition和offset.
+
+您可以通过绑定 `Handler` 来接受发送的结果。这个结果其实就是一些元数据(metadata)，包含消息的 topic、目的分区 (destination partition) 以及分配的偏移量 (assigned offset)。
 
 ```java
-
 for (int i = 0; i < 5; i++) {
 
   KafkaProducerRecord<String, String> record =
@@ -480,12 +532,13 @@ for (int i = 0; i < 5; i++) {
   });
 }
 ```
-如果希望将消息发送到指定的partition,你可以指定其partition的标识或者设定消息的key.
+
+如果希望将消息发送到指定的分区，你可以指定分区的标识(identifier)或者设定消息的 key：
 
 ```java
 for (int i = 0; i < 10; i++) {
 
-  // 这里指定了partition为0
+  // 这里指定了 partition 为 0
   KafkaProducerRecord<String, String> record =
     KafkaProducerRecord.create("test", null, "message_" + i, 0);
 
@@ -493,7 +546,7 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-因为producer可以使用消息的key作为hash值来确定partition,所以我们可以保证所有的消息被发送到同样的partition并且是有序的.
+因为 Producer 可以使用消息的 key 作为 hash 值来确定 partition，所以我们可以保证所有的消息被发送到同样的 partition 中，并且是有序的。
 
 ```java
 
@@ -510,9 +563,11 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-注意: 可共享的Producer通过`createShared`创建,他可以在多个verticle实例之间公用,所以相关的配置也在创建的Producer的时候定义.
-== 共享Producer
-有时候你希望在多个verticle或者contexts下共用一个Producer.你可以通过[KafkaProducer.createShared](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#createShared-io.vertx.core.Vertx-java.lang.String-java.util.Map)来创建,这个方法返回的Producer可以安全的用于多个Verticle.
+> 注意：可共享的 Producer 通过 `createShared` 方法创建。它可以在多个 Verticle 实例之间共享，所以相关的配置必须在创建 Producer 的时候定义。
+
+## 共享 Producer
+
+有时候您希望在多个 Verticle 或者 Vert.x Context 下共用一个 Producer。您可以通过 [`KafkaProducer.createShared`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#createShared-io.vertx.core.Vertx-java.lang.String-java.util.Map-) 方法来创建可以在 Verticle 之间安全共享的 `KafkaProducer` 实例：
 
 
 ```java
@@ -522,10 +577,13 @@ KafkaProducer<String, String> producer1 = KafkaProducer.createShared(vertx, "the
 producer1.close();
 ```
 
-返回KafkaProducer将复用所有的thread,connection等相关资源.使用完后,直接调用`close`方法关闭即可,相关的资源会自动释放.  
+返回的 `KafkaProducer` 实例将复用相关的资源（如线程、连接等）。使用完 `KafkaProducer` 后，直接调用 `close` 方法关闭即可，相关的资源会自动释放。  
 
-== 关闭Producer
-同样的如果你比较关心Producer关闭行为是否正在的完成了,关闭的时候是否发生了异常(因为关闭行为是异步的),此时你就需要注册一个侦听关闭行为的Handler.
+## 关闭 Producer
+
+与关闭 Consumer 类似，关闭 Producer 只需要调用 `close` 方法就可以了，它会自动的关闭与 Kafka 的连接，同时释放所有相关资源。
+
+由于 `close` 方法是异步的，你并不知道关闭操作什么时候完成或失败，这时你需要注册一个处理器(`Handler`)来监听关闭完成的消息。当关闭操作彻底完成以后，注册的 `Handler` 将会被调用。
 
 ```java
 producer.close(res -> {
@@ -537,8 +595,9 @@ producer.close(res -> {
 });
 ```
 
-== 获取Topic partition相关信息
-调用[partitionsFor](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#partitionsFor-java.lang.String-io.vertx.core.Handler)获取指定topic的partitions信息.
+## 获取 Topic Partition 的相关信息
+
+您可以通过 [`partitionsFor`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#partitionsFor-java.lang.String-io.vertx.core.Handler-) 方法获取指定 topic 的分区信息。
 
 ```java
 producer.partitionsFor("test", ar -> {
@@ -552,22 +611,25 @@ producer.partitionsFor("test", ar -> {
 });
 ```
 
-== 错误处理
-通过注册一个`exceptionHandler`可以用来处理consumer或者producer发生的异常比如 timeout 异常.[consumer](../../apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#exceptionHandler-io.vertx.core.Handler),[producer](../../apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#exceptionHandler-io.vertx.core.Handler).
+## 错误处理
+
+您可以利用 [`KafkaProducer#exceptionHandler`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaProducer.html#exceptionHandler-io.vertx.core.Handler-) 方法和 [`KafkaConsumer#exceptionHandler`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaConsumer.html#exceptionHandler-io.vertx.core.Handler-) 方法来处理 Kafka 客户端（生产者和消费者）和 Kafka 集群之间的错误（如超时）。比如：
 
 ```java
-
 consumer.exceptionHandler(e -> {
   System.out.println("Error = " + e.getMessage());
 });
 ```
 
-== 随verticles自动销毁
-如果在verticles内部创建consumer或者producer,那么当vertcle执行`undeployed`的时候，相关的consumer和producer会自动关闭.  
+## 随 Verticle 自动关闭
 
-== 使用Vert.x序列化与反序列化
-Vert.x Kafka Client 自带序列化与反序列化,比如buffer, jsonObject,jsonArray.  
-在consumer里可以使用Buffer.
+如果您是在 Verticle 内部创建的 Consumer 和 Producer，那么当对应 Verticle 被卸载(undeploy)的时候，相关的 Consumer 和 Producer 会自动关闭。
+
+## 使用 Vert.x 自带的序列化与反序列化机制
+
+Vert.x Kafka Client 自带现成的序列化与反序列化机制，可以处理 `Buffer`、`JsonObject` 和 `JsonArray` 等类型。
+
+在 `KafkaConsumer` 里您可以使用 `Buffer`：
 
 ```java
 Map<String, String> config = new HashMap<>();
@@ -597,7 +659,7 @@ config.put("auto.offset.reset", "earliest");
 config.put("enable.auto.commit", "false");
 ```
 
-同意的Producer也可以.
+同样在 `KafkaProducer` 中也可以：
 
 ```java
 Map<String, String> config = new HashMap<>();
@@ -621,9 +683,9 @@ config.put("value.serializer", "io.vertx.kafka.client.serialization.JsonArraySer
 config.put("acks", "1");
 ```
 
-也可以在`create`方法里指明序列化与反序列化.  
+您也可以在 `create` 方法里指明序列化与反序列化相关的类。  
 
-比如创建Consumer时.
+比如创建 Consumer 时：
 
 ```java
 Map<String, String> config = new HashMap<>();
@@ -642,7 +704,7 @@ KafkaConsumer<JsonObject, JsonObject> jsonObjectConsumer = KafkaConsumer.create(
 KafkaConsumer<JsonArray, JsonArray> jsonArrayConsumer = KafkaConsumer.create(vertx, config, JsonArray.class, JsonArray.class);
 ```
 
-创建Producer时
+创建 Producer 时：
 
 ```java
 Map<String, String> config = new HashMap<>();
@@ -659,8 +721,11 @@ KafkaProducer<JsonObject, JsonObject> jsonObjectProducer = KafkaProducer.create(
 KafkaProducer<JsonArray, JsonArray> jsonArrayProducer = KafkaProducer.create(vertx, config, JsonArray.class, JsonArray.class);
 ```
 
-== RxJava API
-Kafka Client也提供Rx风格的API. `(译者注:这个也可以看看kafka-stream)`
+##  RxJava API
+
+Vert.x Kafka Client 组件也提供Rx风格的API。
+
+> 译者注：此处也可以参考 [Kafka Stream](https://kafka.apache.org/documentation/streams) 相关的 API。
 
 ```java
 Observable<KafkaConsumerRecord<String, Long>> observable = consumer.toObservable();
@@ -677,8 +742,20 @@ observable
 });
 ```
 
-== 流实现与kafka原生对象
-如果你希望直接操作原生的kafka records,你可以使用原生的kafka流式对象.[KafkaReadStream](../../apidocs/io/vertx/kafka/client/consumer/KafkaReadStream.html)用于读取topic以及partition,他读到的是一个流对象[ConsumerRecord](../../apidocs/org/apache/kafka/clients/consumer/ConsumerRecord.html)对象.[KafkaWriteStream](../../apidocs/io/vertx/kafka/client/producer/KafkaWriteStream.html)用于写消息到topic,写的是一个[ProducerRecord](../../apidocs/org/apache/kafka/clients/producer/ProducerRecord.html)这也是一个流对象.  
+## 流实现与 Kafka 原生对象
 
-API通过这些接口直接暴露给用户,其他语言实现也应该类似.
+如果您希望直接操作原生的 Kafka record，您可以使用原生的 Kafka 流式对象，它可以处理原生 Kafka 对象。
 
+[`KafkaReadStream`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/consumer/KafkaReadStream.html)用于读取 topic partition。它是 [`ConsumerRecord`](http://vertx.io/docs/apidocs/org/apache/kafka/clients/consumer/ConsumerRecord.html) 对象的可读流对象，读到的是 [`ConsumerRecord`](http://vertx.io/docs/apidocs/org/apache/kafka/clients/consumer/ConsumerRecord.html) 对象。
+
+[`KafkaWriteStream`](http://vertx.io/docs/apidocs/io/vertx/kafka/client/producer/KafkaWriteStream.html)用于向某些 topic 中写入数据。它是 [`ProducerRecord`](http://vertx.io/docs/apidocs/org/apache/kafka/clients/producer/ProducerRecord.html) 对象的可写流对象。
+
+API通过这些接口将这些方法展现给用户，其他语言版本也应该类似。
+
+---
+
+> [原文档](http://vertx.io/docs/vertx-kafka-client/java/)最后更新于 2017-03-15 15:54:14 CET
+
+[1]: http://vertx.io/docs/vertx-kafka-client/java/
+[2]: https://github.com/vert-x3/vertx-kafka-client
+[3]: https://github.com/vert-x3/vertx-examples/tree/master/kafka-examples
