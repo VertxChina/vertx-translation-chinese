@@ -10,6 +10,7 @@
 * Sub-Route: 子路由
 * Handler：处理器，某些特定的地方未翻译
 * Blocking：阻塞式
+* Context：多指代路由的上下文 routing context，需要区别于 Vert.x core 的 Context
 * Application：应用
 * Header：消息头
 * Body：消息体
@@ -48,8 +49,8 @@ Vert.x-Web 的一部分关键特性有：
 * 支持本地会话和集群会话
 * 支持 CORS（跨域资源共享）
 * 错误页面处理器
-* HTTP基本授权
-* 基于重定向的授权
+* HTTP基本认证
+* 基于重定向的认证
 * 授权处理器
 * 基于 JWT 的授权
 * 用户/角色/权限授权
@@ -162,7 +163,7 @@ server.requestHandler(router::accept).listen(8080);
 
 之后，我们为这个 route 指定了一个处理器，所有的请求都会调用这个处理器处理。
 
-调用处理器的参数是一个 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html)。它不仅包含了 Vert.x 中标准的 [HttpServerRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html) 和
+调用处理器的参数是一个 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。它不仅包含了 Vert.x 中标准的 [HttpServerRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html) 和
 [HttpServerResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html)，还包含了各种用于简化 Vert.x-Web 使用的东西。
 
 每一个被路由的请求对应一个唯一的 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html)，这个实例会被传递到所有处理这个请求的处理器上。
@@ -224,7 +225,7 @@ Route route3 = router.route("/some/path/").handler(routingContext -> {
 
 你不能在普通的处理器里执行这些操作，所以我们提供了向 route 设置阻塞式处理器的能力。
 
-阻塞式处理器和普通处理器的区别是 Vert.x 会使用 worker pool 中的线程来执行这个处理器而不是 event loop。
+阻塞式处理器和普通处理器的区别是 Vert.x 会使用 worker pool 中的线程来执行这个处理器而不是 event loop 线程。
 
 你可以使用 [blockingHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#blockingHandler-io.vertx.core.Handler-) 方法来设置阻塞式处理器。下面是一个例子：
 
@@ -279,7 +280,7 @@ route.handler(routingContext -> {
 
 你经常需要为所有以某些路径开始的请求设置 route。你可以使用正则表达式来实现，但更简单的方式是在声明 route 的路径时使用一个 `*` 作为结尾。
 
-在下面的例子中处理器会被所有 URI 以 `/some/path` 开始的请求调用。
+在下面的例子中处理器会匹配所有 URI 以 `/some/path` 开头的请求。
 
 例如 `/some/path/foo.html` 和 `/some/path/otherdir/blah.css` 都会匹配。
 
@@ -312,7 +313,7 @@ route.handler(routingContext -> {
 
 ### 捕捉路径参数
 
-通过占位符声明路径参数并在请求中通过 [params](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#params--) 获取是可行的：
+可以通过占位符声明路径参数并在处理请求时通过 [params](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#params--) 方法获取：
 
 以下是一个例子：
 
@@ -367,7 +368,7 @@ route.handler(routingContext -> {
 
 ### 通过正则表达式捕捉路径参数
 
-你也可以再使用正则表达式时捕捉路径参数，下面是一个例子：
+你也可以捕捉通过正则表达式声明的路径参数，下面是一个例子：
 
 ```java
 Route route = router.routeWithRegex(".*foo");
@@ -454,7 +455,7 @@ route.handler(routingContext -> {
 
 默认的 route 的匹配顺序与添加到 router 的顺序一致。
 
-当一个请求到达时，router 会一步一步检查每一个 route 是否匹配，如果匹配则响应的处理器会被调用。
+当一个请求到达时，router 会一步一步检查每一个 route 是否匹配，如果匹配则对应的处理器会被调用。
 
 如果处理器随后调用了 [next](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#next--)，则下一个匹配的 route 对应的处理器（如果有）会被调用。 以此类推。
 
@@ -508,7 +509,7 @@ route3
 
 当 route 被创建时会被赋予一个其被添加到 router 中时相应的顺序，例如第一个 route 是 0，第二个是 1，以此类推。
 
-你可以使用特定的顺序覆盖默认的顺序。顺序可以是负值，如果你需要确保一个 route 在顺序 0 的 route 之前执行。
+你可以使用特定的顺序覆盖默认的顺序。如果你需要确保一个 route 在顺序 0 的 route 之前执行，可以将其指定为负值。
 
 让我们改变 `route2` 的值使其能在 `route1` 之前执行：
 
@@ -698,17 +699,17 @@ route.handler(routingContext -> {
 
 ### 启用和停用 Route
 
-你可以通过 [disable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#disable--) 来停用一个 Route。停用的 Route 在匹配时会被忽略。
+你可以通过 [disable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#disable--) 方法来停用一个 Route。停用的 Route 在匹配时会被忽略。
 
-你可以用 [enable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#enable--) 来重新启用它。
+你可以用 [enable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#enable--) 方法来重新启用它。
 
 ### 上下文数据
 
-你可以通过 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 来维护任何你希望在请求的生命周期中在处理器之间共享的数据。
+你可以通过路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 来维护任希望在请求的生命周期中经过的处理器之间共享的数据。
 
 以下是一个例子，一个处理器设置了一些数据，另一个处理器获取它：
 
-你可以使用 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#put-java.lang.String-java.lang.Object-) 向上下文设置任何对象，[get](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#get-java.lang.String-) 从上下文中获取任何对象。
+你可以使用 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#put-java.lang.String-java.lang.Object-) 方法向上下文设置任何对象，使用 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#get-java.lang.String-) 方法从上下文中获取任何对象。
 
 一个路径为 `/some/path/other` 的请求会同时匹配两个 Route:
 
@@ -1122,7 +1123,263 @@ Vertx.clusteredVertx(new VertxOptions().setClustered(true), res -> {
 });
 ```
 
-##### 创建会话处理器
+#### 创建会话处理器
+
+当你创建会话存储之后，你可以创建一个会话处理器，并添加到 route 上。你需要确保会话处理器在你的应用处理器之前被执行。
+
+由于会话处理器需要使用 cookie 来查找会话，因此你还需要包含一个 cookie 处理器。这个 cookie 处理器需要在会话处理器之前被执行。
+
+以下是例子：
+
+```java
+Router router = Router.router(vertx);
+
+// We need a cookie handler first
+router.route().handler(CookieHandler.create());
+
+// Create a clustered session store using defaults
+SessionStore store = ClusteredSessionStore.create(vertx);
+
+SessionHandler sessionHandler = SessionHandler.create(store);
+
+// Make sure all requests are routed through the session handler too
+router.route().handler(sessionHandler);
+
+// Now your application handlers
+router.route("/somepath/blah/").handler(routingContext -> {
+
+  Session session = routingContext.session();
+  session.put("foo", "bar");
+  // etc
+
+});
+```
+
+会话处理器会自动从会话存储中查找会话（如果没有则创建），并在你的应用处理器执行之前设置在上下文中。
+
+#### 使用会话
+
+在你的处理器中，你可以通过 [session](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#session--) 来访问会话对象。
+
+你可以通过 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#put-java.lang.String-java.lang.Object-) 来设置数据，通过 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#get-java.lang.String-) 来获取数据，通过 [remove](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#remove-java.lang.String-) 来删除数据。
+
+会话中的键的类型必须是字符串。本地会话存储的值可以是任何类型；集群会话存储的值类型可以是基本类型，或者 [Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)、[JsonObject](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)、[JsonArray](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html) 或可序列化对象。因为这些值需要在集群中进行序列化。
+
+以下是操作会话数据的例子：
+
+```java
+router.route().handler(CookieHandler.create());
+router.route().handler(sessionHandler);
+
+// Now your application handlers
+router.route("/somepath/blah").handler(routingContext -> {
+
+  Session session = routingContext.session();
+
+  // Put some data from the session
+  session.put("foo", "bar");
+
+  // Retrieve some data from a session
+  int age = session.get("age");
+
+  // Remove some data from a session
+  JsonObject obj = session.remove("myobj");
+
+});
+```
+
+在响应完成后会话会自动回写到存储中。
+
+你可以使用  [destroy](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#destroy--) 来销毁一个会话。这会将这个会话同时从上下文和存储中删除。*注意，在删除会话之后，下一次通过浏览器访问并经过会话处理器处理时，新的会话会自动被创建。*
+
+#### 会话超时
+
+如果会话在指定的周期内没有被访问，则会超时。
+
+当请求到达，并且会话被访问并且在响应完成会话被回写到存储是，会话会被标记为被访问的。
+
+你也可以通过 [setAccessed](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#setAccessed--) 来人工指定会话被访问。
+
+可以在创建会话处理器时配置超时时间。默认的超时时间是 30 分钟。
+
+### 认证 / 授权
+
+Vert.x-Web 提供了若干开箱机用的处理器来处理认证和授权。
+
+#### 创建认证处理器
+
+你需要一个 [AuthProvider](http://vertx.io/docs/apidocs/io/vertx/ext/auth/AuthProvider.html) 实例来创建认证处理器。Auth provider 用于为用户提供认证和授权。Vert.x 在 `vertx-auth` 项目中提供了若干开箱即用的 auth provider。完整的 auth provider 的配置和用法请参考 [vertx-auth 的文档](../auth/Auth.md)。
+
+以下是一个使用 auth provider 来创建认证处理器的例子：
+
+```java
+router.route().handler(CookieHandler.create());
+router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
+
+AuthHandler basicAuthHandler = BasicAuthHandler.create(authProvider);
+```
+
+#### 在你的应用中处理认证
+
+我们来假设你希望所有路径为 `/private` 的请求都需要认证控制。为了实现这个，你需要确保你的认证处理器匹配这个路径，并在你的应用处理器之前执行：
+
+```java
+router.route().handler(CookieHandler.create());
+router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
+router.route().handler(UserSessionHandler.create(authProvider));
+
+AuthHandler basicAuthHandler = BasicAuthHandler.create(authProvider);
+
+// All requests to paths starting with '/private/' will be protected
+router.route("/private/*").handler(basicAuthHandler);
+
+router.route("/someotherpath").handler(routingContext -> {
+
+  // This will be public access - no login required
+
+});
+
+router.route("/private/somepath").handler(routingContext -> {
+
+  // This will require a login
+
+  // This will have the value true
+  boolean isAuthenticated = routingContext.user() != null;
+
+});
+```
+
+如果认证处理器完成了授权和认证，它会向 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 中注入一个 [User](http://vertx.io/docs/apidocs/io/vertx/ext/auth/User.html)。你可以通过 [user](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#user--) 方法在你的处理器中获取到该对象。
+
+如果你希望在回话中存储用户对象，以避免对所有的请求都执行认证过程，你需要使用会话处理器。确保它匹配了对应的路径，并且会在认证处理器之前执行。
+
+一旦你获取到了 user 对象，你使用它的相关方法，通过编程的方式来为用户授权。
+
+如果你希望用户登出，你可以调用 routing context 的 [clearUser](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#clearUser--) 方法。
+
+#### HTTP 基础认证
+
+HTTP基础认证是适用于简单应用的简单认证手段。
+
+在这种认证方式下， 证书会以非加密的形式在 HTTP 请求中传输。因此，使用 HTTPS 而非 HTTP 来实现你的应用是非常必要的。
+
+当用户请求一个需要授权的资源，基础认证处理器会返回一个包含 `WWW-Authenticate` 头的 `401` 响应。浏览器会显示一个登陆窗口并提示用户输入他们的用户名和密码。
+
+在这之后，浏览器会重新发送这个请求，并将用户名和密码以 Base64 编码的形式包含在  `Authorization` 请求头里。
+
+当基础认证处理器收到了这些信息，它会使用用户名和密码调用配置的 [AuthProvider](http://vertx.io/docs/apidocs/io/vertx/ext/auth/AuthProvider.html) 来认证用户。如果认证成功则该处理器会尝试用户授权，如果也成功了则这个请求被允许继续路由到后续的处理器里。否则，会返回一个 `403` 的响应来表示拒绝访问。
+
+在设置认证处理器时可以指定一系列访问资源时需要被授予的权限。
+
+#### 重定向认证处理器
+
+重定向认证处理器用于当未登录的用户尝试访问受保护的资源时将他们重定向到登录页上。
+
+当用户提交登录表单，服务器会处理用户认证。如果成功，则将用户重定向到原始的资源上。
+
+则你可以配置一个 [RedirectAuthHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/RedirectAuthHandler.html) 对象来使用重定向处理器。
+
+你还需要配置用于处理登录页面的处理器，以及实际处理登录的处理器。我们提供了一个内置的处理器 [FormLoginHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/FormLoginHandler.html) 来处理登录的问题。
+
+这里是一个简单的例子，使用了一个重定向认证处理器并使用默认的重定向 url `/loginpage`。
+
+```java
+router.route().handler(CookieHandler.create());
+router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
+router.route().handler(UserSessionHandler.create(authProvider));
+
+AuthHandler redirectAuthHandler = RedirectAuthHandler.create(authProvider);
+
+// All requests to paths starting with '/private/' will be protected
+router.route("/private/*").handler(redirectAuthHandler);
+
+// Handle the actual login
+// One of your pages must POST form login data
+router.post("/login").handler(FormLoginHandler.create(authProvider));
+
+// Set a static server to serve static resources, e.g. the login page
+router.route().handler(StaticHandler.create());
+
+router.route("/someotherpath").handler(routingContext -> {
+  // This will be public access - no login required
+});
+
+router.route("/private/somepath").handler(routingContext -> {
+
+  // This will require a login
+
+  // This will have the value true
+  boolean isAuthenticated = routingContext.user() != null;
+
+});
+```
+
+#### JWT 授权
+
+JWT 授权通过权限来保护资源不被未为授权的用户访问。
+
+使用这个处理器涉及 2 个步骤：
+
+- 配置一个处理器用于颁发令牌（或依靠第三方）
+- 配置授权处理器来过滤请求
+
+*注意，这两个处理器应该只能通过 HTTPS 访问。否则可能会引起由流量嗅探引起的会话劫持。*
+
+这里是一个派发令牌的例子：
+
+```java
+Router router = Router.router(vertx);
+
+JsonObject authConfig = new JsonObject().put("keyStore", new JsonObject()
+    .put("type", "jceks")
+    .put("path", "keystore.jceks")
+    .put("password", "secret"));
+
+JWTAuth authProvider = JWTAuth.create(vertx, authConfig);
+
+router.route("/login").handler(ctx -> {
+  // this is an example, authentication should be done with another provider...
+  if ("paulo".equals(ctx.request().getParam("username")) && "secret".equals(ctx.request().getParam("password"))) {
+    ctx.response().end(authProvider.generateToken(new JsonObject().put("sub", "paulo"), new JWTOptions()));
+  } else {
+    ctx.fail(401);
+  }
+});
+```
+
+*注意，对于持有令牌的客户端，唯一需要做的是在所有后续的的 HTTP 请求中包含 `Authoriztion` 头并写入 `Bearer <token> `*，例如：
+
+```java
+Router router = Router.router(vertx);
+
+JsonObject authConfig = new JsonObject().put("keyStore", new JsonObject()
+    .put("type", "jceks")
+    .put("path", "keystore.jceks")
+    .put("password", "secret"));
+
+JWTAuth authProvider = JWTAuth.create(vertx, authConfig);
+
+router.route("/protected/*").handler(JWTAuthHandler.create(authProvider));
+
+router.route("/protected/somepage").handler(ctx -> {
+  // some handle code...
+});
+```
+
+JWT 允许你向令牌中添加任何你需要的信息，只需要在创建令牌时向 JsonObject 参数中添加数据即可。这样做服务器上不存在任何的状态，你可以在不依赖集群会话数据的情况下扩展你的应用。
+
+```java
+JsonObject authConfig = new JsonObject().put("keyStore", new JsonObject()
+    .put("type", "jceks")
+    .put("path", "keystore.jceks")
+    .put("password", "secret"));
+
+JWTAuth authProvider = JWTAuth.create(vertx, authConfig);
+
+authProvider.generateToken(new JsonObject().put("sub", "paulo").put("someKey", "some value"), new JWTOptions());
+```
+
+
 
 
 
