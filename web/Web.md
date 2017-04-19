@@ -10,7 +10,7 @@
 * Sub-Route: 子路由
 * Handler：处理器，某些特定的地方未翻译
 * Blocking：阻塞式
-* Context：多指代路由的上下文 routing context，需要区别于 Vert.x core 的 Context
+* Context：指代路由的上下文 routing context，需要区别于 Vert.x core 的 Context
 * Application：应用
 * Header：消息头
 * Body：消息体
@@ -733,9 +733,9 @@ router.get("/some/path/other").handler(routingContext -> {
 另一种你可以访问上下文数据的方式是使用 [data](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#data--)。
 
 
-### 转发（Reroute）
+### 转发
 
-(4)到目前为止，所有的路由机制允许你顺序地处理你的请求，但某些情况下你可能需要回退。处理器的顺序是动态的，上下文并没有暴露出任何关于前一个或后一个处理器的信息。有一个方式是在当前的 Router 里重启整个路由过程。
+(4)到目前为止，所有的路由机制允许你顺序地处理你的请求，但某些情况下你可能需要回退。处理器的顺序是动态的，上下文并没有暴露出任何关于前一个或后一个处理器的信息。有一个方式是在当前的 Router 里重新执行路由流程。
 
 ```java
 router.get("/some/path").handler(routingContext -> {
@@ -776,7 +776,7 @@ router.get().failureHandler(ctx -> {
 });
 ```
 
-### 子路由（Sub-routers）
+### 子路由
 
 当你有很多处理器的情况下，合理的方式是将它们分隔为多个 Routers。这也有利于你在多个不用的应用中通过设置不同的根路径来复用处理器。
 
@@ -1366,7 +1366,7 @@ router.route("/protected/somepage").handler(ctx -> {
 });
 ```
 
-JWT 允许你向令牌中添加任何你需要的信息，只需要在创建令牌时向 JsonObject 参数中添加数据即可。这样做服务器上不存在任何的状态，你可以在不依赖集群会话数据的情况下扩展你的应用。
+JWT 允许你向令牌中添加任何你需要的信息，只需要在创建令牌时向 JsonObject 参数中添加数据即可。这样做服务器上不存在任何的会话状态，你可以在不依赖集群会话数据的情况下对应用进行水平扩展。
 
 ```java
 JsonObject authConfig = new JsonObject().put("keyStore", new JsonObject()
@@ -1379,7 +1379,60 @@ JWTAuth authProvider = JWTAuth.create(vertx, authConfig);
 authProvider.generateToken(new JsonObject().put("sub", "paulo").put("someKey", "some value"), new JWTOptions());
 ```
 
+在消费时用同样的方式：
 
+```java
+Handler<RoutingContext> handler = rc -> {
+  String theSubject = rc.user().principal().getString("sub");
+  String someKey = rc.user().principal().getString("someKey");
+};
+```
+
+#### 配置所需的权限
+
+你可以对认证处理器配置访问资源所需的权限。
+
+默认的，如果不配置权限，那么只要登录了就可以访问资源。否则，用户不仅需要登录，而且需要具有所需的权限。
+
+以下的例子定义了一个应用，该应用的不同部分需要不同的权限。*注意，权限的含义取决于你使用的的 auth provider。例如一些支持角色/权限的模型，另一些可能是其他的模型。*
+
+```java
+AuthHandler listProductsAuthHandler = RedirectAuthHandler.create(authProvider);
+listProductsAuthHandler.addAuthority("list_products");
+
+// Need "list_products" authority to list products
+router.route("/listproducts/*").handler(listProductsAuthHandler);
+
+AuthHandler settingsAuthHandler = RedirectAuthHandler.create(authProvider);
+settingsAuthHandler.addAuthority("role:admin");
+
+// Only "admin" has access to /private/settings
+router.route("/private/settings/*").handler(settingsAuthHandler);
+```
+
+### 静态资源服务
+
+Vert.x-Web 提供了一个开箱即用的处理器来提供静态的 web 资源。你可以非常容易地编写静态的 web 服务器。
+
+你可以使用静态资源处理器 [StaticHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html) 来提供诸如 `.html`、`.css`、`.js`  或其他类型的静态资源。
+
+每一个被静态资源处理器处理的请求都会返回文件系统的某个目录或 classpath 里的文件。文件的根目录是可以配置的，默认为 `webroot`。 
+
+在以下的例子中，所有路径以 `/static` 开头的请求都会对应到 `webroot` 目录：
+
+```java
+router.route("/static/*").handler(StaticHandler.create());
+```
+
+例如，对于一个路径为 `/static/css/mystyles.css` 的请求，静态处理器会在该路径中查找文件 `webroot/css/mystyle.css` (8)。
+
+它也会在 classpath 中查找文件 `webroot/static/css/mystyle.css`。这意味着你可以将所有的静态资源打包到一个 jar 文件（或 fatjar）里进行分发。
+
+当 Vert.x 在 classpath 中第一次找到一个资源时，会将它提取到一个磁盘的缓存目录中以避免每一次都重新提取。
+
+这个处理器能够处理范围请求。当客户端静态资源时，该处理器会添加一个范围单位的说明到 `Accept-Ranges` 响应头里来通知客户端它支持范围请求。如果后续请求的 `Range` 头包含了正确的单位以及起始、终止位置，则客户端将收到包含了的 `Content-Range` 头的部分响应。
+
+#### 配置缓存
 
 
 
@@ -1398,6 +1451,8 @@ authProvider.generateToken(new JsonObject().put("sub", "paulo").put("someKey", "
 5. 会话 cookie 也即 session cookie，特指有效期为 `session` 的 cookie。可参考 [MSDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Session_cookie) 
 6. 或可称之为不可枚举的。可防止碰撞攻击。
 7. 指通过 vertx.executeBlocking 来定期刷新生成器的种子，在 event loop 线程中执行生成随机数的过程。
+8. 此处原文中描述的目标文件为 `webroot/static/css/mystyle.css`。但经过实验是错误的，可以参考 [issue419](https://github.com/vert-x3/vertx-web/issues/419#issuecomment-233572447)。
+9. ​
 
 ## 结语
 
