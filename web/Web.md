@@ -15,6 +15,7 @@
 * Header：消息头
 * Body：消息体
 * MIME types：互联网媒体类型
+* Load-Balancer：负载均衡器
 
 ## 正文
 
@@ -55,7 +56,7 @@ Vert.x-Web 的一部分关键特性有：
 * 基于 JWT 的授权
 * 用户/角色/权限授权
 * 网页图标处理器
-* 支持服务端模板渲染，包括以下开箱机用的模板引擎：
+* 支持服务端模板渲染，包括以下开箱即用的模板引擎：
     * Handlebars
     * Jade
     * MVEL
@@ -1434,11 +1435,420 @@ router.route("/static/*").handler(StaticHandler.create());
 
 #### 配置缓存
 
+默认的，为了让浏览器有效地缓存文件，静态处理器会设置缓存头。
 
+Vert.x-Web 会设置这些响应头：`cache-control`、`last-modified`、`date`。
 
+`cache-control` 的默认值为 `max-age=86400`，也就是一天。可以通过 [setMaxAgeSeconds](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setMaxAgeSeconds-long-) 方法来配置。
 
+当浏览器发送了携带 `if-modified-since` 头的 GET 或 HEAD 请求时，如果对应的资源在该日期之后没有修改过，则会返回一个 `304` 状态码通知浏览器使用本地的缓存资源。
 
-## 引用
+如果不需要缓存头，可以通过 [setCachingEnabled](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setCachingEnabled-boolean-) 方法将其禁用。
+
+如果启用了缓存处理，则 Vert.x-Web 会将资源的最后修改日期缓存在内存里，以此来避免频繁地访问取磁盘来检查修改时间。
+
+缓存有过期时间，在这个时间之后，会重新访问磁盘检查文件并更新缓存。
+
+默认的，如果你的文件永远不会发生变化，则缓存内容会永远有效。
+
+如果你的文件在服务器运行过程中可能发生变化，你可以通过 [setFilesReadOnly](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setFilesReadOnly-boolean-) 方法设置文件的只读属性为 false。
+
+你可以通过 [setMaxCacheSize](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setMaxCacheSize-int-) 方法来设置内存缓存的最大数量。通过 [setCacheEntryTimeout](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setCacheEntryTimeout-long-) 方法来设置缓存的过期时间。
+
+#### 配置索引页
+
+所有访问根路径 `/` 的请求会被定位到索引页。默认的该文件为 `index.html`。可以通过 [setIndexPage](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setIndexPage-java.lang.String-) 方法来设置。
+
+#### 配置跟目录
+
+默认的，所有资源都以  `webroot` 作为根目录。可以通过 [setWebRoot](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setWebRoot-java.lang.String-) 方法来配置。
+
+#### 隐藏文件
+
+默认的，处理器会为隐藏文件提供服务（文件名以 `.` 开头的文件）。
+
+如果你不需要为隐藏文件提供服务，可以通过 [setIncludeHidden](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setIncludeHidden-boolean-) 方法来配置。
+
+#### 列举目录
+
+静态资源处理器可以用于列举目录的文件。默认情况下该功能是关闭的。可以通过 [setDirectoryListing](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setDirectoryListing-boolean-) 方法来启用。
+
+当该功能启用时，会根据客户端请求的 `accept` 头表示的类型来返回相应的结果。
+
+例如对于 `text/html` 头标示的请求，会使用通过 [setDirectoryTemplate](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setDirectoryTemplate-java.lang.String-) 方法设置的模板来渲染文件列表。
+
+#### 禁用磁盘文件缓存
+
+默认情况下，Vert.x 会使用当前工作目录的子目录 `.vertx` 来在磁盘上缓存通过 classpath 服务的静态资源。这对于在生产环境中通过 fatjar 来部署的服务是很重要的。因为每一次都通过 classpath 来获取文件是低效的。
+
+这在开发时会导致一个问题，即在服务运行的过程中，如果你修改了文件，缓存的文件时不会被更新的。
+
+你可以通过设置系统属性 `vertx.disableFileCaching` 为 false 来禁用文件缓存。例如当你通过 IDE 的运行配置来启动你的应用时。
+
+### 处理跨域资源共享
+
+跨域资源共享（[Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing)）是一个安全机制。该机制允许了浏览器在一个域名下访问另一个域名的资源。
+
+Vert.x-Web 提供了一个处理器 [CorsHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CorsHandler.html) 来为你处理 CORS 协议。
+
+这是一个例子：
+
+```java
+router.route().handler(CorsHandler.create("vertx\\.io").allowedMethod(HttpMethod.GET));
+
+router.route().handler(routingContext -> {
+
+  // Your app handlers
+
+});
+```
+
+### 模板
+
+Vert.x-Web 为若干流行的模板引擎提供了开箱即用的支持，通过这种方式来提供生成动态页面的能力。你也可以很容易地添加你自己的实现。
+
+模板引擎 [TemplateEngine](http://vertx.io/docs/apidocs/io/vertx/ext/web/templ/TemplateEngine.html) 定义了使用模板引擎的接口，当渲染模板时会调用 [render](http://vertx.io/docs/apidocs/io/vertx/ext/web/templ/TemplateEngine.html#render-io.vertx.ext.web.RoutingContext-java.lang.String-io.vertx.core.Handler-) 方法。
+
+最简单的使用模板的方式不是直接调用模板引擎，而是使用模板处理器 [TemplateHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/TemplateHandler.html)。这个处理器会根据 HTTP 请求的路径来调用模板引擎。
+
+默认的，模板处理器会在 `templates` 目录中查找模板文件。这是可以配置的。
+
+该处理器会返回渲染的结果，并默认设置 `Content-Type` 头为 `text/html`。这也是可以配置的。
+
+你需要在创建模板处理器时提供你需要使用的模板引擎的实例。
+
+模板引擎的实现没有内嵌在 Vert.x-Web 里，你需要配置你的项目来访问它们。Vert.x-Web 提供了每一种模板引擎的配置。
+
+以下是一个例子：
+
+```java
+TemplateEngine engine = HandlebarsTemplateEngine.create();
+TemplateHandler handler = TemplateHandler.create(engine);
+
+// This will route all GET requests starting with /dynamic/ to the template handler
+// E.g. /dynamic/graph.hbs will look for a template in /templates/dynamic/graph.hbs
+router.get("/dynamic/*").handler(handler);
+
+// Route all GET requests for resource ending in .hbs to the template handler
+router.getWithRegex(".+\\.hbs").handler(handler);
+```
+
+#### MVEL 模板引擎
+
+你需要在你的项目中添加这些依赖来使用 MVEL 模板引擎：`io.vertx:vertx-web-templ-mvel:3.4.1`。通过这个方法来创建 MVEL 模板引擎的实例：`io.vertx.ext.web.templ.MVELTemplateEngine#create()`。
+
+在使用 MVEL 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.templ` 的文件。
+
+在 MVEL 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+
+这是一个例子：
+
+```mvel
+The request path is @{context.request().path()}
+
+The variable 'foo' from the session is @{context.session().get('foo')}
+
+The value 'bar' from the context data is @{context.get('bar')}
+```
+
+关于如何编写 MVEL 模板，请参考 [MVEL 模板文档](http://mvel.codehaus.org/MVEL+2.0+Templating+Guide)。
+
+#### Jade 模板引擎
+
+你需要在你的项目中添加这些依赖来使用 Jade 模板引擎：`io.vertx:vertx-web-templ-jade:3.4.1`。通过这个方法来创建 Jade 模板引擎的实例：`io.vertx.ext.web.templ.JadeTemplateEngine#create()`。
+
+在使用 Jade 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.jade` 的文件。
+
+在 Jade 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+
+这是一个例子：
+
+```jade
+!!! 5
+html
+  head
+    title= context.get('foo') + context.request().path()
+  body
+```
+
+关于如何编写 Jade 模板，请参考 [Jade4j 文档](https://github.com/neuland/jade4j)。
+
+#### Handlebars 模板引擎
+
+你需要在你的项目中添加这些依赖来使用 Handlebars：`io.vertx:vertx-web-templ-handlebars:3.4.1`。通过这个方法来创建 Handlebars 模板引擎的实例：`io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()`。
+
+在使用 Handlebars 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.hbs` 的文件。
+
+Handlebars 不允许在模板中随意地调用对象的方法，因此我们不能像对待其他模板引擎一样将路由上下文传递到引擎里并让模板来识别它。
+
+替代方案是，可以使用 [data](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#data--) 来访问上下文数据。
+
+如果你要访问某些上下文数据里不存在的信息，比如请求的路径、请求参数或者会话等，你需要在模板处理器执行之前将他们添加到上下文数据里，例如：
+
+```handlebars
+TemplateHandler handler = TemplateHandler.create(engine);
+
+router.get("/dynamic").handler(routingContext -> {
+
+  routingContext.put("request_path", routingContext.request().path());
+  routingContext.put("session_data", routingContext.session().data());
+
+  routingContext.next();
+});
+
+router.get("/dynamic/").handler(handler);
+```
+
+关于如何编写 Handlebars 模板，请参考 [Handlebars Java 文档](https://github.com/jknack/handlebars.java)。
+
+#### Thymeleaf 模板引擎
+
+你需要在你的项目中添加这些依赖来使用 Thymeleaf：`io.vertx:vertx-web-templ-thymeleaf:3.4.1`。通过这个方法来创建 Thymeleaf 模板引擎的实例：`io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()`。
+
+在使用 Thymeleaf 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.html` 的文件。
+
+在 Thymeleaf 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+
+这是一个例子：
+
+```thymeleaf
+[snip]
+<p th:text="${context.get('foo')}"></p>
+<p th:text="${context.get('bar')}"></p>
+<p th:text="${context.normalisedPath()}"></p>
+<p th:text="${context.request().params().get('param1')}"></p>
+<p th:text="${context.request().params().get('param2')}"></p>
+[snip]
+```
+
+关于如何编写 Thymeleaf 模板，请参考 [Thymeleaf 文档](http://www.thymeleaf.org/)。
+
+### Apache FreeMarker 模板引擎
+
+你需要在你的项目中添加这些依赖来使用 Apache FreeMarker：`io.vertx:vertx-web-templ-freemarker:3.4.1`。通过这个方法来创建 Apache FreeMarker 模板引擎的实例：`io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()`。
+
+在使用 Apache FreeMarker 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.ftl` 的文件。
+
+在 Apache FreeMarker 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+
+这是一个例子：
+
+```freemarker
+[snip]
+<p th:text="${context.foo}"></p>
+<p th:text="${context.bar}"></p>
+<p th:text="${context.normalisedPath()}"></p>
+<p th:text="${context.request().params().param1}"></p>
+<p th:text="${context.request().params().param2}"></p>
+[snip]
+```
+
+关于如何编写 Apache FreeMarker 模板，请参考 [Apache FreeMarker 文档](http://www.freemarker.org/)。
+
+### Pebble 模板引擎
+
+你需要在你的项目中添加这些依赖来使用 Pebble：`io.vertx:vertx-web-templ-pebble:3.4.0-SNAPSHOT`。通过这个方法来创建 Pebble 模板引擎的实例：`io.vertx.ext.web.templ.PebbleTemplateEngine#create()`。
+
+在使用 Pebble 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.peb` 的文件。
+
+在 Pebble 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+
+这是一个例子：
+
+```pebble
+[snip]
+<p th:text="{{context.foo}}"></p>
+<p th:text="{{context.bar}}"></p>
+<p th:text="{{context.normalisedPath()}}"></p>
+<p th:text="{{context.request().params().param1}}"></p>
+<p th:text="{{context.request().params().param2}}"></p>
+[snip]
+```
+
+关于如何编写 Pebble 模板，请参考 [Pebble 文档](http://www.mitchellbosecke.com/pebble/home/)。
+
+### 错误处理
+
+你可以用模板处理器来渲染错误信息，或者使用 Vert.x-Web 内置的一个 ”漂亮“ 的、开箱即用的错误处理器来渲染错误页面。
+
+这个处理器是 [ErrorHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/ErrorHandler.html)。你只需要在需要覆盖到的路径上将它设置为失败处理器(9)来使用它。
+
+### 请求日志
+
+Vert.x-Web 提供了一个用于记录 HTTP 请求的处理器 [LoggerHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/LoggerHandler.html)。
+
+默认的，请求会通过 Vert.x 日志来记录，或者也可以配置为 jul 日志、log4j 或 slf4j。详见 [LoggerFormat](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/LoggerFormat.html)。
+
+### 提供网页图标
+
+Vert.x-Web 通过内置的处理器 [FaviconHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/FaviconHandler.html) 来提供网页图标。
+
+图标可以指定为文件系统上的某个路径，否则 Vert.x-Web 默认会在 classpath 上寻找 `favicon.ico` 文件。这意味着你可以将图标打包到你的应用的 jar 包里。
+
+### 超时处理器
+
+Vert.x-Web 提供了一个超时处理器，可以在处理时间过长时将请求超时。
+
+通过 [TimeoutHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/TimeoutHandler.html) 对象来进行配置。
+
+如果一个请求在响应之前超时，则会给客户端返回一个 `503` 的响应。
+
+下面的例子设置了一个超时处理器。对于所有以 `/foo` 路径开头的请求，都会在执行 5 秒后自动超时。
+
+```java
+router.route("/foo/").handler(TimeoutHandler.create(5000));
+```
+
+### 响应时间处理器
+
+该处理器会将从接受到请求到写入响应头之间的毫秒数写入到响应的 `x-response-time` 里，例如：
+
+x-response-time: 1456ms
+
+### Content Type 处理器
+
+该处理器 `ResponseContentTypeHandler` 会自动设置响应的 `Content-Type` 头。假设我们要构建一个 RESTful 的 web 应用，我们需要在所有处理器里设置 content type：
+
+```java
+router.get("/api/books").produces("application/json").handler(rc -> {
+  findBooks(ar -> {
+    if (ar.succeeded()) {
+      rc.response().putHeader("Content-Type", "application/json").end(toJson(ar.result()));
+    } else {
+      rc.fail(ar.cause());
+    }
+  });
+});
+```
+
+随着 API 接口数量的增长，设置 content type 会变得很麻烦。可以通过在 Route 上添加 `ResponseContentTypeHandler` 来避免这个问题：
+
+```java
+router.route("/api/*").handler(ResponseContentTypeHandler.create());
+router.get("/api/books").produces("application/json").handler(rc -> {
+  findBooks(ar -> {
+    if (ar.succeeded()) {
+      rc.response().end(toJson(ar.result()));
+    } else {
+      rc.fail(ar.cause());
+    }
+  });
+});
+```
+
+这个处理器会通过 [getAcceptableContentType](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getAcceptableContentType--) 方法来选择适当的 contetn type。因此，你可以很容易地使用同一个处理器来提供不同类型的数据：
+
+```java
+router.route("/api/*").handler(ResponseContentTypeHandler.create());
+router.get("/api/books").produces("text/xml").produces("application/json").handler(rc -> {
+  findBooks(ar -> {
+    if (ar.succeeded()) {
+      if (rc.getAcceptableContentType().equals("text/xml")) {
+        rc.response().end(toXML(ar.result()));
+      } else {
+        rc.response().end(toJson(ar.result()));
+      }
+    } else {
+      rc.fail(ar.cause());
+    }
+  });
+});
+```
+
+### SockJS
+
+SockJS 是一个客户端的 JavaScript 库。它提供了简单的类 WebSocket 的接口来让你和 SockJS 的服务端建立连接而不必关注浏览器或网络是否真的是 WebSocket。
+
+它提供了若干不同的传输方式，并在运行时根据浏览器和网络的兼容性来选择使用哪种传输方式处理。
+
+所有这些对你是透明的，你只需要简单地使用类 WebSocket 的接口。
+
+请访问 [SockJS 网站](https://github.com/sockjs/sockjs-client) 来获取 SockJS 的详细信息。
+
+#### SockJS 处理器
+
+Vert.x-Web 提供了一个开箱机用的处理器 [SockJSHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html) 来让你在 Vert.x-Web 应用中使用  SockJS。
+
+你需要通过 [SockJSHandler.create](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html#create-io.vertx.core.Vertx-) 方法为每一个 SockJS 的应用创建这个处理器。你也可以在创建处理器时通过 [SockJSHandlerOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandlerOptions.html) 对象来指定配置选项。
+
+```java
+Router router = Router.router(vertx);
+
+SockJSHandlerOptions options = new SockJSHandlerOptions().setHeartbeatInterval(2000);
+
+SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
+
+router.route("/myapp/*").handler(sockJSHandler);
+```
+
+#### 处理  SockJS 套接字
+
+你可以在服务器端设置一个处理器，这个处理器会在每次客户端创建连接时被调用：
+
+调用这个处理器的参数是一个 [SockJSSocket](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSSocket.html) 对象。这是一个类似套接字的接口，你可以向使用 [NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html) 和 [WebSocket](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html) 那样通过它来读写数据。它实现了 [ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html) 和 [WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html) 接口，因此你可以将它套用（pump）到其他的读写流上。
+
+下面的例子中的 SockJS 处理器直接使用了它读取到的数据进行回应：
+
+```java
+Router router = Router.router(vertx);
+
+SockJSHandlerOptions options = new SockJSHandlerOptions().setHeartbeatInterval(2000);
+
+SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
+
+sockJSHandler.socketHandler(sockJSSocket -> {
+
+  // Just echo the data back
+  sockJSSocket.handler(sockJSSocket::write);
+});
+
+router.route("/myapp/*").handler(sockJSHandler);
+```
+
+#### 客户端
+
+在客户端你需要通过 JavaScript 使用 SockJS 的客户端库来建立连接。
+
+[SockJS 客户端的地址](http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js)
+
+完整的细节可以在 [SockJS 的网站](https://github.com/sockjs/sockjs-client) 中找到，简单来说你会像这样使用：
+
+```javascript
+var sock = new SockJS('http://mydomain.com/myapp');
+
+sock.onopen = function() {
+  console.log('open');
+};
+
+sock.onmessage = function(e) {
+  console.log('message', e.data);
+};
+
+sock.onclose = function() {
+  console.log('close');
+};
+
+sock.send('test');
+
+sock.close();
+```
+
+#### 配置 SockJS 处理器
+
+可以通过 [SockJSHandlerOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandlerOptions.html) 对象来配置这个处理器的若干选项。
+
+`insertJSESSIONID`
+
+在 cookie 中插入一个 JSESSIONID，这样负载均衡器可以保证 SockJS 会话永远转发到正确的服务器上。默认值为 `true`。
+
+`sessionTimeout`
+
+如果一段时间后客户端链接没有任何操作，服务器会向客户端发送一个 `close` 事件。这个延时通过这个选项来配置。
+
+`heartbeatInterval`
+
+我们会每个一段事件发送一个心跳包，用来
+
 
 
 ## 注释
@@ -1452,7 +1862,7 @@ router.route("/static/*").handler(StaticHandler.create());
 6. 或可称之为不可枚举的。可防止碰撞攻击。
 7. 指通过 vertx.executeBlocking 来定期刷新生成器的种子，在 event loop 线程中执行生成随机数的过程。
 8. 此处原文中描述的目标文件为 `webroot/static/css/mystyle.css`。但经过实验是错误的，可以参考 [issue419](https://github.com/vert-x3/vertx-web/issues/419#issuecomment-233572447)。
-9. ​
+9. 即 [Route.failureHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#failureHandler-io.vertx.core.Handler-)。
 
 ## 结语
 
