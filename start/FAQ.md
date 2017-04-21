@@ -96,3 +96,17 @@ vertx.eventBus().send("address1","message", future1.completer());
 ```
 
 可以看到，使用了future之后，原先的两层缩进被抽取出来，变成了最多单层的缩进，从而使得代码可读性更强，更加美观。
+
+值得注意的是，示范代码可能会抛出NullPointerException，因为当操作失败时，asyncResult.result()方法返回值为null，此时调用.body()方法会抛出空指针异常，在生产环境中正确写法应该是：
+
+```
+if(asyncResult.succeeded()){
+    System.out.println(asyncResult.result().body());
+}else if(asyncResult.failed()){
+    System.out.println(asyncResult.cause());
+}else{
+    System.out.println("Why am I here?");
+}
+```
+
+示范代码中为了解释future的用法简写了代码。
