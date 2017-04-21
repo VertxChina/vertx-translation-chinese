@@ -1,9 +1,9 @@
 # Vert.x 官方文档翻译工作计划
 
-## 2017-04-15
+## 2017-04-21
 
 - [ ] **Vert.x Core**：初稿翻译完成，正在进行校对
-- [ ] **Vert.x Web**：翻译正在进行
+- [ ] **Vert.x Web**：初稿翻译完成，正在进行校对
 - [x] **Vert.x Web Client**：已翻译校对完成
 - [x] **Vert.x Microservices**
   - [x] **Vert.x Circuit Breaker**：已翻译校对完成
