@@ -55,6 +55,8 @@ vertx.eventBus().send("address","message", asyncResult->{
 });
 ```
 
+以上是未使用future时的代码，以下是使用future改造后的代码：
+
 ```java
 Future<Message<String>> future = Future.future();
 //将回调函数存入future中，从而实现代码的扁平化
