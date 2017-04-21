@@ -18,7 +18,7 @@ import io.vertx.ext.web.client.WebClient;
  */
 public class TestVerticle extends AbstractVerticle{
     //将客户端对象与Verticle对象绑定
-  	HttpClient httpClient;
+    HttpClient httpClient;
     WebClient webClient;
     JDBCClient jdbcClient;
 
