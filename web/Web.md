@@ -1,4 +1,4 @@
-# Vert.x Web - Draft
+# Vert.x Web
 
 ## 中英对照表
 
