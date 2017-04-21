@@ -4,7 +4,7 @@
 
 ### 问：Vert.x中各种Client该如何正确使用，用完是否需要关闭？
 
-答：Vert.x中提供了各种预设客户端，例如HttpClient，JDBCClient，WebClient，KafkaClient，MongoDBClient等，一般情况下，建议将客户端与Verticle对象绑定，一个Verticle对象内保留一个特定客户端的引用，并在start方法中将其实例化，这样Vert.x会在执行deployVerticle的时候执行start方法，实例化并保存该对象，在Verticle生命周期内，不需要频繁创建和关闭同类型的客户端，建议在Verticle的生命周期内对于特定领域，只创建一个客户端并复用该客户端，例如：
+答：Vert.x中提供了各种预设客户端，例如HttpClient，JDBCClient，WebClient，MongoDBClient等，一般情况下，建议将客户端与Verticle对象绑定，一个Verticle对象内保留一个特定客户端的引用，并在start方法中将其实例化，这样Vert.x会在执行deployVerticle的时候执行start方法，实例化并保存该对象，在Verticle生命周期内，不需要频繁创建和关闭同类型的客户端，建议在Verticle的生命周期内对于特定领域，只创建一个客户端并复用该客户端，例如：
 
 ```java
 import io.vertx.core.AbstractVerticle;
