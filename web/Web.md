@@ -31,11 +31,11 @@ Vert.x-Web 基于 Vert.x core，提供了一系列更丰富的功能以便更容
 
 它继承了 Vert.x 2.x 里的 [Yoke](http://pmlopes.github.io/yoke/) 的特点，灵感来自于 Node.js 的框架 [Express](http://expressjs.com/) 和 Ruby 的框架 [Sinatra](http://www.sinatrarb.com/) 等等。
 
-Vert.x-Web 的设计是强大的，非侵入式的，并且是完全可插拔的。Vert.x-Web 不是一个容器，你可以只使用你需要的部分。
+Vert.x-Web 的设计是强大的，非侵入式的，并且是完全可插拔的。Vert.x-Web 不是一个容器，您可以只使用您需要的部分。
 
-你可以使用 Vetx.x-Web 来构建经典的服务端 web 应用，RESTful 应用，实时的（服务端推送）web 应用，或任何类型的你所能想到的 Web 应用。应用类型的选择取决于你，而不是 Vert.x-Web。
+您可以使用 Vetx.x-Web 来构建经典的服务端 web 应用，RESTful 应用，实时的（服务端推送）web 应用，或任何类型的您所能想到的 Web 应用。应用类型的选择取决于您，而不是 Vert.x-Web。
 
-Vert.x-Web 非常适合编写 **RESTful HTTP 微服务**，但我们不强制你必须把应用实现成这样。
+Vert.x-Web 非常适合编写 **RESTful HTTP 微服务**，但我们不强制您必须把应用实现成这样。
 
 Vert.x-Web 的一部分关键特性有：
 
@@ -73,13 +73,13 @@ Vert.x-Web 的一部分关键特性有：
 * CSRF 跨域请求伪造
 * 虚拟主机
 
-Vert.x-Web 的大多数特性被实现为了处理器（Handler），因此你随时可以实现你自己的处理器。我们预计随着时间的推移会有更多的处理器被实现。
+Vert.x-Web 的大多数特性被实现为了处理器（Handler），因此您随时可以实现您自己的处理器。我们预计随着时间的推移会有更多的处理器被实现。
 
 我们会在本手册里讨论所有上述的特性。
 
 ### 使用 Vert.x Web
 
-在使用 vert.x web 之前，需要为你的构建工具在描述文件中添加依赖项：
+在使用 vert.x web 之前，需要为您的构建工具在描述文件中添加依赖项：
 
 * Maven（在 pom.xml 文件中）：
 
@@ -129,7 +129,7 @@ server.listen(8080);
 
 之后，我们告诉服务器监听 `8080` 端口（默认的主机名是 `localhost`）
 
-你可以执行这段代码，并打开浏览器访问 [http://localhost:8080](http://localhost:8080) 来验证它是否如预期的一样工作。
+您可以执行这段代码，并打开浏览器访问 [http://localhost:8080](http://localhost:8080) 来验证它是否如预期的一样工作。
 
 
 ### Vert.x-Web 的基本概念
@@ -138,7 +138,7 @@ server.listen(8080);
 
 Router 接收 HTTP 请求，并查找首个匹配该请求的 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html)，然后将请求传递给这个 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html)。
 
-Route 可以持有一个与之关联的处理器用于接收请求。你可以通过这个处理器对请求做一些事情，然后结束响应或者把请求传递给下一个匹配的处理器。
+Route 可以持有一个与之关联的处理器用于接收请求。您可以通过这个处理器对请求做一些事情，然后结束响应或者把请求传递给下一个匹配的处理器。
 
 以下是一个简单的 router 示例：
 
@@ -180,9 +180,9 @@ server.requestHandler(router::accept).listen(8080);
 
 当 Vert.x-Web 决定路由一个请求到匹配的 route 上，他会使用一个 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 调用对应处理器。
 
-如果你不在处理器里结束这个响应，你需要调用 [next](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#next--) 方法让其他匹配的 Route 来处理请求（如果有）。
+如果您不在处理器里结束这个响应，您需要调用 [next](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#next--) 方法让其他匹配的 Route 来处理请求（如果有）。
 
-你不需要在处理器执行完毕时调用 [next](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#next--) 方法。你可以在之后你需要的时间点调用它：
+您不需要在处理器执行完毕时调用 [next](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#next--) 方法。您可以在之后您需要的时间点调用它：
 
 ```java
 Route route1 = router.route("/some/path/").handler(routingContext -> {
@@ -223,13 +223,13 @@ Route route3 = router.route("/some/path/").handler(routingContext -> {
 
 ### 使用阻塞式处理器
 
-某些时候你可能需要在处理器里执行一些需要阻塞 event loop 的操作，比如调用某个传统的阻塞式 API 或者执行密集计算。
+某些时候您可能需要在处理器里执行一些需要阻塞 event loop 的操作，比如调用某个传统的阻塞式 API 或者执行密集计算。
 
-你不能在普通的处理器里执行这些操作，所以我们提供了向 route 设置阻塞式处理器的能力。
+您不能在普通的处理器里执行这些操作，所以我们提供了向 route 设置阻塞式处理器的能力。
 
 阻塞式处理器和普通处理器的区别是 Vert.x 会使用 worker pool 中的线程而不是 event loop 线程来处理请求。
 
-你可以使用 [blockingHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#blockingHandler-io.vertx.core.Handler-) 方法来设置阻塞式处理器。下面是一个例子：
+您可以使用 [blockingHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#blockingHandler-io.vertx.core.Handler-) 方法来设置阻塞式处理器。下面是一个例子：
 
 ```java
 router.route().blockingHandler(routingContext -> {
@@ -244,9 +244,9 @@ router.route().blockingHandler(routingContext -> {
 ```
 
 默认情况下在一个 context（Vert.x core 的 Context，例如同一个 verticle 实例） 上执行的所有阻塞式处理器的执行是顺序的，也就意味着只有一个处理器执行完了才会继续执行下一个。
-如果你不关心执行的顺序，并且不介意阻塞式处理器以并行的方式执行，你可以在调用 [blockingHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#blockingHandler-io.vertx.core.Handler-boolean-) 方法时将 `ordered` 设置为 false。
+如果您不关心执行的顺序，并且不介意阻塞式处理器以并行的方式执行，您可以在调用 [blockingHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#blockingHandler-io.vertx.core.Handler-boolean-) 方法时将 `ordered` 设置为 false。
 
-*注意，如果你需要在一个阻塞处理器中处理一个 multipart 类型的表单数据，你需要首先使用一个非阻塞的处理器来调用 `setExpectMultipart(true)`。下面是一个例子：*
+*注意，如果您需要在一个阻塞处理器中处理一个 multipart 类型的表单数据，您需要首先使用一个非阻塞的处理器来调用 `setExpectMultipart(true)`。下面是一个例子：*
 
 ```java
 router.post("/some/endpoint").handler(ctx -> {
@@ -280,7 +280,7 @@ route.handler(routingContext -> {
 
 ### 基于路径前缀的路由
 
-你经常需要为所有以某些路径开始的请求设置 route。你可以使用正则表达式来实现，但更简单的方式是在声明 route 的路径时使用一个 `*` 作为结尾。
+您经常需要为所有以某些路径开始的请求设置 route。您可以使用正则表达式来实现，但更简单的方式是在声明 route 的路径时使用一个 `*` 作为结尾。
 
 在下面的例子中处理器会匹配所有 URI 以 `/some/path` 开头的请求。
 
@@ -369,7 +369,7 @@ route.handler(routingContext -> {
 
 ### 通过正则表达式捕捉路径参数
 
-你也可以捕捉通过正则表达式声明的路径参数，下面是一个例子：
+您也可以捕捉通过正则表达式声明的路径参数，下面是一个例子：
 
 ```java
 Route route = router.routeWithRegex(".*foo");
@@ -391,7 +391,7 @@ route.pathRegex("\\/([^\\/]+)\\/([^\\/]+)").handler(routingContext -> {
 
 默认的，route 会匹配所有 HTTP method。
 
-如果你需要 route 只匹配指定的 HTTP method，你可以使用 [method](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#method-io.vertx.core.http.HttpMethod-) 方法。
+如果您需要 route 只匹配指定的 HTTP method，您可以使用 [method](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#method-io.vertx.core.http.HttpMethod-) 方法。
 
 ```java
 Route route = router.route().method(HttpMethod.POST);
@@ -415,7 +415,7 @@ route.handler(routingContext -> {
 });
 ```
 
-如果你想路由指定的 HTTP method ，你也可以使用对应的 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html#get--)、[post](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html#post--)、[put](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html#put--) 等方法。下面是一个例子：
+如果您想路由指定的 HTTP method ，您也可以使用对应的 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html#get--)、[post](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html#post--)、[put](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html#put--) 等方法。下面是一个例子：
 
 ```java
 router.get().handler(routingContext -> {
@@ -437,7 +437,7 @@ router.getWithRegex(".*foo").handler(routingContext -> {
 });
 ```
 
-如果你想一个 route 匹配不止一个 HTTP method，你可以调用 [method](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#method-io.vertx.core.http.HttpMethod-) 方法多次：
+如果您想一个 route 匹配不止一个 HTTP method，您可以调用 [method](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#method-io.vertx.core.http.HttpMethod-) 方法多次：
 
 ```java
 Route route = router.route().method(HttpMethod.POST).method(HttpMethod.PUT);
@@ -502,11 +502,11 @@ route3
 
 对于任意以 `/some/path` 开头的请求，route 会被依次调用。
 
-如果你想覆盖 route 默认的顺序，你可以通过 [order](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#order-int-) 方法为每一个 route 指定一个 integer 值。
+如果您想覆盖 route 默认的顺序，您可以通过 [order](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#order-int-) 方法为每一个 route 指定一个 integer 值。
 
 当 route 被创建时 order 会被赋值为其被添加到 router 时的序号，例如第一个 route 是 0，第二个是 1，以此类推。
 
-你可以使用特定的顺序值覆盖默认的顺序。如果你需要确保一个 route 在顺序 0 的 route 之前执行，可以将其指定为负值。
+您可以使用特定的顺序值覆盖默认的顺序。如果您需要确保一个 route 在顺序 0 的 route 之前执行，可以将其指定为负值。
 
 让我们改变 `route2` 的值使其能在 `route1` 之前执行：
 
@@ -556,12 +556,12 @@ route3
 
 如果两个匹配的 route 有相同的顺序值，则会按照添加它们的顺序来调用。
 
-你也可以通过 [last](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#last--) 方法来指定 route 最后执行。
+您也可以通过 [last](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#last--) 方法来指定 route 最后执行。
 
 
 ### 基于请求媒体类型（MIME types）的路由
 
-你可以使用 [consumes](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#consumes-java.lang.String-) 方法指定 route 匹配对应 MIME 类型的请求。
+您可以使用 [consumes](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#consumes-java.lang.String-) 方法指定 route 匹配对应 MIME 类型的请求。
 
 在这种情况下，如果请求中包含了消息头 `content-type` 声明了消息体的 MIME 类型。则它会与通过 [consumes](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#consumes-java.lang.String-) 方法声明的值进行比较。
 
@@ -598,7 +598,7 @@ router.route().consumes("text/*").handler(routingContext -> {
 });
 ```
 
-你也可以用通配符匹配顶级的类型（top level type）：
+您也可以用通配符匹配顶级的类型（top level type）：
 
 ```java
 router.route().consumes("*/json").handler(routingContext -> {
@@ -609,7 +609,7 @@ router.route().consumes("*/json").handler(routingContext -> {
 });
 ```
 
-如果你没有在 consumers 中包含 `/`，则意味着是一个子类型（sub-type）。
+如果您没有在 consumers 中包含 `/`，则意味着是一个子类型（sub-type）。
 
 ### 基于客户端可接受媒体类型（MIME types acceptable）的路由
 
@@ -633,7 +633,7 @@ Accept: text/plain; q=0.9, text/html
 
 在这种情况下，如果服务器可以同时提供 text/plain 和 text/html，它需要提供 text/html。
 
-你可以使用 [produces](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#produces-java.lang.String-) 来定义 route 可以提供哪些 MIME 类型。例如以下处理器可以提供 MIME 类型为 `application/json` 的响应。
+您可以使用 [produces](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#produces-java.lang.String-) 来定义 route 可以提供哪些 MIME 类型。例如以下处理器可以提供 MIME 类型为 `application/json` 的响应。
 
 ```java
 router.route().produces("application/json").handler(routingContext -> {
@@ -652,7 +652,7 @@ Accept: application/*
 Accept: application/json, text/html
 Accept: application/json;q=0.7, text/html;q=0.8, text/plain
 
-你也可以标记你的 route 提供不止一种 MIME 类型。在这种情况下，你可以使用 [getAcceptableContentType](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getAcceptableContentType--) 来找出真正被接受的 MIME 类型。
+您也可以标记您的 route 提供不止一种 MIME 类型。在这种情况下，您可以使用 [getAcceptableContentType](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getAcceptableContentType--) 来找出真正被接受的 MIME 类型。
 
 ```java
 router.route().produces("application/json").produces("text/html").handler(routingContext -> {
@@ -667,7 +667,7 @@ router.route().produces("application/json").produces("text/html").handler(routin
 });
 ```
 
-在上述例子中，如果你发送一个包含如下 `accept` 消息头的请求：
+在上述例子中，如果您发送一个包含如下 `accept` 消息头的请求：
 
 Accept: application/json; q=0.7, text/html
 
@@ -675,7 +675,7 @@ Accept: application/json; q=0.7, text/html
 
 ### 组合路由规则
 
-你可以用不同的方式来组合上述的路由规则，例如：
+您可以用不同的方式来组合上述的路由规则，例如：
 
 ```java
 Route route = router.route(HttpMethod.PUT, "myapi/orders")
@@ -691,17 +691,17 @@ route.handler(routingContext -> {
 
 ### 启用和停用 Route
 
-你可以通过 [disable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#disable--) 方法来停用一个 Route。停用的 Route 在匹配时会被忽略。
+您可以通过 [disable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#disable--) 方法来停用一个 Route。停用的 Route 在匹配时会被忽略。
 
-你可以用 [enable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#enable--) 方法来重新启用它。
+您可以用 [enable](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#enable--) 方法来重新启用它。
 
 ### 上下文数据
 
-在请求的生命周期中，你可以通过路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 来维护任何你希望在处理器之间共享的数据。
+在请求的生命周期中，您可以通过路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 来维护任何您希望在处理器之间共享的数据。
 
 以下是一个例子，一个处理器设置了一些数据，另一个处理器获取它：
 
-你可以使用 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#put-java.lang.String-java.lang.Object-) 方法向上下文设置任何对象，使用 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#get-java.lang.String-) 方法从上下文中获取任何对象。
+您可以使用 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#put-java.lang.String-java.lang.Object-) 方法向上下文设置任何对象，使用 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#get-java.lang.String-) 方法从上下文中获取任何对象。
 
 一个路径为 `/some/path/other` 的请求会同时匹配两个 Route:
 
@@ -722,12 +722,12 @@ router.get("/some/path/other").handler(routingContext -> {
 });
 ```
 
-另一种你可以访问上下文数据的方式是使用 [data](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#data--) 方法。
+另一种您可以访问上下文数据的方式是使用 [data](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#data--) 方法。
 
 
 ### 转发
 
-(4) 到目前为止，通过上述的路由机制你可以顺序地处理你的请求，但某些情况下你可能需要回退。由于处理器的顺序是动态的，路由上下文并没有暴露出任何关于前一个或后一个处理器的信息。唯一的方式是在当前的 router 里重启路由的流程。
+(4) 到目前为止，通过上述的路由机制您可以顺序地处理您的请求，但某些情况下您可能需要回退。由于处理器的顺序是动态的，路由上下文并没有暴露出任何关于前一个或后一个处理器的信息。唯一的方式是在当前的 router 里重启路由的流程。
 
 ```java
 router.get("/some/path").handler(routingContext -> {
@@ -748,7 +748,7 @@ router.get("/some/path").handler(routingContext -> {
 
 从代码中可以看到，如果一个到达的请求包含路径 `/some/path`，首先第一个处理器向上下文添加了值，然后路由到了下一个处理器。第二个处理器转发到了路径 `/some/path/B`，该处理器最后结束了响应。
 
-你可以使用路径或者同时使用路径和方法来转发。*注意，基于方法的重定向可能会带来安全问题，例如将一个通常安全的 GET 请求可能会成为 DELETE。*
+您可以使用路径或者同时使用路径和方法来转发。*注意，基于方法的重定向可能会带来安全问题，例如将一个通常安全的 GET 请求可能会成为 DELETE。*
 
 也可以在失败处理器中转发。由于转发的性质，在这种情况下，当前的状态码和失败原因也会被重置。因此在转发后的处理器应该根据需要生成正确的状态码，例如：
 
@@ -770,9 +770,9 @@ router.get().failureHandler(ctx -> {
 
 ### 子路由
 
-当你有很多处理器的情况下，合理的方式是将它们分隔为多个 routers。这也有利于你在多个不用的应用中通过设置不同的根路径来复用处理器。
+当您有很多处理器的情况下，合理的方式是将它们分隔为多个 routers。这也有利于您在多个不用的应用中通过设置不同的根路径来复用处理器。
 
-你可以通过将一个 router 挂载到另一个 router 的挂载点上来实现。挂载的 router 被称为子路由（Sub Router）。Sub router 上也可以挂载其他的 sub router。因此，你可以包含若干级别的 sub router。
+您可以通过将一个 router 挂载到另一个 router 的挂载点上来实现。挂载的 router 被称为子路由（Sub Router）。Sub router 上也可以挂载其他的 sub router。因此，您可以包含若干级别的 sub router。
 
 让我们看一个 sub router 挂载到另一个 router 上的例子：
 
@@ -854,7 +854,7 @@ Route route = router.get("/localized").handler( rc -> {
 ```
 
 方法 [acceptableLocales](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#acceptableLocales--) 会返回客户端能够理解的排序好的语言列表。
-如果你只关心用户偏好的语言，那么使用 [preferredLocale](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#preferredLocale--) 会返回列表的第一个元素。
+如果您只关心用户偏好的语言，那么使用 [preferredLocale](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#preferredLocale--) 会返回列表的第一个元素。
 如果用户没有提供，则返回空。
 
 
@@ -862,18 +862,18 @@ Route route = router.get("/localized").handler( rc -> {
 
 如果没有为请求匹配到任何 router，Vert.x-Web 会声明一个 404 错误。
 
-这可以被你自己实现的处理器处理，或者被我们提供的专用错误处理器（failureHandler）处理。
+这可以被您自己实现的处理器处理，或者被我们提供的专用错误处理器（failureHandler）处理。
 如果没有提供错误处理器，Vert.x-Web 会发送一个基本的 404 (Not  Found) 响应。
 
 ### 错误处理
 
-和设置处理器处理请求一样，你可以设置处理器处理路由过程中的失败。
+和设置处理器处理请求一样，您可以设置处理器处理路由过程中的失败。
 
 失败处理器和普通的处理器具有完全一样的路由匹配规则。
 
-例如你可以提供一个失败处理器只处理在某个路径上发生的失败，或某个 HTTP 方法。
+例如您可以提供一个失败处理器只处理在某个路径上发生的失败，或某个 HTTP 方法。
 
-这允许你在应用的不同部分设置不同的失败处理器。
+这允许您在应用的不同部分设置不同的失败处理器。
 
 下面例子中的失败处理器只会在路由路径为 `/somepath/` 的 GET 请求失败时被调用：
 
@@ -932,9 +932,9 @@ route3.failureHandler(failureRoutingContext -> {
 
 ### 处理请求消息体
 
-你可以使用消息体处理器 [BodyHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/BodyHandler.html) 来获取请求的消息体，限制消息体大小，或者处理文件上传。
+您可以使用消息体处理器 [BodyHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/BodyHandler.html) 来获取请求的消息体，限制消息体大小，或者处理文件上传。
 
-你需要保证消息体处理器能够匹配到所有你需要这个功能的请求。
+您需要保证消息体处理器能够匹配到所有您需要这个功能的请求。
 
 由于它需要在所有异步执行之前处理请求的消息体，因此这个处理器要尽可能早地设置到 router 上。
 
@@ -944,7 +944,7 @@ router.route().handler(BodyHandler.create());
 
 #### 获取请求的消息体
 
-如果你知道消息体的类型是 JSON，你可以使用 [getBodyAsJson](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getBodyAsJson--)；如果你知道它的类型是字符串，你可以使用 [getBodyAsString](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getBodyAsString--)；否则可以通过 [getBody](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getBody--) 作为 buffer 来处理。
+如果您知道消息体的类型是 JSON，您可以使用 [getBodyAsJson](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getBodyAsJson--)；如果您知道它的类型是字符串，您可以使用 [getBodyAsString](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getBodyAsString--)；否则可以通过 [getBody](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getBody--) 作为 buffer 来处理。
 
 #### 限制消息体大小
 
@@ -957,7 +957,7 @@ router.route().handler(BodyHandler.create());
 #### 合并表单属性
 
 消息体处理器默认地会合并表单属性到请求的参数里。
-如果你不需要这个行为，可以通过 [setMergeFormAttributes](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/BodyHandler.html#setMergeFormAttributes-boolean-) 来禁用。
+如果您不需要这个行为，可以通过 [setMergeFormAttributes](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/BodyHandler.html#setMergeFormAttributes-boolean-) 来禁用。
 
 #### 处理文件上传
 
@@ -987,7 +987,7 @@ router.post("/some/path/uploads").handler(routingContext -> {
 
 Vert.x-Web 通过 cookie 处理器 [CookieHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CookieHandler.html) 来支持 cookie。
 
-你需要保证 cookie 处理器器能够匹配到所有你需要这个功能的请求。
+您需要保证 cookie 处理器器能够匹配到所有您需要这个功能的请求。
 
 ```java
 router.route().handler(CookieHandler.create());
@@ -995,7 +995,7 @@ router.route().handler(CookieHandler.create());
 
 #### 操作 Cookie
 
-你可以使用 [getCookie](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getCookie-java.lang.String-) 来通过名称获取 cookie 值，或者使用 [cookies](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#cookies--) 获取整个集合。
+您可以使用 [getCookie](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getCookie-java.lang.String-) 来通过名称获取 cookie 值，或者使用 [cookies](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#cookies--) 获取整个集合。
 
 使用 [removeCookie](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#removeCookie-java.lang.String-) 来删除 cookie。
 
@@ -1003,7 +1003,7 @@ router.route().handler(CookieHandler.create());
 
 当向响应中写入响应消息头时，cookie 的集合会自动被回写到响应里，这样浏览器就可以存储下来。
 
-cookie 是使用 [Cookie](http://vertx.io/docs/apidocs/io/vertx/ext/web/Cookie.html) 对象来表述的。你可以通过它来获取名称、值、域名、路径或 cookie 的其他属性。
+cookie 是使用 [Cookie](http://vertx.io/docs/apidocs/io/vertx/ext/web/Cookie.html) 对象来表述的。您可以通过它来获取名称、值、域名、路径或 cookie 的其他属性。
 
 以下是一个查询和添加 cookie 的例子：
 
@@ -1032,15 +1032,15 @@ Vert.x-Web 使用会话 cookie(5) 来标示一个会话。会话 cookie 是临�
 
 我们不会在会话 cookie 中设置实际的会话数据，这个 cookie 只是在服务器上查找实际的会话数据时使用的标示。这个标示是一个通过安全的随机过程生成的 UUID，因此它是无法推测的(6)。
 
-Cookie 会在 HTTP 请求和响应之间传递。因此通过 HTTPS 来使用会话功能是明智的。如果你尝试直接通过 HTTP 使用会话，Vert.x-Web 会给于警告。
+Cookie 会在 HTTP 请求和响应之间传递。因此通过 HTTPS 来使用会话功能是明智的。如果您尝试直接通过 HTTP 使用会话，Vert.x-Web 会给于警告。
 
-你需要在匹配的 route 上注册会话处理器 [SessionHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/SessionHandler.html) 来启用会话功能，并确保它能够在应用逻辑之前执行。
+您需要在匹配的 route 上注册会话处理器 [SessionHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/SessionHandler.html) 来启用会话功能，并确保它能够在应用逻辑之前执行。
 
-会话处理器会创建会话 cookie 并查找会话信息，你不需要自己来实现。
+会话处理器会创建会话 cookie 并查找会话信息，您不需要自己来实现。
 
 #### 会话存储
 
-你需要提供一个会话存储对象来创建会话处理器。会话存储用于维持会话数据。
+您需要提供一个会话存储对象来创建会话处理器。会话存储用于维持会话数据。
 
 会话存储持有一个伪随机数生成器（PRNG）用于安全地生成会话标示。PRNG 是独立于存储的，这意味着对于给定的存储 A 的会话标示是不能够派发出存储 B 的会话标示的，因为他们具有不同的种子和状态。
 
@@ -1050,17 +1050,17 @@ PRNG 默认使用混合模式，阻塞式地刷新种子，非阻塞式地生成
 - io.vertx.ext.auth.prng.seed.interval e.g.: 1000 (every second)
 - io.vertx.ext.auth.prng.seed.bits e.g.: 128
 
-大多数用户并不需要配置这些值，除非你发现应用的性能被 PRNG 的算法所影响。
+大多数用户并不需要配置这些值，除非您发现应用的性能被 PRNG 的算法所影响。
 
-Vert.x-Web 提供了两种开箱即用的会话存储实现，你也可以编写你自己的实现。
+Vert.x-Web 提供了两种开箱即用的会话存储实现，您也可以编写您自己的实现。
 
 ##### 本地会话存储
 
 该存储将会话保存在内存中，并只在当前实例中有效。
 
-这个存储适用于你只有一个 Vert.x 实例的情况，或者你正在使用粘性会话。也就是说你可以配置你的负载均衡器来确保所有请求（来自同一用户的）永远被派发到同一个 Vert.x 实例上。
+这个存储适用于您只有一个 Vert.x 实例的情况，或者您正在使用粘性会话。也就是说您可以配置您的负载均衡器来确保所有请求（来自同一用户的）永远被派发到同一个 Vert.x 实例上。
 
-如果你不能够保证这一点，那么就不要使用这个存储。这会导致请求被派发到无法识别这个会话的服务器上。
+如果您不能够保证这一点，那么就不要使用这个存储。这会导致请求被派发到无法识别这个会话的服务器上。
 
 本地会话存储基于本地的共享 Map来实现，并包含了一个用于清理过期会话的回收器。
 
@@ -1072,7 +1072,7 @@ Vert.x-Web 提供了两种开箱即用的会话存储实现，你也可以编写
 SessionStore store1 = LocalSessionStore.create(vertx);
 
 // 通过指定的 Map 名称创建了一个本地会话存储
-// 这适用于你在同一个 Vert.x 实例中有多个应用，并且希望不同的应用使用不同的 Map 的情况
+// 这适用于您在同一个 Vert.x 实例中有多个应用，并且希望不同的应用使用不同的 Map 的情况
 SessionStore store2 = LocalSessionStore.create(vertx, "myapp3.sessionmap");
 
 // 通过指定的 Map 名称创建了一个本地会话存储
@@ -1084,11 +1084,11 @@ SessionStore store3 = LocalSessionStore.create(vertx, "myapp3.sessionmap", 10000
 
 该存储将会话保存在分布式 Map 中，该 Map 可以在 Vert.x 集群中共享访问。
 
-这个存储适用于你没有使用粘性会话的情况。比如你的负载均衡器会将来自同一个浏览器的不同请求转发到不同的服务器上。
+这个存储适用于您没有使用粘性会话的情况。比如您的负载均衡器会将来自同一个浏览器的不同请求转发到不同的服务器上。
 
-通过这个存储，你的会话可以被集群中的任何节点访问。
+通过这个存储，您的会话可以被集群中的任何节点访问。
 
-如果要使用集群会话存储，你需要确保你的 Vert.x 实例是集群式的。
+如果要使用集群会话存储，您需要确保您的 Vert.x 实例是集群式的。
 
 以下是一些创建 [ClusteredSessionStore](http://vertx.io/docs/apidocs/io/vertx/ext/web/sstore/ClusteredSessionStore.html) 的例子：
 
@@ -1101,16 +1101,16 @@ Vertx.clusteredVertx(new VertxOptions().setClustered(true), res -> {
   SessionStore store1 = ClusteredSessionStore.create(vertx);
 
   // 通过指定的 Map 名称创建了一个集群会话存储
-  // 这适用于你在集群中有多个应用，并且希望不同的应用使用不同的 Map 的情况
+  // 这适用于您在集群中有多个应用，并且希望不同的应用使用不同的 Map 的情况
   SessionStore store2 = ClusteredSessionStore.create(vertx, "myclusteredapp3.sessionmap");
 });
 ```
 
 #### 创建会话处理器
 
-当你创建会话存储之后，你可以创建一个会话处理器，并添加到 route 上。你需要确保会话处理器在你的应用处理器之前被执行。
+当您创建会话存储之后，您可以创建一个会话处理器，并添加到 route 上。您需要确保会话处理器在您的应用处理器之前被执行。
 
-由于会话处理器需要使用 cookie 来查找会话，因此你还需要包含一个 cookie 处理器。这个 cookie 处理器需要在会话处理器之前被执行。
+由于会话处理器需要使用 cookie 来查找会话，因此您还需要包含一个 cookie 处理器。这个 cookie 处理器需要在会话处理器之前被执行。
 
 以下是例子：
 
@@ -1128,7 +1128,7 @@ SessionHandler sessionHandler = SessionHandler.create(store);
 // 确保所有请求都会经过 session 处理器
 router.route().handler(sessionHandler);
 
-// 你自己的应用处理器
+// 您自己的应用处理器
 router.route("/somepath/blah/").handler(routingContext -> {
 
   Session session = routingContext.session();
@@ -1138,13 +1138,13 @@ router.route("/somepath/blah/").handler(routingContext -> {
 });
 ```
 
-会话处理器会自动从会话存储中查找会话（如果没有则创建），并在你的应用处理器执行之前设置在上下文中。
+会话处理器会自动从会话存储中查找会话（如果没有则创建），并在您的应用处理器执行之前设置在上下文中。
 
 #### 使用会话
 
-在你的处理器中，你可以通过 [session](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#session--) 方法来访问会话对象。
+在您的处理器中，您可以通过 [session](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#session--) 方法来访问会话对象。
 
-你可以通过 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#put-java.lang.String-java.lang.Object-) 方法来向会话中设置数据，通过 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#get-java.lang.String-) 方法来获取数据，通过 [remove](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#remove-java.lang.String-) 方法来删除数据。
+您可以通过 [put](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#put-java.lang.String-java.lang.Object-) 方法来向会话中设置数据，通过 [get](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#get-java.lang.String-) 方法来获取数据，通过 [remove](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#remove-java.lang.String-) 方法来删除数据。
 
 会话中的键的类型必须是字符串。本地会话存储的值可以是任何类型；集群会话存储的值类型可以是基本类型，或者 [Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)、[JsonObject](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)、[JsonArray](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html) 或可序列化对象。因为这些值需要在集群中进行序列化。
 
@@ -1154,7 +1154,7 @@ router.route("/somepath/blah/").handler(routingContext -> {
 router.route().handler(CookieHandler.create());
 router.route().handler(sessionHandler);
 
-// 你的应用处理器
+// 您的应用处理器
 router.route("/somepath/blah").handler(routingContext -> {
 
   Session session = routingContext.session();
@@ -1173,7 +1173,7 @@ router.route("/somepath/blah").handler(routingContext -> {
 
 在响应完成后会话会自动回写到存储中。
 
-你可以使用  [destroy](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#destroy--) 来销毁一个会话。这会将这个会话同时从上下文和存储中删除。*注意，在删除会话之后，下一次通过浏览器访问并经过会话处理器处理时，会自动创建新的会话。*
+您可以使用  [destroy](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#destroy--) 来销毁一个会话。这会将这个会话同时从上下文和存储中删除。*注意，在删除会话之后，下一次通过浏览器访问并经过会话处理器处理时，会自动创建新的会话。*
 
 #### 会话超时
 
@@ -1181,7 +1181,7 @@ router.route("/somepath/blah").handler(routingContext -> {
 
 当请求到达，访问了会话，并且在响应完成向会话存储回写会话时，会话会被标记为被访问的。
 
-你也可以通过 [setAccessed](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#setAccessed--) 来人工指定会话被访问。
+您也可以通过 [setAccessed](http://vertx.io/docs/apidocs/io/vertx/ext/web/Session.html#setAccessed--) 来人工指定会话被访问。
 
 可以在创建会话处理器时配置超时时间。默认的超时时间是 30 分钟。
 
@@ -1191,7 +1191,7 @@ Vert.x-Web 提供了若干开箱即用的处理器来处理认证和授权。
 
 #### 创建认证处理器
 
-你需要一个 [AuthProvider](http://vertx.io/docs/apidocs/io/vertx/ext/auth/AuthProvider.html) 实例来创建认证处理器。Auth provider 用于为用户提供认证和授权。Vert.x 在 `vertx-auth` 项目中提供了若干开箱即用的 auth provider。完整的 auth provider 的配置和用法请参考 [vertx-auth 的文档](../auth/Auth.md)。
+您需要一个 [AuthProvider](http://vertx.io/docs/apidocs/io/vertx/ext/auth/AuthProvider.html) 实例来创建认证处理器。Auth provider 用于为用户提供认证和授权。Vert.x 在 `vertx-auth` 项目中提供了若干开箱即用的 auth provider。完整的 auth provider 的配置和用法请参考 [vertx-auth 的文档](../auth/Auth.md)。
 
 以下是一个使用 auth provider 来创建认证处理器的例子：
 
@@ -1202,9 +1202,9 @@ router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
 AuthHandler basicAuthHandler = BasicAuthHandler.create(authProvider);
 ```
 
-#### 在你的应用中处理认证
+#### 在您的应用中处理认证
 
-我们来假设你希望所有路径为 `/private` 的请求都需要认证控制。为了实现这个，你需要确保你的认证处理器匹配这个路径，并在你的应用处理器之前执行：
+我们来假设您希望所有路径为 `/private` 的请求都需要认证控制。为了实现这个，您需要确保您的认证处理器匹配这个路径，并在您的应用处理器之前执行：
 
 ```java
 router.route().handler(CookieHandler.create());
@@ -1232,19 +1232,19 @@ router.route("/private/somepath").handler(routingContext -> {
 });
 ```
 
-如果认证处理器完成了授权和认证，它会向 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 中注入一个 [User](http://vertx.io/docs/apidocs/io/vertx/ext/auth/User.html) 对象。你可以通过 [user](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#user--) 方法在你的处理器中获取到该对象。
+如果认证处理器完成了授权和认证，它会向 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 中注入一个 [User](http://vertx.io/docs/apidocs/io/vertx/ext/auth/User.html) 对象。您可以通过 [user](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#user--) 方法在您的处理器中获取到该对象。
 
-如果你希望在回话中存储用户对象，以避免对所有的请求都执行认证过程，你需要使用会话处理器。确保它匹配了对应的路径，并且会在认证处理器之前执行。
+如果您希望在回话中存储用户对象，以避免对所有的请求都执行认证过程，您需要使用会话处理器。确保它匹配了对应的路径，并且会在认证处理器之前执行。
 
-一旦你获取到了 user 对象，你可以通过编程的方式来使用它的相关方法为用户授权。
+一旦您获取到了 user 对象，您可以通过编程的方式来使用它的相关方法为用户授权。
 
-如果你希望用户登出，你可以调用上下文的 [clearUser](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#clearUser--) 方法。
+如果您希望用户登出，您可以调用上下文的 [clearUser](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#clearUser--) 方法。
 
 #### HTTP 基础认证
 
 HTTP基础认证是适用于简单应用的简单认证手段。
 
-在这种认证方式下， 证书会以非加密的形式在 HTTP 请求中传输。因此，使用 HTTPS 而非 HTTP 来实现你的应用是非常必要的。
+在这种认证方式下， 证书会以非加密的形式在 HTTP 请求中传输。因此，使用 HTTPS 而非 HTTP 来实现您的应用是非常必要的。
 
 当用户请求一个需要授权的资源，基础认证处理器会返回一个包含 `WWW-Authenticate` 消息头的 `401` 响应。浏览器会显示一个登录窗口并提示用户输入他们的用户名和密码。
 
@@ -1260,9 +1260,9 @@ HTTP基础认证是适用于简单应用的简单认证手段。
 
 当用户提交登录表单，服务器会处理用户认证。如果成功，则将用户重定向到原始的资源上。
 
-则你可以配置一个 [RedirectAuthHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/RedirectAuthHandler.html) 对象来使用重定向处理器。
+则您可以配置一个 [RedirectAuthHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/RedirectAuthHandler.html) 对象来使用重定向处理器。
 
-你还需要配置用于处理登录页面的处理器，以及实际处理登录的处理器。我们提供了一个内置的处理器 [FormLoginHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/FormLoginHandler.html) 来处理登录的问题。
+您还需要配置用于处理登录页面的处理器，以及实际处理登录的处理器。我们提供了一个内置的处理器 [FormLoginHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/FormLoginHandler.html) 来处理登录的问题。
 
 这里是一个简单的例子，使用了一个重定向认证处理器并使用默认的重定向 url `/loginpage`。
 
@@ -1277,10 +1277,10 @@ AuthHandler redirectAuthHandler = RedirectAuthHandler.create(authProvider);
 router.route("/private/*").handler(redirectAuthHandler);
 
 // 处理登录请求
-// 你的登录页需要 POST 登录表单数据
+// 您的登录页需要 POST 登录表单数据
 router.post("/login").handler(FormLoginHandler.create(authProvider));
 
-// 处理静态资源，例如你的登录页
+// 处理静态资源，例如您的登录页
 router.route().handler(StaticHandler.create());
 
 router.route("/someotherpath").handler(routingContext -> {
@@ -1349,7 +1349,7 @@ router.route("/protected/somepage").handler(ctx -> {
 });
 ```
 
-JWT 允许你向令牌中添加任何你需要的信息，只需要在创建令牌时向 JsonObject 参数中添加数据即可。这样做服务器上不存在任何的会话状态，你可以在不依赖集群会话数据的情况下对应用进行扩展。
+JWT 允许您向令牌中添加任何您需要的信息，只需要在创建令牌时向 JsonObject 参数中添加数据即可。这样做服务器上不存在任何的会话状态，您可以在不依赖集群会话数据的情况下对应用进行扩展。
 
 ```java
 JsonObject authConfig = new JsonObject().put("keyStore", new JsonObject()
@@ -1373,11 +1373,11 @@ Handler<RoutingContext> handler = rc -> {
 
 #### 配置所需的权限
 
-你可以对认证处理器配置访问资源所需的权限。
+您可以对认证处理器配置访问资源所需的权限。
 
 默认的，如果不配置权限，那么只要登录了就可以访问资源。否则，用户不仅需要登录，而且需要具有所需的权限。
 
-以下的例子定义了一个应用，该应用的不同部分需要不同的权限。*注意，权限的含义取决于你使用的的 auth provider。例如一些支持角色/权限的模型，另一些可能是其他的模型。*
+以下的例子定义了一个应用，该应用的不同部分需要不同的权限。*注意，权限的含义取决于您使用的的 auth provider。例如一些支持角色/权限的模型，另一些可能是其他的模型。*
 
 ```java
 AuthHandler listProductsAuthHandler = RedirectAuthHandler.create(authProvider);
@@ -1395,9 +1395,9 @@ router.route("/private/settings/*").handler(settingsAuthHandler);
 
 ### 静态资源服务
 
-Vert.x-Web 提供了一个开箱即用的处理器来提供静态的 web 资源。你可以非常容易地编写静态的 web 服务器。
+Vert.x-Web 提供了一个开箱即用的处理器来提供静态的 web 资源。您可以非常容易地编写静态的 web 服务器。
 
-你可以使用静态资源处理器 [StaticHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html) 来提供诸如 `.html`、`.css`、`.js`  或其他类型的静态资源。
+您可以使用静态资源处理器 [StaticHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html) 来提供诸如 `.html`、`.css`、`.js`  或其他类型的静态资源。
 
 每一个被静态资源处理器处理的请求都会返回文件系统的某个目录或 classpath 里的文件。文件的根目录是可以配置的，默认为 `webroot`。 
 
@@ -1409,7 +1409,7 @@ router.route("/static/*").handler(StaticHandler.create());
 
 例如，对于一个路径为 `/static/css/mystyles.css` 的请求，静态处理器会在该路径中查找文件 `webroot/css/mystyle.css` (8)。
 
-它也会在 classpath 中查找文件 `webroot/css/mystyle.css`。这意味着你可以将所有的静态资源打包到一个 jar 文件（或 fatjar）里进行分发。
+它也会在 classpath 中查找文件 `webroot/css/mystyle.css`。这意味着您可以将所有的静态资源打包到一个 jar 文件（或 fatjar）里进行分发。
 
 当 Vert.x 在 classpath 中第一次找到一个资源时，会将它提取到一个磁盘的缓存目录中以避免每一次都重新提取。
 
@@ -1431,11 +1431,11 @@ Vert.x-Web 会在响应里设置这些消息头：`cache-control`、`last-modifi
 
 缓存有过期时间，在这个时间之后，会重新访问磁盘检查文件并更新缓存。
 
-默认的，如果你的文件永远不会发生变化，则缓存内容会永远有效。
+默认的，如果您的文件永远不会发生变化，则缓存内容会永远有效。
 
-如果你的文件在服务器运行过程中可能发生变化，你可以通过 [setFilesReadOnly](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setFilesReadOnly-boolean-) 方法设置文件的只读属性为 false。
+如果您的文件在服务器运行过程中可能发生变化，您可以通过 [setFilesReadOnly](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setFilesReadOnly-boolean-) 方法设置文件的只读属性为 false。
 
-你可以通过 [setMaxCacheSize](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setMaxCacheSize-int-) 方法来设置内存缓存的最大数量。通过 [setCacheEntryTimeout](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setCacheEntryTimeout-long-) 方法来设置缓存的过期时间。
+您可以通过 [setMaxCacheSize](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setMaxCacheSize-int-) 方法来设置内存缓存的最大数量。通过 [setCacheEntryTimeout](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setCacheEntryTimeout-long-) 方法来设置缓存的过期时间。
 
 #### 配置索引页
 
@@ -1449,7 +1449,7 @@ Vert.x-Web 会在响应里设置这些消息头：`cache-control`、`last-modifi
 
 默认的，处理器会为隐藏文件提供服务（文件名以 `.` 开头的文件）。
 
-如果你不需要为隐藏文件提供服务，可以通过 [setIncludeHidden](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setIncludeHidden-boolean-) 方法来配置。
+如果您不需要为隐藏文件提供服务，可以通过 [setIncludeHidden](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setIncludeHidden-boolean-) 方法来配置。
 
 #### 列举目录
 
@@ -1463,15 +1463,15 @@ Vert.x-Web 会在响应里设置这些消息头：`cache-control`、`last-modifi
 
 默认情况下，Vert.x 会使用当前工作目录的子目录 `.vertx` 来在磁盘上缓存通过 classpath 服务的静态资源。这对于在生产环境中通过 fatjar 来部署的服务是很重要的。因为每一次都通过 classpath 来提取文件是低效的。
 
-这在开发时会导致一个问题，例如当你通过 IDE 的运行配置来启动你的应用时，如果你修改了文件，缓存的文件时不会被更新的。
+这在开发时会导致一个问题，例如当您通过 IDE 的运行配置来启动您的应用时，如果您修改了文件，缓存的文件时不会被更新的。
 
-你可以通过设置系统属性 `vertx.disableFileCaching` 为 false 来禁用文件缓存。
+您可以通过设置系统属性 `vertx.disableFileCaching` 为 false 来禁用文件缓存。
 
 ### 处理跨域资源共享
 
 跨域资源共享（[Cross Origin Resource Sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing)）是一个安全机制。该机制允许了浏览器在一个域名下访问另一个域名的资源。
 
-Vert.x-Web 提供了一个处理器 [CorsHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CorsHandler.html) 来为你处理 CORS 协议。
+Vert.x-Web 提供了一个处理器 [CorsHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CorsHandler.html) 来为您处理 CORS 协议。
 
 这是一个例子：
 
@@ -1480,14 +1480,14 @@ router.route().handler(CorsHandler.create("vertx\\.io").allowedMethod(HttpMethod
 
 router.route().handler(routingContext -> {
 
-  // 你的应用处理
+  // 您的应用处理
 
 });
 ```
 
 ### 模板
 
-Vert.x-Web 为若干流行的模板引擎提供了开箱即用的支持，通过这种方式来提供生成动态页面的能力。你也可以很容易地添加你自己的实现。
+Vert.x-Web 为若干流行的模板引擎提供了开箱即用的支持，通过这种方式来提供生成动态页面的能力。您也可以很容易地添加您自己的实现。
 
 模板引擎 [TemplateEngine](http://vertx.io/docs/apidocs/io/vertx/ext/web/templ/TemplateEngine.html) 定义了使用模板引擎的接口，当渲染模板时会调用 [render](http://vertx.io/docs/apidocs/io/vertx/ext/web/templ/TemplateEngine.html#render-io.vertx.ext.web.RoutingContext-java.lang.String-io.vertx.core.Handler-) 方法。
 
@@ -1497,9 +1497,9 @@ Vert.x-Web 为若干流行的模板引擎提供了开箱即用的支持，通过
 
 该处理器会返回渲染的结果，并默认设置 `Content-Type` 消息头为 `text/html`。这也是可以配置的。
 
-你需要在创建模板处理器时提供你需要使用的模板引擎的实例。
+您需要在创建模板处理器时提供您需要使用的模板引擎的实例。
 
-模板引擎的实现没有内嵌在 Vert.x-Web 里，你需要配置你的项目来访问它们。Vert.x-Web 提供了每一种模板引擎的配置。
+模板引擎的实现没有内嵌在 Vert.x-Web 里，您需要配置您的项目来访问它们。Vert.x-Web 提供了每一种模板引擎的配置。
 
 以下是一个例子：
 
@@ -1517,11 +1517,11 @@ router.getWithRegex(".+\\.hbs").handler(handler);
 
 #### MVEL 模板引擎
 
-你需要在你的项目中添加这些依赖来使用 MVEL 模板引擎：`io.vertx:vertx-web-templ-mvel:3.4.1`。通过这个方法来创建 MVEL 模板引擎的实例：`io.vertx.ext.web.templ.MVELTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 MVEL 模板引擎：`io.vertx:vertx-web-templ-mvel:3.4.1`。通过这个方法来创建 MVEL 模板引擎的实例：`io.vertx.ext.web.templ.MVELTemplateEngine#create()`。
 
 在使用 MVEL 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.templ` 的文件。
 
-在 MVEL 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+在 MVEL 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着您可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
 
 这是一个例子：
 
@@ -1537,11 +1537,11 @@ The value 'bar' from the context data is @{context.get('bar')}
 
 #### Jade 模板引擎
 
-你需要在你的项目中添加这些依赖来使用 Jade 模板引擎：`io.vertx:vertx-web-templ-jade:3.4.1`。通过这个方法来创建 Jade 模板引擎的实例：`io.vertx.ext.web.templ.JadeTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Jade 模板引擎：`io.vertx:vertx-web-templ-jade:3.4.1`。通过这个方法来创建 Jade 模板引擎的实例：`io.vertx.ext.web.templ.JadeTemplateEngine#create()`。
 
 在使用 Jade 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.jade` 的文件。
 
-在 Jade 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+在 Jade 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着您可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
 
 这是一个例子：
 
@@ -1557,7 +1557,7 @@ html
 
 #### Handlebars 模板引擎
 
-你需要在你的项目中添加这些依赖来使用 Handlebars：`io.vertx:vertx-web-templ-handlebars:3.4.1`。通过这个方法来创建 Handlebars 模板引擎的实例：`io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Handlebars：`io.vertx:vertx-web-templ-handlebars:3.4.1`。通过这个方法来创建 Handlebars 模板引擎的实例：`io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()`。
 
 在使用 Handlebars 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.hbs` 的文件。
 
@@ -1565,7 +1565,7 @@ Handlebars 不允许在模板中随意地调用对象的方法，因此我们不
 
 替代方案是，可以使用 [data](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#data--) 来访问上下文数据。
 
-如果你要访问某些上下文数据里不存在的信息，比如请求的路径、请求参数或者会话等，你需要在模板处理器执行之前将他们添加到上下文数据里，例如：
+如果您要访问某些上下文数据里不存在的信息，比如请求的路径、请求参数或者会话等，您需要在模板处理器执行之前将他们添加到上下文数据里，例如：
 
 ```handlebars
 TemplateHandler handler = TemplateHandler.create(engine);
@@ -1585,11 +1585,11 @@ router.get("/dynamic/").handler(handler);
 
 #### Thymeleaf 模板引擎
 
-你需要在你的项目中添加这些依赖来使用 Thymeleaf：`io.vertx:vertx-web-templ-thymeleaf:3.4.1`。通过这个方法来创建 Thymeleaf 模板引擎的实例：`io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Thymeleaf：`io.vertx:vertx-web-templ-thymeleaf:3.4.1`。通过这个方法来创建 Thymeleaf 模板引擎的实例：`io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()`。
 
 在使用 Thymeleaf 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.html` 的文件。
 
-在 Thymeleaf 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+在 Thymeleaf 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着您可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
 
 这是一个例子：
 
@@ -1607,11 +1607,11 @@ router.get("/dynamic/").handler(handler);
 
 ### Apache FreeMarker 模板引擎
 
-你需要在你的项目中添加这些依赖来使用 Apache FreeMarker：`io.vertx:vertx-web-templ-freemarker:3.4.1`。通过这个方法来创建 Apache FreeMarker 模板引擎的实例：`io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Apache FreeMarker：`io.vertx:vertx-web-templ-freemarker:3.4.1`。通过这个方法来创建 Apache FreeMarker 模板引擎的实例：`io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()`。
 
 在使用 Apache FreeMarker 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.ftl` 的文件。
 
-在 Apache FreeMarker 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+在 Apache FreeMarker 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着您可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
 
 这是一个例子：
 
@@ -1629,11 +1629,11 @@ router.get("/dynamic/").handler(handler);
 
 ### Pebble 模板引擎
 
-你需要在你的项目中添加这些依赖来使用 Pebble：`io.vertx:vertx-web-templ-pebble:3.4.0-SNAPSHOT`。通过这个方法来创建 Pebble 模板引擎的实例：`io.vertx.ext.web.templ.PebbleTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Pebble：`io.vertx:vertx-web-templ-pebble:3.4.0-SNAPSHOT`。通过这个方法来创建 Pebble 模板引擎的实例：`io.vertx.ext.web.templ.PebbleTemplateEngine#create()`。
 
 在使用 Pebble 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.peb` 的文件。
 
-在 Pebble 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着你可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
+在 Pebble 模板中可以通过 `context` 变量来访问路由上下文 [RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 对象。这也意味着您可以基于上下文里的任何信息来渲染模板，包括请求、响应、会话或者上下文数据。
 
 这是一个例子：
 
@@ -1651,9 +1651,9 @@ router.get("/dynamic/").handler(handler);
 
 ### 错误处理
 
-你可以用模板处理器来渲染错误信息，或者使用 Vert.x-Web 内置的一个 ”漂亮“ 的、开箱即用的错误处理器来渲染错误页面。
+您可以用模板处理器来渲染错误信息，或者使用 Vert.x-Web 内置的一个 ”漂亮“ 的、开箱即用的错误处理器来渲染错误页面。
 
-这个处理器是 [ErrorHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/ErrorHandler.html)。你只需要在需要覆盖到的路径上将它设置为失败处理器(9)来使用它。
+这个处理器是 [ErrorHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/ErrorHandler.html)。您只需要在需要覆盖到的路径上将它设置为失败处理器(9)来使用它。
 
 ### 请求日志
 
@@ -1665,7 +1665,7 @@ Vert.x-Web 提供了一个用于记录 HTTP 请求的处理器 [LoggerHandler](h
 
 Vert.x-Web 通过内置的处理器 [FaviconHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/FaviconHandler.html) 来提供网页图标。
 
-图标可以指定为文件系统上的某个路径，否则 Vert.x-Web 默认会在 classpath 上寻找 `favicon.ico` 文件。这意味着你可以将图标打包到你的应用的 jar 包里。
+图标可以指定为文件系统上的某个路径，否则 Vert.x-Web 默认会在 classpath 上寻找 `favicon.ico` 文件。这意味着您可以将图标打包到您的应用的 jar 包里。
 
 ### 超时处理器
 
@@ -1718,7 +1718,7 @@ router.get("/api/books").produces("application/json").handler(rc -> {
 });
 ```
 
-这个处理器会通过 [getAcceptableContentType](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getAcceptableContentType--) 方法来选择适当的 contetn type。因此，你可以很容易地使用同一个处理器来提供不同类型的数据：
+这个处理器会通过 [getAcceptableContentType](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#getAcceptableContentType--) 方法来选择适当的 contetn type。因此，您可以很容易地使用同一个处理器来提供不同类型的数据：
 
 ```java
 router.route("/api/*").handler(ResponseContentTypeHandler.create());
@@ -1739,19 +1739,19 @@ router.get("/api/books").produces("text/xml").produces("application/json").handl
 
 ### SockJS
 
-SockJS 是一个客户端的 JavaScript 库。它提供了类似 WebSocket 的接口为你和 SockJS 服务端建立连接。你不必关注浏览器或网络是否真的是 WebSocket。
+SockJS 是一个客户端的 JavaScript 库。它提供了类似 WebSocket 的接口为您和 SockJS 服务端建立连接。您不必关注浏览器或网络是否真的是 WebSocket。
 
 它提供了若干不同的传输方式，并在运行时根据浏览器和网络的兼容性来选择使用哪种传输方式处理。
 
-所有这些对你是透明的，你只需要简单地使用类似 WebSocket 的接口。
+所有这些对您是透明的，您只需要简单地使用类似 WebSocket 的接口。
 
 请访问 [SockJS 网站](https://github.com/sockjs/sockjs-client) 来获取 SockJS 的详细信息。
 
 #### SockJS 处理器
 
-Vert.x-Web 提供了一个开箱即用的处理器 [SockJSHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html) 来让你在 Vert.x-Web 应用中使用  SockJS。
+Vert.x-Web 提供了一个开箱即用的处理器 [SockJSHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html) 来让您在 Vert.x-Web 应用中使用  SockJS。
 
-你需要通过 [SockJSHandler.create](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html#create-io.vertx.core.Vertx-) 方法为每一个 SockJS 的应用创建这个处理器。你也可以在创建处理器时通过 [SockJSHandlerOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandlerOptions.html) 对象来指定配置选项。
+您需要通过 [SockJSHandler.create](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html#create-io.vertx.core.Vertx-) 方法为每一个 SockJS 的应用创建这个处理器。您也可以在创建处理器时通过 [SockJSHandlerOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandlerOptions.html) 对象来指定配置选项。
 
 ```java
 Router router = Router.router(vertx);
@@ -1765,9 +1765,9 @@ router.route("/myapp/*").handler(sockJSHandler);
 
 #### 处理  SockJS 套接字
 
-你可以在服务器端设置一个处理器，这个处理器会在每次客户端创建连接时被调用：
+您可以在服务器端设置一个处理器，这个处理器会在每次客户端创建连接时被调用：
 
-调用这个处理器的参数是一个 [SockJSSocket](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSSocket.html) 对象。这是一个类似套接字的接口，你可以向使用 [NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html) 和 [WebSocket](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html) 那样通过它来读写数据。它实现了 [ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html) 和 [WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html) 接口，因此你可以将它套用（pump）到其他的读写流上。
+调用这个处理器的参数是一个 [SockJSSocket](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSSocket.html) 对象。这是一个类似套接字的接口，您可以向使用 [NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html) 和 [WebSocket](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html) 那样通过它来读写数据。它实现了 [ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html) 和 [WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html) 接口，因此您可以将它套用（pump）到其他的读写流上。
 
 下面的例子中的 SockJS 处理器直接使用了它读取到的数据进行回写：
 
@@ -1789,11 +1789,11 @@ router.route("/myapp/*").handler(sockJSHandler);
 
 #### 客户端
 
-在客户端 JavaScript 环境里你需要通过 SockJS 的客户端库来建立连接。
+在客户端 JavaScript 环境里您需要通过 SockJS 的客户端库来建立连接。
 
 [SockJS 客户端的地址](http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js)
 
-完整的细节可以在 [SockJS 的网站](https://github.com/sockjs/sockjs-client) 中找到，简单来说你会像这样使用：
+完整的细节可以在 [SockJS 的网站](https://github.com/sockjs/sockjs-client) 中找到，简单来说您会像这样使用：
 
 ```javascript
 var sock = new SockJS('http://mydomain.com/myapp');
@@ -1900,9 +1900,9 @@ var eb = new EventBus('http://localhost:8080/eventbus');
 
 在连接打开之前，我们什么也做不了。当它打开后，会回调 `onopen` 函数处理。
 
-你可以通过依赖管理器来获取客户端库：
+您可以通过依赖管理器来获取客户端库：
 
-- Maven （在你的 `pom.xml` 文件里） 
+- Maven （在您的 `pom.xml` 文件里） 
 
 ```xml
 <dependency>
@@ -1914,7 +1914,7 @@ var eb = new EventBus('http://localhost:8080/eventbus');
 </dependency>
 ```
 
-- Gradle（在你的 `build.gradle` 文件里）
+- Gradle（在您的 `build.gradle` 文件里）
 
 ```gradle
 compile 'io.vertx:vertx-web:3.4.1:client'
@@ -1926,29 +1926,29 @@ compile 'io.vertx:vertx-web:3.4.1:client'
 
 #### 安全的桥接
 
-如果你像上面的例子一样启动一个桥接器，并试图发送消息，你会发现你的消息神秘地失踪了。发生了什么？
+如果您像上面的例子一样启动一个桥接器，并试图发送消息，您会发现您的消息神秘地失踪了。发生了什么？
 
-对于大多数的应用，你应该不希望客户端的 JavaScript 代码可以发送任何消息到任何的服务端处理器或其他所有浏览器上。
+对于大多数的应用，您应该不希望客户端的 JavaScript 代码可以发送任何消息到任何的服务端处理器或其他所有浏览器上。
 
-例如，你可能在 event bus 上注册了一个服务，用于访问和删除数据。但我们并不希望恶意的客户端能够通过这个服务来操作数据库中的数据。并且，我们也不希望客户端能够监听所有 event bus 上的地址。
+例如，您可能在 event bus 上注册了一个服务，用于访问和删除数据。但我们并不希望恶意的客户端能够通过这个服务来操作数据库中的数据。并且，我们也不希望客户端能够监听所有 event bus 上的地址。
 
-为了解决这个问题，SockJS 默认的会拒绝所有的消息。你需要告诉桥接器哪些消息是可以通过的。（例外情况是，所有的回复消息都是可以通过的）。
+为了解决这个问题，SockJS 默认的会拒绝所有的消息。您需要告诉桥接器哪些消息是可以通过的。（例外情况是，所有的回复消息都是可以通过的）。
 
 换句话说，桥接器的行为像是配置了 deny-all 策略的防火墙。
 
 为桥接器配置哪些消息允许通过是很容易的。
 
-你可以通过调用桥接器时传入的  [BridgeOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeOptions.html) 来配置匹配规则，指定哪些输入和输出的流量是允许通过的。
+您可以通过调用桥接器时传入的  [BridgeOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeOptions.html) 来配置匹配规则，指定哪些输入和输出的流量是允许通过的。
 
 每一个匹配规则对应一个 [PermittedOptions](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/PermittedOptions.html) 对象：
 
 [setAddress](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/PermittedOptions.html#setAddress-java.lang.String-)
 
-这个配置精确地定义了消息可以被发送到哪些地址。如果你需要通过精确的地址来控制消息的话，使用这个选项。
+这个配置精确地定义了消息可以被发送到哪些地址。如果您需要通过精确的地址来控制消息的话，使用这个选项。
 
 [setAddressRegex](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/PermittedOptions.html#setAddressRegex-java.lang.String-)
 
-这个配置通过正则表达式来定义消息可以被发送到哪些地址。如果你需要通过正则表达式来控制消息的话，使用这个选项。如果指定了 `address`，这个选项会被忽略。
+这个配置通过正则表达式来定义消息可以被发送到哪些地址。如果您需要通过正则表达式来控制消息的话，使用这个选项。如果指定了 `address`，这个选项会被忽略。
 
 [setMatch](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/PermittedOptions.html#setMatch-io.vertx.core.json.JsonObject-)
 
@@ -2026,7 +2026,7 @@ inboundPermitted.setRequiredAuthority("place_orders");
 BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted);
 ```
 
-用户需要登录，并被授权才能够访问消息。因此，你需要配置一个 Vert.x 认证处理器来处理登录和授权。例如：
+用户需要登录，并被授权才能够访问消息。因此，您需要配置一个 Vert.x 认证处理器来处理登录和授权。例如：
 
 ```java
 Router router = Router.router(vertx);
@@ -2056,7 +2056,7 @@ router.route("/eventbus/*").handler(sockJSHandler);
 
 #### 处理 event bus 桥接器事件
 
-如果你需要在在桥接器发生事件的时候得到通知，你需要在调用 [bridge](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html#bridge-io.vertx.ext.web.handler.sockjs.BridgeOptions-io.vertx.core.Handler-) 方法时提供一个处理器。
+如果您需要在在桥接器发生事件的时候得到通知，您需要在调用 [bridge](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/SockJSHandler.html#bridge-io.vertx.ext.web.handler.sockjs.BridgeOptions-io.vertx.core.Handler-) 方法时提供一个处理器。
 
 任何发生的事件都会被传递到这个处理器。事件由对象 [BridgeEvent](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeEvent.html) 来描述。
 
@@ -2098,7 +2098,7 @@ router.route("/eventbus/*").handler(sockJSHandler);
 
 当客户端试图注销一个处理器时会发生该事件。
 
-你可以通过 [type](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeEvent.html#type--) 方法来获得事件的类型，通过 [getRawMessage](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeEvent.html#getRawMessage--) 方法来获得消息原始内容。
+您可以通过 [type](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeEvent.html#type--) 方法来获得事件的类型，通过 [getRawMessage](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/sockjs/BridgeEvent.html#getRawMessage--) 方法来获得消息原始内容。
 
 消息的原始内容是一个如下结构的 JSON 对象：
 
@@ -2110,9 +2110,9 @@ router.route("/eventbus/*").handler(sockJSHandler);
 }
 ```
 
-事件对象同时是一个 [Future](http://vertx.io/docs/apidocs/io/vertx/core/Future.html) 实例。当你完成了对消息的处理，你可以用参数 `true` 来完成这个 future 以执行后续的处理。
+事件对象同时是一个 [Future](http://vertx.io/docs/apidocs/io/vertx/core/Future.html) 实例。当您完成了对消息的处理，您可以用参数 `true` 来完成这个 future 以执行后续的处理。
 
-如果你不希望事件继续处理，你可以用参数 `false` 来结束这个 future。这个特性可以用于定制你自己的消息过滤器、细粒度的授权或指标收集。
+如果您不希望事件继续处理，您可以用参数 `false` 来结束这个 future。这个特性可以用于定制您自己的消息过滤器、细粒度的授权或指标收集。
 
 在下面的例子里，我们拒绝掉了所有经过桥接器并且包含 “Armadillos” 一词的消息：
 
@@ -2159,7 +2159,7 @@ sockJSHandler.bridge(options, be -> {
 router.route("/eventbus").handler(sockJSHandler);
 ```
 
-在客户端 JavaScript 环境里你使用 `vertx-eventbus.js` 来创建到 event bus 的连接并发送和接收消息：
+在客户端 JavaScript 环境里您使用 `vertx-eventbus.js` 来创建到 event bus 的连接并发送和接收消息：
 
 ```javascript
 <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
@@ -2191,7 +2191,7 @@ var eb = new EventBus('http://localhost:8080/eventbus', {"vertxbus_ping_interval
 
 构造函数的第二个参数是告诉 SockJS 的库每隔 5 分钟发送一个 ping 消息。由于服务器端配置了期望每隔 5 秒收到一条 ping 消息，因此会在服务器端触发 `SOCKET_IDLE` 事件。
 
- 你也可以在处理事件时修改原始的消息内容，例如修改消息体。对于从客户端发送来的消息，你也可以修改消息的消息头，下面是一个例子：
+ 您也可以在处理事件时修改原始的消息内容，例如修改消息体。对于从客户端发送来的消息，您也可以修改消息的消息头，下面是一个例子：
 
 ```java
 Router router = Router.router(vertx);
@@ -2218,7 +2218,7 @@ router.route("/eventbus").handler(sockJSHandler);
 
 ### CSRF 跨站点请求伪造
 
-CSRF 某些时候也被称为 XSRF。它是一种可以再未授权的网站获取用户隐私数据的技术。Vet.x-Web 提供了一个处理器 [CSRFHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CSRFHandler.html) 是你可以避免跨站点的伪造请求。
+CSRF 某些时候也被称为 XSRF。它是一种可以再未授权的网站获取用户隐私数据的技术。Vet.x-Web 提供了一个处理器 [CSRFHandler](http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CSRFHandler.html) 是您可以避免跨站点的伪造请求。
 
 这个处理器会向所有的 GET 请求的响应里加一个独一无二的令牌作为 Cookie。客户端会在消息头里包含这个令牌。由于令牌基于 Cookie，因此需要在 router 上启用 cookie 处理器。
 
@@ -2230,7 +2230,7 @@ CSRF 某些时候也被称为 XSRF。它是一种可以再未授权的网站获�
 </form>
 ```
 
-你需要将表单的属性设置为正确的值。填充这个值唯一的办法是通过上下文来获取键 `X-XSRF-TOKEN` 的值。这个键的名称也可以在初始化 `CSRFHandler` 时指定。
+您需要将表单的属性设置为正确的值。填充这个值唯一的办法是通过上下文来获取键 `X-XSRF-TOKEN` 的值。这个键的名称也可以在初始化 `CSRFHandler` 时指定。
 
 ```java
 router.route().handler(CookieHandler.create());
@@ -2255,13 +2255,13 @@ router.route().handler(VirtualHostHandler.create("*.vertx.io", routingContext ->
 
 ### OAuth2 认证处理器
 
-OAuth2AuthHandler 帮助你快速地配置基于 OAuth2 协议的安全路由。这个处理器简化了获取 authCode 的流程。下面的例子用这个处理器实现了保护资源并通过 GitHub 来授权：
+OAuth2AuthHandler 帮助您快速地配置基于 OAuth2 协议的安全路由。这个处理器简化了获取 authCode 的流程。下面的例子用这个处理器实现了保护资源并通过 GitHub 来授权：
 
 ```java
 OAuth2Auth authProvider = GithubAuth.create(vertx, "CLIENT_ID", "CLIENT_SECRET");
 
 // 在服务器上创建 oauth2 处理器
-// 第二个参数是你提供给你的提供商的回调 URL
+// 第二个参数是您提供给您的提供商的回调 URL
 OAuth2AuthHandler oauth2 = OAuth2AuthHandler.create(authProvider, "https://myserver.com/callback");
 
 // 配置回调处理器来接收 GitHub 的回调
@@ -2280,7 +2280,7 @@ router.get("/").handler(ctx -> {
 });
 ```
 
-OAuth2AuthHandler 会配置一个正确的 OAuth2 回调，因此你不需要处理授权服务器的响应。一个很重要的事情是，来自授权服务器的响应只有一次有效。也就是说如果客户端对回调 URL 发起了重载操作，则会因为验证错误而请求失败。
+OAuth2AuthHandler 会配置一个正确的 OAuth2 回调，因此您不需要处理授权服务器的响应。一个很重要的事情是，来自授权服务器的响应只有一次有效。也就是说如果客户端对回调 URL 发起了重载操作，则会因为验证错误而请求失败。
 
 经验法则是：当有效的回调执行时，通知客户端跳转到受保护的资源上。
 
@@ -2303,7 +2303,7 @@ OAuth2AuthHandler 会配置一个正确的 OAuth2 回调，因此你不需要处
 - Stripe [StripeAuth](http://vertx.io/docs/apidocs/io/vertx/ext/auth/oauth2/providers/StripeAuth.html)
 - Twitter [TwitterAuth](http://vertx.io/docs/apidocs/io/vertx/ext/auth/oauth2/providers/TwitterAuth.html)
 
-如果你需要使用一个上述未列出的提供商，你也可以使用基本的 API 来实现，例如：
+如果您需要使用一个上述未列出的提供商，您也可以使用基本的 API 来实现，例如：
 
 ```java
 OAuth2Auth authProvider = OAuth2Auth.create(vertx, OAuth2FlowType.AUTH_CODE, new OAuth2ClientOptions()
@@ -2335,27 +2335,27 @@ router.get("/").handler(ctx -> {
 });
 ```
 
-你需要手工提供所有关于你所使用的提供商的细节，但结果是一样的。
+您需要手工提供所有关于您所使用的提供商的细节，但结果是一样的。
 
-这个处理器会在你的应用上绑定回调的 URL。用法很简单，只需要为这个处理器提供一个 route，其他的配置都会自动完成。一个典型的情况是你的 OAuth2 提供商会需要你来提供你的应用的 callback url，则你的输入类似于 `[https://myserver.com/callback](https://myserver.com/callback)`。这是你的处理器的第二个参数。至此，你完成所有必须的配置，只需要通过 `setupCallback` 方法来启动它即可。
+这个处理器会在您的应用上绑定回调的 URL。用法很简单，只需要为这个处理器提供一个 route，其他的配置都会自动完成。一个典型的情况是您的 OAuth2 提供商会需要您来提供您的应用的 callback url，则您的输入类似于 `[https://myserver.com/callback](https://myserver.com/callback)`。这是您的处理器的第二个参数。至此，您完成所有必须的配置，只需要通过 `setupCallback` 方法来启动它即可。
 
-以上就是如何在你的服务器上绑定处理器 [https://myserver.com:8447/callback](https://myserver.com:8447/callback)。*注意，端口号可以不使用默认值。*
+以上就是如何在您的服务器上绑定处理器 [https://myserver.com:8447/callback](https://myserver.com:8447/callback)。*注意，端口号可以不使用默认值。*
 
 ```java
 OAuth2AuthHandler oauth2 = OAuth2AuthHandler.create(provider, "https://myserver.com:8447/callback");
-// 允许该处理器为你处理回调地址
+// 允许该处理器为您处理回调地址
 oauth2.setupCallback(router.route());
 ```
 
-在这个例子中，route 对象通过 `Router.route()` 创建。如果你需要完整的控制处理器的执行顺序（例如你期望它在处理链中首先被执行），你也可以先创建这个 route 对象，然后将引用传进这个方法里。
+在这个例子中，route 对象通过 `Router.route()` 创建。如果您需要完整的控制处理器的执行顺序（例如您期望它在处理链中首先被执行），您也可以先创建这个 route 对象，然后将引用传进这个方法里。
 
 #### 混合 OAuth2 和 JWT
 
- 一些 OAuth2 的提供商参考了 [RFC6750](https://tools.ietf.org/html/rfc6750) 规范，使用 JWT 令牌来作为访问令牌。这对于需要混合基于客户端的授权和基于 API 的授权很有用。例如你的应用提供了一些受保护的 HTML 文档，同时你又希望他可以作为 API 被消费。在这种情况下，一个 API 不能够很容易的处理 OAuth2 需要的重定向握手，但可以提供令牌(11)。
+ 一些 OAuth2 的提供商参考了 [RFC6750](https://tools.ietf.org/html/rfc6750) 规范，使用 JWT 令牌来作为访问令牌。这对于需要混合基于客户端的授权和基于 API 的授权很有用。例如您的应用提供了一些受保护的 HTML 文档，同时您又希望他可以作为 API 被消费。在这种情况下，一个 API 不能够很容易的处理 OAuth2 需要的重定向握手，但可以提供令牌(11)。
 
 只要提供商被配置为支持 JWT，OAuth 处理器会自动处理这个问题。
 
-这意味着你的 API 可以通过提供值为 `Bearer BASE64_ACCESS_TOKEN` 的消息头 `Authorization` 来访问受保护的资源。
+这意味着您的 API 可以通过提供值为 `Bearer BASE64_ACCESS_TOKEN` 的消息头 `Authorization` 来访问受保护的资源。
 
 ## 注释
 
