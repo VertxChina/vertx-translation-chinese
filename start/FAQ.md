@@ -51,7 +51,7 @@ public class TestVerticle extends AbstractVerticle{
 ```java
 //未使用future时，回调函数嵌在send方法内部，以匿名函数的形式作为send的参数
 vertx.eventBus().send("address","message", asyncResult->{
-    System.out.println(asyncResult.result()); 
+    System.out.println(asyncResult.result().body()); 
 });
 ```
 
@@ -61,7 +61,7 @@ vertx.eventBus().send("address","message", asyncResult->{
 Future<Message<String>> future = Future.future();
 //将回调函数存入future中，从而实现代码的扁平化
 future.setHandler(asyncResult -> {
-    System.out.println(asyncResult.result());
+    System.out.println(asyncResult.result().body());
 });
 //使用future之后，用completer方法填充参数
 vertx.eventBus().send("address","message", future.completer());
@@ -72,8 +72,8 @@ vertx.eventBus().send("address","message", future.completer());
 ```java
 //以下程序先向address1发送一个message，然后等address1回复之后，将address1的回复消息发送给address2，最后将address2的回复打印到控制台上
 vertx.eventBus().send("address1","message", asyncResult->{
-    vertx.eventBus().send("address2", asyncResult.result(), asyncResult2->{
-        System.out.println(asyncResult2.result());
+    vertx.eventBus().send("address2", asyncResult.result().body(), asyncResult2->{
+        System.out.println(asyncResult2.result().body());
     });
 });
 ```
@@ -85,11 +85,11 @@ Future<Message<String>> future1 = Future.future();
 Future<Message<String>> future2 = Future.future();
 
 future1.setHandler(asyncResult -> {
-   vertx.eventBus().send("address2", asyncResult.result(), future2.completer());
+   vertx.eventBus().send("address2", asyncResult.result().body(), future2.completer());
 });
 
 future2.setHandler(asyncResult-> {
-    System.out.println(asyncResult.result());
+    System.out.println(asyncResult.result().body());
 });
 
 vertx.eventBus().send("address1","message", future1.completer());
