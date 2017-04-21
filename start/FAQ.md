@@ -2,7 +2,7 @@
 
 此处会列出常见的关于Vert.x 各个组件的常见问题以及相应的注意事项和解决方案。
 
-##### 问：Vert.x中各种Client该如何正确使用，用完是否需要关闭？
+### 问：Vert.x中各种Client该如何正确使用，用完是否需要关闭？
 
 答：Vert.x中提供了各种预设客户端，例如HttpClient，JDBCClient，WebClient，KafkaClient，MongoDBClient等，一般情况下，建议将客户端与Verticle对象绑定，一个Verticle对象内保留一个特定客户端的引用，并在start方法中将其实例化，这样Vert.x会在执行deployVerticle的时候执行start方法，实例化并保存该对象，在Verticle生命周期内，不需要频繁创建和关闭同类型的客户端，建议在Verticle的生命周期内对于特定领域，只创建一个客户端并复用该客户端，例如：
 
@@ -44,7 +44,7 @@ public class TestVerticle extends AbstractVerticle{
 
 每次使用客户端完之后，**无需**调用client.close();方法关闭客户端，频繁创建销毁客户端会在一定程度上消耗系统资源，降低性能，同时增加开发人员的负担，Vert.x提供客户端的目的就在于复用连接以减少资源消耗，提升性能，同时简化代码，减轻开发人员的负担。如您关闭客户端，在下一次使用该客户端的时候，需要重新创建客户端。
 
-##### 问：Vert.x中Future该如何正确使用，怎样规避回调地狱？
+### 问：Vert.x中Future该如何正确使用，怎样规避回调地狱？
 
 答：Future对象提供了一种异步结果的包装，用户可使用Future类中的setHandler方法来保存回调函数，然后在原先使用该回调函数的地方用completer方法予以填充，这样便可将回调函数从原参数中取出，以减少回调缩进，从而规避回调地狱，来看一个简单的例子：
 
