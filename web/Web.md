@@ -10,13 +10,14 @@
 * Sub-Route: 子路由
 * Handler：处理器，某些特定的地方未翻译
 * Blocking：阻塞式
-* Context：上下文。非特别说明指代路由的上下文 routing context，不同于于 Vert.x core 的 Context
+* Context：上下文。非特别说明指代路由的上下文 routing context，不同于 Vert.x core 的 Context
 * Application：应用
 * Header：消息头
 * Body：消息体
 * MIME types：互联网媒体类型
 * Load-Balancer：负载均衡器
 * Socket：套接字
+* Mount：挂载
 
 ## 正文
 
@@ -111,11 +112,11 @@ HttpServer server = vertx.createHttpServer();
 
 server.requestHandler(request -> {
 
-  // This handler gets called for each request that arrives on the server
+  // 所有的请求都会调用这个处理器处理
   HttpServerResponse response = request.response();
   response.putHeader("content-type", "text/plain");
 
-  // Write to the response and end it
+  // 写入响应并结束处理
   response.end("Hello World!");
 });
 
@@ -135,9 +136,9 @@ server.listen(8080);
 
 [Router](http://vertx.io/docs/apidocs/io/vertx/ext/web/Router.html) 是 Vert.x-Web 的核心概念之一。它是一个维护了零或多个 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html) 的对象。
 
-Router 接受 HTTP 请求，并查找首个匹配该请求的 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html)，然后将请求传递给这个 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html)。
+Router 接收 HTTP 请求，并查找首个匹配该请求的 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html)，然后将请求传递给这个 [Route](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html)。
 
-Route 可以持有一个与之关联的处理器用于接受请求。你可以通过这个处理器对请求做一些事情，然后结束响应或者把请求传递给下一个匹配的处理器。
+Route 可以持有一个与之关联的处理器用于接收请求。你可以通过这个处理器对请求做一些事情，然后结束响应或者把请求传递给下一个匹配的处理器。
 
 以下是一个简单的 router 示例：
 
@@ -148,11 +149,11 @@ Router router = Router.router(vertx);
 
 router.route().handler(routingContext -> {
 
-  // This handler will be called for every request
+  // 所有的请求都会调用这个处理器处理
   HttpServerResponse response = routingContext.response();
   response.putHeader("content-type", "text/plain");
 
-  // Write to the response and end it
+  // 写入响应并结束处理
   response.end("Hello World from Vert.x-Web!");
 });
 
@@ -187,14 +188,13 @@ server.requestHandler(router::accept).listen(8080);
 Route route1 = router.route("/some/path/").handler(routingContext -> {
 
   HttpServerResponse response = routingContext.response();
-  // enable chunked responses because we will be adding data as
-  // we execute over other handlers. This is only required once and
-  // only if several handlers do output.
+  // 由于我们会在不同的处理器里写入响应，因此需要启用分块传输
+  // 仅当需要通过多个处理器输出响应时才需要
   response.setChunked(true);
 
   response.write("route1\n");
 
-  // Call the next matching route after a 5 second delay
+  // 5 秒后调用下一个处理器
   routingContext.vertx().setTimer(5000, tid -> routingContext.next());
 });
 
@@ -203,7 +203,7 @@ Route route2 = router.route("/some/path/").handler(routingContext -> {
   HttpServerResponse response = routingContext.response();
   response.write("route2\n");
 
-  // Call the next matching route after a 5 second delay
+  // 5 秒后调用下一个处理器
   routingContext.vertx().setTimer(5000, tid ->  routingContext.next());
 });
 
@@ -212,7 +212,7 @@ Route route3 = router.route("/some/path/").handler(routingContext -> {
   HttpServerResponse response = routingContext.response();
   response.write("route3");
 
-  // Now end the response
+  // 结束响应
   routingContext.response().end();
 });
 ```
@@ -234,10 +234,10 @@ Route route3 = router.route("/some/path/").handler(routingContext -> {
 ```java
 router.route().blockingHandler(routingContext -> {
 
-  // Do something that might take some time synchronously
+  // 执行某些同步的耗时操作
   service.doSomethingThatBlocks();
 
-  // Now call the next handler
+  // 调用下一个处理器
   routingContext.next();
 
 });
@@ -253,7 +253,7 @@ router.post("/some/endpoint").handler(ctx -> {
   ctx.request().setExpectMultipart(true);
   ctx.next();
 }).blockingHandler(ctx -> {
-  // ... Do some blocking operation
+  // 执行某些阻塞操作
 });
 ```
 
@@ -267,13 +267,13 @@ router.post("/some/endpoint").handler(ctx -> {
 Route route = router.route().path("/some/path/");
 
 route.handler(routingContext -> {
-  // This handler will be called for the following request paths:
+  // 所有以下路径的请求都会调用这个处理器:
 
   // `/some/path`
   // `/some/path/`
   // `/some/path//`
   //
-  // but not:
+  // 但不包括：
   // `/some/path/subdir`
 });
 ```
@@ -290,15 +290,14 @@ route.handler(routingContext -> {
 Route route = router.route().path("/some/path/*");
 
 route.handler(routingContext -> {
-  // This handler will be called for any path that starts with
-  // `/some/path/`, e.g.
+  // 所有路径以 `/some/path/` 开头的请求都会调用这个处理器处理，例如：
 
   // `/some/path`
   // `/some/path/`
   // `/some/path/subdir`
   // `/some/path/subdir/blah.html`
   //
-  // but not:
+  // 但不包括：
   // `/some/bath`
 });
 ```
@@ -309,7 +308,7 @@ route.handler(routingContext -> {
 Route route = router.route("/some/path/*");
 
 route.handler(routingContext -> {
-  // This handler will be called same as previous example
+  // 这个路由器的调用规则和上面的例子一样
 });
 ```
 
@@ -327,13 +326,13 @@ route.handler(routingContext -> {
   String productType = routingContext.request().getParam("producttype");
   String productID = routingContext.request().getParam("productid");
 
-  // Do something with them...
+  // 执行某些操作...
 });
 ```
 
 占位符由 `:` 和参数名构成。参数名由字母、数字和下划线构成。
 
-在上述的例子中，如果一个 POST 请求的路径为  `/catalogue/products/tools/drill123/`，那么会匹配这个 route，并且会接受到参数 `productType` 的值为 `tools`，参数 `productID` 的值为 `drill123`。
+在上述的例子中，如果一个 POST 请求的路径为  `/catalogue/products/tools/drill123/`，那么会匹配这个 route，并且会接收到参数 `productType` 的值为 `tools`，参数 `productID` 的值为 `drill123`。
 
 ### 基于正则表达式的路由
 
@@ -344,14 +343,14 @@ Route route = router.route().pathRegex(".*foo");
 
 route.handler(routingContext -> {
 
-  // This handler will be called for:
+  // 以下路径的请求都会调用这个处理器:
 
   // /some/path/foo
   // /foo
   // /foo/bar/wibble/foo
   // /bar/foo
 
-  // But not:
+  // 但不包括:
   // /bar/wibble
 });
 ```
@@ -363,7 +362,7 @@ Route route = router.routeWithRegex(".*foo");
 
 route.handler(routingContext -> {
 
-  // This handler will be called same as previous example
+  // 这个路由器的调用规则和上面的例子一样
 
 });
 ```
@@ -375,19 +374,18 @@ route.handler(routingContext -> {
 ```java
 Route route = router.routeWithRegex(".*foo");
 
-// This regular expression matches paths that start with something like:
-// "/foo/bar" - where the "foo" is captured into param0 and the "bar" is captured into
-// param1
+// 这个正则表达式可以匹配路径类似于 `/foo/bar` 的请求
+// `foo` 可以通过参数 param0 获取，`bar` 可以通过参数 param1 获取
 route.pathRegex("\\/([^\\/]+)\\/([^\\/]+)").handler(routingContext -> {
 
   String productType = routingContext.request().getParam("param0");
   String productID = routingContext.request().getParam("param1");
 
-  // Do something with them...
+  // 执行某些操作
 });
 ```
 
-在上面的例子中，如果一个请求的路径为 `/tools/drill123/`，那么会匹配这个 route，并且会接受到参数 `productType` 的值为 `tools`，参数 `productID` 的值为 `drill123`。
+在上面的例子中，如果一个请求的路径为 `/tools/drill123/`，那么会匹配这个 route，并且会接收到参数 `productType` 的值为 `tools`，参数 `productID` 的值为 `drill123`。
 
 ### 基于 HTTP method 的路由
 
@@ -400,7 +398,7 @@ Route route = router.route().method(HttpMethod.POST);
 
 route.handler(routingContext -> {
 
-  // This handler will be called for any POST request
+  // 所有的 POST 请求都会调用这个处理器
 
 });
 ```
@@ -412,7 +410,7 @@ Route route = router.route(HttpMethod.POST, "/some/path/");
 
 route.handler(routingContext -> {
 
-  // This handler will be called for any POST request to a URI path starting with /some/path/
+  // 所有路径为 `/some/path/` 的 POST 请求都会调用这个处理器
 
 });
 ```
@@ -422,21 +420,19 @@ route.handler(routingContext -> {
 ```java
 router.get().handler(routingContext -> {
 
-  // Will be called for any GET request
+  // 所有 GET 请求都会调用这个处理器
 
 });
 
 router.get("/some/path/").handler(routingContext -> {
 
-  // Will be called for any GET request to a path
-  // starting with /some/path
+  // 所有路径为 `/some/path/` 的 GET 请求都会调用这个处理器
 
 });
 
 router.getWithRegex(".*foo").handler(routingContext -> {
 
-  // Will be called for any GET request to a path
-  // ending with `foo`
+  // 所有路径以 `foo` 结尾的 GET 请求都会调用这个处理器
 
 });
 ```
@@ -448,7 +444,7 @@ Route route = router.route().method(HttpMethod.POST).method(HttpMethod.PUT);
 
 route.handler(routingContext -> {
 
-  // This handler will be called for any POST or PUT request
+  // 所有 GET 或 POST 请求都会调用这个处理器
 
 });
 ```
@@ -467,14 +463,13 @@ route.handler(routingContext -> {
 Route route1 = router.route("/some/path/").handler(routingContext -> {
 
   HttpServerResponse response = routingContext.response();
-  // enable chunked responses because we will be adding data as
-  // we execute over other handlers. This is only required once and
-  // only if several handlers do output.
+  // 由于我们会在不同的处理器里写入响应，因此需要启用分块传输
+  // 仅当需要通过多个处理器输出响应时才需要
   response.setChunked(true);
 
   response.write("route1\n");
 
-  // Now call the next matching route
+  // 调用下一个匹配的 route
   routingContext.next();
 });
 
@@ -483,7 +478,7 @@ Route route2 = router.route("/some/path/").handler(routingContext -> {
   HttpServerResponse response = routingContext.response();
   response.write("route2\n");
 
-  // Now call the next matching route
+  // 调用下一个匹配的 route
   routingContext.next();
 });
 
@@ -492,7 +487,7 @@ Route route3 = router.route("/some/path/").handler(routingContext -> {
   HttpServerResponse response = routingContext.response();
   response.write("route3");
 
-  // Now end the response
+  // 结束响应
   routingContext.response().end();
 });
 ```
@@ -521,21 +516,20 @@ Route route1 = router.route("/some/path/").handler(routingContext -> {
   HttpServerResponse response = routingContext.response();
   response.write("route1\n");
 
-  // Now call the next matching route
+  // 调用下一个匹配的 route
   routingContext.next();
 });
 
 Route route2 = router.route("/some/path/").handler(routingContext -> {
 
   HttpServerResponse response = routingContext.response();
-  // enable chunked responses because we will be adding data as
-  // we execute over other handlers. This is only required once and
-  // only if several handlers do output.
+  // 由于我们会在不同的处理器里写入响应，因此需要启用分块传输
+  // 仅当需要通过多个处理器输出响应时才需要
   response.setChunked(true);
 
   response.write("route2\n");
 
-  // Now call the next matching route
+  // 调用下一个匹配的 route
   routingContext.next();
 });
 
@@ -544,11 +538,11 @@ Route route3 = router.route("/some/path/").handler(routingContext -> {
   HttpServerResponse response = routingContext.response();
   response.write("route3");
 
-  // Now end the response
+  // 结束响应
   routingContext.response().end();
 });
 
-// Change the order of route2 so it runs before route1
+// 更改 route2 的顺序使其可以在 route1 之前执行
 route2.order(-1);
 ```
 
@@ -578,8 +572,7 @@ MIME type 的匹配过程是精确的：
 ```java
 router.route().consumes("text/html").handler(routingContext -> {
 
-  // This handler will be called for any request with
-  // content-type header set to `text/html`
+  // 所有 `content-type` 消息头的值为 `text/html` 的请求会调用这个处理器
 
 });
 ```
@@ -589,8 +582,7 @@ router.route().consumes("text/html").handler(routingContext -> {
 ```java
 router.route().consumes("text/html").consumes("text/plain").handler(routingContext -> {
 
-  // This handler will be called for any request with
-  // content-type header set to `text/html` or `text/plain`.
+  // 所有 `content-type` 消息头的值为 `text/html` 或 `text/plain` 的请求会调用这个处理器
 
 });
 ```
@@ -600,19 +592,19 @@ router.route().consumes("text/html").consumes("text/plain").handler(routingConte
 ```java
 router.route().consumes("text/*").handler(routingContext -> {
 
-  // This handler will be called for any request with top level type `text`
-  // e.g. content-type header set to `text/html` or `text/plain` will both match
+  // 所有 `content-type` 消息头的顶级类型为 `text` 的请求会调用这个处理器
+  // 例如 `content-type` 消息头设置为 `text/html` 或 `text/plain` 都会匹配
 
 });
 ```
 
-你也可以匹配顶级的类型（top level type）：
+你也可以用通配符匹配顶级的类型（top level type）：
 
 ```java
 router.route().consumes("*/json").handler(routingContext -> {
 
-  // This handler will be called for any request with sub-type json
-  // e.g. content-type header set to `text/json` or `application/json` will both match
+  // 所有 `content-type` 消息头的子类型为 `json` 的请求会调用这个处理器
+  // 例如 `content-type` 消息头设置为 `text/json` 或 `application/json` 都会匹配
 
 });
 ```
@@ -667,7 +659,7 @@ router.route().produces("application/json").produces("text/html").handler(routin
 
   HttpServerResponse response = routingContext.response();
 
-  // Get the actual MIME type acceptable
+  // 获取最终匹配到的 MIME type
   String acceptableContentType = routingContext.getAcceptableContentType();
 
   response.putHeader("content-type", acceptableContentType);
@@ -692,9 +684,7 @@ Route route = router.route(HttpMethod.PUT, "myapi/orders")
 
 route.handler(routingContext -> {
 
-  // This would be match for any PUT method to paths starting with "myapi/orders" with a
-  // content-type of "application/json"
-  // and an accept header matching "application/json"
+  // 这会匹配所有路径以 `/myapi/orders` 开头，`content-type` 值为 `application/json` 并且 `accept` 值为 `application/json` 的 PUT 请求
 
 });
 ```
@@ -726,7 +716,7 @@ router.get("/some/path").handler(routingContext -> {
 router.get("/some/path/other").handler(routingContext -> {
 
   String bar = routingContext.get("foo");
-  // Do something with bar
+  // 执行某些操作
   routingContext.response().end();
 
 });
@@ -794,21 +784,21 @@ Router restAPI = Router.router(vertx);
 
 restAPI.get("/products/:productID").handler(rc -> {
 
-  // TODO Handle the lookup of the product....
+  // TODO 查找产品信息
   rc.response().write(productJSON);
 
 });
 
 restAPI.put("/products/:productID").handler(rc -> {
 
-  // TODO Add a new product...
+  // TODO 添加新的产品
   rc.response().end();
 
 });
 
 restAPI.delete("/products/:productID").handler(rc -> {
 
-  // TODO delete the product...
+  // TODO 删除产品
   rc.response().end();
 
 });
@@ -821,7 +811,7 @@ restAPI.delete("/products/:productID").handler(rc -> {
 ```java
 Router mainRouter = Router.router(vertx);
 
-// Handle static resources
+// 处理静态资源
 mainRouter.route("/static/*").handler(myStaticHandler);
 
 mainRouter.route(".*\\.templ").handler(myTemplateHandler);
@@ -841,9 +831,7 @@ Vert.x Web 解析 `Accept-Language` 消息头并提供了一些识别客户端�
 
 ```java
 Route route = router.get("/localized").handler( rc -> {
-  // although it might seem strange by running a loop with a switch we
-  // make sure that the locale order of preference is preserved when
-  // replying in the users language.
+  //虽然通过一个 switch 循环有点奇怪，我们必须按顺序选择正确的本地化方式
   for (LanguageHeader language : rc.acceptableLanguages()) {
     switch (language.tag()) {
       case "en":
@@ -860,7 +848,7 @@ Route route = router.get("/localized").handler( rc -> {
         return;
     }
   }
-  // we do not know the user language so lets just inform that back:
+  // 我们不知道用户的语言，因此返回这个信息：
   rc.response().end("Sorry we don't speak: " + rc.preferredLocale());
 });
 ```
@@ -894,9 +882,7 @@ Route route = router.get("/somepath/*");
 
 route.failureHandler(frc -> {
 
-  // This will be called for failures that occur
-  // when routing requests to paths starting with
-  // '/somepath/'
+  // 如果在处理路径以 `/somepath/` 开头的请求过程中发生错误，会调用这个处理器
 
 });
 ```
@@ -912,7 +898,7 @@ Route route1 = router.get("/somepath/path1/");
 
 route1.handler(routingContext -> {
 
-  // Let's say this throws a RuntimeException
+  // 这里抛出一个 RuntimeException
   throw new RuntimeException("something happened!");
 
 });
@@ -920,22 +906,20 @@ route1.handler(routingContext -> {
 Route route2 = router.get("/somepath/path2");
 
 route2.handler(routingContext -> {
-
-  // This one deliberately fails the request passing in the status code
-  // E.g. 403 - Forbidden
+  // 这里故意将请求处理为失败状态
+  // 例如 403 - 禁止访问
   routingContext.fail(403);
 
 });
 
-// Define a failure handler
-// This will get called for any failures in the above handlers
+// 定义一个失败处理器，上述的处理器发生错误时会调用这个处理器
 Route route3 = router.get("/somepath/*");
 
 route3.failureHandler(failureRoutingContext -> {
 
   int statusCode = failureRoutingContext.statusCode();
 
-  // Status code will be 500 for the RuntimeException or 403 for the other failure
+  // 对于 RuntimeException 状态码会是 500，否则是 403
   HttpServerResponse response = failureRoutingContext.response();
   response.setStatusCode(statusCode).end("Sorry! Not today");
 
@@ -992,7 +976,7 @@ router.post("/some/path/uploads").handler(routingContext -> {
 
   Set<FileUpload> uploads = routingContext.fileUploads();
 
-  // Do something with uploads....
+  // 执行上传处理
 
 });
 ```
@@ -1031,9 +1015,9 @@ router.route("some/path/").handler(routingContext -> {
   Cookie someCookie = routingContext.getCookie("mycookie");
   String cookieValue = someCookie.getValue();
 
-  // Do something with cookie...
+  // 使用 cookie 执行某些操作
 
-  // Add a cookie - this will get written back in the response automatically
+  // 添加一个 cookie，会自动回写到响应里
   routingContext.addCookie(Cookie.cookie("othercookie", "somevalue"));
 });
 ```
@@ -1087,13 +1071,12 @@ Vert.x-Web 提供了两种开箱即用的会话存储实现，你也可以编写
 ```java
 SessionStore store1 = LocalSessionStore.create(vertx);
 
-// Create a local session store specifying the local shared map name to use
-// This might be useful if you have more than one application in the same
-// Vert.x instance and want to use different maps for different applications
+// 通过指定的 Map 名称创建了一个本地会话存储
+// 这适用于你在同一个 Vert.x 实例中有多个应用，并且希望不同的应用使用不同的 Map 的情况
 SessionStore store2 = LocalSessionStore.create(vertx, "myapp3.sessionmap");
 
-// Create a local session store specifying the local shared map name to use and
-// setting the reaper interval for expired sessions to 10 seconds
+// 通过指定的 Map 名称创建了一个本地会话存储
+// 设置了会话的过期时间为 10 秒
 SessionStore store3 = LocalSessionStore.create(vertx, "myapp3.sessionmap", 10000);
 ```
 
@@ -1114,12 +1097,11 @@ Vertx.clusteredVertx(new VertxOptions().setClustered(true), res -> {
 
   Vertx vertx = res.result();
 
-  // Create a clustered session store using defaults
+  // 创建了一个默认的集群会话存储
   SessionStore store1 = ClusteredSessionStore.create(vertx);
 
-  // Create a clustered session store specifying the distributed map name to use
-  // This might be useful if you have more than one application in the cluster
-  // and want to use different maps for different applications
+  // 通过指定的 Map 名称创建了一个集群会话存储
+  // 这适用于你在集群中有多个应用，并且希望不同的应用使用不同的 Map 的情况
   SessionStore store2 = ClusteredSessionStore.create(vertx, "myclusteredapp3.sessionmap");
 });
 ```
@@ -1135,18 +1117,18 @@ Vertx.clusteredVertx(new VertxOptions().setClustered(true), res -> {
 ```java
 Router router = Router.router(vertx);
 
-// We need a cookie handler first
+// 我们首先需要一个 cookie 处理器
 router.route().handler(CookieHandler.create());
 
-// Create a clustered session store using defaults
+// 用默认值创建一个集群会话存储
 SessionStore store = ClusteredSessionStore.create(vertx);
 
 SessionHandler sessionHandler = SessionHandler.create(store);
 
-// Make sure all requests are routed through the session handler too
+// 确保所有请求都会经过 session 处理器
 router.route().handler(sessionHandler);
 
-// Now your application handlers
+// 你自己的应用处理器
 router.route("/somepath/blah/").handler(routingContext -> {
 
   Session session = routingContext.session();
@@ -1172,18 +1154,18 @@ router.route("/somepath/blah/").handler(routingContext -> {
 router.route().handler(CookieHandler.create());
 router.route().handler(sessionHandler);
 
-// Now your application handlers
+// 你的应用处理器
 router.route("/somepath/blah").handler(routingContext -> {
 
   Session session = routingContext.session();
 
-  // Put some data from the session
+  // 向会话中设置值
   session.put("foo", "bar");
 
-  // Retrieve some data from a session
+  // 从会话中获取值
   int age = session.get("age");
 
-  // Remove some data from a session
+  // 从会话中删除值
   JsonObject obj = session.remove("myobj");
 
 });
@@ -1231,20 +1213,20 @@ router.route().handler(UserSessionHandler.create(authProvider));
 
 AuthHandler basicAuthHandler = BasicAuthHandler.create(authProvider);
 
-// All requests to paths starting with '/private/' will be protected
+// 所有路径以 `/private` 开头的请求会被保护
 router.route("/private/*").handler(basicAuthHandler);
 
 router.route("/someotherpath").handler(routingContext -> {
 
-  // This will be public access - no login required
+  // 此处是公开的，不需要登录
 
 });
 
 router.route("/private/somepath").handler(routingContext -> {
 
-  // This will require a login
+  // 此处需要登录
 
-  // This will have the value true
+  // 这个值会返回 true
   boolean isAuthenticated = routingContext.user() != null;
 
 });
@@ -1291,25 +1273,25 @@ router.route().handler(UserSessionHandler.create(authProvider));
 
 AuthHandler redirectAuthHandler = RedirectAuthHandler.create(authProvider);
 
-// All requests to paths starting with '/private/' will be protected
+// 所有路径以 `/private` 开头的请求会被保护
 router.route("/private/*").handler(redirectAuthHandler);
 
-// Handle the actual login
-// One of your pages must POST form login data
+// 处理登录请求
+// 你的登录页需要 POST 登录表单数据
 router.post("/login").handler(FormLoginHandler.create(authProvider));
 
-// Set a static server to serve static resources, e.g. the login page
+// 处理静态资源，例如你的登录页
 router.route().handler(StaticHandler.create());
 
 router.route("/someotherpath").handler(routingContext -> {
-  // This will be public access - no login required
+  // 此处是公开的，不需要登录
 });
 
 router.route("/private/somepath").handler(routingContext -> {
 
-  // This will require a login
+  // 此处需要登录
 
-  // This will have the value true
+  // 这个值会返回 true
   boolean isAuthenticated = routingContext.user() != null;
 
 });
@@ -1339,7 +1321,7 @@ JsonObject authConfig = new JsonObject().put("keyStore", new JsonObject()
 JWTAuth authProvider = JWTAuth.create(vertx, authConfig);
 
 router.route("/login").handler(ctx -> {
-  // this is an example, authentication should be done with another provider...
+  // 这是一个例子，认证会由另一个 provider 执行
   if ("paulo".equals(ctx.request().getParam("username")) && "secret".equals(ctx.request().getParam("password"))) {
     ctx.response().end(authProvider.generateToken(new JsonObject().put("sub", "paulo"), new JWTOptions()));
   } else {
@@ -1363,7 +1345,7 @@ JWTAuth authProvider = JWTAuth.create(vertx, authConfig);
 router.route("/protected/*").handler(JWTAuthHandler.create(authProvider));
 
 router.route("/protected/somepage").handler(ctx -> {
-  // some handle code...
+  // 一些处理过程
 });
 ```
 
@@ -1401,13 +1383,13 @@ Handler<RoutingContext> handler = rc -> {
 AuthHandler listProductsAuthHandler = RedirectAuthHandler.create(authProvider);
 listProductsAuthHandler.addAuthority("list_products");
 
-// Need "list_products" authority to list products
+// 需要 `list_products` 权限来列举产品
 router.route("/listproducts/*").handler(listProductsAuthHandler);
 
 AuthHandler settingsAuthHandler = RedirectAuthHandler.create(authProvider);
 settingsAuthHandler.addAuthority("role:admin");
 
-// Only "admin" has access to /private/settings
+// 只有 `admin` 可以访问 `/private/settings`
 router.route("/private/settings/*").handler(settingsAuthHandler);
 ```
 
@@ -1498,7 +1480,7 @@ router.route().handler(CorsHandler.create("vertx\\.io").allowedMethod(HttpMethod
 
 router.route().handler(routingContext -> {
 
-  // Your app handlers
+  // 你的应用处理
 
 });
 ```
@@ -1525,11 +1507,11 @@ Vert.x-Web 为若干流行的模板引擎提供了开箱即用的支持，通过
 TemplateEngine engine = HandlebarsTemplateEngine.create();
 TemplateHandler handler = TemplateHandler.create(engine);
 
-// This will route all GET requests starting with /dynamic/ to the template handler
-// E.g. /dynamic/graph.hbs will look for a template in /templates/dynamic/graph.hbs
+// 这会将所有以 `/dynamic` 开头的请求路由到模板处理器上
+// 例如 /dynamic/graph.hbs 会查找模板 /templates/dynamic/graph.hbs
 router.get("/dynamic/*").handler(handler);
 
-// Route all GET requests for resource ending in .hbs to the template handler
+// 将所有以 `.hbs` 结尾的请求路由到模板处理器上
 router.getWithRegex(".+\\.hbs").handler(handler);
 ```
 
@@ -1701,7 +1683,7 @@ router.route("/foo/").handler(TimeoutHandler.create(5000));
 
 ### 响应时间处理器
 
-该处理器会将从接受到请求到写入响应的消息头之间的毫秒数写入到响应的 `x-response-time` 里，例如：
+该处理器会将从接收到请求到写入响应的消息头之间的毫秒数写入到响应的 `x-response-time` 里，例如：
 
 x-response-time: 1456ms
 
@@ -1798,7 +1780,7 @@ SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
 
 sockJSHandler.socketHandler(sockJSSocket -> {
 
-  // Just echo the data back
+  // 将数据回写
   sockJSSocket.handler(sockJSSocket::write);
 });
 
@@ -1843,7 +1825,7 @@ sock.close();
 
 `sessionTimeout`
 
-对于一个正在接受响应的客户端连接，如果一段时间内没有动作，则服务端会发出一个  `close` 事件。延时时间由这个配置决定。默认的服务端会在 5 秒之后发出这个 `close` 事件。(10)
+对于一个正在接收响应的客户端连接，如果一段时间内没有动作，则服务端会发出一个  `close` 事件。延时时间由这个配置决定。默认的服务端会在 5 秒之后发出这个 `close` 事件。(10)
 
 `heartbeatInterval`
 
@@ -1895,12 +1877,12 @@ var eb = new EventBus('http://localhost:8080/eventbus');
 
 eb.onopen = function() {
 
-  // set a handler to receive a message
+  // 设置了一个接收数据的处理器
   eb.registerHandler('some-address', function(error, message) {
     console.log('received a message: ' + JSON.stringify(message));
   });
 
-  // send a message
+  // 发送消息
   eb.send('some-address', {name: 'tim', age: 587});
 
 }
@@ -1992,28 +1974,27 @@ Router router = Router.router(vertx);
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
 
 
-// Let through any messages sent to 'demo.orderMgr' from the client
+// 允许客户端向地址 `demo.orderMgr` 发送消息
 PermittedOptions inboundPermitted1 = new PermittedOptions().setAddress("demo.orderMgr");
 
-// Allow calls to the address 'demo.persistor' from the client as long as the messages
-// have an action field with value 'find' and a collection field with value
-// 'albums'
+// 允许客户端向地址 `demo.orderMgr` 发送消息
+// 并且 `action` 的值为 `find`、`collecton` 的值为 `albums` 消息。
 PermittedOptions inboundPermitted2 = new PermittedOptions().setAddress("demo.persistor")
     .setMatch(new JsonObject().put("action", "find")
         .put("collection", "albums"));
 
-// Allow through any message with a field `wibble` with value `foo`.
+// 允许 `wibble` 值为 `foo` 的消息.
 PermittedOptions inboundPermitted3 = new PermittedOptions().setMatch(new JsonObject().put("wibble", "foo"));
 
-// First let's define what we're going to allow from server -> client
+// 下面定义了如何允许服务端向客户端发送消息
 
-// Let through any messages coming from address 'ticker.mystock'
+// 允许向客户端发送地址为 `ticker.mystock` 的消息
 PermittedOptions outboundPermitted1 = new PermittedOptions().setAddress("ticker.mystock");
 
-// Let through any messages from addresses starting with "news." (e.g. news.europe, news.usa, etc)
+// 允许向客户端发送地址以 `news.` 开头的消息（例如 news.europe, news.usa, 等）
 PermittedOptions outboundPermitted2 = new PermittedOptions().setAddressRegex("news\\..+");
 
-// Let's define what we're going to allow from client -> server
+// 将规则添加到 BridgeOptions 里
 BridgeOptions options = new BridgeOptions().
     addInboundPermitted(inboundPermitted1).
     addInboundPermitted(inboundPermitted1).
@@ -2039,7 +2020,7 @@ event bus 桥接器可以使用 Vert.x-Web 的授权功能来配置消息的访�
 ```java
 PermittedOptions inboundPermitted = new PermittedOptions().setAddress("demo.orderService");
 
-// But only if the user is logged in and has the authority "place_orders"
+// 仅当用户已登录并且拥有权限 `place_orders`
 inboundPermitted.setRequiredAuthority("place_orders");
 
 BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted);
@@ -2050,17 +2031,17 @@ BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted
 ```java
 Router router = Router.router(vertx);
 
-// Let through any messages sent to 'demo.orderService' from the client
+// 允许客户端向地址 `demo.orderService` 发送消息
 PermittedOptions inboundPermitted = new PermittedOptions().setAddress("demo.orderService");
 
-// But only if the user is logged in and has the authority "place_orders"
+// 仅当用户已经登录并且包含 `place_orders` 权限
 inboundPermitted.setRequiredAuthority("place_orders");
 
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
 sockJSHandler.bridge(new BridgeOptions().
         addInboundPermitted(inboundPermitted));
 
-// Now set up some basic auth handling:
+// 设置基础认证处理器
 
 router.route().handler(CookieHandler.create());
 router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
@@ -2138,7 +2119,7 @@ router.route("/eventbus/*").handler(sockJSHandler);
 ```java
 Router router = Router.router(vertx);
 
-// Let through any messages sent to 'demo.orderMgr' from the client
+// 允许客户端向地址 `demo.orderMgr` 发送消息
 PermittedOptions inboundPermitted = new PermittedOptions().setAddress("demo.someService");
 
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
@@ -2147,7 +2128,7 @@ BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted
 sockJSHandler.bridge(options, be -> {
   if (be.type() == BridgeEventType.PUBLISH || be.type() == BridgeEventType.RECEIVE) {
     if (be.getRawMessage().getString("body").equals("armadillos")) {
-      // Reject it
+      // 拒绝该消息
       be.complete(false);
       return;
     }
@@ -2161,7 +2142,7 @@ router.route("/eventbus").handler(sockJSHandler);
 下面的例子展示了如何配置并处理 SOCKET_IDDLE 事件。*注意，setPingTimeout(5000) 的作用是当 ping 消息在 5 秒内没有从客户端返回时触发 SOCKET_IDLE 事件*
 
 ```java
-// Initialize SockJS handler
+// 初始化 SockJS 处理器
 Router router = Router.router(vertx);
 
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
@@ -2169,7 +2150,7 @@ BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted
 
 sockJSHandler.bridge(options, be -> {
 	if (be.type() == BridgeEventType.SOCKET_IDLE) {
-	    // Do some custom handling...
+	    // 执行某些处理
 	}
 
  be.complete(true);
@@ -2190,12 +2171,12 @@ var eb = new EventBus('http://localhost:8080/eventbus', {"vertxbus_ping_interval
 
 eb.onopen = function() {
 
- // set a handler to receive a message
+ // 设置一个接收消息的回调函数
  eb.registerHandler('some-address', function(error, message) {
    console.log('received a message: ' + JSON.stringify(message));
  });
 
- // send a message
+ // 发送消息
  eb.send('some-address', {name: 'tim', age: 587});
 }
 
@@ -2215,7 +2196,7 @@ var eb = new EventBus('http://localhost:8080/eventbus', {"vertxbus_ping_interval
 ```java
 Router router = Router.router(vertx);
 
-// Let through any messages sent to 'demo.orderService' from the client
+// 允许客户端向地址 `demo.orderService` 发送消息
 PermittedOptions inboundPermitted = new PermittedOptions().setAddress("demo.orderService");
 
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
@@ -2223,7 +2204,7 @@ BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted
 
 sockJSHandler.bridge(options, be -> {
   if (be.type() == BridgeEventType.PUBLISH || be.type() == BridgeEventType.SEND) {
-    // Add some headers
+    // 添加消息头
     JsonObject headers = new JsonObject().put("header1", "val").put("header2", "val2");
     JsonObject rawMessage = be.getRawMessage();
     rawMessage.put("headers", headers);
@@ -2268,7 +2249,7 @@ router.route().handler(rc -> {
 
 ```java
 router.route().handler(VirtualHostHandler.create("*.vertx.io", routingContext -> {
-  // do something if the request is for *.vertx.io
+  // 如果请求访问虚机主机 `*.vertx.io` ，执行某些处理
 }));
 ```
 
@@ -2279,21 +2260,21 @@ OAuth2AuthHandler 帮助你快速地配置基于 OAuth2 协议的安全路由。
 ```java
 OAuth2Auth authProvider = GithubAuth.create(vertx, "CLIENT_ID", "CLIENT_SECRET");
 
-// create a oauth2 handler on our running server
-// the second argument is the full url to the callback as you entered in your provider management console.
+// 在服务器上创建 oauth2 处理器
+// 第二个参数是你提供给你的提供商的回调 URL
 OAuth2AuthHandler oauth2 = OAuth2AuthHandler.create(authProvider, "https://myserver.com/callback");
 
-// setup the callback handler for receiving the GitHub callback
+// 配置回调处理器来接收 GitHub 的回调
 oauth2.setupCallback(router.route());
 
-// protect everything under /protected
+// 保护 `/protected` 路径下的资源
 router.route("/protected/*").handler(oauth2);
-// mount some handler under the protected zone
+// 在 `/protected` 路径下挂载某些处理器
 router.route("/protected/somepage").handler(rc -> {
   rc.response().end("Welcome to the protected resource!");
 });
 
-// welcome page
+// 欢迎页
 router.get("/").handler(ctx -> {
   ctx.response().putHeader("content-type", "text/html").end("Hello<br><a href=\"/protected/somepage\">Protected by Github</a>");
 });
@@ -2332,23 +2313,23 @@ OAuth2Auth authProvider = OAuth2Auth.create(vertx, OAuth2FlowType.AUTH_CODE, new
     .setTokenPath("https://www.googleapis.com/oauth2/v3/token")
     .setAuthorizationPath("/o/oauth2/auth"));
 
-// create a oauth2 handler on our domain: "http://localhost:8080"
+// 在域名 `http://localhost:8080` 上创建 oauth2 处理器
 OAuth2AuthHandler oauth2 = OAuth2AuthHandler.create(authProvider, "http://localhost:8080");
 
-// these are the scopes
+// 配置需要的权限
 oauth2.addAuthority("profile");
 
-// setup the callback handler for receiving the Google callback
+// 配置回调处理器来接收 Google 的回调
 oauth2.setupCallback(router.get("/callback"));
 
-// protect everything under /protected
+// 保护 `/protected` 路径下的资源
 router.route("/protected/*").handler(oauth2);
-// mount some handler under the protected zone
+// 在 `/protected` 路径下挂载某些处理器
 router.route("/protected/somepage").handler(rc -> {
   rc.response().end("Welcome to the protected resource!");
 });
 
-// welcome page
+// 欢迎页
 router.get("/").handler(ctx -> {
   ctx.response().putHeader("content-type", "text/html").end("Hello<br><a href=\"/protected/somepage\">Protected by Google</a>");
 });
@@ -2362,7 +2343,7 @@ router.get("/").handler(ctx -> {
 
 ```java
 OAuth2AuthHandler oauth2 = OAuth2AuthHandler.create(provider, "https://myserver.com:8447/callback");
-// now allow the handler to setup the callback url for you
+// 允许该处理器为你处理回调地址
 oauth2.setupCallback(router.route());
 ```
 
