@@ -57,7 +57,7 @@ vertx.eventBus().send("address","message", asyncResult->{
 
 ```java
 Future<Message<String>> future = Future.future();
-//将回调函数存入future中，从而实现程序的扁平化
+//将回调函数存入future中，从而实现代码的扁平化
 future.setHandler(asyncResult -> {
     System.out.println(asyncResult.result());
 });
