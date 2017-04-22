@@ -5833,7 +5833,7 @@ Vert.x使用内置的日志记录API进行日志记录，默认实现使用JDK�
 
 #### 配置JUL日志记录
 
-一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性、值为您的配置文件（位置）。有关此更多信息和JUL配置文件的结构，请参阅JUL日志记录文档。
+一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性，值为您的配置文件（位置）。有关此更多信息和JUL配置文件的结构，请参阅JUL日志记录文档。
 
 Vert.x还提供了一种更方便的方式指定配置文件，而无需设置系统属性。您只需在您的类路径中提供名为`vertx-default-jul-logging.properties`的JUL配置文件（如，您的fatjar），Vert.x将使用该配置文件配置JUL。
 
@@ -5849,7 +5849,7 @@ Vert.x还提供了一种更方便的方式指定配置文件，而无需设置�
 
 Vert.x本身只是一个库，您可以在自己的应用程序使用任何日志库的API来记录日志。
 
-但是，若您愿意，可以使用上述的Vert.x日志记录工具为应用程序提供日志记录。
+但是，若您愿意，也可以使用上述的Vert.x日志记录工具为应用程序提供日志记录。
 
 为此，您可以使用[LoggerFactory](http://vertx.io/docs/apidocs/io/vertx/core/logging/LoggerFactory.html)获取一个[Logger](http://vertx.io/docs/apidocs/io/vertx/core/logging/Logger.html)实例用来记录日志：
 
@@ -5873,7 +5873,6 @@ Netty不依赖于外部日志配置（例如系统属性），而是根据Netty�
 通过直接在`io.netty.util.internal.logging.InternalLoggerFactory`上设置Netty的内部记录器实现，强制执行日志记录器实现。
 
 ```
-// Force logging to Log4j
 // 强制使用Log4j日志记录
 InternalLoggerFactory.setDefaultFactory(Log4JLoggerFactory.INSTANCE);
 ```
@@ -5890,7 +5889,7 @@ SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 
-这意味着您的类路径中有`SLF4J-API`却没有实际的绑定。使用`SLF4J`记录的消息将被删除，则您应该添加绑定到您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并进行配置。
+这意味着您的类路径中有`SLF4J-API`却没有实际的绑定。使用`SLF4J`记录的消息将被删除。您应该添加绑定到您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并进行配置。
 
 请注意，Netty会寻找`SLF4-API`的jar，并在默认情况下使用它。
 
@@ -5908,7 +5907,7 @@ SEVERE: java.io.IOException: Connection reset by peer
 
 Vert.x使用地址解析器将主机名解析为IP地址，而不是JVM内置的阻塞解析器。
 
-主机名使用一下方式解析为IP地址：
+主机名使用以下方式解析为IP地址：
 
 * 操作系统的hosts文件
 * DNS查询服务器列表
@@ -5928,7 +5927,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 
 DNS服务器的默认端口为`53`，当服务器使用不同的端口时，可以使用冒号分隔符设置该端口：`192.168.0.2:40000`。
 
-*注意：有时可能需要使用JVM内置解析器，JVM系统属性`-Dvertx.disableDnsResolver=true`激活该行为*
+> 请注意： *有时可能需要使用JVM内置解析器，JVM系统属性`-Dvertx.disableDnsResolver=true`激活该行为*
 
 #### 故障转移【Failover】
 
@@ -5940,7 +5939,7 @@ DNS服务器的默认端口为`53`，当服务器使用不同的端口时，可�
 
 默认情况下，DNS服务器选择使用第一个，其余的服务器用于故障转移。
 
-您可以配置[setRotateServers](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-)为true，让解析器使用轮询选择。它会在服务器之间传播查询负载并避免所有的查找都找到列表中的第一个服务器。
+您可以配置[setRotateServers](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-)为true，让解析器使用轮询选择。它会在服务器之间传播查询负载，并避免所有的查找都找到列表中的第一个服务器。
 
 故障转移仍然适用，并将使用列表中的下一个服务器。
 
@@ -5973,7 +5972,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 
 ### 高可用/故障转移
 
-Vert.x允许您运行支持高可用（HA——High Availability）的Verticle，这种情况下，当运行Verticle的Vert.x实例突然死亡时，该Veritlce将迁移到另一个Vert.x实例。这个Vert.x实例必须在同一个集群中。
+Vert.x允许您运行支持高可用（HA——High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然死亡时，该Veritlce将迁移到另一个Vert.x实例。这个Vert.x实例必须在同一个集群中。
 
 #### 自动故障转移
 
@@ -5991,10 +5990,10 @@ vertx run my-verticle.js -ha
 vertx run my-other-verticle.js -ha
 ```
 
-如果运行了`my-verticle.js`的Vert.x实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x实例将自动重新部署`my-verticle.js`，现在这个Vert.x实例正在运行两个Verticle。
+如果运行了`my-verticle.js`的Vert.x实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x实例将自动重新部署`my-verticle.js`，所以现在这个Vert.x实例正在运行两个Verticle。
 
-*注意：只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
-*重要：请注意，干净地关闭Vert.x实例不会导致故障转移发生：**CTRL-C**或**kill -SIGNINT***
+> 注意： *只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
+> 重要： *请注意，干净地关闭Vert.x实例不会导致故障转移发生，例如：**CTRL-C**或**kill -SIGNINT***
 
 您也可以启动裸的Vert.x实例——即最初不运行任何Verticle的实例，它们也将为集群中的节点进行故障转移。要启动一个裸实例，您只需做：
 
@@ -6004,7 +6003,7 @@ vertx run -ha
 
 当使用`-ha`开关时，您不需要提供`-cluster`开关，因为若要使用HA就假定是集群。
 
-*注意：根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机cluster-host和集群端口cluster-port参数。*
+> 请注意： *根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机cluster-host和集群端口cluster-port参数。*
 
 #### HA组
 
