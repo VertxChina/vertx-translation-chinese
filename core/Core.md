@@ -149,7 +149,7 @@ response.write("some text");
 response.end();
 ```
 
-### 不要找我们，我们会找你的 \[3\]
+### 不要找我们，我们会找你的
 
 Vert.x的API大部分都是事件驱动，这意味着当您感兴趣的事情发生时，它会以事件的形式发送给您。
 
@@ -6520,7 +6520,6 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 
 1. Vert.x的扩展包是Vert.x的子项目集合，类似[Web](http://vertx.io/docs/#web)、[Web Client](http://vertx.io/docs/#web-client)、[Data Access](http://vertx.io/docs/#data_access)等。
 2. 两种常用的项目构建工具。
-3. Don't call us, we'll call you，Call斟酌了很久是翻译还是不翻译，“调用”在这个标题中听起来过于生硬，为了辅助理解没有翻译。
 
 ## 注释
 
