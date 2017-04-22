@@ -1,8 +1,11 @@
 # Vert.x 官方文档翻译工作计划
 
-## 2017-04-21
+## 2017-04-22
 
 - [ ] **Vert.x Core**：初稿翻译完成，正在进行校对
+  - [ ] **2320行之前**：由gy校对
+  - [ ] **2321到3560行**：由hxl负责校对
+  - [ ] **3561行之后**：暂未开始校对
 - [x] **Vert.x Web**：已翻译校对完成
 - [x] **Vert.x Web Client**：已翻译校对完成
 - [x] **Vert.x Microservices**
@@ -25,9 +28,10 @@
 
 ## 2017-03-28  
 
-- **Core、Web：** silentbalanceyh负责翻译，chengenzhao、kkkoko校对
-- **WebClient：** chengenzhao负责翻译，zlf负责校对  
-- **Microservices：** troopson@163.com，me.yan.xia@qq.com负责翻译和校对  
+- **Core：** silentbalanceyh负责翻译，chengenzhao、kkkoko、gy、hxl校对
+- **Web：** gy负责翻译，chengenzhao校对
+- **WebClient：** chengenzhao负责翻译，zlf负责校对  
+- **Microservices：** troopson@163.com，me.yan.xia@qq.com负责翻译和校对  
 - **Reactive：** cet63负责翻译  
 - **IoT：** lizhenxiang负责翻译，943470549@qq.com负责校对  
 - **data access：** DaC1989负责翻译，kkkoko校对  
