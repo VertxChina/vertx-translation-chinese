@@ -3650,19 +3650,19 @@ client.getNow("some-uri", response -> {
 
 **结束响应处理器**
 
-整个响应体被读取时或者没有响应体而响应头被读取时，响应中的[endHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html#endHandler-io.vertx.core.Handler-)会被调用。
+当整个响应体被完全读取或者无响应体的响应头被完全读取时，响应的[endHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html#endHandler-io.vertx.core.Handler-)就会被调用。
 
 **从响应中读取Cookie**
 
-您可以用[cookies](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html#cookies--)方法从响应中读取一个cookie的列表。
+您可用[cookies](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html#cookies--)方法从响应中获取cookies列表。
 
-或者，您可以在响应中自己解析Set-Cookie头。
+或者您可以在响应中自己解析Set-Cookie头。
 
 **30x重定向处理器**
 
-客户端可配置成遵循HTTP重定向的：当客户端接收到301、302、303或307状态代码时，它遵循由Location响应头提供的重定向，并且响应处理器将传递重定向响应代替原始响应。
+客户端可配置成遵循HTTP重定向：当客户端接收到301、302、303或307状态代码时，它遵循由Location响应头提供的重定向，响应处理器将传递重定向响应以替代原始响应。
 
-这儿有个例子：
+这有个例子：
 
 ```java
 client.get("some-uri", response -> {
@@ -3675,7 +3675,7 @@ client.get("some-uri", response -> {
 * 当接收到301、302或303状态代码时，使用GET方法执行重定向
 * 当接收到307状态代码时，使用相同的HTTP方法和缓存的请求体执行重定向
 
-*警告：遵循重定向会缓存请求体。*
+> 警告： *随后的重定向会缓存请求体*
 
 默认情况最大的重定向数为`16`，您可使用[setMaxRedirects](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientOptions.html#setMaxRedirects-int-)设置。
 
@@ -3689,7 +3689,7 @@ client.get("some-uri", response -> {
 }).setFollowRedirects(true).end();
 ```
 
-一个尺寸不适合所有情况并且默认重定向策略不适合您的需要。
+没有放之四海而皆准的策略，缺省的重定向策略可能不能满足您的需要。
 
 默认重定向策略可使用自定义实现更改：
 
@@ -3714,11 +3714,11 @@ client.redirectHandler(response -> {
   return null;
 });
 ```
-这个策略会接收到原始[HttpClientResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html)，并返回`null`或`Future<HttpClientRequest>`。
+这个策略将会处理接收到的原始[HttpClientResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html)，并返回`null`或`Future<HttpClientRequest>`。
 
-* 当返回null时，处理原始响应
-* 当一个Future返回时，请求将在它成功完成后发送
-* 当一个Future返回时，请求失败时调用设置的异常处理器
+* 当返回的是null时，处理原始响应
+* 当返回的是Future时，请求将在它成功完成后发送
+* 当返回的是Future时，请求失败时调用设置的异常处理器
 
 返回的请求必须是未发送的，这样原始请求处理器才会被发送而且客户端之后才能发送请求。大多数原始请求设置将会传播（拷贝）到新请求中：
 
