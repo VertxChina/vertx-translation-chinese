@@ -5,6 +5,12 @@
 - [ ] **Vert.x Core**：初稿翻译完成，正在进行校对
 - [x] **Vert.x Web**：已翻译校对完成
 - [x] **Vert.x Web Client**：已翻译校对完成
+- [ ] **Vert.x Data Access**
+  - [ ] **Vert.x Mongo Client**：未进行
+  - [x] **Vert.x JDBC Client**：已翻译校对完成
+  - [x] **Vert.x Common SQL Interface**：已翻译校对完成
+  - [x] **Vert.x Redis Client**：已翻译校对完成
+  - [x] **Vert.x MySQL/PostgreSQL Client**：已翻译校对完成
 - [x] **Vert.x Microservices**
   - [x] **Vert.x Circuit Breaker**：已翻译校对完成
   - [x] **Vert.x Service Discovery**：已翻译校对完成
@@ -13,16 +19,10 @@
   - [x] **Vert.x Kafka Client**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
 - [x] **Vert.x Service Proxy**：已重新翻译
-- [ ] **Vert.x Data Access**
-  - [ ] **Vert.x Mongo Client**：未进行
-  - [x] **Vert.x JDBC Client**：已翻译校对完成
-  - [x] **Vert.x Common SQL Interface**：已翻译校对完成
-  - [x] **Vert.x Redis Client**：已翻译校对完成
-  - [x] **Vert.x MySQL/PostgreSQL Client**：已翻译校对完成
 - [ ] **Vert.x IoT**：未进行
 - [ ] **Vert.x Cluster**：未做更新
 
-本次计划预计四月中旬完成。
+本次计划预计五月中旬完成。
 
 
 ## 2017-03-28  
