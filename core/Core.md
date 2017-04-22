@@ -5992,7 +5992,8 @@ vertx run my-other-verticle.js -ha
 
 如果运行了`my-verticle.js`的Vert.x实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x实例将自动重新部署`my-verticle.js`，所以现在这个Vert.x实例正在运行两个Verticle。
 
-> 注意： *只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
+> 请注意： *只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
+
 > 重要： *请注意，干净地关闭Vert.x实例不会导致故障转移发生，例如：**CTRL-C**或**kill -SIGNINT***
 
 您也可以启动裸的Vert.x实例——即最初不运行任何Verticle的实例，它们也将为集群中的节点进行故障转移。要启动一个裸实例，您只需做：
