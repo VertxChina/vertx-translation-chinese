@@ -6523,7 +6523,5 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 
 ## 注释
 
-1. worker executor和executor在这个章节也就是等价概念，创建一个执行器创建额外的工作线程池，执行器用来管理这个额外的线程池。
-
 ## 结语
 
