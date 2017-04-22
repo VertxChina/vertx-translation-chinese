@@ -230,7 +230,7 @@ client
   });
 ```
 
-> 请注意： *[`Json.encode`](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-) 方法使用Jackson的 mapper将 POJO 映射成 JSON*。
+> 请注意： *[`Json.encode`](http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-) 方法使用Jackson的 mapper将 POJO 映射成 JSON。*
 
 #### 表单提交
 
@@ -372,7 +372,7 @@ client
   });
 ```
 
-> 警告：缺省状况下，响应会被完全缓冲读入内存，请用 [`BodyCodec.pipe`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-) 方法将响应写入流。
+> 警告：*缺省状况下，响应会被完全缓冲读入内存，请用 [`BodyCodec.pipe`](http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-) 方法将响应写入流。*
 
 ### 响应编解码器
 
@@ -482,7 +482,7 @@ client
   });
 ```
 
-> 警告：这种方式仅对响应结果为缓冲体有效。
+> 警告：*这种方式仅对响应结果为缓冲体有效。*
 
 ### 处理30x重定向
 
