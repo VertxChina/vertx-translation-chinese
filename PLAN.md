@@ -11,12 +11,12 @@
   - [x] **Vert.x Common SQL Interface**：已翻译校对完成
   - [x] **Vert.x Redis Client**：已翻译校对完成
   - [x] **Vert.x MySQL/PostgreSQL Client**：已翻译校对完成
+- [ ] **Vert.x Integration**
+  - [x] **Vert.x Kafka Client**：已翻译校对完成
 - [x] **Vert.x Microservices**
   - [x] **Vert.x Circuit Breaker**：已翻译校对完成
   - [x] **Vert.x Service Discovery**：已翻译校对完成
   - [x] **Vert.x Config**：已翻译校对完成
-- [ ] **Vert.x Integration**
-  - [x] **Vert.x Kafka Client**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
 - [x] **Vert.x Service Proxy**：已重新翻译
 - [ ] **Vert.x IoT**：未进行
