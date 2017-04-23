@@ -4798,21 +4798,21 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 ### 数据报套接字（UDP）
 
-Vert.x中使用用户数据报协议（UDP）是非常简单的。
+Vert.x中使用用户数据报协议（UDP）就是小菜一碟。
 
 UDP是无连接的传输，这基本上意味着您没有与远程客户端的持续连接。
 
 因此您可以发送和接收包，并且每个包包含远程地址。
 
-UDP不像TCP的使用那样安全，这意味着不能保证发送的数据包会被对应的接收端（Endpoint）接收。
+UDP不像TCP的使用那样安全，这也就意味着不能保证发送的数据包一定会被对应的接收端（Endpoint）接收。
 
-唯一的保证是，它将会被不完全接收或者完全不被接收到。
+唯一的保证是，它一定会有部分接收端所接收到。
 
 因为每一个数据包将会作为一个包发送，所以通常情况下您不能发送大于网络接口的最大传输单元（MTU）的数据包。
 
-但是要注意，即使数据包尺寸小于MTU，它仍然可能会失败。
+但是要注意，即使数据包尺寸小于MTU，它仍然可能会发送失败。
 
-它失败的尺寸取决于操作系统等（其他），所以经验法则是尝试发送小数据包。
+它失败的尺寸取决于操作系统等（其他原因），所以经验法则是尝试发送小数据包。
 
 由于UDP的本质，最适合一些允许丢弃数据包的应用（如监视应用程序）。
 
@@ -4820,13 +4820,13 @@ UDP不像TCP的使用那样安全，这意味着不能保证发送的数据包�
 
 #### 创建一个DatagramSocket
 
-要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，若您只是想要发送数据、发送、接收，这并不重要。
+要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，无论您是要仅仅数据发送或者数据收发，这都是一样的。
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 ```
 
-返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，若您只想发送数据（如客户端）这不是一个问题，但更多的在下一节。
+返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，若您只想发送数据（如作为客户端）这是没问题的，但更多详细的内容在下一节。
 
 #### 发送数据报包
 
@@ -4896,7 +4896,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 唯一的区别是您可以将多播组的地址传递给send方法发送出去。
 
-这里显示：
+如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4914,9 +4914,9 @@ socket.send(buffer, 1234, "230.0.0.1", asyncResult -> {
 
 若要接收特定多播组的数据包，则需要通过在其上调用`listen(...)`来绑定一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，并加入多播组。
 
-这样，您将能够接收发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)监听的地址和端口的DatagramPacket，也可以接受发送到多播组的数据报。
+这样，您将能够接收到被发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的数据报，同时也可以接收被发送到该多播组的数据报。
 
-除此之外，您可设置一个处理器，每次接收到DatagramPacket时会被调用。
+除此之外，您还可设置一个处理器，它在每次接收到DatagramPacket时会被调用。
 
 [DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)有以下方法：
 
@@ -4947,11 +4947,11 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 **取消/离开多播组**
 
-有时候您想在有限时间内为多播组接收数据包。
+有时候您想只在特定时间内接收多播组的数据包。
 
-这种情况下，您可以先监听他们，之后unlisten。
+这种情况下，您可以先监听他们，之后再取消监听。
 
-这里显示：
+如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4959,8 +4959,8 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
     if (asyncResult.succeeded()) {
       socket.handler(packet -> {
         // Do something with the packet
-		// 用数据报做些事
-      });
+		// 处理数据报
+     });
 
       // join the multicast group
 	  // 加入多播组
@@ -4985,11 +4985,11 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 **阻塞多播**
 
-除了unlisten一个多播地址以外，也有可能阻塞指定发送者地址的多播。
+除了取消监听一个多播地址以外，也可以做到阻塞指定发送者地址的多播。
 
 注意：这仅适用于某些操作系统和内核版本，所以请检查操作系统文档看是它是否支持（该功能）。
 
-这是一个专家功能。
+这是一专用级的功能。
 
 要阻塞来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
 
@@ -5008,7 +5008,7 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 **DatagramSocket属性**
 
-当创建[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)时，您可以通过[DatagramSocketOptions](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html)对象设置多个属性来更改它的行为。这些（属性）列在这儿：
+当创建[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)时，您可以通过[DatagramSocketOptions](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html)对象来设置多个属性以更改它的功能。这些（属性）列在这儿：
 
 * [setSendBufferSize](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setSendBufferSize-int-)以字节为单位设置发送缓冲区的大小。
 * [setReceiveBufferSize](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setReceiveBufferSize-int-)设置TCP接收缓冲区大小（以字节为单位）。
@@ -5020,7 +5020,7 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 **DatagramSocket本地地址**
 
-您可以通过调用[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#localAddress--)来查找套接字的本地地址（即UDP Socket这边的地址）。若您之前调用`listen(...)`绑定了[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)则将返回一个InetSocketAddress，否则返回null。
+若您在调用`listen(...)`之前已经绑定了[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，您可以通过调用[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#localAddress--)来查找套接字的本地地址（即UDP Socket这边的地址，它将返回一个InetSocketAddress，否则返回null。
 
 **关闭DatagramSocket**
 
@@ -5031,21 +5031,21 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 通常情况下，您将需要以异步方式来获取DNS信息。
 
-不幸的是，Java虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
+但不幸的是，Java虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
 
-若要获取DnsClient实例，您将通过Vertx实例创建一个新的。
+若要获取DnsClient实例，您可以通过Vertx实例来创建一个。
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 ```
 
-请注意，您可以传入InetSocketAddress参数的变量，以指定更多的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若头一个在第一次使用时产生了错误下一个将（在产生错误的地方）使用。
+请注意，您可以传入InetSocketAddress参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
 
-#### lookup
+#### 获取
 
-尝试查找给定名称的A（ipv4）或AAAA（ipv6）记录。第一个返回的（记录）将会被使用，因此它的操作方式和操作系统上使用`nslookup`类似。
+当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。因此它的操作方式和操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的A/AAAA记录，您通常会使用它：
+要为`vertx.io`的获取A/AAAA记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5058,11 +5058,11 @@ client.lookup("vertx.io", ar -> {
 });
 ```
 
-#### lookup4
+#### 获取IPV4
 
 尝试查找给定名称的A（ipv4）记录。第一个返回的（记录）将会被使用，因此它的操作方式与操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的A记录，您通常会使用它：
+要查找`vertx.io`的A记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5075,11 +5075,11 @@ client.lookup4("vertx.io", ar -> {
 });
 ```
 
-#### lookup6
+#### 获取IPV6
 
 尝试查找给定名称的AAAA（ipv6）记录。第一返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的AAAA记录，您通常会使用它：
+要查找`vertx.io`的AAAA记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5092,7 +5092,7 @@ client.lookup6("vertx.io", ar -> {
 });
 ```
 
-#### resolveA
+#### 解析IPV4
 
 尝试解析给定名称的所有A（ipv4）记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5112,7 +5112,7 @@ client.resolveA("vertx.io", ar -> {
 });
 ```
 
-#### resolveAAAA
+#### 解析IPV6
 
 尝试解析给定名称的所有AAAA（ipv6）记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5132,7 +5132,7 @@ client.resolveAAAA("vertx.io", ar -> {
 });
 ```
 
-#### resolveCNAME
+#### 解析CNAME
 
 尝试解析给定名称的所有CNAME记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5152,7 +5152,7 @@ client.resolveCNAME("vertx.io", ar -> {
 });
 ```
 
-#### resolveMX
+#### 解析MX
 
 尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器接受给定域的电子邮件。
 
@@ -5181,7 +5181,7 @@ record.priority();
 record.name();
 ```
 
-#### resolveTXT
+#### 解析TXT
 
 尝试解析给定名称的所有TXT记录，TXT记录通常用于定义域的额外信息。
 
@@ -5201,7 +5201,7 @@ client.resolveTXT("vertx.io", ar -> {
 });
 ```
 
-#### resolveNS
+#### 解析NS
 
 尝试解析给定名称的所有NS记录，NS记录指定哪个DNS服务器托管给定域的DNS信息。
 
@@ -5221,7 +5221,7 @@ client.resolveNS("vertx.io", ar -> {
 });
 ```
 
-#### resolveSRV
+#### 解析SRV
 
 尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这个额外信息。
 
@@ -5257,7 +5257,7 @@ record.target();
 
 有关详细信息，请参阅API文档。
 
-#### resolvePTR
+#### 解析PTR
 
 尝试解析给定名称的PTR记录，PTR记录将`ipaddress`映射到名称。
 
@@ -5275,7 +5275,7 @@ client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
 });
 ```
 
-#### reverseLookup
+#### 解析Lookup
 
 尝试对ipaddress进行反向查找，这与解析PTR记录类似，但是允许您只传递ipaddress，而不是有效的PTR查询字符串。
 
@@ -5295,9 +5295,9 @@ client.reverseLookup("10.0.0.1", ar -> {
 
 #### 错误处理
 
-如前边部分所述，DnsClient允许您传递一个Handler，一旦查询完成将会传入一个AsyncResult给处理器并通知它。
+如前边部分所述，DnsClient允许您传递一个Handler，一旦查询完成将会传入一个AsyncResult给Handler并通知它。
 
-在出现错误的情况下，通知中将包含一个DnsException，该异常会打开一个[DnsResponseCode](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html)用于分辨为何失败。此DnsResponseCode可用于更详细检查原因。
+在出现错误的情况下，通知中将包含一个DnsException，该异常会包含一个说明为何失败的[DnsResponseCode](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html)。此DnsResponseCode可用于更详细检查原因。
 
 可能的DnsResponseCode值是：
 
