@@ -27,7 +27,7 @@
 
 ## 2017-03-28  
 
-- **Core：** silentbalanceyh负责翻译，chengenzhao、kkkoko、gy、hxl、szk、Toyer、漓江校对
+- **Core：** silentbalanceyh负责翻译，chengenzhao、kkkoko、gy、hxl、Toyer、漓江校对
 - **Web：** gy负责翻译，chengenzhao校对
 - **WebClient：** chengenzhao负责翻译，zlf负责校对  
 - **Microservices：** troopson@163.com，me.yan.xia@qq.com负责翻译和校对  
