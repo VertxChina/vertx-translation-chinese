@@ -234,7 +234,7 @@ Vert.x的工作方式有所不同。每个Vertx实例维护的是多个event loo
 我们将这种模式称为多反应器模式，区别于单线程的多反应器模式。
 
 
-> 请注意：*即使一个Vertx实例维护了多个Event Loop，任何一个处理器永远不会并行执行。大部分情况下（除开_[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)之_外）它们总是在同一个Event Loop线程中被调用。*
+> 请注意：*即使一个Vertx实例维护了多个Event Loop，任何一个处理器永远不会并行执行。大部分情况下（除开[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)以外）它们总是在同一个Event Loop线程中被调用。*
 
 ### 黄金法则：不要阻塞Event Loop
 
