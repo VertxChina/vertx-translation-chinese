@@ -43,7 +43,7 @@
 * High Availability：高可用性
 * Fail-Over：故障转移
 
-> 请注意  *Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
+> 请注意：*Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
 
 ## 正文
 
@@ -233,7 +233,7 @@ server.requestHandler(request -> {
 
 我们将这种模式称为多反应堆模式，区别于单线程反应堆模式。
 
-_注意：即使一个Vertx实例维护了多个Event Loop，任何特定的处理器永远不会同时执行，大部分情况下（除开_[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)之_外）它们总是在完全相同的Event Loop中被调用。_
+> 请注意：*即使一个Vertx实例维护了多个Event Loop，任何特定的处理器永远不会同时执行，大部分情况下（除开_[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)之外）它们总是在完全相同的Event Loop中被调用。*
 
 ### 黄金法则——不要阻塞Event Loop
 
@@ -343,7 +343,7 @@ long maxExecuteTime = 120000;
 WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool", poolSize, maxExecuteTime);
 ```
 
-_注意：这个配置信息在worker pool创建的时候设置。_
+> 请注意：*这个配置信息在worker pool创建的时候设置。*
 
 ### 异步协调
 
@@ -572,7 +572,7 @@ public class MyVerticle extends AbstractVerticle {
 }
 ```
 
-_注意：您不需要在一个Verticle的stop方法中手工去撤销启动时部署的子Verticle，当父Verticle在撤销时Vert.x会自动撤销任何子Verticle。_
+> 请注意：*您不需要在一个Verticle的stop方法中手工去撤销启动时部署的子Verticle，当父Verticle在撤销时Vert.x会自动撤销任何子Verticle。*
 
 #### Verticle类型
 
@@ -611,13 +611,13 @@ Worker Verticle实例绝对不会在Vert.x中被多个线程同时执行，但�
 
 一个multi-threaded worker verticle近似于普通的Worker Verticle，但是它可以由不同的线程同时执行。
 
-*警告：Multi-threaded worker verticle是一个高级功能，大部分应用程序不会需要它。由于在这些Verticle中的并发性，您必须非常小心和使用Java技术中多线程编程方式保持状态一致性。*
+> 警告：*Multi-threaded worker verticle是一个高级功能，大部分应用程序不会需要它。由于在这些Verticle中的并发性，您必须非常小心和使用Java技术中多线程编程方式保持状态一致性。*
 
 #### 编程方式部署Verticle
 
 您可以指定一个Verticle名称或传入您已经创建好的Verticle实例，使用任意一个[deployVerticle](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#deployVerticle-io.vertx.core.Verticle-)方法来部署Verticle。
 
-*注意：部署Verticle仅限Java语言*
+> 请注意：*部署Verticle仅限Java语言*
 
 ```java
 Verticle myVerticle = new MyVerticle();
@@ -761,7 +761,7 @@ System.getenv("HOME");
 
 若您想要加载的类和资源不存在于主类路径，您可使用[setExtraClasspath](http://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setExtraClasspath-java.util.List-)将额外的类路径添加到这里。
 
-*警告：谨慎使用此功能，类加载器可能是一个蠕虫病毒，除其他事情外它会使调试变得困难。*
+> 警告：*谨慎使用此功能，类加载器可能是一个蠕虫病毒，除其他事情外它会使调试变得困难。*
 
 以下是使用隔离组隔离Verticle的部署例子：
 
@@ -794,7 +794,7 @@ Verticle可以启用高可用方式（HA）部署，在上下文环境中，当�
 
 为此，您需要下载并安装Vert.x的发行版【distribution】，并且将安装的`bin`目录添加到您的`PATH`环境变量中，还要确保您的`PATH`中设置了Java 8的JDK环境。
 
-*注意：JDK需要支持Java代码的快速编译【Fly compilcation】。*
+> 请注意：*JDK需要支持Java代码的快速编译【Fly compilcation】。*
 
 现在您可以使用`vertx run`命令运行Verticle了，这儿是一些例子：
 
@@ -1282,7 +1282,7 @@ Vertx.clusteredVertx(options, res -> {
 
 上边代码段描述了如何在Event Bus中使用SSL连接替换纯的TCP连接。
 
-*警告：要在集群模式下强制执行安全性，您必须将集群管理器【Cluster】配置成加密的或强制安全性（的方式）。参考集群管理器的文档获取更多细节。*
+> 警告：*要在集群模式下强制执行安全性，您必须将集群管理器【Cluster】配置成加密的或强制安全性（的方式）。参考集群管理器的文档获取更多细节。*
 
 Event Bus的配置需要在所有集群节点中保持一致性。
 
@@ -2242,7 +2242,7 @@ NetClient client = vertx.createNetClient(options);
 
 ##### 用于测试和开发目的的自签名证书
 
-*警告：不要在生产设置中使用，注意，这里生成的密钥非常不安全。*
+> 小心：*不要在生产设置中使用，请注意在这里生成的密钥非常不安全。*
 
 通常情况下，无论是单位/集成测试还是运行应用程序的开发版本都需要自签名证书。
 
@@ -2499,7 +2499,7 @@ ALPN是一个TLS的扩展，它在客户端和服务器开始交换数据之前�
 * [getMaxConcurrentStreams](http://vertx.io/docs/apidocs/io/vertx/core/http/Http2Settings.html#getMaxConcurrentStreams--)：按照HTTP/2 RFC建议推荐值为100
 * 其他默认的HTTP/2的设置
 
-*注意：Worker Verticles和HTTP/2不兼容*
+> 请注意：*Worker Verticles和HTTP/2不兼容*
 
 #### 记录网络服务器活动
 
