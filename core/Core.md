@@ -5041,7 +5041,7 @@ DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 
 请注意，您可以传入InetSocketAddress参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
 
-#### 获取
+#### 获取Ip
 
 当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。因此它的操作方式和操作系统上使用`nslookup`类似。
 
@@ -5339,21 +5339,21 @@ client.lookup("nonexisting.vert.xio", ar -> {
 
 ### 流【Stream】
 
-Vert.x有几个对象可以让项【items】被读取和写入。
+Vert.x有多个对象用于文件的读写。
 
-在以前的版本中，`streams.adoc`软件包正在独占操作[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象。从现在开始，流不再与Buffer耦合，它们可以和任意类型的对象一起工作。
+在以前的版本中，`streams.adoc`软件包只能通过操作指定的[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象来实现文件读写。从现在开始，流不再与Buffer耦合，它们可以和任意类型的对象一起工作。
 
-在Vert.x中，写调用立即返回，并且内部排队写入。
+在Vert.x中，写调用是立即返回的，而写操作的实际是在内部队列中排队写入。
 
 不难看出，若写入对象的速度比实际写入底层数据资源速度快，那么写入队列就会无限增长，最终导致内存耗尽。
 
 为了解决这个问题，Vert.x API中的一些对象提供了简单的流程控制（回压）功能。
 
-任何流程可感知的写入流对象都实现了[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)，而任何流程可感知的读取流对象都实现了[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)。
+任何可控制的写入流对象都实现了[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)，相应的，任何可控制的读取流对象都实现了[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)。
 
 让我们举个例子，我们要从ReadStream中读取数据，然后将数据写入WriteStream。
 
-一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket实现了ReadStream和WriteStream。请注意，这适用于任何符合ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
+一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket既实现了ReadStream也实现了WriteStream。请注意，这个操作适用于任何实现了ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
 
 这样做的一个原生的方法是直接获取已经读取的数据，并立即将其写入NetSocket：
 
@@ -5370,7 +5370,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-上面的例子有一个问题：如果数据从Socket读取的速度比可以写回Socket的速度快，那么它将在NetSocket的写队列中累计，最终用完RAM。这可能会发生，例如，若Socket另一端的客户端读取速度不够快，则有效地将连接回压。
+上面的例子有一个问题：如果从Socket读取数据的速度比写回Socket的速度快，那么它将在NetSocket的写队列中不断堆积，最终用完RAM。这是有可能会发生，例如，若Socket另一端的客户端读取速度不够快，无法快速地向连接的另一端回压。
 
 由于NetSocket实现了WriteStream，我们可以在写入之前检查WriteStream是否已满：
 
@@ -5388,7 +5388,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-这个例子不会用完RAM，单如果写入队列已满，我们最终会丢失数据。我们真正想要做的是在写入队列已满时暂停NetSocket：
+这个例子不会用完RAM，但如果写入队列已满，我们最终会丢失数据。我们真正想要做的是在写入队列已满时暂停读取NetSocket：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5404,7 +5404,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-我们几乎在那儿，单不完全相同。NetSocket现在在文件已满时暂停，但是当写队列处理挤压时，我们依然要取消暂停：
+我们已经快达到我们的目标，但还没有完全实现。现在NetSocket在文件已满时会暂停，但是当写队列处理完成时，我们需要取消暂停：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5423,7 +5423,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-在那里我们有它。当写队列准备好接收更多的数据时，[drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复NetSocket，允许读取更多的数据。
+在这里，我们的目标实现了。当写队列准备好接收更多的数据时，[drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复NetSocket，允许读取更多的数据。
 
 在编写Vert.x应用程序时，这样做是很常见的，因此我们提供了一个名为[Pump](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html)的帮助类，它为您完成所有这些艰苦的工作。您只需要给ReadStream追加上WriteStream，然后启动它：
 
@@ -5491,7 +5491,7 @@ buffer3: DOING OK
 buffer4:\n
 ```
 
-记录解析器将产生
+记录解析器将生成下结果：
 
 ```
 buffer1:HELLO
@@ -5524,11 +5524,11 @@ RecordParser.newFixed(4, h -> {
 
 ### 线程安全
 
-大多数Vert.x对象可以从不同的线程安全地访问，但是，当从相同的上下文访问它们时，性能会被优化。
+大多数Vert.x对象可以从被不同的线程安全地访问，但在相同的上下文中访问它们时，性能才是最优的。
 
 例如，若您部署了一个创建NetServer的Verticle，该NetServer在处理器中提供了NetSocket实例，则最好始终从该Verticle的Event Loop中访问Socket实例。
 
-若您坚持使用Vert.x中的Standard Verticle部署模型，可以避免在Verticle之间共享对象，那么您没有必要考虑这样的情况。
+如果您不是需要通过Vert.x中的Standard Verticle部署模型来避免在Verticle之间共享对象，那您没有必要考虑这样的情况。
 
 ### Metrics SPI
 
@@ -5622,7 +5622,7 @@ vertx run groovy:io.vertx.example.MyGroovyVerticle
 
 您还可以使用下边方式设置系统属性：`-Dkey=value`。
 
-这里有更多的例子：
+下面有更多的例子：
 
 使用默认设置运行JavaScript的Verticle：server.js：
 
@@ -5690,7 +5690,7 @@ java -jar my-application-fat.jar
 
 对于这点，Vert.x没什么特别的，您可以使用任何Java应用程序。
 
-您可以创建自己的主类并在MANIFEST中指定，单建议您将代码编写成Verticle，并使用Vert.x中的[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类（`io.vertx.core.Launcher`）作为您的主类。这是在命令行中运行Vert.x使用的主类，因此允许您指定命令行参数，如`-instances`以便更轻松地扩展应用程序。
+您可以创建自己的主类并在MANIFEST中指定，但建议您将代码编写成Verticle，并使用Vert.x中的[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类（`io.vertx.core.Launcher`）作为您的主类。这是在命令行中运行Vert.x使用的主类，因此允许您指定命令行参数，如`-instances`以便更轻松地扩展应用程序。
 
 要将您的Verticle全部部署在这个`fatjar`中时，您必须将下边信息写入MANIFEST：
 
@@ -5817,7 +5817,7 @@ java -jar build/libs/my-fat-jar.jar --redeploy="src/**/*.java" --on-redeploy='./
 
 集群管理器不处理Event Bus节点之间的传输，这是由Vert.x直接通过TCP连接完成。
 
-Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://hazelcast.com/)集群管理器，但是它可以轻松被替换成实现了Vert.x集群管理器接口的不同实现，因为Vert.x集群管理器可插拔的。
+Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://hazelcast.com/)集群管理器，但是它可以轻松被替换成实现了Vert.x集群管理器接口的不同实现，因为Vert.x集群管理器可替换的。
 
 集群管理器必须实现[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)接口，Vert.x在运行时使用Java的服务加载器【[Service Loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html)】功能查找集群管理器，以便在类路径中查找[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)的实例。
 
