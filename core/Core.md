@@ -1364,7 +1364,10 @@ int intVal = jsonObject.getInteger("some-other-key");
 
 您可以从Java对象的字段创建一个JSON对象，如下所示：
 
-(官缺）
+```java
+String jsonString = "{\"foo\":\"bar\"}";
+JsonObject object = new JsonObject(jsonString);
+```
 
 也可以实例化一个Java对象并从JSON对象填充其字段值。如下所示：
 
