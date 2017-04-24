@@ -63,7 +63,7 @@ Vert.x Core提供了下列功能
 * 高可用性
 * 集群
 
-Core中的功能相当底层，您在此不会找到诸如数据库访问、授权或高层Web应用的功能，您可以在**Vert.x ext** \[1\]（扩展包）中找到这些功能。
+Core中的功能相当底层，您在此不会找到诸如数据库访问、授权或高层Web应用的功能，您可以在**Vert.x ext** （扩展包）（译者注：Vert.x的扩展包是Vert.x的子项目集合，类似[Web](http://vertx.io/docs/#web)、[Web Client](http://vertx.io/docs/#web-client)、[Data Access](http://vertx.io/docs/#data_access)等）中找到这些功能。
 
 **Vert.x Core**小而轻，你可以只使用你需要的部分。它可整体嵌入现存应用中。我们并不会强迫您用特定的方式构造您的应用。
 
@@ -71,7 +71,7 @@ Core中的功能相当底层，您在此不会找到诸如数据库访问、授�
 
 从现在开始文中我们使用core代表**Vert.x Core**。
 
-如果您在使用Maven或Gradle \[2\]，将下列依赖项添加到您的项目描述（文件）中`dependencies`节点`section`来访问**Vert.x Core**的API：
+如果您在使用Maven或Gradle（译者注：两种常用的项目构建工具），将下列依赖项添加到您的项目描述（文件）中`dependencies`节点`section`来访问**Vert.x Core**的API：
 
 * Maven（您的`pom.xml`中）
 
@@ -6518,11 +6518,6 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，单始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
 最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存，这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
-
-## 引用
-
-1. Vert.x的扩展包是Vert.x的子项目集合，类似[Web](http://vertx.io/docs/#web)、[Web Client](http://vertx.io/docs/#web-client)、[Data Access](http://vertx.io/docs/#data_access)等。
-2. 两种常用的项目构建工具。
 
 ## 注释
 
