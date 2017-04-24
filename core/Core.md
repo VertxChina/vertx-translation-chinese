@@ -6,6 +6,7 @@
 * Server：服务器
 * Primitive：基本（描述类型）
 * Writing：编写（有些地方译为开发）
+* Fluent：流式的
 * Reactor：反应堆
 * Multi-Reactor：多反应堆
 * Options：配置项，作为参数时候翻译成选项
@@ -46,31 +47,31 @@
 
 ## 正文
 
-Vert.x内部的Java API集合我们称为**Vert.x Core**，[文档地址](https://github.com/eclipse/vert.x)。
+Vert.x的核心Java API被我们称为**Vert.x Core**，[文档地址](https://github.com/eclipse/vert.x)。
 
 Vert.x Core提供了下列功能
 
 * 编写TCP客户端和服务器
-* 编写HTTP客户端和支持WebSocket的服务器
+* 编写支持WebSocket的HTTP客户端和服务器
 * 事件总线
 * 共享数据——本地的Map和分布式集群Map
-* 周期性、延迟性行为
+* 周期性、延迟性动作
 * 部署和撤销Verticle实例
-* 数据报套接字【Datagram Sockets】
+* 数据报套接字
 * DNS客户端
 * 文件系统访问
 * 高可用性
 * 集群
 
-Core中的功能相当底层——您在此不会找到诸如数据库访问、授权或高层Web应用的功能，您可以在**Vert.x ext** \[1\]（扩展包）中找到这些功能。
+Core中的功能相当底层，您在此不会找到诸如数据库访问、授权或高层Web应用的功能，您可以在**Vert.x ext** \[1\]（扩展包）中找到这些功能。
 
-**Vert.x Core**小而轻，它仅包括您所需的最少部分，它可整体嵌入现存应用中——在使用时，我们并不会强迫您用特定的方式构造您的应用。
+**Vert.x Core**小而轻，你可以只使用你需要的部分。它可整体嵌入现存应用中。我们并不会强迫您用特定的方式构造您的应用。
 
-您亦可在其它Vert.x支持的语言中使用Core。很酷的是——我们并不强迫您在书写诸如JavaScript或Ruby时直接调用Java API，毕竟不同的语言有不同的代码风格，若强行让Ruby开发人员遵循Java的代码风格会很怪异，所以我们根据Java API自动生成了适应不同语言代码风格的API。
+您亦可在其它Vert.x支持的语言中使用Core。很酷的是：我们并不强迫您在书写诸如JavaScript或Ruby时直接调用Java API，毕竟不同的语言有不同的代码风格，若强行让Ruby开发人员遵循Java的代码风格会很怪异，所以我们根据Java API自动生成了适应不同语言代码风格的API。
 
 从现在开始文中我们使用core代表**Vert.x Core**。
 
-如果您在使用Maven或Gradle \[2\]，将下列依赖项添加到您的项目描述（文件）中`dependencies`节点【section】来访问**Vert.x Core**的API：
+如果您在使用Maven或Gradle \[2\]，将下列依赖项添加到您的项目描述（文件）中`dependencies`节点`section`来访问**Vert.x Core**的API：
 
 * Maven（您的`pom.xml`中）
 
@@ -94,13 +95,13 @@ dependencies {
 
 ### 故事从Vert.x开始
 
-_注意：本文大部分内容专用于Java语言——若有需要可以切换到语言特定部分（手册中）。_
+*注意：本文大部分内容专用于Java语言——若有需要可以切换到语言特定部分（手册中）。*
 
 除非您拿到[Vert.x](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html)对象，否则在Vert.x领域中您做不了太多的事情。
 
-它（Vert.x对象）是Vert.x的控制中心，也是您做几乎一切事情（的基础），包括创建客户端和服务器、获取事件总线的引用、设置定时器等其他很多事情。
+它是Vert.x的控制中心，也是您做几乎一切事情（的基础），包括创建客户端和服务器、获取事件总线的引用、设置定时器等其他很多事情。
 
-那么如何获取（Vert.x）实例呢？
+那么如何获取它的实例呢？
 
 如果您用嵌入方式使用Vert.x，可通过以下代码创建实例：
 
@@ -110,29 +111,29 @@ Vertx vertx = Vertx.vertx();
 
 如您使用Verticles，在Verticle中会有一个内置的vertx对象，您可直接使用该内置对象，无需重新创建。
 
-> 请注意  *大部分应用将只会需要一个Vert.x实例，但如果您有需要也可创建多个Vert.x实例，如：隔离的事件总线或不同组的客户端和服务器。*
+*请注意，大部分应用将只会需要一个Vert.x实例，但如果您有需要也可创建多个Vert.x实例，如：隔离的事件总线或不同组的客户端和服务器。*
 
 #### 创建Vertx对象时指定配置项
 
-如果您对缺省的配置不满意，可在创建Vertx对象的同时指定配置项：
+如果缺省的配置不适合您，可在创建Vertx对象的同时指定配置项：
 
 ```java
 Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(40));
 ```
 
-[VertxOptions](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html)对象有很多配置，它允许您配置一些类似集群、高可用、池大小等其他各种配置，Javadoc中描述了所有配置的细节。
+[VertxOptions](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html)对象有很多配置，包括集群、高可用、池大小等。在Javadoc中描述了所有配置的细节。
 
 #### 创建集群的Vert.x对象
 
-如果您想创建一个集群的Vert.x【Clustered Vert.x】（参考[event bus](http://vertx.io/docs/vertx-core/java/#event_bus)章节了解更多事件总线集群细节），那么通常情况下您将需要使用异步协变方式【Variant】来创建一个Vertx对象。
+如果您想创建一个集群的Vert.x（参考[event bus](#event_bus)章节了解更多事件总线集群细节），那么通常情况下您将需要使用另一种异步的方式来创建Vertx对象。
 
-这是因为需要一些时间（也许是几秒钟）让不同的Vert.X实例组成一个集群，在这段时间内，我们不想去阻塞调用线程，所以我们将结果异步返回给您。
+这是因为让不同的Vert.X实例组成一个集群需要一些时间（也许是几秒钟）。在这段时间内，我们不想去阻塞调用线程，所以我们将结果异步返回给您。
 
-### 您是Fluent吗？
+### 是流式的吗？
 
-您也许注意到前边的例子里使用了一个Fluent的API。
+您也许注意到前边的例子里使用了一个流式的API。
 
-一个Fluent的API表示：多个方法形成链式结构一起按序调用。例如：
+一个流式的API表示将多个方法的调用链在一起。例如：
 
 ```java
 request.response().putHeader("Content-Type", "text/plain").write("some text").end();
@@ -140,7 +141,7 @@ request.response().putHeader("Content-Type", "text/plain").write("some text").en
 
 这是贯穿Vert.x的API中的一个通用模式，所以请适应这种代码风格。
 
-这样的链式调用会让您的代码更为简洁。当然，如果您不喜欢Fluent的方式，我们不强制您用这种方式书写代码，您大可忽略之，如果您更倾向于用以下方式编码：
+这样的链式调用会让您的代码更为简洁。当然，如果您不喜欢Fluent的方式，我们不强制您用这种方式书写代码。如果您更倾向于用以下方式编码，您可以忽略它：
 
 ```java
 HttpServerResponse response = request.response();
@@ -149,9 +150,9 @@ response.write("some text");
 response.end();
 ```
 
-### 不要找我们，我们会找你的
+### Don’t call us, we’ll call you
 
-Vert.x的API大部分都是事件驱动，这意味着当您感兴趣的事情发生时，它会以事件的形式发送给您。
+Vert.x的API大部分都是事件驱动。这意味着当您感兴趣的事情发生时，它会以事件的形式发送给您。
 
 以下是一些事件的例子：
 
@@ -161,7 +162,7 @@ Vert.x的API大部分都是事件驱动，这意味着当您感兴趣的事情�
 * 发生了一个异常
 * HTTP服务器收到了一个请求
 
-您以提供处理器给Vert.x API的形式来处理事件。例如每隔一秒发送一个事件的计时器：
+您提供处理器给Vert.x API来处理事件。例如每隔一秒发送一个事件的计时器：
 
 ```java
 vertx.setPeriodic(1000, id -> {
@@ -181,9 +182,9 @@ server.requestHandler(request -> {
 });
 ```
 
-稍后当Vert.x有一个事件要传给您的处理器时，它会异步调用这个处理器。
+稍后当Vert.x有一个事件要传给您的处理器时，它会**异步地**调用这个处理器。
 
-这将我们引向一些Vert.x中重要的概念：
+由此引入了一些Vert.x中的重要概念：
 
 ### 不要阻塞我
 
