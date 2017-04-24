@@ -219,7 +219,7 @@ server.requestHandler(request -> {
 
 由于没有阻塞，Event Loop可在短时间内分发大量的事件。例如，一个单独的**Event Loop**可以非常迅速地处理数千个HTTP请求。
 
-我们称之为[反应器模式](https://en.wikipedia.org/wiki/Reactor_pattern)[1]。
+我们称之为[反应器模式](https://en.wikipedia.org/wiki/Reactor_pattern)（译者注：Reactor Pattern 翻译成了[反应器模式](https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%BA%94%E5%99%A8%E6%A8%A1%E5%BC%8F)）。
 
 您之前也许听说过它，例如Node.js实现了这种模式。
 
@@ -253,7 +253,7 @@ Vert.x的工作方式有所不同。每个Vertx实例维护的是多个event loo
 * 执行一个复杂的计算，占用了可感知的时长
 * 在循环语句中长时间逗留
 
-如果上述任何一种情况停止了Event Loop并占用了**显著执行时间**，那你应该去罚站，等待下一步的指示(2)。
+如果上述任何一种情况停止了Event Loop并占用了**显著执行时间**，那你应该去罚站（译者注：原文此处为Naughy Step，英国父母会在家里选择一个角落作为小孩罚站或静坐的地方，被称为 `naughty corner ` 或 `naughty step`），等待下一步的指示。
 
 所以，什么是**显著执行时间**？
 
@@ -6518,11 +6518,6 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，单始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
 最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存，这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
-
-## 注释
-
-1. Reactor Pattern 翻译成了[反应器模式](https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%BA%94%E5%99%A8%E6%A8%A1%E5%BC%8F)
-2. Naughy Step，英国父母会在家里选择一个角落作为小孩罚站或静坐的地方，被称为 `naughty corner ` 或 `naughty step`
 
 ## 结语
 
