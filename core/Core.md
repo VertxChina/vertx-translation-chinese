@@ -7,8 +7,8 @@
 * Primitive：基本（描述类型）
 * Writing：编写（有些地方译为开发）
 * Fluent：流式的
-* Reactor：反应堆
-* Multi-Reactor：多反应堆
+* Reactor：反应器
+* Multi-Reactor：多反应器
 * Options：配置项，作为参数时候翻译成选项
 * Context：上下文环境
 * Undeploy：撤销（反部署，对应部署）
@@ -190,9 +190,9 @@ server.requestHandler(request -> {
 
 除了很少的特例（如以“Sync"结尾的某些文件系统操作），Vert.x中的所有API都不会阻塞调用线程。
 
-如果可以立即提供结果，它将立即返回，否则您将在稍后提供一个处理器来接收事件。
+如果可以立即提供结果，它将立即返回，否则您需要提供一个处理器来接收稍后回调的事件。
 
-因为没有一个Vert.x API会阻塞线程，这意味着您可以使用Vert.x用少量线程来处理大量并发。
+因为Vert.x API不会阻塞线程，所以通过Vert.x您可以只使用少量的线程来处理大量的并发。
 
 当使用传统的阻塞式API做以下操作时，调用线程可能会被阻塞：
 
@@ -201,60 +201,60 @@ server.requestHandler(request -> {
 * 发送消息给接收者并等待回复
 * ...其他很多情况
 
-在上述所有情况下，当您的线程在等待处理结果时它不做任何事——此时，这些线程并无实际用处。
+在上述所有情况下，当您的线程在等待处理结果时它不能做任何事。此时这些线程并无实际用处。
 
 这意味着如果您使用阻塞式API处理大量并发，您需要大量线程来防止应用程序逐步停止运转。
 
-线程之间的切换以及线程本身（例如它们的栈）都会消耗内存。
+所需的内存（例如它们的栈）和上下文切换都是线程的开销。
 
-这意味着，以现代应用程序所要求的并发级别，阻塞的方式将会难于扩展。
+这意味着，阻塞式的方式对于现代应用程序所需要的并发级别来说是难于扩展的。
 
-### 反应堆和多反应堆
+### 反应器和多反应器
 
-我们前边提过Vert.x的API都是事件驱动的——当有事件时Vert.x将事件传给处理器。
+我们前边提过Vert.x的API都是事件驱动的，当有事件时Vert.x会将事件传给处理器来处理。
 
 在多数情况下，Vert.x使用被称为**Event Loop**的线程来调用您的处理器。
 
-当Vert.x或应用程序块中没有任何阻塞时，这个**Event Loop**可以快速地运行，以便在事件到达时向不同的处理器成功传递事件。
+由于Vert.x或应用程序的代码块中没有阻塞，**Event Loop**可以在事件到达时快速地分发到不同的处理器中。
 
-当没有东西被阻塞住时，一个Event Loop可在短时间内传递大量的事件。例如，一个单独的**Event Loop**可以很快处理数千个HTTP请求。
+由于没有阻塞，Event Loop可在短时间内分发大量的事件。例如，一个单独的**Event Loop**可以非常迅速地处理数千个HTTP请求。
 
-我们称之为[反应堆模式](https://en.wikipedia.org/wiki/Reactor_pattern)。
+我们称之为[反应器模式](https://en.wikipedia.org/wiki/Reactor_pattern)[1]。
 
-您之前也许听说过它——例如Node.js实现了这种模式。
+您之前也许听说过它，例如Node.js实现了这种模式。
 
-在一个标准反应堆实现中，有一个独立的Event Loop会轮询执行，当有事件到达时将这些事件传递给所有处理器。
+在一个标准反应器实现中，有一个独立的Event Loop会循环执行，处理所有到达的事件并传递给处理器处理。
 
-一个线程的麻烦就是它在任何一个时间只能在一个单一的核上运行，如果您希望单线程反应堆应用（如您的Node.js应用）扩展到多核服务器上，则不得不启动并且管理许多不同的进程。
+单一线程的问题在于它在任意时刻只能运行在一个核上。如果您希望单线程反应器应用（如您的Node.js应用）扩展到多核服务器上，则需要启动并且管理多个不同的进程。
 
-这一点Vert.x的工作有所不同，每个Vertx实例维护的不是一个Event Loop，而是多个。默认情况下，我们会根据机器上可用的核数量来设置Event Loop的数量，您亦可自行设置。
+Vert.x的工作方式有所不同。每个Vertx实例维护的是多个event loop线程。默认情况下，我们会根据机器上可用的核数量来设置Event Loop的数量，您亦可自行设置。
 
-与Node.js不同，这意味着单个Vertx进程可以跨服务器扩展。
+这意味着Vertx进程能够在您的服务器上扩展，与Node.js不同。
 
-我们将这种模式称为多反应堆模式，区别于单线程反应堆模式。
+我们将这种模式称为多反应器模式，区别于单线程的多反应器模式。
 
-_注意：即使一个Vertx实例维护了多个Event Loop，任何特定的处理器永远不会同时执行，大部分情况下（除开_[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)之_外）它们总是在完全相同的Event Loop中被调用。_
+*注意：即使一个Vertx实例维护了多个Event Loop，任何一个处理器永远不会并行执行。大部分情况下（除开_[_Worker Verticle_](http://vertx.io/docs/vertx-core/java/#worker_verticles)之_外）它们总是在同一个Event Loop线程中被调用。*
 
-### 黄金法则——不要阻塞Event Loop
+### 黄金法则：不要阻塞Event Loop
 
-尽管我们已经知道，Vert.x的API都是非阻塞式的并且不会阻塞Event Loop，但是这并不能帮您避免如果**您执意**在自己的处理器中阻塞Event Loop的情况发生。
+尽管我们已经知道，Vert.x的API都是非阻塞式的并且不会阻塞Event Loop。但是这并不能帮您避免在您自己的处理器中阻塞Event Loop的情况发生。
 
 如果这样做，该Event Loop在被阻塞时就不能做任何事情。如果您阻塞了Vertx实例中的所有Event Loop，那么您的应用就会完全停止！
 
-所以不要这样做！**您被警告了哦**
+所以不要这样做！**这是一个警告**
 
 这些阻塞做法包括：
 
 * `Thead.sleep()`
 * 等待一个锁
-* 等待一个互斥量或监视器【Mutex & Monitor】（参考：Synchronized Section）
+* 等待一个互斥信号或监视器（例如同步的代码块）
 * 执行一个长时间数据库操作并等待其结果
-* 执行一个很占可用时间的复杂运算
+* 执行一个复杂的计算，占用了可感知的时长
 * 在循环语句中长时间逗留
 
-如果上述任何一种情况阻止了Event Loop并占用了**显著执行时间**，那您应立即进入淘气楼梯反省，并等待进一步指示。
+如果上述任何一种情况停止了Event Loop并占用了**可感知的时间**，那你应该去罚站，等待下一步的指示(2)。
 
-所以，什么是**显著执行时间**？
+所以，什么是**可感知的时间 **？
 
 您要等多久？它取决于您的应用程序和所需的并发数量。
 
@@ -278,7 +278,7 @@ Vert.x还将提供堆栈跟踪，以精确定位发生阻塞的位置。
 
 **但是……真实世界并非如此（您最近看新闻了吧？）**
 
-事实是，很多，也非所有的库，特别是在JVM生态系统中有很多同步API，这些API中许多方法都是阻塞式的。一个很好的例子就是JDBC API——它本质上是同步的，无论多么努力地去尝试，Vert.x都不能像魔法小精灵撒尘变法一样将它转换成异步API。
+事实是，很多，也非所有的库，特别是在JVM生态系统中有很多同步API，这些API中许多方法都是阻塞式的。一个很好的例子就是JDBC API，它本质上是同步的，无论多么努力地去尝试，Vert.x都不能像魔法小精灵撒尘变法一样将它转换成异步API。
 
 我们不会将所有的内容重写成异步方式，所以我们为您提供一种在Vert.x应用中安全调用"传统"阻塞API的方法。
 
@@ -299,7 +299,7 @@ vertx.executeBlocking(future -> {
 
 默认情况下，如果executeBlocking在同一个上下文环境中（如：同一个Verticle实例）被调用了多次，那么这些不同的executeBlocking代码块会顺序执行（一个接一个）。
 
-若您不需要关心您调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)的顺序，可以将`ordered`参数的值设为false。这样任何executeBlocking都会在一个Worker Pool \(1\)中并行执行。
+若您不需要关心您调用[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)的顺序，可以将`ordered`参数的值设为false。这样任何executeBlocking都会在Worker Pool中并行执行。
 
 另外一种运行阻塞式代码的方法是使用[Worker Verticle](http://vertx.io/docs/vertx-core/java/#worker_verticles)。
 
@@ -307,7 +307,7 @@ vertx.executeBlocking(future -> {
 
 默认的阻塞式代码会在Vert.x的Worker Pool中执行，通过[setWorkerPoolSize](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setWorkerPoolSize-int-)配置。
 
-出于不同的目的，可创建新的线程池：
+可以为不同的用途创建不同的池：
 
 ```java
 WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool");
@@ -321,7 +321,7 @@ executor.executeBlocking(future -> {
 });
 ```
 
-这个`worker executor` \(2\)在不需要的时候必需被关闭：
+这个`worker executor`在不需要的时候必需被关闭：
 
 ```java
 executor.close();
@@ -347,7 +347,7 @@ _注意：这个配置信息在worker pool创建的时候设置。_
 
 ### 异步协调
 
-多个操作调用结果的协调是由Vert.x中的[futures](http://vertx.io/docs/apidocs/io/vertx/core/Future.html)来完成。它支持并发合并（并行执行多个异步调用）和顺序合并（依次执行异步调用）。
+Vert.x中的[futures](http://vertx.io/docs/apidocs/io/vertx/core/Future.html)用来协调多个异步操作的结果。它支持并发合并（并行执行多个异步调用）和顺序合并（依次执行异步调用）。
 
 #### 并发合并【Concurrent Composition】
 
@@ -373,7 +373,7 @@ CompositeFuture.all(httpServerFuture, netServerFuture).setHandler(ar -> {
 });
 ```
 
-所有被合并的future中的操作同时运行，当结果future返回时，附在返回future上的处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（传入一个future被标记成failure），则返回的future会被标记为失败。当所有的操作都成功时，返回的future将会成功完成。
+所有被合并的future中的操作同时运行。当组合的处理操作完成时，该方法返回的future上持有的处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（其中的某一个future被标记成failure），则返回的future会被标记为失败。当所有的操作都成功时，返回的future将会成功完成。
 
 您可以传入一个future的列表（默认为空）：
 
@@ -383,15 +383,13 @@ CompositeFuture.all(Arrays.asList(future1, future2, future3));
 
 **2.any**
 
-不同于`all`的合并会等待所有的future成功执行（或任一失败），`any`的合并会等待第一个成功执行的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当任一future成功完成；是_失败的_当所有的future都执行失败：
+不同于`all`的合并会等待所有的future成功执行（或任一失败），`any`的合并会等待第一个成功执行的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个）。当任意一个future成功，则该future成功；当所有的future都执行失败，则该future失败。
 
 ```java
 CompositeFuture.any(future1, future2).setHandler(ar -> {
   if (ar.succeeded()) {
-    // At least one is succeeded
     // 至少一个成功
   } else {
-    // All failed
     // 所有的都失败
   }
 });
@@ -427,11 +425,11 @@ CompositeFuture.join(future1, future2, future3).setHandler(ar -> {
 CompositeFuture.join(Arrays.asList(future1, future2, future3));
 ```
 
-#### 顺序合并【Sequential Composition】
+#### 顺序合并
 
 **1.compose**
 
-和`all`以及`any`实现的并发合并不同，[compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)方法作用于链式future（顺序合并）。
+和`all`以及`any`实现的并发合并不同，[compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)方法作用于链接future（顺序合并）。
 
 ```java
 FileSystem fs = vertx.fileSystem();
@@ -462,7 +460,7 @@ fut1.compose(v -> {
 2. 一些东西被写入到文件（`fut2`）
 3. 文件被移走（`startFuture`）
 
-如果这三个步骤全部成功，则最终的future（`startFuture`）返回_成功_，其中任何一步失败，则最终future返回_失败_。
+如果这三个步骤全部成功，则最终的future（`startFuture`）会是成功的，其中任何一步失败，则最终future失败。
 
 例子中使用了：
 
@@ -6523,6 +6521,9 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 2. 两种常用的项目构建工具。
 
 ## 注释
+
+1. Reactor Pattern 翻译成了[反应器模式](https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%BA%94%E5%99%A8%E6%A8%A1%E5%BC%8F)
+2. Naughy Step，英国父母会在家里选择一个角落作为小孩罚站或静坐的地方，被称为 `naughty corner ` 或 `naughty step`
 
 ## 结语
 
