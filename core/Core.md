@@ -71,7 +71,7 @@ Core中的功能相当底层，您在此不会找到诸如数据库访问、授�
 
 从现在开始文中我们使用core代表**Vert.x Core**。
 
-如果您在使用Maven或Gradle（译者注：两种常用的项目构建工具），将下列依赖项添加到您的项目描述（文件）中`dependencies`节点`section`来访问**Vert.x Core**的API：
+如果您在使用Maven或Gradle（译者注：两种常用的项目构建工具），将以下依赖项添加到您的项目描述的`dependencies`节点中以使用**Vert.x Core**的API：
 
 * Maven（您的`pom.xml`中）
 
