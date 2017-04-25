@@ -625,27 +625,25 @@ vertx.deployVerticle(myVerticle);
 
 这个Verticle的名称会用于查找实例化Verticle的特定[VerticleFactory](http://vertx.io/docs/apidocs/io/vertx/core/spi/VerticleFactory.html)。
 
-不同的Verticle Factory会对实例化不同语言的Verticle以及其他原因如加载服务、运行时从Maven中获取Verticle等——合法可用。
+不同的Verticle Factory可用于实例化不同语言的Verticle，也可用以其他目的，例如加载服务、运行时从Maven中获取Verticle实例等。
 
-这允许您部署用任何Vert.x支持的语言编写的Verticle实例。
+这允许您部署用任何使用Vert.x支持的语言编写的Verticle实例。
 
 这儿有一个部署不同类型Verticle的例子：
 
 ```java
 vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle");
 
-// Deploy a JavaScript verticle
 // 部署JavaScript的Verticle
 vertx.deployVerticle("verticles/myverticle.js");
 
-// Deploy a Ruby verticle verticle
 // 部署Ruby的Verticle
 vertx.deployVerticle("verticles/my_verticle.rb");
 ```
 
 #### Verticle名称到Factory的映射规则
 
-若使用名称部署Verticle，这个名称用于选择一个将要实例化Verticle的Factory。
+当使用名称部署Verticle时，会通过名称来选择一个用于实例化Verticle的Verticle Factory。
 
 Verticle名称可以有一个前缀——使用字符串紧跟着一个冒号，它用于查找存在的Factory，参考例子。
 
@@ -662,11 +660,11 @@ foo.js // 将使用JavaScript的Factory
 SomeScript.groovy // 将使用Groovy的Factory
 ```
 
-若前缀后缀都没指定，Vert.x将假定这个名字是一个Java限定类全名（FQCN）然后尝试实例化它。
+若前缀后缀都没指定，Vert.x将假定这个名字是一个Java全限定类名（FQCN）然后尝试实例化它。
 
 #### 如何定位Verticle Factory？
 
-大部分Verticle Factory会在Vert.x启动时注册并且从类路径（CLASSPATH）中加载。
+大部分Verticle Factory会从classpath中加载，并在Vert.x启动时注册。
 
 您同样可以使用编程的方式去注册或注销Verticle Factory：[registerVerticleFactory](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#registerVerticleFactory-io.vertx.core.spi.VerticleFactory-)和[unregisterVerticleFactory](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#unregisterVerticleFactory-io.vertx.core.spi.VerticleFactory-)
 
@@ -674,7 +672,7 @@ SomeScript.groovy // 将使用Groovy的Factory
 
 Verticle的部署是异步方式，可能在deploy方法调用返回后一段时间才会完成部署。
 
-如果您想要在部署完成时发出通知则可以指定一个Completion Handler。
+如果您想要在部署完成时被通知则可以指定一个完成处理器
 
 ```java
 vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle", res -> {
@@ -686,15 +684,15 @@ vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle", res -> {
 });
 ```
 
-如果部署成功，这个Completion Handler的结果（result）中将会传入一个包含了部署id的字符串。
+如果部署成功，这个完成处理器的结果中将会包含部署ID的字符串。
 
 这个部署ID可以在之后您想要撤销它时使用。
 
 #### 撤销Verticle
 
-部署（好的Verticle）可以使用[undeploy](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#undeploy-java.lang.String-)被撤销。
+部署好的Verticle可以使用[undeploy](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#undeploy-java.lang.String-)来撤销。
 
-撤销也是异步方式，因此若您想要在撤销完成过后收到通知则可以指定另一个Completion Handler。
+撤销也是异步方式，因此若您想要在撤销完成过后收到通知则可以指定另一个完成处理器。
 
 ```java
 vertx.undeploy(deploymentID, res -> {
@@ -715,11 +713,11 @@ DeploymentOptions options = new DeploymentOptions().setInstances(16);
 vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle", options);
 ```
 
-若跨多核简化水平扩展时这个功能很有用。如，您的计算机上有一个包含Web服务器的Verticle需要部署以及跨多核，因此您需要部署多个实例来利用所有的（服务器）核。
+这个功能对于跨多核扩展时很有用。例如，您有一个实现了Web服务器的Verticle需要部署在多个的机器上，您可以部署多个实例来利用所有的核。
 
-#### 传入配置给Verticle
+#### 给Verticle传入配置
 
-一个JSON格式的配置可在部署时传给Verticle
+可在部署时传给Verticle一个JSON格式的配置
 
 ```java
 JsonObject config = new JsonObject().put("name", "tim").put("directory", "/blah");
@@ -727,9 +725,9 @@ DeploymentOptions options = new DeploymentOptions().setConfig(config);
 vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle", options);
 ```
 
-这个配置之后通过[Context](http://vertx.io/docs/apidocs/io/vertx/core/Context.html)对象或直接使用[config](http://vertx.io/docs/apidocs/io/vertx/core/AbstractVerticle.html#config--)方法访问【Available】。
+传入之后，这个配置可以通过[Context](http://vertx.io/docs/apidocs/io/vertx/core/Context.html)对象或使用[config](http://vertx.io/docs/apidocs/io/vertx/core/AbstractVerticle.html#config--)方法访问。
 
-这个配置会返回一个JSON对象，因此您可以用下边代码读取之中数据：
+这个配置会以JSON对象的形式返回，因此您可以用下边代码读取数据：
 
 ```java
 System.out.println("Configuration: " + config().getString("name"));
@@ -737,28 +735,28 @@ System.out.println("Configuration: " + config().getString("name"));
 
 #### 访问Verticle环境变量
 
-环境变量和系统属直接通过Java API访问：
+环境变量和系统属性可以直接通过Java API访问：
 
 ```java
 System.getProperty("prop");
 System.getenv("HOME");
 ```
 
-#### Verticle隔离组【Isolation Groups】
+#### 隔离的Verticle组
 
-默认情况，Vert.x有一个水平类路径【flat classpath】，当Vert.x部署Verticle时它会调用当前类加载器来做——它不会创建一个新的（类加载器），大多数情况下，这是最简单、最清晰和最干净的事。
+默认情况，当Vert.x部署Verticle时它会调用当前类加载器来加载类，而不会创建一个新的。大多数情况下，这是最简单、最清晰和最干净。
 
 但是在某些情况下，您可能需要部署一个Verticle，它包含的类要与应用程序中其他类隔离开来。
 
-可能是这种情况，例如：您想要在一个Vert.x实例中部署两个同名不同类的Verticle，或者在同一个jar库文件中您有两个不同版本的Verticle。
+可能是这种情况，例如：您想要在一个Vert.x实例中部署两个同名不同版本的Verticle，或者不同的Verticle使用了同一个jar包的不同版本。
 
-当使用隔离组时，您需要用[setIsolatedClassed](http://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setIsolatedClasses-java.util.List-)方法，并提供一个您想隔离的类名列表给它——（列表）项可以是一个Java限定类全名如`com.mycompany.myproject.engine.MyClass`，也可以是包含通配符的可匹配某个包或子包的任何类。例如`com.mycompany.myproject.*`将会匹配所有`com.mycompany.myproject`包或任意子包中的任意类名。
+当使用隔离组时，您需要用[setIsolatedClassed](http://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setIsolatedClasses-java.util.List-)方法来提供一个您想隔离的类名列表。列表项可以是一个Java限定类全名如`com.mycompany.myproject.engine.MyClass`，也可以是包含通配符的可匹配某个包或子包的任何类。例如`com.mycompany.myproject.*`将会匹配所有`com.mycompany.myproject`包或任意子包中的任意类名。
 
-请注意仅仅只有匹配的类会被隔离——其他任意类会被当前类加载器加载。
+请注意仅仅只有匹配的类会被隔离，其他任意类会被当前类加载器加载。
 
 若您想要加载的类和资源不存在于主类路径，您可使用[setExtraClasspath](http://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setExtraClasspath-java.util.List-)将额外的类路径添加到这里。
 
-> 警告：*谨慎使用此功能，类加载器可能是一个蠕虫病毒，除其他事情外它会使调试变得困难。*
+> 警告：*谨慎使用此功能，类加载器可能会导致你的应用难于调试，变得一团乱麻（can of worms）。*
 
 以下是使用隔离组隔离Verticle的部署例子：
 
@@ -769,7 +767,7 @@ options.setIsolatedClasses(Arrays.asList("com.mycompany.myverticle.*",
 vertx.deployVerticle("com.mycompany.myverticle.VerticleClass", options);
 ```
 
-#### 高可用性【High Availability】
+#### 高可用性
 
 Verticle可以启用高可用方式（HA）部署，在上下文环境中，当其中一个部署在Vert.x实例中的Verticle突然死掉，这个Verticle可以在集群环境中的另一个Vert.x实例中重新部署。
 
