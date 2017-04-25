@@ -42,6 +42,7 @@
 * Multicast：多播（组播）
 * High Availability：高可用性
 * Fail-Over：故障转移
+* Launcher：启动器
 
 > 请注意：*Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
 
@@ -6467,7 +6468,7 @@ io.vertx.core.launcher.example.HelloCommandFactory
 vertx hello vert.x
 java -jar my-fat-jar.jar hello vert.x
 ```
-#### 使用fat-jar中的启动器【Launcher】
+#### 使用fat-jar中的启动器
 
 要在fat-jar中使用[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类，只需要将*MANIFEST*的`Main-Class`设置为`io.vertx.core.Launcher`。另外，将*MANIFEST*中`Main-Verticle`条目设置为您的主Verticle的名称。
 
