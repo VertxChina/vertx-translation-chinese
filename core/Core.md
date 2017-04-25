@@ -6198,6 +6198,7 @@ CLI cli = CLI.create("some-name")
 也可以从JSON表单中实例化选项。
 
 **参数**
+
 和选项不同，参数不具有键【key】并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
 
 参数没有名称，使用基于0的索引进行标识。第一个参数的索引为0：
