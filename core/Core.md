@@ -474,19 +474,19 @@ fut1.compose(v -> {
 
 ### Verticles
 
-Vert.x提供了一个简单便捷的、可扩展的、类似Actor-Model的部署和并发模型机制，您可以用此模型机制来保管您自己的代码组件。
+Vert.x通过开箱机用的方式提供了一个简单便捷的、可扩展的、类似Actor-Model的部署和并发模型机制，您可以用此模型机制来保管您自己的代码组件。
 
 **这个模型是可选的，如果您不想这样做，Vert.x不会强迫您用这种方式创建您的应用程序。**
 
 这个模型不能说是严格的Actor-Model的实现，但它确实有相似之处，特别是在并发、扩展和部署等方面。
 
-要使用该模型，您需要将您的代码组织成**verticle**的集合。
+要使用该模型，您需要将您的代码组织成一系列的**verticle**。
 
-Verticle是由Vert.x部署和运行的代码块，默认情况一个Vert.x实例维护了N（默认：N = 核 x 2）个Event Loop线程。Verticle实例可使用任意Vert.x支持的计算机语言编写，一个简单的应用程序也可以包含多种语言编写的Verticle。
+Verticle是由Vert.x部署和运行的代码块。默认情况一个Vert.x实例维护了N（默认：N = 核 x 2）个Event Loop线程。Verticle实例可使用任意Vert.x支持的计算机语言编写，一个简单的应用程序也可以包含多种语言编写的Verticle。
 
 您可以将Verticle想成[Actor Model](https://en.wikipedia.org/wiki/Actor_model)中的Actor。
 
-一个应用程序通常是由同一时间运行在同一个Vert.x实例中的许多Verticle实例组合而成。不同的Verticle实例通过事件总线发送消息相互通信。
+一个应用程序通常是由在同一个Vert.x实例中同时运行的许多Verticle实例组合而成。不同的Verticle实例通过向[event bus](http://vertx.io/docs/vertx-core/java/#event_bus)上发送消息来相互通信。
 
 #### 编写Verticle
 
@@ -514,9 +514,9 @@ public class MyVerticle extends AbstractVerticle {
 
 通常您需要像上边例子一样重写start方法。
 
-当Vert.x部署一个Verticle时，它的start方法将被调用，这个方法执行完成后Verticle会是started（的状态）。
+当Vert.x部署一个Verticle时，它的start方法将被调用，这个方法执行完成后Verticle会是已启动状态。
 
-您同样可以重写stop方法，当Vert.x撤销一个Verticle时它会被调用，这个方法执行完成后Verticle会是stopped（的状态）。
+您同样可以重写stop方法，当Vert.x撤销一个Verticle时它会被调用，这个方法执行完成后Verticle会是已停止状态。
 
 #### Verticle异步启动和停止
 
@@ -526,9 +526,9 @@ public class MyVerticle extends AbstractVerticle {
 
 所以您要怎么做？
 
-您可以实现异步版本的start方法来做这个事。这个版本的方法需要一个Future作参数，方法执行完时，Verticle实例并没有部署好（状态不是deployed）。
+您可以实现异步版本的start方法来做这个事。这个版本的方法会以一个Future作参数被调用。方法执行完时，Verticle实例并没有部署好（状态不是deployed）。
 
-稍后，您完成了所有您需要做的事（如：启动其他Verticle），您可以调用Future的complete（或fails）方法来示意您完成了。
+稍后，您完成了所有您需要做的事（如：启动其他Verticle），您可以调用Future的complete（或fail）方法来标记完成。
 
 这儿有一个例子：
 
@@ -536,7 +536,6 @@ public class MyVerticle extends AbstractVerticle {
 public class MyVerticle extends AbstractVerticle {
 
   public void start(Future<Void> startFuture) {
-    // Now deploy some other verticle:
     // 现在部署其他的一些verticle
     vertx.deployVerticle("com.foo.OtherVerticle", res -> {
       if (res.succeeded()) {
@@ -555,7 +554,6 @@ public class MyVerticle extends AbstractVerticle {
 public class MyVerticle extends AbstractVerticle {
 
   public void start() {
-    // Do something
     // 做一些事
   }
 
@@ -577,25 +575,25 @@ public class MyVerticle extends AbstractVerticle {
 
 这儿有三种不同类型的Verticle：
 
-* **Stardand Verticles**：这是常用的一类Verticle——它们会被一个Event Loop线程执行，稍后的章节我们会讨论更多。
-* **Worker Verticles**：这类Verticle会使用Worker Pool中的线程，一个实例绝对不会被多个线程同时执行。
-* **Multi-threaded worker verticles**：这类Verticle也会使用Worker Pool中的线程，一个实例可以由多个线程同时执行。
+* **Stardand Verticles**：这是常用的一类Verticle，它们永远运行在Event Loop线程上。稍后的章节我们会讨论更多。
+* **Worker Verticles**：这类Verticle会运行在Worker Pool中的线程上。一个实例绝对不会被多个线程同时执行。
+* **Multi-threaded worker verticles**：这类Verticle也会运行在Worker Pool中的线程上。一个实例可以由多个线程同时执行。
 
 #### Standard Verticles
 
-当Standard Verticle被创建时，它会被分派给一个Event Loop线程，并在这个Event Loop中执行它的start方法。当您在一个Event Loop调用了Core API中处理器上任意其他方法时，Vert.x将保证这些处理器在调用时在相同的Event Loop中执行。
+当Standard Verticle被创建时，它会被分派给一个Event Loop线程，并在这个Event Loop中执行它的start方法。当您在一个Event Loop上调用了Core API中的方法并传入了处理器时，Vert.x将保证用与调用该方法时相同的Event Loop来执行这些处理器。
 
 这意味着我们可以保证您的Verticle实例中所有的代码都是在相同Event Loop中执行（只要您不创建自己的线程并调用它！）
 
-同样意味着您可以将您的应用中的所有代码用单线程方式编写，让Vert.x去担心线程和扩展问题。（您）不再担心同步和不稳定，当多线程应用开发使用传统方式手工回滚时，这种避免其他竞争条件和死锁（的方式）会更流行。
+同样意味着您可以将您的应用中的所有代码用单线程方式编写，让Vert.x去考虑线程和扩展问题。您不用再考虑synchronized和volatile的问题，也可以避免传统的多线程应用经常会遇到的静态条件和死锁的问题。
 
 #### Worker Verticles
 
 一个Worker Verticle和Standard Verticle很像，但它并不是由一个Event Loop来执行，而是由Vert.x中的Worker Pool中的线程执行。
 
-Worker Verticle被设计来调用阻塞式代码，但它不会阻塞任何Event Loop。
+Worker Verticle被设计来调用阻塞式代码，它不会阻塞任何Event Loop。
 
-如果您不想使用Worker Verticle来运行阻塞式代码，您还可以在一个Event Loop中直接使用[内联阻塞式代码](http://vertx.io/docs/vertx-core/java/#blocking_code)（前文中executeBlocking）。
+如果您不想使用Worker Verticle来运行阻塞式代码，您还可以在一个Event Loop中直接使用[内联阻塞式代码](http://vertx.io/docs/vertx-core/java/#blocking_code)。
 
 若您想要将Verticle部署成一个Worker Verticle，用[setWorker](http://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setWorker-boolean-)来做：
 
@@ -610,7 +608,7 @@ Worker Verticle实例绝对不会在Vert.x中被多个线程同时执行，但�
 
 一个multi-threaded worker verticle近似于普通的Worker Verticle，但是它可以由不同的线程同时执行。
 
-> 警告：*Multi-threaded worker verticle是一个高级功能，大部分应用程序不会需要它。由于在这些Verticle中的并发性，您必须非常小心和使用Java技术中多线程编程方式保持状态一致性。*
+> 警告：*Multi-threaded worker verticle是一个高级功能，大部分应用程序不会需要它。由于这些Verticle是并发的，您必须小心地使用标准的Java多线程技术来保持verticle的状态一致性。*
 
 #### 编程方式部署Verticle
 
