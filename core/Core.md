@@ -5861,22 +5861,22 @@ logger.error("oops!", exception);
 
 #### Netty日志记录
 
-配置日志记录时，您还应该关心（如何）配置Netty日志记录。
+配置日志记录时，您也应该关心配置Netty日志记录。
 
-Netty不依赖于外部日志配置（例如系统属性），而是根据Netty类可见的日志记录库来实现日志记录配置：
+Netty不依赖于外部日志配置（例如系统属性），而是根据Netty类可见的日志记录库来实现日志记录：
 
-* 如果可见，先使用`SLF4J`库
-* 否则若可见，再使用`Log4j`库
+* 如`SLF4J`可见，则优先使用该库
+* 否则若`Log4j`可见，再使用该库
 * 否则退回使用`java.util.logging`
 
-通过直接在`io.netty.util.internal.logging.InternalLoggerFactory`上设置Netty的内部记录器实现，强制执行日志记录器实现。
+可通过设置`io.netty.util.internal.logging.InternalLoggerFactory`强制Netty使用某个特定实现。
 
 ```
 // 强制使用Log4j日志记录
 InternalLoggerFactory.setDefaultFactory(Log4JLoggerFactory.INSTANCE);
 ```
 
-#### 排除故障
+#### 故障排除
 
 **SLF4J启动警告**
 
@@ -5888,9 +5888,9 @@ SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 
-这意味着您的类路径中有`SLF4J-API`却没有实际的绑定。使用`SLF4J`记录的消息将被删除。您应该添加绑定到您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并进行配置。
+这意味着您的类路径中有`SLF4J-API`却没绑定。`SLF4J`记录的消息将会丢失。您应该将绑定加入您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并配置。
 
-请注意，Netty会寻找`SLF4-API`的jar，并在默认情况下使用它。
+请注意，Netty会寻找`SLF4-API`的jar，并在缺省情况下使用它。
 
 **对等连接重置**
 
@@ -6077,7 +6077,7 @@ Quora也可以与HA组合使用，在这种情况下，每个特定组会解决Q
 
 ### 安全注意事项
 
-Vert.x是一个工具包，而不是一个舆论框架来强迫您以某种方式做事情。这赋予了开发人员以更大的能力，同时也伴随着更大的责任（译者注：能力越大，责任越大，小蜘蛛他叔叔说的）。
+Vert.x是一个工具包，而不是一个舆论框架来强迫您以某种方式做事情。这赋予了开发人员以更强大的能力，同时也伴随着更大的责任（译者注：能力越大，责任越大，小蜘蛛他叔叔说的）。
 
 搭配其它工具包，使得编写不安全的应用程序成为可能，因此在开发时需谨慎，尤其是当您将其对公众发布的时候（如在互联网上发布）。
 
