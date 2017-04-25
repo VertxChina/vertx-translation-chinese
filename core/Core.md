@@ -6106,7 +6106,7 @@ Vert.x Core本身不提供这样的检查，所以这将取决于开发者您自
 
 Vert.x Core提供了一个用于解析传递给程序命令行参数的API。
 
-它还可以打印详细说明可用于命令行工具的选项帮助消息。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，也可在fat-jar和`vertx`命令行工具中使用。另外，它是polyglot（可用于任何支持的语言），并在Vert.x Shell中使用。
+它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，可以在fat-jar和`vertx`命令行工具中使用。另外，它是polyglot（可用于任何支持的语言），并在Vert.x Shell中使用。
 
 Vert.x CLI提供了一个描述命令行界面的模型，也是一个解析器，这个解析器可支持不同的语法：
 
@@ -6148,7 +6148,7 @@ CLI cli = CLI.create("copy")
 
 **选项**
 
-[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的键【key】标识的命令行参数。选项至少必须有一个长名或一个短命，长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
+[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的键【key】标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6184,7 +6184,7 @@ CLI cli = CLI.create("some-name")
 
 可以使用[setHidden](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-)方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（对于高级用户）。
 
-如果选项值与固定值相违背，则可以设置不同的可接受选项：
+如果选项值被限制为一个固定集合，您可以设置不同的可接受选项：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6198,9 +6198,9 @@ CLI cli = CLI.create("some-name")
 也可以从JSON表单中实例化选项。
 
 **参数**
-和选项不同，参数不具有键【key】标识并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
+和选项不同，参数不具有键【key】并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
 
-参数没有名称，使用基于0的索引进行标识，第一个参数的索引为0：
+参数没有名称，使用基于0的索引进行标识。第一个参数的索引为0：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6218,12 +6218,10 @@ CLI cli = CLI.create("some-name")
 
 ```java
 CLI cli = CLI.create("some-name")
-    // will have the index 0
 	// 索引为0
     .addArgument(new Argument()
         .setDescription("the first argument")
         .setArgName("arg1"))
-    // will have the index 1
 	// 索引为1
     .addArgument(new Argument()
         .setDescription("the second argument")
@@ -6276,11 +6274,11 @@ A command line interface to copy files.
   -R,--directory   enables directory support
 ```
 
-若需要调整使用消息（的格式），请检查[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
+若需要调整使用消息（的格式），请查阅[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
 
 #### 解析阶段【1.Parsing】
 
-一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来评估【Evaluate】每个选项和参数：
+一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来评估每个选项和参数：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
@@ -6301,7 +6299,7 @@ boolean flag = commandLine.isFlagEnabled("my-flag");
 String arg0 = commandLine.getArgumentValue(0);
 ```
 
-您的一个选项可以被标记为“帮助”，如果用户命令行启用“帮助”选项，验证将不会失败，但是可以让您有机会检查用户是否需要帮助：
+您的一个选项可以被标记为“帮助”。如果用户命令行启用“帮助”选项，验证将不会失败，但是可以让您有机会检查用户是否需要帮助：
 
 ```java
 CLI cli = CLI.create("test")
@@ -6312,7 +6310,6 @@ CLI cli = CLI.create("test")
 
 CommandLine line = cli.parse(Collections.singletonList("-h"));
 
-// The parsing does not fail and let you do:
 // 解析不会失败，您可以做：
 if (!line.isValid() && line.isAskingForHelp()) {
   StringBuilder builder = new StringBuilder();
@@ -6375,13 +6372,13 @@ CLI cli = CLI.create("some-name")
         .setLongName("person"));
 ```
 
-对于布尔值，布尔值将被计算为`true`:`on`，`yes`，`1`，`true`。
+对于布尔值，布尔值将被评定为`true`:`on`，`yes`，`1`，`true`。
 
 若您的一个选项是`enum`类型，则（系统）会自动计算一组选项。
 
-#### 使用Annotation
+#### 使用注解
 
-您还可以使用Annotation定义CLI，定义使用类和setter方法上的Annotation来完成：
+您还可以使用注解定义CLI。在类和setter方法上使用注解来定义：
 
 ```java
 @Name("some-name")
@@ -6410,7 +6407,7 @@ public class AnnotatedCli {
 }
 ```
 
-一旦被注解，您可以定义[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并使用以下命令注入值：
+注解后，您可以使用以下命令来定义[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并注入值：
 
 ```java
 CLI cli = CLI.create(AnnotatedCli.class);
@@ -6421,7 +6418,7 @@ CLIConfigurator.inject(commandLine, instance);
 
 ### Vert.x启动器
 
-Vert.x [Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)在fat-jar中作为主类，由`vertx`命令行实用程序调用，它可执行一组命令，如`run`, `bare`, `start`...
+Vert.x [Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)在fat-jar中作为主类，由`vertx`命令行实用程序调用。它可执行一组命令，如`run`, `bare`, `start`...
 
 #### 扩展Vert.x启动器
 
@@ -6462,7 +6459,7 @@ public class HelloCommandFactory extends DefaultCommandFactory<HelloCommand> {
 io.vertx.core.launcher.example.HelloCommandFactory
 ```
 
-构建包含命令的jar，确保包含了SPI文件（`META-INF/services/io.vertx.core.spi.launcher.CommandFactory`）。
+构建包含命令的jar。确保包含了SPI文件（`META-INF/services/io.vertx.core.spi.launcher.CommandFactory`）。
 
 然后，将包含该命令的jar放入fat-jar（或包含在其中）的类路径中，或放在Vert.x发行版的`lib`目录中，您将可以执行：
 
@@ -6476,9 +6473,9 @@ java -jar my-fat-jar.jar hello vert.x
 
 默认情况下，它执行了`run`命令。但是，您可以通过设置*MANIFEST*的`Main-Command`条目来配置默认命令。若在没有命令的情况下启动fat-jar，则使用默认命令。
 
-#### 子分类启动器
+#### 子类启动器
 
-您还可以创建[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)来启动子应用程序的子类，这个类被设计成易于扩展的。
+您还可以创建[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)的子类来启动您的应用程序。这个类被设计成易于扩展的。
 
 一个[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)子类可以：
 
@@ -6500,7 +6497,7 @@ java -jar my-fat-jar.jar hello vert.x
 
 ### 配置Vert.x缓存
 
-当Vert.x需要从类路径中读取文件（嵌入在fat-jar中，类路径中jar文件或其他文件）时，将其复制到缓存目录。背后原因很简单：从jar或从输入流读取文件是阻塞的，所以为了避免每次都付出代价，Vert.x会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
+当Vert.x需要从类路径中读取文件（嵌入在fat-jar中，类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从jar或从输入流读取文件是阻塞的。所以为了避免每次都付出代价，Vert.x会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
 
 首先，默认情况下，Vert.x使用`$CWD/.vertx`作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用`vertx.cacheDirBase`系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
 
@@ -6510,11 +6507,11 @@ vertx run my.Verticle -Dvertx.cacheDirBase=/tmp/vertx-cache
 java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 ```
 
-*重要：该目录必须是可写的。*
+>重要： *该目录必须是可写的。*
 
-当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，单始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
+当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，但始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
-最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存，这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
+最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存。这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
 
 ## 引用
 
