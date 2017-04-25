@@ -6086,9 +6086,9 @@ Vert.x是一个工具包，而不是一个舆论框架来强迫您以某种方�
 
 如果编写Web应用程序，强烈建议您直接使用Vert.x Web而非直接使用Vert.x Core以提供资源或处理文件上传。
 
-Vert.x Web对请求中的路径进行了规范，以防止恶意客户端伪造URL来访问Web根目录外部的资源。
+Vert.x Web对请求中的路径进行了规范，以防止恶意客户端通过伪造URL来访问Web根目录以外的资源。
 
-类似地，对于文件上传Vert.x Web提供上传到磁盘上已知位置的功能，并且不依赖上传中客户端提供的文件名，可以将其上传到磁盘的其他位置。
+类似地，对于文件上传Vert.x Web提供上传到磁盘上已知位置的功能，且不依赖客户端提供的文件名，客户端提供的文件名可被恶意伪装成上传到硬盘上的不同位置。
 
 Vert.x Core本身不提供这样的检查，所以这取决于开发者您自身如何实现了。
 
@@ -6100,15 +6100,15 @@ Vert.x Core本身不提供这样的检查，所以这取决于开发者您自身
 
 任何服务都可能存在潜在的漏洞，无论是使用Vert.x还是任何其他工具包，因此始终遵循安全最佳实践，特别是当您的服务面向公众。
 
-如，您应该始终在DMZ中运行它们，并使用具有受限权限的用户账户，以限制服务受到损害的程度。
+例如，您应该始终在DMZ中运行它们，并使用具有受限权限的用户账户，以限制服务受到损害的程度。
 
 ### Vert.x命令行接口API
 
-Vert.x Core提供了一个用于解析传递给程序命令行参数的API。
+Vert.x Core提供了一个用于解析传递给程序的命令行参数API。
 
-它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，可以在fat-jar和`vertx`命令行工具中使用。另外，它是polyglot（可用于任何支持的语言），并在Vert.x Shell中使用。
+它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，可以在fat-jar和`vertx`命令行工具中使用。另外，它支持多语言（可用于任何支持的语言），并可在Vert.x Shell中使用。
 
-Vert.x CLI提供了一个描述命令行界面的模型，也是一个解析器，这个解析器可支持不同的语法：
+Vert.x CLI提供了一个描述命令行界面的模型，同时也是一个解析器，这个解析器可支持不同的语法：
 
 * 类似POSIX选项（即`tar -zxvf foo.tar.gz`）
 * 类似GNU选项（即`du --human-readable --max-depth=1`）
@@ -6118,9 +6118,9 @@ Vert.x CLI提供了一个描述命令行界面的模型，也是一个解析器�
 
 使用CLI API的三个步骤如下：
 
-1. 命令行接口的定义
+1. 定义命令行接口
 2. 解析用户命令行
-3. 查询/询问
+3. 查询/审问
 
 #### 定义阶段
 
@@ -6148,7 +6148,7 @@ CLI cli = CLI.create("copy")
 
 **选项**
 
-[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的键【key】标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
+[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的*键*标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6182,7 +6182,7 @@ CLI cli = CLI.create("some-name")
         .setDescription("an optional option with a default value"));
 ```
 
-可以使用[setHidden](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-)方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（对于高级用户）。
+可以使用[setHidden](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-)方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（针对高级用户）。
 
 如果选项值被限制为一个固定集合，您可以设置不同的可接受选项：
 
@@ -6199,7 +6199,7 @@ CLI cli = CLI.create("some-name")
 
 **参数**
 
-和选项不同，参数不具有键【key】并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
+和选项不同，参数不具有*键*并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
 
 参数没有名称，使用基于0的索引进行标识。第一个参数的索引为0：
 
@@ -6242,7 +6242,7 @@ CLI cli = CLI.create("some-name")
 
 **生成Usage**
 
-一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以生成Usage信息：
+一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以生成Usage消息：
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6265,7 +6265,7 @@ StringBuilder builder = new StringBuilder();
 cli.usage(builder);
 ```
 
-上边生成的Usage信息如下：
+上边生成的Usage消息如下：
 
 ```
 Usage: copy [-R] source target
@@ -6275,11 +6275,11 @@ A command line interface to copy files.
   -R,--directory   enables directory support
 ```
 
-若需要调整使用消息（的格式），请查阅[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
+若需要调整Usage消息，请查阅[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
 
 #### 解析阶段
 
-一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来评估每个选项和参数：
+一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来解析每个选项和参数：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
