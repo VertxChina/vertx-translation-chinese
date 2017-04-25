@@ -5828,29 +5828,29 @@ Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://h
 
 ### 日志记录
 
-Vert.x使用内置的日志记录API进行日志记录，默认实现使用JDK（JUL）日志记录，因此不需要额外的依赖项。
+Vert.x使用内置的日志API进行记录日志，默认实现使用JDK（JUL）日志，不需要额外的依赖项。
 
 #### 配置JUL日志记录
 
-一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性，值为您的配置文件（位置）。有关此更多信息和JUL配置文件的结构，请参阅JUL日志记录文档。
+一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性值为您的配置文件。更多关于此部分以及JUL配置文件结构的内容，请参阅JUL日志记录文档。
 
-Vert.x还提供了一种更方便的方式指定配置文件，而无需设置系统属性。您只需在您的类路径中提供名为`vertx-default-jul-logging.properties`的JUL配置文件（如，您的fatjar），Vert.x将使用该配置文件配置JUL。
+Vert.x还提供了一种更方便的方式指定配置文件，无需设置系统属性。您只需在您的类路径中提供名为`vertx-default-jul-logging.properties`的JUL配置文件（例如在您的fatjar中），Vert.x将使用该配置文件配置JUL。
 
 #### 使用另一个日志框架
 
-如果您不希望Vert.x使用JUL自己的日志记录，您可以为其配置另一个日志记录框架，例如Log4J或SLF4J。
+如果您不希望Vert.x使用JUL记录日志，您可以为其配置另一个日志记录框架，例如Log4J或SLF4J。
 
-为此，您应该设置一个名为`vertx.logger-delegate-factory-class-name`的系统属性，该名称是一个实现了[LogDelegateFactory](http://vertx.io/docs/apidocs/io/vertx/core/spi/logging/LogDelegateFactory.html)接口的Java类名称。我们为Log4J（版本1）、Log4J（版本2）和SLF4J提供了预构建的实现，类名（分别）为：`io.vertx.core.logging.Log4jLogDelegateFactory`，`io.vertx.core.logging.Log4j2LogDelegateFactory`和`io.vertx.core.logging.SLF4JLogDelegateFactory`。如果要使用这些实现，您还应确保相关的Log4J或SLF4J的jar位于您的类路径上。
+为此，您应该设置一个名为`vertx.logger-delegate-factory-class-name`的系统属性，该属性的值是一个实现了[LogDelegateFactory](http://vertx.io/docs/apidocs/io/vertx/core/spi/logging/LogDelegateFactory.html)接口的Java类名。我们为Log4J（版本1）、Log4J 2和SLF4J提供了预设的实现，类名为：`io.vertx.core.logging.Log4jLogDelegateFactory`，`io.vertx.core.logging.Log4j2LogDelegateFactory`和`io.vertx.core.logging.SLF4JLogDelegateFactory`。如您要使用这些实现，还应确保相关的Log4J或SLF4J的jar在您的类路径上。
 
-请注意，提供的Log4J（版本1）代理不支持参数化消息。Log4J（版本2）的代理使用了像SLF4J代理这样的`{}`语法，JUL代理使用如`{x}`语法。
+请注意，提供的Log4J 1代理不支持参数化消息。Log4J 2的代理使用了像SLF4J代理这样的`{}`语法，JUL代理使用如`{x}`语法。
 
 #### 应用中记录日志
 
 Vert.x本身只是一个库，您可以在自己的应用程序使用任何日志库的API来记录日志。
 
-但是，若您愿意，也可以使用上述的Vert.x日志记录工具为应用程序提供日志记录。
+但是，若您愿意，也可以使用上述的Vert.x日志记录工具为应用程序记录日志。
 
-为此，您可以使用[LoggerFactory](http://vertx.io/docs/apidocs/io/vertx/core/logging/LoggerFactory.html)获取一个[Logger](http://vertx.io/docs/apidocs/io/vertx/core/logging/Logger.html)实例用来记录日志：
+为此，您需要使用[LoggerFactory](http://vertx.io/docs/apidocs/io/vertx/core/logging/LoggerFactory.html)获取一个[Logger](http://vertx.io/docs/apidocs/io/vertx/core/logging/Logger.html)对象以记录日志：
 
 ```
 Logger logger = LoggerFactory.getLogger(className);
