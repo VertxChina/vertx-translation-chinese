@@ -5832,7 +5832,7 @@ Vert.x使用内置的日志记录API进行日志记录，默认实现使用JDK�
 
 #### 配置JUL日志记录
 
-一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性、值为您的配置文件（位置）。有关此更多信息和JUL配置文件的结构，请参阅JUL日志记录文档。
+一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性，值为您的配置文件（位置）。有关此更多信息和JUL配置文件的结构，请参阅JUL日志记录文档。
 
 Vert.x还提供了一种更方便的方式指定配置文件，而无需设置系统属性。您只需在您的类路径中提供名为`vertx-default-jul-logging.properties`的JUL配置文件（如，您的fatjar），Vert.x将使用该配置文件配置JUL。
 
@@ -5848,7 +5848,7 @@ Vert.x还提供了一种更方便的方式指定配置文件，而无需设置�
 
 Vert.x本身只是一个库，您可以在自己的应用程序使用任何日志库的API来记录日志。
 
-但是，若您愿意，可以使用上述的Vert.x日志记录工具为应用程序提供日志记录。
+但是，若您愿意，也可以使用上述的Vert.x日志记录工具为应用程序提供日志记录。
 
 为此，您可以使用[LoggerFactory](http://vertx.io/docs/apidocs/io/vertx/core/logging/LoggerFactory.html)获取一个[Logger](http://vertx.io/docs/apidocs/io/vertx/core/logging/Logger.html)实例用来记录日志：
 
@@ -5872,7 +5872,6 @@ Netty不依赖于外部日志配置（例如系统属性），而是根据Netty�
 通过直接在`io.netty.util.internal.logging.InternalLoggerFactory`上设置Netty的内部记录器实现，强制执行日志记录器实现。
 
 ```
-// Force logging to Log4j
 // 强制使用Log4j日志记录
 InternalLoggerFactory.setDefaultFactory(Log4JLoggerFactory.INSTANCE);
 ```
@@ -5889,7 +5888,7 @@ SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 
-这意味着您的类路径中有`SLF4J-API`却没有实际的绑定。使用`SLF4J`记录的消息将被删除，则您应该添加绑定到您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并进行配置。
+这意味着您的类路径中有`SLF4J-API`却没有实际的绑定。使用`SLF4J`记录的消息将被删除。您应该添加绑定到您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并进行配置。
 
 请注意，Netty会寻找`SLF4-API`的jar，并在默认情况下使用它。
 
@@ -5907,7 +5906,7 @@ SEVERE: java.io.IOException: Connection reset by peer
 
 Vert.x使用地址解析器将主机名解析为IP地址，而不是JVM内置的阻塞解析器。
 
-主机名使用一下方式解析为IP地址：
+主机名使用以下方式解析为IP地址：
 
 * 操作系统的hosts文件
 * DNS查询服务器列表
@@ -5927,7 +5926,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 
 DNS服务器的默认端口为`53`，当服务器使用不同的端口时，可以使用冒号分隔符设置该端口：`192.168.0.2:40000`。
 
-*注意：有时可能需要使用JVM内置解析器，JVM系统属性`-Dvertx.disableDnsResolver=true`激活该行为*
+> 请注意： *有时可能需要使用JVM内置解析器，JVM系统属性`-Dvertx.disableDnsResolver=true`激活该行为*
 
 #### 故障转移【Failover】
 
@@ -5939,7 +5938,7 @@ DNS服务器的默认端口为`53`，当服务器使用不同的端口时，可�
 
 默认情况下，DNS服务器选择使用第一个，其余的服务器用于故障转移。
 
-您可以配置[setRotateServers](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-)为true，让解析器使用轮询选择。它会在服务器之间传播查询负载并避免所有的查找都找到列表中的第一个服务器。
+您可以配置[setRotateServers](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-)为true，让解析器使用轮询选择。它会在服务器之间传播查询负载，并避免所有的查找都找到列表中的第一个服务器。
 
 故障转移仍然适用，并将使用列表中的下一个服务器。
 
@@ -5972,7 +5971,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 
 ### 高可用/故障转移
 
-Vert.x允许您运行支持高可用（HA——High Availability）的Verticle，这种情况下，当运行Verticle的Vert.x实例突然死亡时，该Veritlce将迁移到另一个Vert.x实例。这个Vert.x实例必须在同一个集群中。
+Vert.x允许您运行支持高可用（HA——High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然死亡时，该Veritlce将迁移到另一个Vert.x实例。这个Vert.x实例必须在同一个集群中。
 
 #### 自动故障转移
 
@@ -5990,10 +5989,11 @@ vertx run my-verticle.js -ha
 vertx run my-other-verticle.js -ha
 ```
 
-如果运行了`my-verticle.js`的Vert.x实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x实例将自动重新部署`my-verticle.js`，现在这个Vert.x实例正在运行两个Verticle。
+如果运行了`my-verticle.js`的Vert.x实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x实例将自动重新部署`my-verticle.js`，所以现在这个Vert.x实例正在运行两个Verticle。
 
-*注意：只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
-*重要：请注意，干净地关闭Vert.x实例不会导致故障转移发生：**CTRL-C**或**kill -SIGNINT***
+> 请注意： *只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
+
+> 重要： *请注意，干净地关闭Vert.x实例不会导致故障转移发生，例如：**CTRL-C**或**kill -SIGNINT***
 
 您也可以启动裸的Vert.x实例——即最初不运行任何Verticle的实例，它们也将为集群中的节点进行故障转移。要启动一个裸实例，您只需做：
 
@@ -6003,7 +6003,7 @@ vertx run -ha
 
 当使用`-ha`开关时，您不需要提供`-cluster`开关，因为若要使用HA就假定是集群。
 
-*注意：根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机cluster-host和集群端口cluster-port参数。*
+> 请注意： *根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机cluster-host和集群端口cluster-port参数。*
 
 #### HA组
 
@@ -6089,7 +6089,7 @@ Vert.x Web对请求中的路径进行了规范，以防止恶意客户端伪造U
 
 类似地，对于文件上传Vert.x Web提供上传到磁盘上已知位置的功能，并且不依赖上传中客户端提供的文件名，可以将其上传到磁盘的其他位置。
 
-Vert.x Core本身不提供这样的检查，因此作为一个开发人员自己实现它将取决于您。
+Vert.x Core本身不提供这样的检查，所以这将取决于开发者您自身如何实现了。
 
 #### 集群Event Bus流量
 
@@ -6105,7 +6105,7 @@ Vert.x Core本身不提供这样的检查，因此作为一个开发人员自己
 
 Vert.x Core提供了一个用于解析传递给程序命令行参数的API。
 
-它还可以打印详细说明可用于命令行工具的选项帮助消息。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，也可在fat-jar和`vertx`命令行工具中使用。另外，它是polyglot（可用于任何支持的语言），并在Vert.x Shell中使用。
+它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，可以在fat-jar和`vertx`命令行工具中使用。另外，它是polyglot（可用于任何支持的语言），并在Vert.x Shell中使用。
 
 Vert.x CLI提供了一个描述命令行界面的模型，也是一个解析器，这个解析器可支持不同的语法：
 
@@ -6147,7 +6147,7 @@ CLI cli = CLI.create("copy")
 
 **选项**
 
-[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的键【key】标识的命令行参数。选项至少必须有一个长名或一个短命，长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
+[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的键【key】标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6183,7 +6183,7 @@ CLI cli = CLI.create("some-name")
 
 可以使用[setHidden](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-)方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（对于高级用户）。
 
-如果选项值与固定值相违背，则可以设置不同的可接受选项：
+如果选项值被限制为一个固定集合，您可以设置不同的可接受选项：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6197,9 +6197,10 @@ CLI cli = CLI.create("some-name")
 也可以从JSON表单中实例化选项。
 
 **参数**
-和选项不同，参数不具有键【key】标识并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
 
-参数没有名称，使用基于0的索引进行标识，第一个参数的索引为0：
+和选项不同，参数不具有键【key】并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
+
+参数没有名称，使用基于0的索引进行标识。第一个参数的索引为0：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6217,12 +6218,10 @@ CLI cli = CLI.create("some-name")
 
 ```java
 CLI cli = CLI.create("some-name")
-    // will have the index 0
 	// 索引为0
     .addArgument(new Argument()
         .setDescription("the first argument")
         .setArgName("arg1"))
-    // will have the index 1
 	// 索引为1
     .addArgument(new Argument()
         .setDescription("the second argument")
@@ -6275,11 +6274,11 @@ A command line interface to copy files.
   -R,--directory   enables directory support
 ```
 
-若需要调整使用消息（的格式），请检查[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
+若需要调整使用消息（的格式），请查阅[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
 
 #### 解析阶段【1.Parsing】
 
-一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来评估【Evaluate】每个选项和参数：
+一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来评估每个选项和参数：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
@@ -6300,7 +6299,7 @@ boolean flag = commandLine.isFlagEnabled("my-flag");
 String arg0 = commandLine.getArgumentValue(0);
 ```
 
-您的一个选项可以被标记为“帮助”，如果用户命令行启用“帮助”选项，验证将不会失败，但是可以让您有机会检查用户是否需要帮助：
+您的一个选项可以被标记为“帮助”。如果用户命令行启用“帮助”选项，验证将不会失败，但是可以让您有机会检查用户是否需要帮助：
 
 ```java
 CLI cli = CLI.create("test")
@@ -6311,7 +6310,6 @@ CLI cli = CLI.create("test")
 
 CommandLine line = cli.parse(Collections.singletonList("-h"));
 
-// The parsing does not fail and let you do:
 // 解析不会失败，您可以做：
 if (!line.isValid() && line.isAskingForHelp()) {
   StringBuilder builder = new StringBuilder();
@@ -6374,13 +6372,13 @@ CLI cli = CLI.create("some-name")
         .setLongName("person"));
 ```
 
-对于布尔值，布尔值将被计算为`true`:`on`，`yes`，`1`，`true`。
+对于布尔值，布尔值将被评定为`true`:`on`，`yes`，`1`，`true`。
 
 若您的一个选项是`enum`类型，则（系统）会自动计算一组选项。
 
-#### 使用Annotation
+#### 使用注解
 
-您还可以使用Annotation定义CLI，定义使用类和setter方法上的Annotation来完成：
+您还可以使用注解定义CLI。在类和setter方法上使用注解来定义：
 
 ```java
 @Name("some-name")
@@ -6409,7 +6407,7 @@ public class AnnotatedCli {
 }
 ```
 
-一旦被注解，您可以定义[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并使用以下命令注入值：
+注解后，您可以使用以下命令来定义[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并注入值：
 
 ```java
 CLI cli = CLI.create(AnnotatedCli.class);
@@ -6420,7 +6418,7 @@ CLIConfigurator.inject(commandLine, instance);
 
 ### Vert.x启动器
 
-Vert.x [Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)在fat-jar中作为主类，由`vertx`命令行实用程序调用，它可执行一组命令，如`run`, `bare`, `start`...
+Vert.x [Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)在fat-jar中作为主类，由`vertx`命令行实用程序调用。它可执行一组命令，如`run`, `bare`, `start`...
 
 #### 扩展Vert.x启动器
 
@@ -6461,7 +6459,7 @@ public class HelloCommandFactory extends DefaultCommandFactory<HelloCommand> {
 io.vertx.core.launcher.example.HelloCommandFactory
 ```
 
-构建包含命令的jar，确保包含了SPI文件（`META-INF/services/io.vertx.core.spi.launcher.CommandFactory`）。
+构建包含命令的jar。确保包含了SPI文件（`META-INF/services/io.vertx.core.spi.launcher.CommandFactory`）。
 
 然后，将包含该命令的jar放入fat-jar（或包含在其中）的类路径中，或放在Vert.x发行版的`lib`目录中，您将可以执行：
 
@@ -6475,9 +6473,9 @@ java -jar my-fat-jar.jar hello vert.x
 
 默认情况下，它执行了`run`命令。但是，您可以通过设置*MANIFEST*的`Main-Command`条目来配置默认命令。若在没有命令的情况下启动fat-jar，则使用默认命令。
 
-#### 子分类启动器
+#### 子类启动器
 
-您还可以创建[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)来启动子应用程序的子类，这个类被设计成易于扩展的。
+您还可以创建[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)的子类来启动您的应用程序。这个类被设计成易于扩展的。
 
 一个[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)子类可以：
 
@@ -6499,7 +6497,7 @@ java -jar my-fat-jar.jar hello vert.x
 
 ### 配置Vert.x缓存
 
-当Vert.x需要从类路径中读取文件（嵌入在fat-jar中，类路径中jar文件或其他文件）时，将其复制到缓存目录。背后原因很简单：从jar或从输入流读取文件是阻塞的，所以为了避免每次都付出代价，Vert.x会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
+当Vert.x需要从类路径中读取文件（嵌入在fat-jar中，类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从jar或从输入流读取文件是阻塞的。所以为了避免每次都付出代价，Vert.x会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
 
 首先，默认情况下，Vert.x使用`$CWD/.vertx`作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用`vertx.cacheDirBase`系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
 
@@ -6509,11 +6507,11 @@ vertx run my.Verticle -Dvertx.cacheDirBase=/tmp/vertx-cache
 java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 ```
 
-*重要：该目录必须是可写的。*
+>重要： *该目录必须是可写的。*
 
-当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，单始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
+当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，但始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
-最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存，这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
+最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存。这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
 
 ## 结语
 
