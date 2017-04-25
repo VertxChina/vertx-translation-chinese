@@ -5900,7 +5900,7 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 io.vertx.core.net.impl.ConnectionBase
 SEVERE: java.io.IOException: Connection reset by peer
 ```
-这意味着客户端正在重置HTTP连接，而不是关闭它。此消息还表示您可能没有使用完整有效的内容（连接在您访问之前被切断）。
+这意味着客户端正在重置HTTP连接，而不是关闭它。此消息还可能表示您没有读取完整的有效负荷（连接在读取完全之前被切断）。
 
 ### 主机名解析
 
@@ -5928,7 +5928,7 @@ DNS服务器的默认端口为`53`，当服务器使用不同的端口时，可�
 
 > 请注意： *有时可能需要使用JVM内置解析器，JVM系统属性`-Dvertx.disableDnsResolver=true`激活该行为*
 
-#### 故障转移【Failover】
+#### 故障转移
 
 当服务器没有及时回复时，尝试从列表中选择下一个解析器，搜索（数量）的限制由[setMaxQueries](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setMaxQueries-int-)设置（默认值是4个查询）
 
@@ -6276,7 +6276,7 @@ A command line interface to copy files.
 
 若需要调整使用消息（的格式），请查阅[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
 
-#### 解析阶段【1.Parsing】
+#### 解析阶段
 
 一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来评估每个选项和参数：
 
@@ -6288,7 +6288,7 @@ CommandLine commandLine = cli.parse(userCommandLineArguments);
 
 您可以使用[isValid](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html#isValid--)来检查[CommandLine](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)是否有效。
 
-#### 查询/询问阶段【2.Query/Interrogation】
+#### 查询/审问阶段
 
 解析后，您可以从解析方法返回的[CommandLine](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象中读取选项和参数的值：
 
