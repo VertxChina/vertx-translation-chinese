@@ -585,7 +585,7 @@ public class MyVerticle extends AbstractVerticle {
 
 这意味着我们可以保证您的Verticle实例中所有的代码都是在相同Event Loop中执行（只要您不创建自己的线程并调用它！）
 
-同样意味着您可以将您的应用中的所有代码用单线程方式编写，让Vert.x去考虑线程和扩展问题。您不用再考虑synchronized和volatile的问题，也可以避免传统的多线程应用经常会遇到的静态条件和死锁的问题。
+同样意味着您可以将您的应用中的所有代码用单线程方式编写，让Vert.x去考虑线程和扩展问题。您不用再考虑synchronized和volatile的问题，也可以避免传统的多线程应用经常会遇到的竞态条件和死锁的问题。
 
 #### Worker Verticles
 
