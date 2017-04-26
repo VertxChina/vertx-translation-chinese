@@ -356,7 +356,7 @@ Vert.x中的[futures](http://vertx.io/docs/apidocs/io/vertx/core/Future.html)用
 
 **1.all**
 
-[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），当所有的future都成功完成，该方法将返回一个_成功的_future；当任一个future执行失败，则返回一个_失败的_future：
+[CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），当所有的future都成功完成，该方法将返回一个*成功的*future；当任一个future执行失败，则返回一个*失败的*future：
 
 ```java
 Future<HttpServer> httpServerFuture = Future.future();
@@ -408,7 +408,7 @@ CompositeFuture.any(Arrays.asList(f1, f2, f3));
 
 `join`的合并会等待所有的future完成，无论成败。
 
-[CompositeFuture.join](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#join-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是_成功的_当全部future成功完成；是_失败的_当任一future执行失败。
+[CompositeFuture.join](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#join-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个），并将结果归并成一个future，future中的结果是*成功的*当全部future成功完成；是*失败的*当任一future执行失败。
 
 ```java
 CompositeFuture.join(future1, future2, future3).setHandler(ar -> {
