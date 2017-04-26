@@ -204,16 +204,16 @@ Future.<Message<String>>future(f ->
 
 另外以下代码是等价的：
 ```java
-	//我们版本
-        future.compose(message ->
-                Future.<Message<String>>future(f ->
-                        vertx.eventBus().send("address", message.body(), f)
-                )
-        );
-        //官方版本
-        future.compose(message ->{
-            Future<Message<String>> f = Future.future();
-            vertx.eventBus().send("address",message.body(),f.completer());
-            return f;
-        });
+//我们版本
+future.compose(message ->
+  Future.<Message<String>>future(f ->
+    vertx.eventBus().send("address", message.body(), f)
+  )
+);
+//官方版本
+future.compose(message ->{
+  Future<Message<String>> f = Future.future();
+  vertx.eventBus().send("address",message.body(),f.completer());
+  return f;
+});
 ```
