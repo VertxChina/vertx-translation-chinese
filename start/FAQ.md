@@ -81,6 +81,9 @@ future.setHandler(asyncResult -> {
 });
 //使用future之后，用completer方法填充参数
 vertx.eventBus().send("address","message", future.completer());
+//或
+vertx.eventBus().send("address","message", future);
+//以上两种写法等效，future继承自Handler<AsyncResult<T>>，completer方法会返回该部分代码，所以可直接使用future
 ```
 
 一个复杂一点的例子：
@@ -101,14 +104,14 @@ Future<Message<String>> future1 = Future.future();
 Future<Message<String>> future2 = Future.future();
 
 future1.setHandler(asyncResult -> {
-   vertx.eventBus().send("address2", asyncResult.result().body(), future2.completer());
+   vertx.eventBus().send("address2", asyncResult.result().body(), future2);
 });
 
 future2.setHandler(asyncResult-> {
     System.out.println(asyncResult.result().body());
 });
 
-vertx.eventBus().send("address1","message", future1.completer());
+vertx.eventBus().send("address1","message", future1);
 ```
 
 可以看到，使用了future之后，原先的两层缩进被抽取出来，变成了最多单层的缩进，从而使得代码可读性更强，更加美观。
