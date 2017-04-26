@@ -204,7 +204,7 @@ public class MyFirstVerticle extends AbstractVerticle {
 </project>
 ```
 
-然后在`src/io/example`目录下新增`MainVerticle.java`文件，代码如下：
+然后在`src/main/java/io/example`目录下新增`MainVerticle.java`文件，代码如下：
 
 ```java
 package io.example;
