@@ -90,7 +90,7 @@
 
 跟其它Maven项目一样，我们首先定义了项目的GroupId，ArtifactId以及版本号，随后我们定义了两个属性，分别是：`vertx.version`，也就是Vert.x的版本号，此处我们使用最新的Vert.x版本，也就是3.4.1；以及`main.class`，也就是我们要使用的包含有main函数的主类。之后我们引入了两个Maven插件，分别是`maven-compiler-plugin`和`maven-shade-plugin`，前者用来将.java的源文件编译成.class的字节码文件，后者可将编译后的.class字节码文件打包成可执行的jar文件，俗称`fat-jar`。
 
-然后我们在src/main/java/io/example目录下新建两个java文件，分别是`Main.java`和`MyFirstVerticle.java`，代码如下：
+然后我们在`src/main/java/io/example`目录下新建两个java文件，分别是`Main.java`和`MyFirstVerticle.java`，代码如下：
 
 Main.java
 
@@ -204,7 +204,7 @@ public class MyFirstVerticle extends AbstractVerticle {
 </project>
 ```
 
-然后在src/io/example目录下新增MainVerticle.java文件，代码如下：
+然后在`src/io/example`目录下新增`MainVerticle.java`文件，代码如下：
 
 ```java
 package io.example;
@@ -307,7 +307,7 @@ public class MainVerticle extends AbstractVerticle {
 </project>
 ```
 
-随后在src/test/java/io/example目录下新增MyFirstVerticleTest.java文件：
+随后在`src/test/java/io/example`目录下新增`MyFirstVerticleTest.java`文件：
 
 ```java
 package io.example;
