@@ -40,6 +40,7 @@
 * Datagram：数据报
 * Socket：套接字（有些地方未翻译，直接用的Socket）
 * Multicast：多播（组播）
+* Concurrent Composition：并发合并
 * High Availability：高可用性
 * Fail-Over：故障转移
 * Launcher：启动器
@@ -351,7 +352,7 @@ WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool", poo
 
 Vert.x中的[futures](http://vertx.io/docs/apidocs/io/vertx/core/Future.html)用来协调多个异步操作的结果。它支持并发合并（并行执行多个异步调用）和顺序合并（依次执行异步调用）。
 
-#### 并发合并【Concurrent Composition】
+#### 并发合并
 
 **1.all**
 
