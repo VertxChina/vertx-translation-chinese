@@ -6062,7 +6062,7 @@ vertx run my-verticle.js -ha -quorum 3
 ```
 vertx run my-other-verticle.js -ha -quorum 3
 ```
-此时，Vert.x实例将启动不部署模块（还），因为集群中只有两个节点，而不是3个。
+此时，Vert.x实例将启动但不部署模块（尚未）因为目前集群中只有2个节点，而不是3个。
 
 在第三个控制台，您可以启动另一个Vert.x的实例：
 
