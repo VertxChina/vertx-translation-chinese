@@ -201,3 +201,19 @@ Future.<Message<String>>future(f ->
 通过 `compose` 方法来组织代码最大的价值在于可以 **让异步代码的执行顺序和代码的编写顺序看起来一致**，并在任何一步抛出异常时直接退出到最后一个 handler 来处理，**不需要针对每一个异步操作都编写异常处理的逻辑**。这对于编写复杂的异步流程时是非常有用的。
 
 [Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
+
+另外以下代码是等价的：
+```java
+	//我们版本
+        future.compose(message ->
+                Future.<Message<String>>future(f ->
+                        vertx.eventBus().send("address", message.body(), f)
+                )
+        );
+        //官方版本
+        future.compose(message ->{
+            Future<Message<String>> f = Future.future();
+            vertx.eventBus().send("address",message.body(),f.completer());
+            return f;
+        });
+```
