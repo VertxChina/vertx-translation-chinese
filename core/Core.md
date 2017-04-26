@@ -875,9 +875,9 @@ Vert.x中，想要延迟之后执行或定期执行操作很常见。
 
 在Standard Verticle中您不能让线程休眠以引入延迟，因为它会阻塞Event Loop线程。
 
-取而代之是使用Vert.x定时器，定时器可以是一次性【One-shot】或定期的【periodic】，我们将讨论二者。
+取而代之是使用Vert.x定时器，定时器可以是一次性或周期性的，我们将讨论二者。
 
-**一次性计时器【One-shot】**
+**一次性计时器**
 
 一个一次性计时器会在一定延迟后调用一个Event Handler，以毫秒为单位。
 
@@ -893,7 +893,7 @@ System.out.println("First this is printed");
 
 返回值是一个唯一的计时器id，该id可用于之后取消该计时器，这个计时器id会传入给处理器。
 
-**周期性计时器【Periodic】**
+**周期性计时器**
 
 您同样可以使用[setPeriodic](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#setPeriodic-long-io.vertx.core.Handler-)设置一个周期性触发的计时器。
 
@@ -939,7 +939,7 @@ vertx.deployVerticle("the-verticle", new DeploymentOptions().setWorkerPoolName("
 
 ### Event Bus
 
-Event Bus是Vert.x中的神经系统【Nervous System】。
+Event Bus是Vert.x中的神经系统。
 
 每一个Vert.x实例都有一个单独的Event Bus实例，可通过方法[eventBus](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#eventBus--)来获得。
 
@@ -957,21 +957,21 @@ Event Bus的API很简单，它主要涉及注册处理器、撤销处理器和�
 
 #### 理论
 
-**寻址【Addressing】**
+**寻址**
 
-消息在Event Bus上会发送到一个地址【Address】。
+消息在Event Bus上会发送到一个地址。
 
 同任何花哨的寻址方式相比Vert.x（寻址）并不麻烦，Vert.x中的地址是一个简单的字符串，任意字符串都合法。然后，使用某种模式仍然是明智之举，如：使用据点来划分名空间。
 
 一些合法的地址形如：europe.news.feed1、acme.games.pacman, sausages和X。
 
-**处理器【Handlers】**
+**处理器**
 
 消息在处理器中被接收，您可以在一个地址上注册一个处理器。
 
 同一个地址可以注册许多不同的处理器，一个处理器也可以在许多不同的地址上注册。
 
-**发布/订阅消息【Publish/Subscribe Messaging】**
+**发布/订阅消息**
 
 Event Bus支持发布消息功能。
 
@@ -983,7 +983,7 @@ Event Bus支持发布消息功能。
 
 Event Bus也支持点对点消息。
 
-消息将被发送到一个地址中，Vert.x将会把消息分发【route】到某个注册在该地址上的处理器。
+消息将被发送到一个地址中，Vert.x将会把消息分发到某个注册在该地址上的处理器。
 
 若这个地址上有不止一个注册过的处理器，它将使用不严格的轮询算法选择其中一个。
 
@@ -995,7 +995,7 @@ Event Bus也支持点对点消息。
 
 这就是一种称为**请求-响应**模式的消息模式。
 
-**尽力服务传输【Best-effort delivery】**
+**尽力服务传输**
 
 Vert.x会尽它最大努力去传递消息，并且保证消息不会出现丢失，这种称为**尽力服务**传输。
 
@@ -1003,13 +1003,13 @@ Vert.x会尽它最大努力去传递消息，并且保证消息不会出现丢�
 
 若您的应用关心丢失的消息，您应该编写具有幂等性的处理器，并且您的发送者可以在恢复后重试。
 
-**消息类型【Types of messages】**
+**消息类型**
 
 标准Vert.x允许任何基本/简单类型、String或[buffers](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)作为消息发送。
 
 不过在Vert.x中通常以[JSON](http://json.org/)格式作为发送消息的惯例和常用实践。
 
-对于Vert.x支持的所有语言，JSON非常容易创建、读取和解析，因此它已经成为了Vert.x中的通用语【lingua franca】。
+对于Vert.x支持的所有语言，JSON非常容易创建、读取和解析，因此它已经成为了Vert.x中的通用语。
 
 但是若您不想用它，并不强制您使用JSON。
 
