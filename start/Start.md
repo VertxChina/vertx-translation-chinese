@@ -136,7 +136,7 @@ public class MyFirstVerticle extends AbstractVerticle {
 
 随后打开浏览器，在浏览器的地址栏中输入：http://localhost:8080/ 便可看到熟悉的Hello World!啦。
 
-我们也可以使用`Launcher`来替代`Main`类，这也是官方推荐的方式，在`pom.xml`中加入`main.verticle`属性，同时设置`main.class`为`io.vertx.core.Launcher`，修改后的`pom.xml`如下：
+我们也可以使用`Launcher`来替代`Main`类，这也是官方推荐的方式，在`pom.xml`中加入`main.verticle`属性，并将该属性值设置为`maven-shade-plugin`插件的`manifestEntries`的`Main-Verticle`对应的值，最后修改`main.class`为`io.vertx.core.Launcher`，修改后的`pom.xml`如下：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
