@@ -717,7 +717,7 @@ vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle", options);
 
 这个功能对于跨多核扩展时很有用。例如，您有一个实现了Web服务器的Verticle需要部署在多核的机器上，您可以部署多个实例来利用所有的核。
 
-#### 给Verticle传入配置
+#### 向Verticle传入配置
 
 可在部署时传给Verticle一个JSON格式的配置
 
@@ -818,15 +818,15 @@ Vert.x将在运行它之前对Java源代码文件执行运行时编译，这对�
 
 #### 退出Vert.x
 
-所有Vert.x实例维护的线程不是守护线程，所以它们将会阻止JVM退出。
+Vert.x实例维护的线程不是守护线程，因此它们会阻止JVM退出。
 
 如果您通过嵌入式的方式使用Vert.x并且完成了操作，您可以调用[close](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#close--)方法关闭它。
 
-这将关闭所有内部线程池并关闭其他资源，而且将允许JVM退出。
+这将关闭所有内部线程池并关闭其他资源，允许JVM退出。
 
 #### Context对象
 
-当Vert.x传递一个事件给处理器或者调用Verticle的`start`或`stop`方法时，它的执行会关联一个`Context`对象。通常一个context又是一个event-loop context并且绑定到一个特定的event-loop线程，所以执行该context总是在同一个event loop线程中；同样Worker Vertcle以及运行的内联阻塞式代码中，一个worker context将会绑定其执行关联到一个特定的worker pool的线程中。
+当Vert.x传递一个事件给处理器或者调用Verticle的`start`或`stop`方法时，它会关联一个`Context`对象来执行。通常来说这个context会是一个event-loop context，它绑定到了一个特定的event-loop线程上。所以在该context上执行的操作总是在同一个event loop线程中。对于运行内联的阻塞代码的worker verticle来说，会关联一个worker context，并且所有的操作运都会运行在worker线程池的线程上。
 
 您可用[getOrCreateContext](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#getOrCreateContext--)方法获取context：
 
@@ -834,7 +834,7 @@ Vert.x将在运行它之前对Java源代码文件执行运行时编译，这对�
 Context context = vertx.getOrCreateContext();
 ```
 
-若已经有一个context和当前线程关联，那么它直接重用这个context对象，如果没有则它会创建一个新的。您可以测试获取的context的类型：
+若已经有一个context和当前线程关联，那么它直接重用这个context对象，如果没有则创建一个新的。您可以检查获取的context的类型：
 
 ```java
 Context context = vertx.getOrCreateContext();
@@ -849,7 +849,7 @@ if (context.isEventLoopContext()) {
 }
 ```
 
-当您获取了这个context对象，您就可以在context中异步执行代码了。换句话说，您提交一个任务（和之后的任务）最终将会在同一个context中运行：
+当您获取了这个context对象，您就可以在context中异步执行代码了。换句话说，您提交的任务将会在同一个context中运行：
 
 ```java
 vertx.getOrCreateContext().runOnContext( (v) -> {
@@ -857,7 +857,7 @@ vertx.getOrCreateContext().runOnContext( (v) -> {
 });
 ```
 
-若同一个context中运行了多个处理器，它们也许想要共享数据，这个context对象提供了在context中存储和读取数据（实现）共享的方法。例如：它允许您将数据传递到[runOnContext](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#runOnContext-io.vertx.core.Handler-)运行的某些操作中。
+当在同一个context中运行了多个处理器时，可能需要在它们之间共享数据。Context对象提供了存储和读取共享数据的方法。举例来说，它允许您将数据传递到[runOnContext](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#runOnContext-io.vertx.core.Handler-)运行的某些操作中。
 
 ```java
 final Context context = vertx.getOrCreateContext();
@@ -867,7 +867,7 @@ context.runOnContext((v) -> {
 });
 ```
 
-这个context对象还可以让您使用[config](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--)方法访问Verticle的配置信息，查看传入配置给Verticle章节了解更多配置信息。
+您还可以通过[config](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--)方法访问Verticle的配置信息。查看[向Verticle传入配置](/向Verticle传入配置)了解更多配置信息。
 
 #### 执行周期性/延迟性操作
 
@@ -875,7 +875,7 @@ Vert.x中，想要延迟之后执行或定期执行操作很常见。
 
 在Standard Verticle中您不能让线程休眠以引入延迟，因为它会阻塞Event Loop线程。
 
-取而代之是使用Vert.x定时器，定时器可以是一次性或周期性的，我们将讨论二者。
+取而代之是使用Vert.x定时器。定时器可以是一次性或周期性的，两者我们都会讨论到。
 
 **一次性计时器**
 
@@ -897,15 +897,15 @@ System.out.println("First this is printed");
 
 您同样可以使用[setPeriodic](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#setPeriodic-long-io.vertx.core.Handler-)设置一个周期性触发的计时器。
 
-这儿将有一个等于该时间的初始化延迟。
+初始的延时等于这个设置周期。
 
 setPeriodic的返回值也是一个唯一的计时器id，若之后该计时器需要取消则使用该id。
 
-传给这个计时器中处理器的参数也是这个唯一的计时器id。
+传给处理器的参数也是这个唯一的计时器id。
 
-请记住这个计时器将会定期触发，如果您的定期（任务）执行【treatment】将会花费大量时间，您的计时器事件能持续执行或最坏的情况：重叠。
+请记住这个计时器将会定期触发。如果您的定时任务会花费大量的时间，则您的计时器事件可能会连续执行甚至发生更坏的情况：重叠。
 
-这种情况，您应考虑使用[setTimer](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#setTimer-long-io.vertx.core.Handler-)，一旦任务执行完成您可设置下一个计时器。
+这种情况，您应考虑使用[setTimer](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#setTimer-long-io.vertx.core.Handler-)。当任务执行完成时设置下一个计时器。
 
 ```java
 long timerID = vertx.setPeriodic(1000, id -> {
@@ -927,11 +927,11 @@ vertx.cancelTimer(timerID);
 
 如果您在Verticle中创建了计时器，当这个Verticle被撤销时这个计时器会被自动关闭。
 
-#### Verticle工作线程池
+#### Verticle worker pool
 
-Verticle使用Vert.x中的工作线程池【Worker Pool】来执行阻塞式行为——如：[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)或Worker Verticle。
+Verticle使用Vert.x中的worker pool来执行阻塞式行为，例如：[executeBlocking](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-)或Worker Verticle。
 
-还可以在部署配置项中指定不同的工作线程池：
+可以在部署配置项中指定不同的worker pool：
 
 ```java
 vertx.deployVerticle("the-verticle", new DeploymentOptions().setWorkerPoolName("the-specific-pool"));
