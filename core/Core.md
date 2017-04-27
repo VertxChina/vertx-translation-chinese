@@ -715,7 +715,7 @@ DeploymentOptions options = new DeploymentOptions().setInstances(16);
 vertx.deployVerticle("com.mycompany.MyOrderProcessorVerticle", options);
 ```
 
-这个功能对于跨多核扩展时很有用。例如，您有一个实现了Web服务器的Verticle需要部署在多个的机器上，您可以部署多个实例来利用所有的核。
+这个功能对于跨多核扩展时很有用。例如，您有一个实现了Web服务器的Verticle需要部署在多核的机器上，您可以部署多个实例来利用所有的核。
 
 #### 给Verticle传入配置
 
