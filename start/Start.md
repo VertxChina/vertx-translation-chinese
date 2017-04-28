@@ -138,6 +138,8 @@ public class MyFirstVerticle extends AbstractVerticle {
 
 随后打开浏览器，在浏览器的地址栏中输入：http://localhost:8080/ 便可看到熟悉的Hello World!啦。
 
+## 启动器
+
 我们也可以使用`Launcher`来替代`Main`类，这也是官方推荐的方式，在`pom.xml`中加入`main.verticle`属性，并将该属性值设置为`maven-shade-plugin`插件的`manifestEntries`的`Main-Verticle`对应的值，最后修改`main.class`为`io.vertx.core.Launcher`，修改后的`pom.xml`如下：
 
 ```xml
@@ -226,6 +228,8 @@ public class MainVerticle extends AbstractVerticle {
 然后重新打包后执行，便可再次看到Hello World!。
 
 > 请注意：*重新打包之前，您可能需要清除之前编译后留下的文件，用mvn clean package命令打包。*
+
+## 测试
 
 下面我们将会介绍测试部分，首先引入两个新的测试依赖，修改后的`pom.xml`如下：
 

@@ -36,7 +36,7 @@
 * Body：请求/响应体（有些地方翻译成请求/响应正文）
 * Pipe：管道
 * Round-Robin：轮询
-* Flush：刷新
+* Flush：刷新（指将缓冲区中已有的数据一次性压入，用这种方式清空缓冲区，传统上翻译成刷新）
 * Datagram：数据报
 * Socket：套接字（有些地方未翻译，直接用的Socket）
 * Multicast：多播（组播）
