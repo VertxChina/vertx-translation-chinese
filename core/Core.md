@@ -2269,7 +2269,7 @@ vertx.createHttpServer(new HttpServerOptions()
 
 ##### 待撤销证书颁发机构
 
-可以将信任配置为对不应再受信任的待撤销证书使用证书吊销列表（CRL），[crlPath](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html#addCrlPath-java.lang.String-)配置CRL列表以使用：
+可以通过配置证书吊销列表（CRL）来吊销不再被信任的证书机构。[crlPath](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html#addCrlPath-java.lang.String-)配置了使用的CRL：
 
 ```java
 NetClientOptions options = new NetClientOptions().
@@ -2279,7 +2279,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myCrlAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/crl.pem");
@@ -2290,7 +2290,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-##### 配置密码套件【Cipher Suite】
+##### 配置密码套件
 
 默认情况下，TLS配置将使用运行Vert.x的JVM密码套件，该密码套件可以配置一套启用的密码：
 
