@@ -1674,23 +1674,23 @@ socket.closeHandler(v -> {
 
 请阅读[从类路径提供文件](http://vertx.io/docs/vertx-core/java/#classpath)章节了解类路径的限制或禁用它。
 
-#### Streaming Socket
+#### 流式的Socket
 
-[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的实例也是[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)和[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)实例，因此它们可以用于将数据抽取到其他读取和写入流中。
+[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)实现了[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)和[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)接口，因此您可以将它套用（pump）到其他的读写流上。
 
-有关更多信息，请参阅[流和泵](http://vertx.io/docs/vertx-core/java/#streams)的章节。
+有关更多信息，请参阅[流和管道](http://vertx.io/docs/vertx-core/java/#streams)的章节。
 
-#### 升级连接到SSL/TLS
+#### 升级到SSL/TLS连接
 
 一个非SSL/TLS连接可以通过[upgradeToSsl](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#upgradeToSsl-io.vertx.core.Handler-)方法升级到SSL/TLS连接。
 
-必须为服务器或客户端配置SSL/TLS才能正常工作，有关详情，请参阅[SSL/TLS](http://vertx.io/docs/vertx-core/java/#ssl)章节。
+必须为服务器或客户端配置SSL/TLS才能正常工作。请参阅[SSL/TLS](http://vertx.io/docs/vertx-core/java/#ssl)章节来获取详细信息。
 
 #### 关闭TCP服务器
 
 调用[close](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServer.html#close--)方法关闭服务器，关闭服务器将关闭所有打开的连接并释放所有服务器资源。
 
-关闭实际上是异步的，直到方法调用返回过后一段时间才会实际关闭，若您想在实际关闭完成时收到通知，那么您可以传递一个处理器。
+关闭实际上是异步的，直到方法调用返回过后一段时间才会实际关闭。若您想在实际关闭完成时收到通知，那么您可以传递一个处理器。
 
 当关闭完全完成后，这个处理器将被调用：
 
@@ -1704,13 +1704,13 @@ server.close(res -> {
 });
 ```
 
-#### Verticle中自动清理
+#### Verticle中的自动清理
 
 若您在Verticle内创建了TCP服务器和客户端，这些服务器和客户端将会在Verticle撤销时自动关闭。
 
 #### 扩展 - 共享TCP服务器
 
-任何TCP服务器中的处理器总是在相同的Event Loop线程上执行。
+任意一个TCP服务器中的处理器总是在相同的Event Loop线程上执行。
 
 这意味着如果您在多核的服务器上运行，并且只部署了一个实例，那么您的服务器上最多只能使用一个核。
 
@@ -1723,8 +1723,7 @@ for (int i = 0; i < 10; i++) {
   NetServer server = vertx.createNetServer();
   server.connectHandler(socket -> {
     socket.handler(buffer -> {
-      // Just echo back the data
-	  // 仅仅回传数据
+	    //仅回传数据
       socket.write(buffer);
     });
   });
@@ -1732,7 +1731,7 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-或者，如果您使用的是Verticle，您可以通过在命令行上使用`-instances`选项来简单部署更多的服务器实例：
+如果您使用的是Verticle，您可以通过在命令行上使用`-instances`选项来简单部署更多的服务器实例：
 
 ```
 vertx run com.mycompany.MyVerticle -instances 10
@@ -1747,15 +1746,15 @@ vertx.deployVerticle("com.mycompany.MyVerticle", options);
 
 一旦您这样做，您将发现echo服务器在功能上与之前相同，但是服务器上的所有核都可以被利用，并且可以处理更多的工作。
 
-在这一点上，您可能会问自己：如何让多台服务器在同一主机和端口上侦听？当您尝试部署一个以上的实例时，您是否会遇到端口冲突？
+在这一点上，您可能会问自己：**如何让多台服务器在同一主机和端口上侦听？尝试部署一个以上的实例时真的不会遇到端口冲突吗？**
 
 *Vert.x在这里有一点魔法。*
 
 当您在与现有服务器相同的主机和端口上部署另一个服务器实例时，实际上它并不会尝试创建在同一主机/端口上侦听的新服务器实例。
 
-相反，它内部仅仅维护一个服务器实例，并且当传入连接到达时，它以循环方式将其分发给任何连接处理器。
+相反，它内部仅仅维护一个服务器实例。当传入新的连接时，它以轮训的方式将其分发给任意一个连接处理器处理。
 
-因此，Vert.x TCP服务器可以扩展可用核，而每个实例保持单线程。
+因此，Vert.x TCP服务器可以扩展到多个核，并且每个实例保持单线程。
 
 #### 创建TCP客户端
 
