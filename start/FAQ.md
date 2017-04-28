@@ -4,7 +4,50 @@
 
 ### 问：怎样正确理解Vert.x机制？
 
-答：Vert.x其实就是建立了一个Verticle内部的线程安全机制，让用户可以排除多线程并发冲突的干扰，专注于业务逻辑上的实现，用了Vert.x，您就不用操心多线程和并发的问题了。Verticle内部代码，除非声明Verticle是Multiple Threaded Worker Verticle（第三种特殊的Verticle，一般情况下不推荐使用），否则Verticle内部环境全部都是线程安全的，不会出现多个线程同时访问同一个Verticle内部的情况。
+答：Vert.x其实就是建立了一个Verticle内部的线程安全机制，让用户可以排除多线程并发冲突的干扰，专注于业务逻辑上的实现，用了Vert.x，您就不用操心多线程和并发的问题了。Verticle内部代码，除非声明Verticle是Worker Verticle，否则Verticle内部环境全部都是线程安全的，不会出现多个线程同时访问同一个Verticle内部的情况。
+
+### 问：Verticle对象和处理器（Handler）是什么关系？Vert.x如何保证Verticle内部线程安全？
+
+答：Verticle对象往往包含有一个或者多个处理器（Handler），在Java代码中，后者经常是以Lambda也就是匿名函数的形式出现，比如：
+
+```java
+vertx.createHttpServer().requestHandler(req->{
+	//blablabla            
+}).listen(8080);
+```
+
+这里的Lambda/匿名函数/req->{//blablabla}就是一个处理器（Handler），在随后的例子中，我们用1stHandler以及2ndHandler来指代具体的匿名函数，让代码更加清晰明了，放在Verticle中类似：
+
+```java
+public class MyVerticle extends AbstractVerticle {
+    public void start() throws Exception {
+        vertx.createHttpServer().requestHandler(1stHandler).listen(8080);
+	vertx.createHttpServer().requestHandler(2ndHandler).listen(8081);
+    }
+}
+```
+
+Java中，Lambda本身也是一个对象，是一个@FunctionalInterface的对象，Verticle对象中包含了一个或者多个处理器（Handler）对象，比如上述例子中MyVerticle中就包含有两个handler。在Vert.x中，完成Verticle的部署之后，真正调用处理逻辑的入口往往是处理器（Handler），Vert.x保证同一个普通Verticle（也就是EventLoop Verticle，非Worker Verticle）内部的所有处理器（Handler）都只会由同一个EventLoop线程调用，由此保证Verticle内部的线程安全。所以我们可以放心地在Verticle内部声明各种线程不安全的属性变量，并在handler中分享他们，比如：
+
+```java
+public class MyVerticle extends AbstractVerticle {
+    int i = 0;//属性变量
+    
+    public void start() throws Exception {
+        vertx.createHttpServer().requestHandler(req->{
+            i++;
+	    req.response().end();//要关闭请求，否则连接很快会被占满
+        }).listen(8080);
+
+        vertx.createHttpServer().requestHandler(req->{
+            System.out.println(i);
+	    req.response().end(“”+i);
+        }).listen(8081);
+    }
+}
+```
+
+访问 http://localhost:8080 就会使计数器加1，访问 http://localhost:8081 将会看到具体的计数。同理，也可以将i替换成HashMap等线程不安全对象，不需要使用ConcurrentHashMap或HashTable，可在Verticle内部安全使用。
 
 ### 问：什么是显著执行时间？什么是异步？如何正确理解文档中说的不要阻塞Eventloop？
 
