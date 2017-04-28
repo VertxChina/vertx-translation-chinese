@@ -1317,14 +1317,14 @@ JSON对象也支持null值。
 
 可以使用默认构造函数创建空的JSON对象。
 
-您可以从JSON格式的字符串创建一个JSON对象：
+您可以通过一个JSON格式的字符串创建JSON对象：
 
 ```java
 String jsonString = "{\"foo\":\"bar\"}";
 JsonObject object = new JsonObject(jsonString);
 ```
 
-您可以从一个Map创建一个JSON对象：
+您可以从通过一个Map创建JSON对象：
 
 ```java
 Map<String, Object> map = new HashMap<>();
@@ -1333,11 +1333,11 @@ map.put("xyz", 3);
 JsonObject object = new JsonObject(map);
 ```
 
-**将条目放入JSON对象**
+**将键值对放入JSON对象**
 
-使用[put](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html#put-java.lang.String-java.lang.Enum-)方法可以将值放入到JSON对象。
+使用[put](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html#put-java.lang.String-java.lang.Enum-)方法可以将值放入到JSON对象里。
 
-因为Vert.x支持Fluent的API，所以这个方法调用可以是链式化的。
+这个API是流式的，因此这个方法可以被链式地调用。
 
 ```java
 JsonObject object = new JsonObject();
@@ -1357,12 +1357,7 @@ int intVal = jsonObject.getInteger("some-other-key");
 
 您可以从Java对象的字段创建一个JSON对象，如下所示：
 
-```java
-String jsonString = "{\"foo\":\"bar\"}";
-JsonObject object = new JsonObject(jsonString);
-```
-
-也可以实例化一个Java对象并从JSON对象填充其字段值。如下所示：
+你可以通过一个JSON对象来实例化一个Java对象并填充字段值。如下所示：
 
 ```java
 request.bodyHandler(buff -> {
@@ -1371,11 +1366,11 @@ request.bodyHandler(buff -> {
 });
 ```
 
-请注意上述映射方向都使用了Jackson的`ObjectMapper#convertValue()`来执行映射，字段和构造函数可见性的影响、有关跨对象引用的序列化完和反序列化等可参考Jackson的文档获取更多信息。
+请注意上述代码直接使用了Jackson的`ObjectMapper#convertValue()`来执行映射。关于字段和构造函数的可见性的影响、对象引用的序列化和反序列化的问题等等可参考Jackson的文档获取更多信息。
 
-然而在最简单的情况下，所有Java类中字段都是public（或者有public的getter/setter）时，并且有一个public的默认构造函数（或不定义构造函数），`mapFrom`和`mapTo`都应该成功。
+在最简单的情况下，如果Java类中所有的字段都是public（或者有public的getter/setter）时，并且有一个public的默认构造函数（或不定义构造函数），`mapFrom`和`mapTo`都应该成功。
 
-只要对象图是非循环的，引用对象通过to/from执行过滤性的序列化和反序列化时同样会作用于嵌套JSON对象。
+只要不存在对象的循环引用，嵌套的Java对象可以被序列化/反序列化为嵌套的JSON对象。
 
 **将JSON对象编码成String**
 
@@ -1385,7 +1380,7 @@ request.bodyHandler(buff -> {
 
 [JsonArray](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html)类用来描述JSON数组。
 
-一个JSON数组是一系列值的有序集（string、number、boolean）。
+一个JSON数组是一个值的序列（string、number、boolean）。
 
 JSON数组同样可以包含null值。
 
@@ -1400,9 +1395,9 @@ String jsonString = "[\"foo\",\"bar\"]";
 JsonArray array = new JsonArray(jsonString);
 ```
 
-**将条目添加JSON数组**
+**将数组项添加到JSON数组**
 
-您可以使用[add](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html#add-java.lang.Enum-)方法添加条目到JSON数组中
+您可以使用[add](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html#add-java.lang.Enum-)方法添加数组项到JSON数组中
 
 ```java
 JsonArray array = new JsonArray();
