@@ -1251,7 +1251,7 @@ vertx run my-verticle.js -cluster
 
 ### 配置Event Bus
 
-Event Bus可以配置，当Event Bus运行在集群模式这是特别有用的。在引擎【hood】之下，Event Bus使用TCP连接发送和接收消息，因此[EventBusOptions](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html)可以让您配置TCP连接的所有方面。由于Event Bus作为了服务器和客户端，这些配置近似于[NetClientOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html)和[NetServerOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html)。
+Event Bus是可以配置的，这对于以集群模式运行的Event Bus是非常有用的。Event Bus使用TCP连接发送和接收消息，因此可以通过[EventBusOptions](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html)对TCP连接进行全面的配置。由于Event Bus同时用作客户端和服务器，因此这些配置近似于[NetClientOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html)和[NetServerOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html)。
 
 ```java
 VertxOptions options = new VertxOptions()
@@ -1273,13 +1273,13 @@ Vertx.clusteredVertx(options, res -> {
 });
 ```
 
-上边代码段描述了如何在Event Bus中使用SSL连接替换纯的TCP连接。
+上边代码段描述了如何在Event Bus中使用SSL连接替换传统的TCP连接。
 
-> 警告：*要在集群模式下强制执行安全性，您必须将集群管理器【Cluster】配置成加密的或强制安全性（的方式）。参考集群管理器的文档获取更多细节。*
+**警告：**若要在集群模式下保证安全性，您**必须**将集群管理器配置成加密的或强制安全的。参考集群管理器的文档获取更多细节。
 
 Event Bus的配置需要在所有集群节点中保持一致性。
 
-[EventBusOptions](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html)还允许您指定Event Bus是否集群、主机信息和端口，您可使用[setClustered](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setClustered-boolean-)、[getClusterHost](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#getClusterHost--)和[getClusterPort](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#getClusterPort--)这样做。
+[EventBusOptions](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html)还允许您指定Event Bus是否集群，以及它的主机信息和端口。您可使用[setClustered](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setClustered-boolean-)、[getClusterHost](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#getClusterHost--)和[getClusterPort](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#getClusterPort--)来设置。
 
 在容器中使用时，您也可以配置公共主机和端口号：
 
@@ -1303,7 +1303,7 @@ Vertx.clusteredVertx(options, res -> {
 
 ### JSON
 
-和其他一些语言不同，Java没有对JSON的原生支持【first class support】，因此我们提供了两个类，以便在Vert.x应用中处理JSON更容易。
+和其他一些语言不同，Java没有对JSON的原生支持（first class support），因此我们提供了两个类，以便在Vert.x应用中处理JSON更容易。
 
 #### JSON对象
 
