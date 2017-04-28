@@ -354,8 +354,6 @@ Vert.x中的[futures](http://vertx.io/docs/apidocs/io/vertx/core/Future.html)用
 
 #### 并发合并
 
-**1.all**
-
 [CompositeFuture.all](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-)方法接受多个future对象作为参数（最多6个），当所有的future都成功完成，该方法将返回一个*成功的*future；当任一个future执行失败，则返回一个*失败的*future：
 
 ```java
@@ -384,8 +382,6 @@ CompositeFuture.all(httpServerFuture, netServerFuture).setHandler(ar -> {
 CompositeFuture.all(Arrays.asList(future1, future2, future3));
 ```
 
-**2.any**
-
 不同于`all`的合并会等待所有的future成功执行（或任一失败），`any`的合并会等待第一个成功执行的future。[CompositeFuture.any](http://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-)接受多个future作为参数（最多6个）。当任意一个future成功，则该future成功；当所有的future都执行失败，则该future失败。
 
 ```java
@@ -403,8 +399,6 @@ CompositeFuture.any(future1, future2).setHandler(ar -> {
 ```java
 CompositeFuture.any(Arrays.asList(f1, f2, f3));
 ```
-
-**3.join**
 
 `join`的合并会等待所有的future完成，无论成败。
 
@@ -1420,13 +1414,13 @@ Boolean boolVal = array.getBoolean(2);
 
 ### Buffers
 
-在Vert.x内部大部分数据使用Buffers的格式【Shuffled】
+在Vert.x内部大部分数据被重新组织（Shuffle/洗牌）成Buffer格式
 
-一个Buffer是可以读取或写入的0个或多个字节序列，并且根据需要可以自动扩容、将任意字节写入Buffer。您也许可以将Buffer想成智能字节数组。
+一个Buffer是可以读取或写入的0个或多个字节序列，并且根据需要可以自动扩容、将任意字节写入Buffer。您也可以将Buffer想象成字节数组。
 
 #### 创建Buffer
 
-可以使用一个静态方法[Buffer.buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#buffer--)来创建Buffer。
+可以使用静态方法[Buffer.buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#buffer--)来创建Buffer。
 
 Buffer可以从字符串或字节数组初始化，或者创建空的Buffer。
 
@@ -1438,7 +1432,7 @@ Buffer可以从字符串或字节数组初始化，或者创建空的Buffer。
 Buffer buff = Buffer.buffer();
 ```
 
-从字符串创建一个Buffer，这个Buffer中的字符串必须可用UTF-8编码：
+从字符串创建一个Buffer，这个Buffer中的字符会通过UTF-8编码：
 
 ```java
 Buffer buff = Buffer.buffer("some string");
@@ -1456,21 +1450,21 @@ byte[] bytes = new byte[] {1, 3, 5};
 Buffer buff = Buffer.buffer(bytes);
 ```
 
-创建一个带有初始化尺寸的Buffer。若您知道您的Buffer会写入一定量的数据，您可以创建Buffer并指定它的尺寸。这使得这个Buffer初始化时分配了更多的内存，比数据写入时重新调整尺寸效率更高。
+创建一个指定初始大小的Buffer。若您知道您的Buffer会写入一定量的数据，您可以创建Buffer并指定它的大小。这使得这个Buffer初始化时分配了更多的内存，比数据写入时重新调整大小的效率更高。
 
-注意以这种方式创建的Buffer是空的，它也不会创建一个填满了0的Buffer。
+注意以这种方式创建的Buffer是空的。它也不会创建一个填满了0的Buffer。
 
 ```java
 Buffer buff = Buffer.buffer(10000);
 ```
 
-#### 写入Buffer
+#### 向Buffer写入数据
 
-写入Buffer的方式有两种：追加和随机访问。任何一种情况下Buffer始终进行自动扩容，所以不可能在Buffer中遇到`IndexOutOfBoundsException`。
+向Buffer写入数据的方式有两种：追加和随机写。任何一种情况下Buffer都会自动进行扩容，所以不可能在使用Buffer时遇到`IndexOutOfBoundsException`。
 
 1. **追加到Buffer**
 
-您可以使用`appendXXX`方法追加数据到Buffer，它存在各种不同数据类型的方法。
+您可以使用`appendXXX`方法追加数据到Buffer。Buffer提供了追加各种不同类型数据的append方法。
 
 因为`appendXXX`方法的返回值就是Buffer自身，所以它可以链式化【Fluent】:
 
