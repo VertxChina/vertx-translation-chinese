@@ -1775,7 +1775,7 @@ NetClient client = vertx.createNetClient(options);
 
 #### 创建连接
 
-您可以使用[connect](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClient.html#connect-int-java.lang.String-io.vertx.core.Handler-)创建到服务器的连接，请指定服务器的端口和主机，以及在连接成功时使用包含[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的结果调用的处理器，若连接失败，则会发生故障。
+您可以使用[connect](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClient.html#connect-int-java.lang.String-io.vertx.core.Handler-)创建到服务器的连接。请指定服务器的端口和主机，以及用于处理[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的处理器。当连接成功或失败时处理器会被调用。
 
 ```java
 NetClientOptions options = new NetClientOptions().setConnectTimeout(10000);
@@ -1790,11 +1790,11 @@ client.connect(4321, "localhost", res -> {
 });
 ```
 
-#### 配置重连
+#### 配置连接尝试
 
-可以将客户端配置为在无法连接的情况下自动重试连接到服务器，这是使用[setReconnectInterval](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html#setReconnectInterval-long-)和[setReconnectAttempts](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html#setReconnectAttempts-int-)配置的。
+可以将客户端配置为在无法连接的情况下自动重试。这是通过[setReconnectInterval](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html#setReconnectInterval-long-)和[setReconnectAttempts](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html#setReconnectAttempts-int-)配置的。
 
-*注意：目前如果连接失败，Vert.x将不尝试重新连接，重新连接尝试和间隔（参数）仅适用于创建初始连接。*
+> *注意：目前如果连接失效，Vert.x将不尝试重新连接。重新连接尝试和时间间隔仅适用于创建初始连接。*
 
 ```java
 NetClientOptions options = new NetClientOptions().
@@ -1808,7 +1808,7 @@ NetClient client = vertx.createNetClient(options);
 
 #### 记录网络活动
 
-为了调试，网络活动可以被记录：
+网络活动可以被记录下来，用于调试：
 
 ```java
 NetServerOptions options = new NetServerOptions().setLogActivity(true);
@@ -1824,26 +1824,26 @@ NetClientOptions options = new NetClientOptions().setLogActivity(true);
 NetClient client = vertx.createNetClient(options);
 ```
 
-Netty使用`DEBUG`级别和`io.netty.handler.logging.LoggingHandler`类记录网络活动，使用网络活动记录时，需要注意以下几点：
+Netty使用`DEBUG`级别和`io.netty.handler.logging.LoggingHandler`名称来记录网络活动。使用网络活动记录时，需要注意以下几点：
 
-* 记录不是由Vert.x的日志器【logging】执行而是由Netty执行
+* 日志的记录是由Netty而不是Vert.x的日志来执行
 * 这个功能不能用于生产环境
 
 您应该阅读[Netty日志器](http://vertx.io/docs/vertx-core/java/#netty-logging)章节
 
 #### 配置服务器和客户端使用SSL/TLS
 
-TCP客户端和服务器通过配置而使用传输层安全性【[Transport Layer Security](http://en.wikipedia.org/wiki/Transport_Layer_Security)】——早期版本的TLS被称为SSL。
+TCP客户端和服务器可以通过配置来使用[传输层安全性协议](https://zh.wikipedia.org/wiki/%E5%82%B3%E8%BC%B8%E5%B1%A4%E5%AE%89%E5%85%A8%E5%8D%94%E8%AD%B0)，早期版本的TLS被称为SSL。
 
-无论是否使用SSL/TLS，服务器和客户端的API都是相同的，并且可以传入配置用于创建服务器或客户端的[NetClientOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html)或[NetServerOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html)实例。
+无论是否使用SSL/TLS，服务器和客户端的API都是相同的。通过创建客户端/服务器时使用的[NetClientOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html)/[NetServerOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html)来启用TLS/SSL。
 
-##### 在服务器上启用SSL/TLS
+**在服务器上启用SSL/TLS**
 
 SSL/TLS使用[ssl](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html#setSsl-boolean-)来启用。
 
 默认是禁用的。
 
-##### 指定服务器的密钥/证书
+**指定服务器的密钥/证书**
 
 SSL/TLS服务器通常向客户端提供证书，以便验证服务器的身份。
 
@@ -1851,7 +1851,7 @@ SSL/TLS服务器通常向客户端提供证书，以便验证服务器的身份�
 
 第一种方法是指定包含证书和私钥的Java密钥库位置。
 
-可以使用JDK附带的[keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html)实用程序来管理Java密钥受信存储。
+可以使用JDK附带的[keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html)实用程序来管理Java密钥存储。
 
 还应提供密钥存储的密码：
 
@@ -1864,7 +1864,7 @@ NetServerOptions options = new NetServerOptions().setSsl(true).setKeyStoreOption
 NetServer server = vertx.createNetServer(options);
 ```
 
-或者，您可以自己读取密钥库到一个Buffer，并将它直接提供：
+或者，您可以自己读取密钥库到一个Buffer，并将它直接提供给 `JksOptions`：
 
 ```java
 Buffer myKeyStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/server-keystore.jks");
@@ -1877,7 +1877,7 @@ NetServerOptions options = new NetServerOptions().
 NetServer server = vertx.createNetServer(options);
 ```
 
-PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)），通常与`.pfx`或`.p12`扩展名也可以与JKS密钥存储相似的方式加载：
+PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)，通常为`.pfx`或`.p12`扩展名）也可以用与JKS密钥存储相似的方式加载：
 
 ```java
 NetServerOptions options = new NetServerOptions().setSsl(true).setPfxKeyCertOptions(
@@ -1888,7 +1888,7 @@ NetServerOptions options = new NetServerOptions().setSsl(true).setPfxKeyCertOpti
 NetServer server = vertx.createNetServer(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myKeyStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/server-keystore.pfx");
@@ -1901,7 +1901,7 @@ NetServerOptions options = new NetServerOptions().
 NetServer server = vertx.createNetServer(options);
 ```
 
-另外一种单独提供服务器私钥和证书的方法是使用`.pem`文件。
+另外一种分别提供服务器私钥和证书的方法是使用`.pem`文件。
 
 ```java
 NetServerOptions options = new NetServerOptions().setSsl(true).setPemKeyCertOptions(
@@ -1912,7 +1912,7 @@ NetServerOptions options = new NetServerOptions().setSsl(true).setPemKeyCertOpti
 NetServer server = vertx.createNetServer(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myKeyAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/server-key.pem");
@@ -1965,7 +1965,7 @@ NetServerOptions options = new NetServerOptions().
 NetServer server = vertx.createNetServer(options);
 ```
 
-PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)），通常与`.pfx`或`.p12`扩展名也可以与JKS受信存储相似的方式加载：
+PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)，通常为`.pfx`或`.p12`扩展名）也可以用与JKS密钥存储相似的方式加载：
 
 ```java
 NetServerOptions options = new NetServerOptions().
@@ -1979,7 +1979,7 @@ NetServerOptions options = new NetServerOptions().
 NetServer server = vertx.createNetServer(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myTrustStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/truststore.pfx");
@@ -1994,7 +1994,7 @@ NetServerOptions options = new NetServerOptions().
 NetServer server = vertx.createNetServer(options);
 ```
 
-另一种提供服务器证书颁发机构的方法是使用一个列表.pem文件。
+另一种提供服务器证书颁发机构的方法是使用一个`.pem`文件列表。
 
 ```java
 NetServerOptions options = new NetServerOptions().
@@ -2007,7 +2007,7 @@ NetServerOptions options = new NetServerOptions().
 NetServer server = vertx.createNetServer(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myCaAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/server-ca.pfx");
@@ -2023,13 +2023,13 @@ NetServer server = vertx.createNetServer(options);
 
 ##### 客户端启用SSL/TLS
 
-网络客户端也可以轻松地配置为SSL，使用SSL时，它们和标准套接字的使用具有完全相同的API。
+网络客户端也可以轻松地配置为SSL。使用SSL和使用标准套接字具有完全相同的API。
 
 若要启用NetClient上的SSL，可调用函数`setSSL(true)`。
 
-##### 受信客户端配置
+##### 客户端受信配置
 
-若客户端使[trustAll](http://vertx.io/docs/apidocs/io/vertx/core/net/ClientOptionsBase.html#setTrustAll-boolean-)设置为true，则客户端将信任所有服务端证书。连接仍然会被加密，但这种模式很容易受到“中间人”的攻击。即您无法确定您正连接到谁，请谨慎使用。默认值为false。
+若客户端将[trustAll](http://vertx.io/docs/apidocs/io/vertx/core/net/ClientOptionsBase.html#setTrustAll-boolean-)设置为true，则客户端将信任所有服务端证书。连接仍然会被加密，但这种模式很容易受到“中间人”的攻击。即您无法确定您正连接到谁，请谨慎使用。默认值为false。
 
 ```java
 NetClientOptions options = new NetClientOptions().
@@ -2038,9 +2038,9 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-若客户端没设置[trustAll](http://vertx.io/docs/apidocs/io/vertx/core/net/ClientOptionsBase.html#setTrustAll-boolean-)，则必须配置客户端受信存储，并且受信客户端应该包含服务器的证书。
+若客户端没有设置[trustAll](http://vertx.io/docs/apidocs/io/vertx/core/net/ClientOptionsBase.html#setTrustAll-boolean-)，则必须配置客户端受信存储，并且受信客户端应该包含服务器的证书。
 
-默认情况下，客户端禁用主机验证。要启用主机验证，请将算法设置为在客户端上使用（目前仅支持HTTPS和LDAPS）：
+默认情况下，客户端禁用主机验证。要启用主机验证，请在客户端上设置使用的算法（目前仅支持HTTPS和LDAPS）：
 
 ```java
 NetClientOptions options = new NetClientOptions().
@@ -2080,7 +2080,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-通常使用`.pfx`或`.p12`扩展名的PKCS＃12格式（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)）的证书颁发机构也可以与JKS受信存储相似的方式加载：
+PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)，通常为`.pfx`或`.p12`扩展名）也可以用与JKS密钥存储相似的方式加载：
 
 ```java
 NetClientOptions options = new NetClientOptions().
@@ -2093,7 +2093,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myTrustStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/truststore.pfx");
@@ -2107,7 +2107,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-另一种提供服务器证书颁发机构的方法是使用一个列表.pem文件。
+另一种提供服务器证书颁发机构的方法是使用一个`.pem`文件列表。
 
 ```java
 NetClientOptions options = new NetClientOptions().
@@ -2119,7 +2119,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myTrustStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/ca-cert.pem");
@@ -2134,7 +2134,7 @@ NetClient client = vertx.createNetClient(options);
 
 ##### 指定客户端的密钥/证书
 
-如果服务器需要客户端认证，那么当连接时，客户端必须向服务器显示自己的证书。 可通过以下几种方式配置客户端：
+如果服务器需要客户端认证，那么当连接时，客户端必须向服务器提供自己的证书。可通过以下几种方式配置客户端：
 
 第一种方法是指定包含密钥和证书的Java密钥库的位置，它只是一个常规的Java密钥存储。 使用[jks options](http://vertx.io/docs/apidocs/io/vertx/core/net/JksOptions.html)上的功能路径设置客户端密钥库位置。
 
@@ -2147,7 +2147,7 @@ NetClientOptions options = new NetClientOptions().setSsl(true).setKeyStoreOption
 NetClient client = vertx.createNetClient(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myKeyStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/client-keystore.jks");
@@ -2160,7 +2160,7 @@ NetClientOptions options = new NetClientOptions().
 NetClient client = vertx.createNetClient(options);
 ```
 
-PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)），通常与`.pfx`或`.p12`扩展名也可以与JKS密钥存储相似的方式加载：
+PKCS＃12格式的密钥/证书（[http://en.wikipedia.org/wiki/PKCS_12](http://en.wikipedia.org/wiki/PKCS_12)，通常为`.pfx`或`.p12`扩展名）也可以用与JKS密钥存储相似的方式加载：
 
 ```java
 NetClientOptions options = new NetClientOptions().setSsl(true).setPfxKeyCertOptions(
@@ -2171,7 +2171,7 @@ NetClientOptions options = new NetClientOptions().setSsl(true).setPfxKeyCertOpti
 NetClient client = vertx.createNetClient(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myKeyStoreAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/client-keystore.pfx");
@@ -2195,7 +2195,7 @@ NetClientOptions options = new NetClientOptions().setSsl(true).setPemKeyCertOpti
 NetClient client = vertx.createNetClient(options);
 ```
 
-它也支持Buffer的配置：
+也支持通过Buffer来配置：
 
 ```java
 Buffer myKeyAsABuffer = vertx.fileSystem().readFileBlocking("/path/to/your/client-key.pem");
@@ -2213,11 +2213,11 @@ NetClient client = vertx.createNetClient(options);
 
 ##### 用于测试和开发目的的自签名证书
 
-> 小心：*不要在生产设置中使用，请注意在这里生成的密钥非常不安全。*
+> 小心：*不要在生产设置中使用，这里生成的密钥非常不安全。*
 
-通常情况下，无论是单位/集成测试还是运行应用程序的开发版本都需要自签名证书。
+在运行单元/集成测试或是运行开发版的应用程序时都经常需要自签名证书。
 
-[SelfSignedCertificate](http://vertx.io/docs/apidocs/io/vertx/core/net/SelfSignedCertificate.html)可用于提供自签名PEM证书，并可以传递[KeyCertOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/KeyCertOptions.html)和[TrustOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TrustOptions.html)配置（给它）：
+[SelfSignedCertificate](http://vertx.io/docs/apidocs/io/vertx/core/net/SelfSignedCertificate.html)可用于提供自签名PEM证书，并可以提供[KeyCertOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/KeyCertOptions.html)和[TrustOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TrustOptions.html)配置：
 
 ```java
 SelfSignedCertificate certificate = SelfSignedCertificate.create();
@@ -2254,7 +2254,7 @@ NetClientOptions clientOptions = new NetClientOptions()
   .setTrustAll(true);
 ```
 
-注意：自签名证书也适用于其他TCP协议，如HTTPS：
+自签名证书也适用于其他基于TCP的协议，如HTTPS：
 
 ```java
 SelfSignedCertificate certificate = SelfSignedCertificate.create();
