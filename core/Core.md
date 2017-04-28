@@ -49,7 +49,9 @@
 
 ## 正文
 
-Vert.x的核心Java API被我们称为**Vert.x Core**，[文档地址](https://github.com/eclipse/vert.x)。
+**Vert.x的核心Java API被我们称为Vert.x Core**
+
+[文档地址](https://github.com/eclipse/vert.x)。
 
 Vert.x Core提供了下列功能
 
@@ -101,7 +103,7 @@ dependencies {
 
 除非您拿到[Vert.x](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html)对象，否则在Vert.x领域中您做不了太多的事情。
 
-它是Vert.x的控制中心，也是您做几乎一切事情（的基础），包括创建客户端和服务器、获取事件总线的引用、设置定时器等其他很多事情。
+它是Vert.x的控制中心，也是您做几乎一切事情的基础，包括创建客户端和服务器、获取事件总线的引用、设置定时器等等。
 
 那么如何获取它的实例呢？
 
@@ -291,7 +293,6 @@ Vert.x还将提供堆栈跟踪，以精确定位发生阻塞的位置。
 
 ```java
 vertx.executeBlocking(future -> {
-  // Call some blocking API that takes a significant amount of time to return
   // 调用一些需要耗费显著执行时间返回结果的阻塞式API
   String result = someAPI.blockingMethod("hello");
   future.complete(result);
@@ -315,7 +316,6 @@ vertx.executeBlocking(future -> {
 ```java
 WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool");
 executor.executeBlocking(future -> {
-  // Call some blocking API that takes a significant amount of time to return
   // 调用一些需要耗费显著执行时间返回结果的阻塞式API
   String result = someAPI.blockingMethod("hello");
   future.complete(result);
@@ -339,7 +339,6 @@ worker executor可以在创建的时候配置：
 ```java
 int poolSize = 10;
 
-// 2 minutes
 // 2分钟
 long maxExecuteTime = 120000;
 
@@ -365,10 +364,8 @@ netServer.listen(netServerFuture.completer());
 
 CompositeFuture.all(httpServerFuture, netServerFuture).setHandler(ar -> {
   if (ar.succeeded()) {
-    // All servers started
     // 所有服务器启动完成
   } else {
-    // At least one server failed
     // 有一个服务器启动失败
   }
 });
@@ -407,10 +404,8 @@ CompositeFuture.any(Arrays.asList(f1, f2, f3));
 ```java
 CompositeFuture.join(future1, future2, future3).setHandler(ar -> {
   if (ar.succeeded()) {
-    // All succeeded
     // 所有都成功
   } else {
-    // All completed and at least one failed
     // 至少一个失败
   }
 });
@@ -424,8 +419,6 @@ CompositeFuture.join(Arrays.asList(future1, future2, future3));
 
 #### 顺序合并
 
-**1.compose**
-
 和`all`以及`any`实现的并发合并不同，[compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)方法作用于链接future（顺序合并）。
 
 ```java
@@ -436,19 +429,16 @@ Future<Void> fut1 = Future.future();
 fs.createFile("/foo", fut1.completer());
 
 fut1.compose(v -> {
-  // When the file is created (fut1), execute this:
   // fut1中文件创建完成后执行
   Future<Void> fut2 = Future.future();
   fs.writeFile("/foo", Buffer.buffer(), fut2.completer());
   return fut2;
 }).compose(v -> {
-          // When the file is written (fut2), execute this:
-          // fut2文件写入完成后执行
-          fs.move("/foo", "/bar", startFuture.completer());
-        },
-        // mark startFuture it as failed if any step fails.
-        // 如果任何一步失败，将startFuture标记成failed
-        startFuture);
+  // fut2文件写入完成后执行
+  fs.move("/foo", "/bar", startFuture.completer());
+},
+  // 如果任何一步失败，将startFuture标记成failed
+  startFuture);
 ```
 
 这里例子中，有三个操作被串起来了：
@@ -464,9 +454,9 @@ fut1.compose(v -> {
 * [compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)：当前future完成时，执行相关代码，并返回future。当返回的future完成时，合并完成。
 * [compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-io.vertx.core.Handler-io.vertx.core.Future-)：当前future完成时，执行相关代码，并完成下一个future的处理。
 
-在第二个例子中，处理器（[Handler](http://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）应该完成下一个（`next`）future过后来报告成功或者失败。
+对于第二个例子，处理器需要完成 `next` future，以此来汇报处理成功或者失败。
 
-您可以使用[completer](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#completer--)方法来串起一个带操作结果的或失败的future，它可使您避免用传统方式编写代码：如果成功则完成future，否则就失败。
+您可以使用[completer](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#completer--)方法来串起一个带操作结果的或失败的future，它可使您避免用传统方式编写代码：`如果成功则完成future，否则就失败。`
 
 ### Verticles
 
@@ -1466,7 +1456,7 @@ Buffer buff = Buffer.buffer(10000);
 
 您可以使用`appendXXX`方法追加数据到Buffer。Buffer提供了追加各种不同类型数据的append方法。
 
-因为`appendXXX`方法的返回值就是Buffer自身，所以它可以链式化【Fluent】:
+因为`appendXXX`方法的返回值就是Buffer自身，所以它可以链式地调用:
 
 ```java
 Buffer buff = Buffer.buffer();
@@ -1502,9 +1492,9 @@ for (int i = 0; i < buff.length(); i += 4) {
 
 #### 使用无符号数据
 
-可使用`getUnsignedXXX`，`appendUnsignedXXX`和`setUnsignedXXX`方法将无符号正数从Buffer中读取或追加/设置到Buffer。这对实现优化网络协议和最小化带宽消耗而实现的编解码器是很有用的。
+可使用`getUnsignedXXX`，`appendUnsignedXXX`和`setUnsignedXXX`方法将无符号正数从Buffer中读取或追加/设置到Buffer里。这对以优化网络协议和最小化带宽消耗为目的实现的编解码器是很有用的。
 
-下边例子中，值200倍设置到一个仅占用一个字节的固定位置：
+下边例子中，值200被设置到了仅占用一个字节的特定位置：
 
 ```java
 Buffer buff = Buffer.buffer(128);
@@ -1516,15 +1506,15 @@ System.out.println(buff.getUnsignedByte(pos));
 
 #### Buffer长度
 
-可使用[length](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#length--)获取Buffer长度，Buffer的长度值是Buffer中包含字节（数据）的最大索引 + 1。
+可使用[length](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#length--)获取Buffer长度，Buffer的长度值是Buffer中包含的字节的最大索引 + 1。
 
 #### 拷贝Buffer
 
 可使用[copy](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#copy--)创建一个Buffer的副本。
 
-#### 分片Buffer
+#### 裁剪Buffer
 
-一个分片Buffer是基于原始Buffer的一个新的Buffer，如，它不会拷贝底层数据。使用[slice](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#slice--)创建一个分片Buffer。
+裁剪得到的Buffer是基于原始Buffer的一个新的Buffer。它不会拷贝实际的数据。使用[slice](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#slice--)裁剪一个Buffer。
 
 #### Buffer重用
 
@@ -1536,7 +1526,7 @@ Vert.x允许您很容易编写非阻塞的TCP客户端和服务器。
 
 #### 创建一个TCP服务器
 
-使用所有默认配置项，最简单地创建一个TCP服务器如下：
+最简单地使用所有默认配置项创建TCP服务器的方式如下：
 
 ```java
 NetServer server = vertx.createNetServer();
@@ -1551,29 +1541,29 @@ NetServerOptions options = new NetServerOptions().setPort(4321);
 NetServer server = vertx.createNetServer(options);
 ```
 
-#### 启动服务监听【Server Listening】
+#### 启动服务监听
 
-要告诉服务器监听传入的请求，您可以使用其中一个[listen](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServer.html#listen--)方式。
+要告诉服务器监听传入的请求，您可以使用[listen](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServer.html#listen--)方式。
 
-在配置项中告诉服务器监听指定的主机和端口：
+让服务器监听配置项指定的主机和端口：
 
 ```java
 NetServer server = vertx.createNetServer();
 server.listen();
 ```
 
-或在调用`listen`时指定主机和端口号，这样就忽略了配置项（中的主机和端口）：
+或在调用`listen`时指定主机和端口号，忽略配置项中的配置：
 
 ```java
 NetServer server = vertx.createNetServer();
 server.listen(1234, "localhost");
 ```
 
-默认主机名是`0.0.0.0`，它表示：监听所有可用地址；默认端口号是`0`，这也是一个特殊值，它告诉服务器本地没有使用的端口中随机选择一个并且使用它。
+默认主机名是`0.0.0.0`，它表示：监听所有可用地址。默认端口号是`0`，这也是一个特殊值，它告诉服务器随机选择并监听一个本地没有被占用的端口。
 
-实际的绑定也是异步的，因此服务器也许并没有在调用listen返回时监听，而是在一段时间过后（才监听）。
+实际的绑定也是异步的，因此服务器在调用了listen方法的一段时间之后才会实际开始监听。
 
-若您希望在服务器实际监听时收到通知，您可以向listen提供一个处理器。例如：
+若您希望在服务器实际监听时收到通知，您可以在调用listen方法时提供一个处理器。例如：
 
 ```java
 NetServer server = vertx.createNetServer();
@@ -1590,7 +1580,7 @@ server.listen(1234, "localhost", res -> {
 
 若设置监听端口为`0`，服务器将随机寻找一个没有使用的端口来监听。
 
-若您想知道服务器实际监听的端口，可以调用[actualPort](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServer.html#actualPort--)方法：
+可以调用[actualPort](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServer.html#actualPort--)方法来获得服务器实际监听的端口：
 
 ```java
 NetServer server = vertx.createNetServer();
@@ -1603,27 +1593,26 @@ server.listen(0, "localhost", res -> {
 });
 ```
 
-#### 收到传入连接【Incoming Connection】的通知
+#### 接收传入连接的通知
 
 若您想要在连接创建完时收到通知，则需要设置一个[connectHandler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetServer.html#connectHandler-io.vertx.core.Handler-)：
 
 ```java
 NetServer server = vertx.createNetServer();
 server.connectHandler(socket -> {
-  // Handle the connection in here
-  // 在这里处理连接
+  // 在这里处理传入连接
 });
 ```
 
-当连接成功时，将会传入一个[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)实例给处理器，并调用它。
+当连接成功时，将会以一个[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)为参数调用这个处理器。
 
-这是一个与实际连接类似的socket接口，它允许您读取和写入数据、以及执行各种其他操作如关闭socket。
+这是一个代表了实际连接的套接字接口，它允许您读取和写入数据、以及执行各种其他操作如关闭Socket。
 
 #### 从Socket读取数据
 
-您可以在Socket中调用[handler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#handler-io.vertx.core.Handler-)设置处理器从Socket中读取数据。
+您可以在Socket上调用[handler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#handler-io.vertx.core.Handler-)方法来设置用于读取数据的处理器。
 
-每次当Socket接收到数据时，会传入一个[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)实例给处理器，并调用它。
+每次当Socket接收到数据时，会以[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象为参数调用处理器。
 
 ```java
 NetServer server = vertx.createNetServer();
@@ -1634,7 +1623,7 @@ server.connectHandler(socket -> {
 });
 ```
 
-#### 写数据到Socket
+#### 向Socket中写入数据
 
 您可使用[write](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#write-io.vertx.core.buffer.Buffer-)方法写入数据到Socket：
 
@@ -1642,20 +1631,18 @@ server.connectHandler(socket -> {
 Buffer buffer = Buffer.buffer().appendFloat(12.34f).appendInt(123);
 socket.write(buffer);
 
-// Write a string in UTF-8 encoding
 // 以UTF-8的编码方式写入一个字符串
 socket.write("some data");
 
-// Write a string using the specified encoding
 // 以指定的编码方式写入一个字符串
 socket.write("some data", "UTF-16");
 ```
 
-写入操作是异步的，直到调用write方法返回过后一段时间它才发生。
+写入操作是异步的，调用write方法返回过后一段时间才会发生。
 
-#### 关闭处理器【Close Handler】
+#### 关闭处理器
 
-若您想要在Socket关闭时收到通知，可（在Socket上）设置一个[closeHandler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#closeHandler-io.vertx.core.Handler-)：
+若您想要在Socket关闭时收到通知，可以设置一个[closeHandler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#closeHandler-io.vertx.core.Handler-)：
 
 ```java
 socket.closeHandler(v -> {
@@ -1665,25 +1652,25 @@ socket.closeHandler(v -> {
 
 #### 处理异常
 
-当Socket发生异常时，您可以设置一个[exceptionHandler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#exceptionHandler-io.vertx.core.Handler-)来接收（捕捉）任何异常信息。
+您可以设置一个[exceptionHandler](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#exceptionHandler-io.vertx.core.Handler-)用以在发生任何异常的时候接收异常信息。
 
 #### Event Bus写处理器
 
-每个Socket会自动在Event Bus中注册一个处理器，当这个处理器中收到任意Buffer（数据）时，它将（数据）写入到自身。
+每个Socket会自动在Event Bus中注册一个处理器，当这个处理器中收到任意Buffer时，它会将数据写入到Socket。
 
-这使您可以将数据写入到处于完全不同Verticle实例的Socket中，甚至通过将Buffer发送到不同Vert.x实例中处理器绑定的地址上。
+这意味着您可以通过向这个地址发送Buffer的方式，从不同的Verticle甚至是不同的Vert.x实例中向指定的Socket发送数据。
 
-处理器地址由[writeHandlerID](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#writeHandlerID--)给出。
+处理器的地址由[writeHandlerID](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#writeHandlerID--)方法提供。
 
 #### 本地和远程地址
 
-一个[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的本地地址可通过[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#localAddress--)获取。
+[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的本地地址可通过[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#localAddress--)方法获取。
 
-一个[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的远程地址（即连接的另一端的地址）可通过[remoteAddress](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#remoteAddress--)获取。
+[NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html)的远程地址（即连接的另一端的地址）可通过[remoteAddress](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#remoteAddress--)方法获取。
 
-#### 从类路径中发送文件或资源
+#### 发送文件或类路径中的资源
 
-文件和类路径资源可以直接使用[sendFile](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#sendFile-java.lang.String-)写入Socket，这是发送文件很有效的方式，若操作系统支持它可以被操作系统内核直接处理。
+文件和类路径中的资源可以直接使用[sendFile](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html#sendFile-java.lang.String-)写入Socket。这种做法是非常高效的，它可以被操作系统内核直接处理。
 
 请阅读[从类路径提供文件](http://vertx.io/docs/vertx-core/java/#classpath)章节了解类路径的限制或禁用它。
 
