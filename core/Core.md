@@ -4862,7 +4862,7 @@ socket.send("A string used as content", 1234, "10.0.0.1", asyncResult -> {
 * [sender](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#sender--)：表示数据发送方的InetSocketAddress。
 * [data](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#data--)：保存接收数据的Buffer。
 
-所以当您需要监听一个特定地址和端口时，您可以像下边这样：
+当您需要监听一个特定地址和端口时，您可以像下边这样：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4885,11 +4885,11 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 **发送多播数据包**
 
-多播允许多个Socket接收相同的数据包，该任务可以通过加入可发送数据包的相同多播组完成。
+多播允许多个Socket接收相同的数据包，该目标可以通过加入到同一个可发送数据包的多播组来实现。
 
 我们将在下一节中介绍如何加入多播组，从而接收数据包。
 
-现在让我们专注于如何发送这些（数据），发送多播报文与发送普通数据报报文没什么不同。
+现在让我们专注于如何发送多播报文，发送多播报文与发送普通数据报报文没什么不同。
 
 唯一的区别是您可以将多播组的地址传递给send方法发送出去。
 
@@ -4905,11 +4905,11 @@ socket.send(buffer, 1234, "230.0.0.1", asyncResult -> {
 });
 ```
 
-加入多播组`230.0.0.1`的所有Socket都将收到该报文。
+所有已经加入多播组`230.0.0.1`的Socket都将收到该报文。
 
 **接收多播数据包**
 
-若要接收特定多播组的数据包，则需要通过在其上调用`listen(...)`来绑定一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，并加入多播组。
+若要接收特定多播组的数据包，您需要通过调用[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)的`listen(...)`方法来绑定一个地址并且加入多播组，并加入多播组。
 
 这样，您将能够接收到被发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的数据报，同时也可以接收被发送到该多播组的数据报。
 
@@ -4926,12 +4926,10 @@ socket.send(buffer, 1234, "230.0.0.1", asyncResult -> {
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 socket.listen(1234, "0.0.0.0", asyncResult -> {
   if (asyncResult.succeeded()) {
-    socket.handler(packet -> {
-      // Do something with the packet
-	  // 用数据报做些事
-    });
+    socket.handler(packet -> {    
+	  // 对数据包进行处理
+    });
 
-    // join the multicast group
 	// 加入多播组
     socket.listenMulticastGroup("230.0.0.1", asyncResult2 -> {
         System.out.println("Listen succeeded? " + asyncResult2.succeeded());
@@ -4942,7 +4940,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 });
 ```
 
-**取消/离开多播组**
+**取消订阅/离开多播组**
 
 有时候您想只在特定时间内接收多播组的数据包。
 
@@ -4982,13 +4980,13 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 **阻塞多播**
 
-除了取消监听一个多播地址以外，也可以做到阻塞指定发送者地址的多播。
+除了取消监听一个多播地址以外，也可以做到屏蔽指定发送者地址的多播。
 
 注意：这仅适用于某些操作系统和内核版本，所以请检查操作系统文档看是它是否支持（该功能）。
 
 这是一专用级的功能。
 
-要阻塞来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
+要屏蔽来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -5026,7 +5024,7 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 ### DNS客户端
 
-通常情况下，您将需要以异步方式来获取DNS信息。
+通常情况下，您需要以异步方式来获取DNS信息。
 
 但不幸的是，Java虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
 
@@ -5038,9 +5036,9 @@ DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 
 请注意，您可以传入InetSocketAddress参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
 
-#### 获取Ip
+#### lookup
 
-当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。因此它的操作方式和操作系统上使用`nslookup`类似。
+当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。它的操作方式和操作系统上使用`nslookup`类似。
 
 要为`vertx.io`的获取A/AAAA记录，您需要像下面那样做：
 
@@ -5055,7 +5053,7 @@ client.lookup("vertx.io", ar -> {
 });
 ```
 
-#### 获取IPV4
+#### lookup4
 
 尝试查找给定名称的A（ipv4）记录。第一个返回的（记录）将会被使用，因此它的操作方式与操作系统上使用`nslookup`类似。
 
@@ -5072,7 +5070,7 @@ client.lookup4("vertx.io", ar -> {
 });
 ```
 
-#### 获取IPV6
+#### lookup6
 
 尝试查找给定名称的AAAA（ipv6）记录。第一返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用`nslookup`类似。
 
@@ -5089,7 +5087,7 @@ client.lookup6("vertx.io", ar -> {
 });
 ```
 
-#### 解析IPV4
+#### resolveA
 
 尝试解析给定名称的所有A（ipv4）记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5109,7 +5107,7 @@ client.resolveA("vertx.io", ar -> {
 });
 ```
 
-#### 解析IPV6
+#### resolveAAAA
 
 尝试解析给定名称的所有AAAA（ipv6）记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5129,7 +5127,7 @@ client.resolveAAAA("vertx.io", ar -> {
 });
 ```
 
-#### 解析CNAME
+#### resolvCNAME
 
 尝试解析给定名称的所有CNAME记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5149,7 +5147,7 @@ client.resolveCNAME("vertx.io", ar -> {
 });
 ```
 
-#### 解析MX
+#### resolvMX
 
 尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器接受给定域的电子邮件。
 
@@ -5178,7 +5176,7 @@ record.priority();
 record.name();
 ```
 
-#### 解析TXT
+#### resolvTXT
 
 尝试解析给定名称的所有TXT记录，TXT记录通常用于定义域的额外信息。
 
@@ -5198,7 +5196,7 @@ client.resolveTXT("vertx.io", ar -> {
 });
 ```
 
-#### 解析NS
+#### resolvNS
 
 尝试解析给定名称的所有NS记录，NS记录指定哪个DNS服务器托管给定域的DNS信息。
 
@@ -5218,7 +5216,7 @@ client.resolveNS("vertx.io", ar -> {
 });
 ```
 
-#### 解析SRV
+#### resolvSRV
 
 尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这个额外信息。
 
@@ -5254,7 +5252,7 @@ record.target();
 
 有关详细信息，请参阅API文档。
 
-#### 解析PTR
+#### resolvPTR
 
 尝试解析给定名称的PTR记录，PTR记录将`ipaddress`映射到名称。
 
@@ -5272,7 +5270,7 @@ client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
 });
 ```
 
-#### 解析Lookup
+#### resolvLookup
 
 尝试对ipaddress进行反向查找，这与解析PTR记录类似，但是允许您只传递ipaddress，而不是有效的PTR查询字符串。
 
@@ -5336,7 +5334,7 @@ client.lookup("nonexisting.vert.xio", ar -> {
 
 ### 流【Stream】
 
-Vert.x有多个对象用于文件的读写。
+Vert.x有多个对象可以用于文件的读取和写入。
 
 在以前的版本中，`streams.adoc`软件包只能通过操作指定的[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象来实现文件读写。从现在开始，流不再与Buffer耦合，它们可以和任意类型的对象一起工作。
 
@@ -5350,7 +5348,7 @@ Vert.x有多个对象用于文件的读写。
 
 让我们举个例子，我们要从ReadStream中读取数据，然后将数据写入WriteStream。
 
-一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket既实现了ReadStream也实现了WriteStream。请注意，这个操作适用于任何实现了ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
+一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket既实现了ReadStream也实现了WriteStream。请注意，这些操作适用于任何实现了ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
 
 这样做的一个原生的方法是直接获取已经读取的数据，并立即将其写入NetSocket：
 
