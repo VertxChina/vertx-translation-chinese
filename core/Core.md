@@ -4798,53 +4798,51 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 ### 数据报套接字（UDP）
 
-Vert.x中使用用户数据报协议（UDP）就是小菜一碟。
+在Vert.x中使用用户数据报协议（UDP）就是小菜一碟。
 
-UDP是无连接的传输，这基本上意味着您没有与远程客户端的持续连接。
+UDP是无连接的传输，这意味着您与远程客户端没有建立持续的连接。
 
-因此您可以发送和接收包，并且每个包包含远程地址。
+所以，您发送和接收的数据包都要包含有远程的地址。
 
-UDP不像TCP的使用那样安全，这也就意味着不能保证发送的数据包一定会被对应的接收端（Endpoint）接收。
+除此之外，UDP不像TCP的使用那样安全，这也就意味着不能保证发送的数据包一定会被对应的接收端（Endpoint）接收。
 
-唯一的保证是，它一定会有部分接收端所接收到。
+唯一的保证是，它既不会被完全接收到，也不会完全不被接收到，即只有部分会被接收到。
 
-因为每一个数据包将会作为一个包发送，所以通常情况下您不能发送大于网络接口的最大传输单元（MTU）的数据包。
+因为每一个数据包将会作为一个包发送，所以在通常情况下您不能发送大于网络接口的最大传输单元（MTU）的数据包。
 
 但是要注意，即使数据包尺寸小于MTU，它仍然可能会发送失败。
 
-它失败的尺寸取决于操作系统等（其他原因），所以经验法则是尝试发送小数据包。
+它失败的尺寸取决于操作系统等（其他原因），所以按照经验法则就是尝试发送小数据包。
 
-由于UDP的本质，最适合一些允许丢弃数据包的应用（如监视应用程序）。
+依照UDP的本质，它最适合一些允许丢弃数据包的应用（如监视应用程序）。
 
-其优点是与TCP相比具有更少的开销，可以由NetServer和NetClient处理（参考前文）。
+其优点是与TCP相比具有更少的开销，而且可以由NetServer和NetClient处理（参考前文）。
 
 #### 创建一个DatagramSocket
 
-要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，无论您是要仅仅数据发送或者数据收发，这都是一样的。
+要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，无论您是要仅仅发送数据或者收发数据，这都是一样的。
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 ```
 
-返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，若您只想发送数据（如作为客户端）这是没问题的，但更多详细的内容在下一节。
+返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，如果您只想发送数据（如作为客户端）的话，这是没问题的，但更多详细的内容在下一节。
 
 #### 发送数据报包
 
-如前所述，用户数据报协议（UDP）将数据分组发送给远程对等体，但不以持续的方式连接到它们。
+如上所述，用户数据报协议（UDP）将数据分组发送给远程对等体，但是以不持续的方式来传送到它们。
 
-这意味着每个数据包都可以发送到另一个远程对等体。
+这意味着每个数据包都可以发送到不同的远程对等体。
 
 发送数据包很容易，如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 Buffer buffer = Buffer.buffer("content");
-// Send a Buffer
 // 发送Buffer
 socket.send(buffer, 1234, "10.0.0.1", asyncResult -> {
   System.out.println("Send succeeded? " + asyncResult.succeeded());
 });
-// Send a String
 // 发送一个字符串
 socket.send("A string used as content", 1234, "10.0.0.1", asyncResult -> {
   System.out.println("Send succeeded? " + asyncResult.succeeded());
@@ -4855,32 +4853,31 @@ socket.send("A string used as content", 1234, "10.0.0.1", asyncResult -> {
 
 若您想要接收数据包，则您需要调用`listen(...)`绑定一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)。
 
-这样您就可以接收[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)的数据，发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)监听的地址和端口。
+这样您就可以接收到被发送至[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)。
 
-除此之外，您还要设置一个Handler，将在接收每个[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)时被调用。
+除此之外，您还要设置一个Handler，每接收到一个[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)时它都会被调用。
 
 [DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)有以下方法：
 
 * [sender](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#sender--)：表示数据发送方的InetSocketAddress。
 * [data](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#data--)：保存接收数据的Buffer。
 
-所以要监听一个特定地址和端口，您可以像下边这样：
+所以当您需要监听一个特定地址和端口时，您可以像下边这样：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 socket.listen(1234, "0.0.0.0", asyncResult -> {
   if (asyncResult.succeeded()) {
-    socket.handler(packet -> {
-      // Do something with the packet
-	  // 使用包做些事
-    });
+    socket.handler(packet -> {     
+	  // 对包进行处理
+   });
   } else {
     System.out.println("Listen failed" + asyncResult.cause());
   }
 });
 ```
 
-注意，即使AsyncResult成功，它只意味着它可能写入了网络堆栈，但不保证它已经到达或者将到达远程对等体。
+注意，即使AsyncResult成功，它只意味着它可能已经写入了网络堆栈，但不保证它已经到达或者将到达远程对等体。
 
 若您需要这样的保证，您可在TCP之上建立一些握手逻辑。
 
