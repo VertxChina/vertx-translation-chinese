@@ -5098,7 +5098,7 @@ client.resolveAAAA("vertx.io", ar -> {
 });
 ```
 
-#### resolvCNAME
+#### resolveCNAME
 
 尝试解析给定名称的所有CNAME记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5118,7 +5118,7 @@ client.resolveCNAME("vertx.io", ar -> {
 });
 ```
 
-#### resolvMX
+#### resolveMX
 
 尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器接受给定域的电子邮件。
 
@@ -5147,7 +5147,7 @@ record.priority();
 record.name();
 ```
 
-#### resolvTXT
+#### resolveTXT
 
 尝试解析给定名称的所有TXT记录，TXT记录通常用于定义域的额外信息。
 
@@ -5167,7 +5167,7 @@ client.resolveTXT("vertx.io", ar -> {
 });
 ```
 
-#### resolvNS
+#### resolveNS
 
 尝试解析给定名称的所有NS记录，NS记录指定哪个DNS服务器托管给定域的DNS信息。
 
@@ -5187,7 +5187,7 @@ client.resolveNS("vertx.io", ar -> {
 });
 ```
 
-#### resolvSRV
+#### resolveSRV
 
 尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这个额外信息。
 
@@ -5223,7 +5223,7 @@ record.target();
 
 有关详细信息，请参阅API文档。
 
-#### resolvPTR
+#### resolvePTR
 
 尝试解析给定名称的PTR记录，PTR记录将`ipaddress`映射到名称。
 
@@ -5241,7 +5241,7 @@ client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
 });
 ```
 
-#### resolvLookup
+#### reverseLookup
 
 尝试对ipaddress进行反向查找，这与解析PTR记录类似，但是允许您只传递ipaddress，而不是有效的PTR查询字符串。
 
