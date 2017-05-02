@@ -3539,11 +3539,11 @@ request.exceptionHandler(err -> {
 ```java
 client.getNow("some-uri", response -> {
   // the status code - e.g. 200 or 404
-  // 状态代码：200、404
+  // 状态代码,如:200、404
   System.out.println("Status code is " + response.statusCode());
 
   // the status message e.g. "OK" or "Not Found".
-  // 状态消息：OK、Not Found
+  // 状态消息,如:OK、Not Found
   System.out.println("Status message is " + response.statusMessage());
 });
 ```
@@ -3556,7 +3556,7 @@ client.getNow("some-uri", response -> {
 
 HTTP响应可包含头信息，使用[headers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html#headers--)来读取响应头。
 
-（该方法）返回的对象是[MultiMap](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html)，因为HTTP响应头中单个键也可关联多个值。
+（该方法）返回的对象是[MultiMap](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html)，因为HTTP响应头中单个键可以关联多个值。
 
 ```java
 String contentType = response.headers().get("content-type");
@@ -3584,7 +3584,7 @@ client.getNow("some-uri", response -> {
 });
 ```
 
-若您知道响应体不是很大，并想在处理之前在所有内存中聚合，那么您可以自己聚合：
+若您知道响应体不是很大，并想在处理之前在内存中聚合所有响应体数据，那么您可以自己聚合：
 
 ```java
 client.getNow("some-uri", response -> {
@@ -3628,11 +3628,11 @@ client.getNow("some-uri", response -> {
 
 您可用[cookies](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html#cookies--)方法从响应中获取cookies列表。
 
-或者您可以在响应中自己解析Set-Cookie头。
+或者您可以在响应中自己解析`Set-Cookie`头。
 
 **30x重定向处理器**
 
-客户端可配置成遵循HTTP重定向：当客户端接收到301、302、303或307状态代码时，它遵循由Location响应头提供的重定向，响应处理器将传递重定向响应以替代原始响应。
+客户端可配置成遵循HTTP重定向：当客户端接收到`301`、`302`、`303`或`307`状态代码时，它遵循由`Location`响应头提供的重定向，响应处理器将传递重定向响应以替代原始响应。
 
 这有个例子：
 
@@ -3644,8 +3644,8 @@ client.get("some-uri", response -> {
 
 重定向策略如下：
 
-* 当接收到301、302或303状态代码时，使用GET方法执行重定向
-* 当接收到307状态代码时，使用相同的HTTP方法和缓存的请求体执行重定向
+* 当接收到`301`、`302`或`303`状态代码时，使用GET方法执行重定向
+* 当接收到`307`状态代码时，使用相同的HTTP方法和缓存的请求体执行重定向
 
 > 警告： *随后的重定向会缓存请求体*
 
@@ -3695,22 +3695,22 @@ client.redirectHandler(response -> {
 返回的请求必须是未发送的，这样原始请求处理器才会被发送而且客户端之后才能发送请求。大多数原始请求设置将会传播（拷贝）到新请求中：
 
 * 请求头，除非您已经设置了一些头（包括[setHost](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html#setHost-java.lang.String-)）
-* 请求体，除非返回的请求使用了GET方法
+* 请求体，除非返回的请求使用了`GET`方法
 * 响应处理器
 * 请求异常处理器
 * 请求超时
 
 **100-持续处理【Continue Handling】**
 
-根据[HTTP 1.1规范](http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html)，一个客户端可以设置请求头`Expect: 100-Continue`，并且在发送剩余请求体之前发送请求头。
+根据[HTTP 1.1规范](http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html)，一个客户端可以设置请求头`Expect: 100-Continue`，并且在发送剩余请求体之前先发送请求头。
 
 然后服务器可以通过回复临时响应状态`Status: 100 (Continue)`来告诉客户端可以发送请求的剩余部分。
 
-这里的想法是允许服务器在发送大量数据之前授权、接收/拒绝请求，若请求不能被接收，则发送大量数据信息会浪费带宽，并将服务器绑定在读取刚刚丢失的无用数据中。
+这里的想法是允许服务器在发送大量数据之前授权、接收/拒绝请求，若请求不能被接收，则发送大量数据信息会浪费带宽，并将服务器绑定在读取即将丢弃的无用数据中。
 
 Vert.x允许您在客户端请求对象中设置一个[continueHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html#continueHandler-io.vertx.core.Handler-)。
 
-如果服务器发回一个状态`Status: 100 (Continue)`则表示（客户端）可以发送请求的剩余部分。
+它将在服务器发回一个状态`Status: 100 (Continue)`时被调用, 同时也表示（客户端）可以发送请求的剩余部分。
 
 这和[sendHead](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html#sendHead--)结合起来发送请求的头信息。
 
@@ -3734,9 +3734,9 @@ request.continueHandler(v -> {
 
 在服务端，一个Vert.x的HTTP服务器可配置成接收到`Expect: 100-Continue`头时自动发回100 Continue临时响应信息。
 
-这个可通过调用[setHandle100ContinueAutomatically](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerOptions.html#setHandle100ContinueAutomatically-boolean-)来设置。
+这个可通过[setHandle100ContinueAutomatically](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerOptions.html#setHandle100ContinueAutomatically-boolean-)来设置。
 
-若您想要决定是否手动发送持续响应，则此属性可设置成false（默认值），那么您可以检查头信息并且调用[writeContinue](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#writeContinue--)以使（告诉）客户端持续发送请求体：
+若您想要决定是否手动发送持续响应，那么此属性可设置成`false`（默认值），然后您可以通过检查头信息并且调用[writeContinue](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#writeContinue--)让客户端持续发送请求体：
 
 ```java
 httpServer.requestHandler(request -> {
@@ -3771,7 +3771,7 @@ httpServer.requestHandler(request -> {
 
       // Reject with a failure code and close the connection
       // this is probably best with persistent connection
-      // 使用失败代码拒绝，并关闭这个连接，这可能是持久连接最好的
+      // 使用失败码拒绝并关闭这个连接，这可能是长连接最好的
       request.response()
           .setStatusCode(405)
           .putHeader("Connection", "close")
@@ -3780,7 +3780,7 @@ httpServer.requestHandler(request -> {
 
       // Reject with a failure code and ignore the body
       // this may be appropriate if the body is small
-      // 使用失败代码拒绝，忽略请求体，若体很小，这是适用的
+      // 使用失败码拒绝忽略请求体，若体很小，这是适用的
       request.response()
           .setStatusCode(405)
           .end();
@@ -3793,7 +3793,7 @@ httpServer.requestHandler(request -> {
 
 服务器推送是一个HTTP/2的新功能，它可以为单个客户端并行发送多个响应。
 
-可以在接受服务器推送的请求/响应的请求上设置推送处理器：
+可以在接收服务器推送的请求/响应的请求上设置一个推送处理器：
 
 ```java
 HttpClientRequest request = client.get("/index.html", response -> {
@@ -3802,6 +3802,7 @@ HttpClientRequest request = client.get("/index.html", response -> {
 });
 
 // Set a push handler to be aware of any resource pushed by the server
+// 设置一个推送处理器来感知服务器推送的任何资源
 request.pushHandler(pushedRequest -> {
 
   // A resource is pushed for this request
@@ -3828,7 +3829,7 @@ request.pushHandler(pushedRequest -> {
     pushedRequest.reset();
   } else {
     // Handle it
-    // 处理它
+    // 处理逻辑
   }
 });
 ```
@@ -3851,11 +3852,11 @@ response.customFrameHandler(frame -> {
 
 #### 客户端启用压缩
 
-标准的HTTP客户端支持HTTP压缩。
+HTTP客户端本来就支持开箱即用的HTTP压缩。
 
 这意味着客户端可以让远程服务器知道它支持压缩，并且能处理压缩过的响应体（数据）。
 
-HTTP服务器可以自由地使用自己支持的压缩算法之一进行压缩，也可以在不压缩的情况下将响应体发回。所以这仅仅是一个HTTP服务器的提示，将来可能被忽略。
+HTTP服务器可以自由地使用自己支持的压缩算法之一进行压缩，也可以在不压缩的情况下将响应体发回。所以这仅仅是HTTP服务器的一个可能被随意忽略的提示。
 
 要告诉服务器当前客户端支持哪种压缩，则它（请求头）将包含一个`Accept-Encoding`头，其值为可支持的压缩算法，（该值可）支持多种压缩算法。这种情况Vert.x将添加以下头：
 
@@ -3919,7 +3920,7 @@ HttpClientOptions clientOptions = new HttpClientOptions().
     setHttp2MaxPoolSize(3);
 
 // Uses up to 3 connections and up to 10 streams per connection
-// 每个连接最多可用三个连接，可连接10个流
+// 每个连接最多可用三个连接，每个连接可连接10个流
 HttpClient client = vertx.createHttpClient(clientOptions);
 ```
 
@@ -3945,7 +3946,7 @@ HTTP/1.x实现了部分[HttpConnection](http://vertx.io/docs/apidocs/io/vertx/co
 HttpConnection connection = request.connection();
 ```
 
-可以在服务器上设置连接处理器【connection handler】，任意连接传入时可得到通知：
+可以在服务器上设置连接处理器，任意连接传入时可得到通知：
 
 ```java
 HttpServer server = vertx.createHttpServer(http2Options);
@@ -4039,7 +4040,7 @@ connection.pingHandler(ping -> {
 connection.shutdown();
 ```
 
-[shutdownHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpConnection.html#shutdownHandler-io.vertx.core.Handler-)通知何时关闭流，连接尚未关闭。
+[shutdownHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpConnection.html#shutdownHandler-io.vertx.core.Handler-)通知何时关闭所有流，连接尚未关闭。
 
 有可能只需发送`GOAWAY`帧，和关闭主要的区别在于它将只是告诉远程连接停止创建新流，并没有计划关闭连接：
 
@@ -4084,7 +4085,7 @@ connection.shutdownHandler(v -> {
 
 HttpClient可以在一个Verticle中使用或者嵌入使用。
 
-在Verticle中使用时，Verticle应该使用自己的客户端实例。
+在Verticle中使用时，Verticle__应该使用自己的客户端实例__。
 
 一般来说，不应该在不同的Vert.x上下文环境之间共享客户端，因为它可能导致意外行为。
 
@@ -4167,7 +4168,7 @@ client.getNow(new RequestOptions()
 [setSsl](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientOptions.html#setSsl-boolean-)将覆盖默认客户端设置：
 
 * 即使客户端配置成使用SSL/TLS，该值设置成`false`将禁用SSL/TLS。
-* 即使客户端配置成不适用SSL/TLS，该值设置成`true`将启用SSL/TLS，实际的客户端SSL/TLS（如受信、密钥/证书、密码、ALPN、……）将被重用。
+* 即使客户端配置成不使用SSL/TLS，该值设置成`true`将启用SSL/TLS，实际的客户端SSL/TLS（如受信、密钥/证书、密码、ALPN、……）将被重用。
 
 同样：[requestAbs](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html#requestAbs-io.vertx.core.http.HttpMethod-java.lang.String-)同样也会（在调用时）覆盖默认客户端设置。
 
@@ -4261,9 +4262,9 @@ websocket.writeTextMessage(message);
 
 **写入帧到WebSocket**
 
-WebSocket消息可以由多个帧组成，在这种情况下，第一帧是二进制或文本帧（text|binary），后边跟着零个或多个连续帧。
+WebSocket消息可以由多个帧组成，在这种情况下，第一帧是二进制或文本帧（text|binary），后边跟着零个或多个*连续*帧。
 
-消息中的最后一帧标记成final。
+消息中的最后一帧标记成*final*。
 
 要发送多个帧组成的消息，请使用[WebSocketFrame.binaryFrame](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocketFrame.html#binaryFrame-io.vertx.core.buffer.Buffer-boolean-)，[WebSocketFrame.textFrame](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocketFrame.html#textFrame-java.lang.String-boolean-)或[WebSocketFrame.continuationFrame](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocketFrame.html#continuationFrame-io.vertx.core.buffer.Buffer-boolean-)创建帧，并使用[writeFrame](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html#writeFrame-io.vertx.core.http.WebSocketFrame-)将其写入WebSocket。
 
@@ -4336,7 +4337,7 @@ HttpClientOptions options = new HttpClientOptions()
 HttpClient client = vertx.createHttpClient(options);
 ```
 
-当客户端连接到HTTP URL时，它连接到代理服务器，并在HTTP请求中提供完整URL（"GET http://www.somehost.com/path/file.html HTTP/1.1"）。
+当客户端连接到HTTP URL时，它连接到代理服务器，并在HTTP请求中提供完整URL（"GET `http://www.somehost.com/path/file.html` HTTP/1.1"）。
 
 当客户端连接到HTTPS URL时，它要求代理使用CONNECT方法创建到远程主机的通道【tunnel】。
 
@@ -4496,7 +4497,7 @@ sd.getLock("mylock", res -> {
 });
 ```
 
-您可以为锁设置一个超时，若在超时时间期间无法获取锁，处理器将被调用失败：
+您可以为锁设置一个超时，若在超时时间期间无法获取锁，处理器将带着失败被调用：
 
 ```java
 sd.getLockWithTimeout("mylock", 10000, res -> {
@@ -4561,7 +4562,7 @@ fs.copy("foo.txt", "bar.txt", res -> {
 });
 ```
 
-阻塞的版本名为`xxxBlocking`，它要么返回结果或直接抛出异常。很多情况下，根据操作系统和文件系统，一些潜在的阻塞操作可以快速返回，这就是我们为什么提供它。但是强烈建议您在Event Loop中使用它之前测试使用它们究竟需要耗费多长时间，以避免使用黄金法则。
+阻塞的版本名为`xxxBlocking`，它要么返回结果或直接抛出异常。很多情况下，根据操作系统和文件系统，一些潜在的阻塞操作可以快速返回，这就是我们为什么提供它。但是强烈建议您在Event Loop中使用它之前测试使用它们究竟需要耗费多长时间，以避免打破黄金法则。
 
 以下是使用阻塞API的拷贝示例：
 
@@ -4641,19 +4642,19 @@ fileSystem.open("myfile.txt", options, res -> {
 });
 ```
 
-AsyncFile实现了ReadStream和WriteStream，因此您可以将文件和其他流对象配合泵工作，如网络Socket、HTTP请求和响应、WebSocket。
+AsyncFile实现了ReadStream和WriteStream，因此您可以将文件和其他流对象配合*泵*工作，如网络Socket、HTTP请求和响应、WebSocket。
 
 它们还允许您直接读写。
 
 **随机访问写**
 
-要使用AsyncFile进行随机访问写，请使用[write](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#write-io.vertx.core.buffer.Buffer-long-io.vertx.core.Handler-)方法。
+要使用`AsyncFile`进行随机访问写，请使用[write](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#write-io.vertx.core.buffer.Buffer-long-io.vertx.core.Handler-)方法。
 
 这个方法的参数有：
 
-* buffer：要写入（数据）的（目标）Buffer
-* position：一个整数指定在文件中写入Buffer的位置，若位置大于或等于文件大小，文件将被扩展【放大】以适应偏移量
-* handler：结果处理器
+* `buffer`：要写入（数据）的（目标）Buffer
+* `position`：一个整数指定在文件中写入Buffer的位置，若位置大于或等于文件大小，文件将被扩展【放大】以适应偏移量
+* `handler`：结果处理器
 
 这是随机访问写的示例：
 
@@ -4682,15 +4683,15 @@ vertx.fileSystem().open("target/classes/hello.txt", new OpenOptions(), result ->
 
 **随机访问读**
 
-要使用AsyncFile进行随机访问读，请使用[read](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#read-io.vertx.core.buffer.Buffer-int-long-int-io.vertx.core.Handler-)方法。
+要使用`AsyncFile`进行随机访问读，请使用[read](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#read-io.vertx.core.buffer.Buffer-int-long-int-io.vertx.core.Handler-)方法。
 
 该方法的参数有：
 
-* buffer：读取数据的Buffer
-* offset：读取数据将被放到Buffer中的偏移量
-* position：从文件中读取数据的位置
-* length：要读取的数据的字节数
-* handler：结果处理器
+* `buffer`：读取数据的Buffer
+* `offset`：读取数据将被放到Buffer中的偏移量
+* `position`：从文件中读取数据的位置
+* `length`：要读取的数据的字节数
+* `handler`：结果处理器
 
 一下是随机访问读的示例：
 
@@ -4717,7 +4718,7 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 **打开选项**
 
-打开AsyncFile时，您可以传递一个[OpenOptions](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html)实例，这些选项描述了访问文件的行为。例如：您可使用[setRead](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setRead-boolean-)，[setWrite](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setWrite-boolean-)和[setPerm](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setPerms-java.lang.String-)方法配置文件访问权限。
+打开`AsyncFile`时，您可以传递一个[OpenOptions](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html)实例，这些选项描述了访问文件的行为。例如：您可使用[setRead](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setRead-boolean-)，[setWrite](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setWrite-boolean-)和[setPerm](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setPerms-java.lang.String-)方法配置文件访问权限。
 
 若打开的文件已经存在，则可以使用[setCreateNew](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setCreateNew-boolean-)和[setTruncateExisting](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setTruncateExisting-boolean-)配置对应行为。
 
@@ -4725,13 +4726,13 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 **将数据刷新到底层存储**
 
-在OpenOptions中，您可以使用[setDsync](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setDsync-boolean-)在每次写入时启用/禁用内容的自动同步。这种情况下，您可以使用[flush](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#flush--)方法手动刷新OS缓存中的数据写入。
+在`OpenOptions`中，您可以使用[setDsync](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setDsync-boolean-)在每次写入时启用/禁用内容的自动同步。这种情况下，您可以使用[flush](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#flush--)方法手动刷新OS缓存中的数据写入。
 
 该方法也可使用一个处理器来调用，这个处理器在flush完成时被调用。
 
 **将AsyncFile作为ReadStream和WriteStream**
 
-AsyncFile实现了ReadStream和WriteStream。您可以使用泵将数据与其他读取和写入流进行数据泵送。例如，这会将内容复制到另外一个AsyncFile：
+`AsyncFile`实现了`ReadStream`和`WriteStream`。您可以使用泵将数据与其他读取和写入流进行数据*泵*送。例如，这会将内容复制到另外一个`AsyncFile`：
 
 ```java
 Vertx vertx = Vertx.vertx();
@@ -4750,7 +4751,7 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 });
 ```
 
-您还可以使用泵将文件内容写入到HTTP响应中，或者写入任意WriteStream。
+您还可以使用泵将文件内容写入到HTTP响应中，或者写入任意`WriteStream`。
 
 **从类路径访问文件**
 
@@ -4758,15 +4759,15 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 由于Java不提供对类路径资源的异步方法，所以当类路径资源第一次被访问时，该文件将复制到工作线程中的文件系统。当第二次访问相同资源时，访问的文件直接从（工作线程的）文件系统提供。即使类路径资源发生变化（例如开发系统中），也会提供原始内容。
 
-您可以将系统属性`vertx.disableFileCaching`设置为true，禁用此（文件）缓存行为。文件缓存的路径默认为`.vertx`，它可以通过设置系统属性`vertx.cacheDirBase`进行自定义。
+您可以将系统属性`vertx.disableFileCaching`设置为`true`，禁用此（文件）缓存行为。文件缓存的路径默认为`.vertx`，它可以通过设置系统属性`vertx.cacheDirBase`进行自定义。
 
-您还可以通过系统属性`vertx.disableFileCPResolving`设置为true来禁用整个类路径解析功能。
+您还可以通过系统属性`vertx.disableFileCPResolving`设置为`true`来禁用整个类路径解析功能。
 
-*注意：当加载`io.vertx.core.impl.FileResolver`类时，这些系统属性将被检查【Evaluate】一次，因此，在加载此类之前应该设置这些属性，或者在启动它时作为JVM系统属性来设置。*
+*注意：当加载`io.vertx.core.impl.FileResolver`类时，这些系统属性将被评估【Evaluate】一次，因此，在加载此类之前应该设置这些属性，或者在启动它时作为JVM系统属性来设置。*
 
 **关闭AsyncFile**
 
-您可调用[close](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#close--)来关闭一个AsyncFile。关闭是异步的，如果希望在关闭过后收到通知，您可指定一个处理器作为函数（close）参数传入。
+您可调用[close](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#close--)来关闭一个`AsyncFile`。关闭是异步的，如果希望在关闭过后收到通知，您可指定一个处理器作为函数（close）参数传入。
 
 ### 数据报套接字（UDP）
 
