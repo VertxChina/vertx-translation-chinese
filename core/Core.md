@@ -36,6 +36,7 @@
 * Pipe：管道
 * Round-Robin：轮询
 * Application-Layer Protocol Negotiation：应用层协议协商
+* Wire：报文
 * Flush：刷新（指将缓冲区中已有的数据一次性压入，用这种方式清空缓冲区，传统上翻译成刷新）
 * Cipher Suite：密码套件
 * Datagram：数据报
@@ -2829,14 +2830,14 @@ HttpServerResponse response = request.response();
 response.write(buffer);
 ```
 
-写入字符串，这种请求字符串将使用UTF-8进行编码，并将结果写入到报文【wire】中。
+写入字符串，这种请求字符串将使用UTF-8进行编码，并将结果写入到报文中。
 
 ```java
 HttpServerResponse response = request.response();
 response.write("hello world!");
 ```
 
-写入带编码方式的字符串，这种情况字符串将使用指定的编码方式编码，并将结果写入到报文【wire】中。
+写入带编码方式的字符串，这种情况字符串将使用指定的编码方式编码，并将结果写入到报文中。
 
 ```java
 HttpServerResponse response = request.response();
