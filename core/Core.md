@@ -4769,53 +4769,51 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 ### 数据报套接字（UDP）
 
-Vert.x中使用用户数据报协议（UDP）是一块蛋糕。
+在Vert.x中使用用户数据报协议（UDP）就是小菜一碟。
 
-UDP是无连接的传输，基本上意味着您没有与远程对等体的持续连接。
+UDP是无连接的传输，这意味着您与远程客户端没有建立持续的连接。
 
-相反您可以发送和接收包，并且每个包包含远程地址。
+所以，您发送和接收的数据包都要包含有远程的地址。
 
-UDP不像TCP的使用那样安全，这意味着不能保证发送的数据包会被对应的Endpoint接收。
+除此之外，UDP不像TCP的使用那样安全，这也就意味着不能保证发送的数据包一定会被对应的接收端（Endpoint）接收。
 
-唯一的保证是，它将会完全接收或者不完全接收。
+唯一的保证是，它既不会被完全接收到，也不会完全不被接收到，即只有部分会被接收到。
 
-您通常也不能发送大于网络接口MTU大小的数据，这是因为每一个数据包将会作为一个包发送。
+因为每一个数据包将会作为一个包发送，所以在通常情况下您不能发送大于网络接口的最大传输单元（MTU）的数据包。
 
-但是要注意，即使数据包尺寸小于MTU，它仍然可能会失败。
+但是要注意，即使数据包尺寸小于MTU，它仍然可能会发送失败。
 
-它失败的尺寸取决于操作系统等（其他），所以经验法则是尝试发送小数据包。
+它失败的尺寸取决于操作系统等（其他原因），所以按照经验法则就是尝试发送小数据包。
 
-由于UDP的本质，最适合一些允许丢弃数据包的应用（如监视应用程序）。
+依照UDP的本质，它最适合一些允许丢弃数据包的应用（如监视应用程序）。
 
-其优点是与TCP相比具有更少的开销，可以由NetServer和NetClient处理（参考前文）。
+其优点是与TCP相比具有更少的开销，而且可以由NetServer和NetClient处理（参考前文）。
 
 #### 创建一个DatagramSocket
 
-要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，若您只是想要发送数据、发送、接收，这并不重要。
+要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，无论您是要仅仅发送数据或者收发数据，这都是一样的。
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 ```
 
-返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，若您只想发送数据（如客户端）这不是一个问题，但更多的在下一节。
+返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，如果您只想发送数据（如作为客户端）的话，这是没问题的，但更多详细的内容在下一节。
 
 #### 发送数据报包
 
-如前所述，用户数据报协议（UDP）将数据分组发送给远程对等体，但不以持续的方式连接到它们。
+如上所述，用户数据报协议（UDP）将数据分组发送给远程对等体，但是以不持续的方式来传送到它们。
 
-这意味着每个数据包都可以发送到另一个远程对等体。
+这意味着每个数据包都可以发送到不同的远程对等体。
 
 发送数据包很容易，如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 Buffer buffer = Buffer.buffer("content");
-// Send a Buffer
 // 发送Buffer
 socket.send(buffer, 1234, "10.0.0.1", asyncResult -> {
   System.out.println("Send succeeded? " + asyncResult.succeeded());
 });
-// Send a String
 // 发送一个字符串
 socket.send("A string used as content", 1234, "10.0.0.1", asyncResult -> {
   System.out.println("Send succeeded? " + asyncResult.succeeded());
@@ -4826,32 +4824,31 @@ socket.send("A string used as content", 1234, "10.0.0.1", asyncResult -> {
 
 若您想要接收数据包，则您需要调用`listen(...)`绑定一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)。
 
-这样您就可以接收[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)的数据，发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)监听的地址和端口。
+这样您就可以接收到被发送至[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)。
 
-除此之外，您还要设置一个Handler，将在接收每个[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)时被调用。
+除此之外，您还要设置一个Handler，每接收到一个[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)时它都会被调用。
 
 [DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)有以下方法：
 
 * [sender](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#sender--)：表示数据发送方的InetSocketAddress。
 * [data](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#data--)：保存接收数据的Buffer。
 
-所以要监听一个特定地址和端口，您可以像下边这样：
+当您需要监听一个特定地址和端口时，您可以像下边这样：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 socket.listen(1234, "0.0.0.0", asyncResult -> {
   if (asyncResult.succeeded()) {
-    socket.handler(packet -> {
-      // Do something with the packet
-	  // 使用包做些事
-    });
+    socket.handler(packet -> {     
+	  // 对包进行处理
+   });
   } else {
     System.out.println("Listen failed" + asyncResult.cause());
   }
 });
 ```
 
-注意，即使AsyncResult成功，它只意味着它可能写入了网络堆栈，但不保证它已经到达或者将到达远程对等体。
+注意，即使AsyncResult成功，它只意味着它可能已经写入了网络堆栈，但不保证它已经到达或者将到达远程对等体。
 
 若您需要这样的保证，您可在TCP之上建立一些握手逻辑。
 
@@ -4859,15 +4856,15 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 **发送多播数据包**
 
-多播允许多个Socket接收相同的数据包，该任务可以通过加入可发送数据包的相同多播组完成。
+多播允许多个Socket接收相同的数据包，该目标可以通过加入到同一个可发送数据包的多播组来实现。
 
 我们将在下一节中介绍如何加入多播组，从而接收数据包。
 
-现在让我们专注于如何发送这些（数据），发送多播报文与发送普通数据报报文没什么不同。
+现在让我们专注于如何发送多播报文，发送多播报文与发送普通数据报报文没什么不同。
 
 唯一的区别是您可以将多播组的地址传递给send方法发送出去。
 
-这里显示：
+如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4879,15 +4876,15 @@ socket.send(buffer, 1234, "230.0.0.1", asyncResult -> {
 });
 ```
 
-加入多播组`230.0.0.1`的所有Socket都将收到该报文。
+所有已经加入多播组`230.0.0.1`的Socket都将收到该报文。
 
 **接收多播数据包**
 
-若要接收特定多播组的数据包，则需要通过在其上调用`listen(...)`来绑定一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，并加入多播组。
+若要接收特定多播组的数据包，您需要通过调用[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)的`listen(...)`方法来绑定一个地址并且加入多播组，并加入多播组。
 
-这样，您将能够接收发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)监听的地址和端口的DatagramPacket，也可以接受发送到多播组的数据报。
+这样，您将能够接收到被发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的数据报，同时也可以接收被发送到该多播组的数据报。
 
-除此之外，您可设置一个处理器，每次接收到DatagramPacket时会被调用。
+除此之外，您还可设置一个处理器，它在每次接收到DatagramPacket时会被调用。
 
 [DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)有以下方法：
 
@@ -4900,12 +4897,10 @@ socket.send(buffer, 1234, "230.0.0.1", asyncResult -> {
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 socket.listen(1234, "0.0.0.0", asyncResult -> {
   if (asyncResult.succeeded()) {
-    socket.handler(packet -> {
-      // Do something with the packet
-	  // 用数据报做些事
-    });
+    socket.handler(packet -> {    
+	  // 对数据包进行处理
+    });
 
-    // join the multicast group
 	// 加入多播组
     socket.listenMulticastGroup("230.0.0.1", asyncResult2 -> {
         System.out.println("Listen succeeded? " + asyncResult2.succeeded());
@@ -4916,13 +4911,13 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 });
 ```
 
-**取消/离开多播组**
+**取消订阅/离开多播组**
 
-有时候您想在有限时间内为多播组接收数据包。
+有时候您想只在特定时间内接收多播组的数据包。
 
-这种情况下，您可以先监听他们，之后unlisten。
+这种情况下，您可以先监听他们，之后再取消监听。
 
-这里显示：
+如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4930,8 +4925,8 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
     if (asyncResult.succeeded()) {
       socket.handler(packet -> {
         // Do something with the packet
-		// 用数据报做些事
-      });
+		// 处理数据报
+     });
 
       // join the multicast group
 	  // 加入多播组
@@ -4956,13 +4951,13 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 **阻塞多播**
 
-除了unlisten一个多播地址以外，也有可能阻塞指定发送者地址的多播。
+除了取消监听一个多播地址以外，也可以做到屏蔽指定发送者地址的多播。
 
 注意：这仅适用于某些操作系统和内核版本，所以请检查操作系统文档看是它是否支持（该功能）。
 
-这是一个专家功能。
+这是一专用级的功能。
 
-要阻塞来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
+要屏蔽来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4979,7 +4974,7 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 **DatagramSocket属性**
 
-当创建[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)时，您可以通过[DatagramSocketOptions](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html)对象设置多个属性来更改它的行为。这些（属性）列在这儿：
+当创建[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)时，您可以通过[DatagramSocketOptions](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html)对象来设置多个属性以更改它的功能。这些（属性）列在这儿：
 
 * [setSendBufferSize](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setSendBufferSize-int-)以字节为单位设置发送缓冲区的大小。
 * [setReceiveBufferSize](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setReceiveBufferSize-int-)设置TCP接收缓冲区大小（以字节为单位）。
@@ -4991,7 +4986,7 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 **DatagramSocket本地地址**
 
-您可以通过调用[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#localAddress--)来查找套接字的本地地址（即UDP Socket这边的地址）。若您之前调用`listen(...)`绑定了[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)则将返回一个InetSocketAddress，否则返回null。
+若您在调用`listen(...)`之前已经绑定了[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，您可以通过调用[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#localAddress--)来查找套接字的本地地址（即UDP Socket这边的地址，它将返回一个InetSocketAddress，否则返回null。
 
 **关闭DatagramSocket**
 
@@ -5000,23 +4995,23 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 
 ### DNS客户端
 
-通常情况下，您将需要以异步方式来获取DNS信息。
+通常情况下，您需要以异步方式来获取DNS信息。
 
-不幸的是，Java虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
+但不幸的是，Java虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
 
-若要获取DnsClient实例，您将通过Vertx实例创建一个新的。
+若要获取DnsClient实例，您可以通过Vertx实例来创建一个。
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 ```
 
-请注意，您可以传入InetSocketAddress参数的变量，以指定更多的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若头一个在第一次使用时产生了错误下一个将（在产生错误的地方）使用。
+请注意，您可以传入InetSocketAddress参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
 
 #### lookup
 
-尝试查找给定名称的A（ipv4）或AAAA（ipv6）记录。第一个返回的（记录）将会被使用，因此它的操作方式和操作系统上使用`nslookup`类似。
+当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。它的操作方式和操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的A/AAAA记录，您通常会使用它：
+要为`vertx.io`的获取A/AAAA记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5033,7 +5028,7 @@ client.lookup("vertx.io", ar -> {
 
 尝试查找给定名称的A（ipv4）记录。第一个返回的（记录）将会被使用，因此它的操作方式与操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的A记录，您通常会使用它：
+要查找`vertx.io`的A记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5050,7 +5045,7 @@ client.lookup4("vertx.io", ar -> {
 
 尝试查找给定名称的AAAA（ipv6）记录。第一返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的AAAA记录，您通常会使用它：
+要查找`vertx.io`的AAAA记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5103,7 +5098,7 @@ client.resolveAAAA("vertx.io", ar -> {
 });
 ```
 
-#### resolveCNAME
+#### resolvCNAME
 
 尝试解析给定名称的所有CNAME记录，这与在unix操作系统上使用`dig`类似。
 
@@ -5123,7 +5118,7 @@ client.resolveCNAME("vertx.io", ar -> {
 });
 ```
 
-#### resolveMX
+#### resolvMX
 
 尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器接受给定域的电子邮件。
 
@@ -5152,7 +5147,7 @@ record.priority();
 record.name();
 ```
 
-#### resolveTXT
+#### resolvTXT
 
 尝试解析给定名称的所有TXT记录，TXT记录通常用于定义域的额外信息。
 
@@ -5172,7 +5167,7 @@ client.resolveTXT("vertx.io", ar -> {
 });
 ```
 
-#### resolveNS
+#### resolvNS
 
 尝试解析给定名称的所有NS记录，NS记录指定哪个DNS服务器托管给定域的DNS信息。
 
@@ -5192,7 +5187,7 @@ client.resolveNS("vertx.io", ar -> {
 });
 ```
 
-#### resolveSRV
+#### resolvSRV
 
 尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这个额外信息。
 
@@ -5228,7 +5223,7 @@ record.target();
 
 有关详细信息，请参阅API文档。
 
-#### resolvePTR
+#### resolvPTR
 
 尝试解析给定名称的PTR记录，PTR记录将`ipaddress`映射到名称。
 
@@ -5246,7 +5241,7 @@ client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
 });
 ```
 
-#### reverseLookup
+#### resolvLookup
 
 尝试对ipaddress进行反向查找，这与解析PTR记录类似，但是允许您只传递ipaddress，而不是有效的PTR查询字符串。
 
@@ -5266,9 +5261,9 @@ client.reverseLookup("10.0.0.1", ar -> {
 
 #### 错误处理
 
-如前边部分所述，DnsClient允许您传递一个Handler，一旦查询完成将会传入一个AsyncResult给处理器并通知它。
+如前边部分所述，DnsClient允许您传递一个Handler，一旦查询完成将会传入一个AsyncResult给Handler并通知它。
 
-在出现错误的情况下，通知中将包含一个DnsException，该异常会打开一个[DnsResponseCode](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html)用于分辨为何失败。此DnsResponseCode可用于更详细检查原因。
+在出现错误的情况下，通知中将包含一个DnsException，该异常会包含一个说明为何失败的[DnsResponseCode](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html)。此DnsResponseCode可用于更详细检查原因。
 
 可能的DnsResponseCode值是：
 
@@ -5310,21 +5305,21 @@ client.lookup("nonexisting.vert.xio", ar -> {
 
 ### 流【Stream】
 
-Vert.x有几个对象可以让项【items】被读取和写入。
+Vert.x有多个对象可以用于文件的读取和写入。
 
-在以前的版本中，`streams.adoc`软件包正在独占操作[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象。从现在开始，流不再与Buffer耦合，它们可以和任意类型的对象一起工作。
+在以前的版本中，`streams.adoc`软件包只能通过操作指定的[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象来实现文件读写。从现在开始，流不再与Buffer耦合，它们可以和任意类型的对象一起工作。
 
-在Vert.x中，写调用立即返回，并且内部排队写入。
+在Vert.x中，写调用是立即返回的，而写操作的实际是在内部队列中排队写入。
 
 不难看出，若写入对象的速度比实际写入底层数据资源速度快，那么写入队列就会无限增长，最终导致内存耗尽。
 
 为了解决这个问题，Vert.x API中的一些对象提供了简单的流程控制（回压）功能。
 
-任何流程可感知的写入流对象都实现了[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)，而任何流程可感知的读取流对象都实现了[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)。
+任何可控制的写入流对象都实现了[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)，相应的，任何可控制的读取流对象都实现了[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)。
 
 让我们举个例子，我们要从ReadStream中读取数据，然后将数据写入WriteStream。
 
-一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket实现了ReadStream和WriteStream。请注意，这适用于任何符合ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
+一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket既实现了ReadStream也实现了WriteStream。请注意，这些操作适用于任何实现了ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
 
 这样做的一个原生的方法是直接获取已经读取的数据，并立即将其写入NetSocket：
 
@@ -5341,7 +5336,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-上面的例子有一个问题：如果数据从Socket读取的速度比可以写回Socket的速度快，那么它将在NetSocket的写队列中累计，最终用完RAM。这可能会发生，例如，若Socket另一端的客户端读取速度不够快，则有效地将连接回压。
+上面的例子有一个问题：如果从Socket读取数据的速度比写回Socket的速度快，那么它将在NetSocket的写队列中不断堆积，最终用完RAM。这是有可能会发生，例如，若Socket另一端的客户端读取速度不够快，无法快速地向连接的另一端回压。
 
 由于NetSocket实现了WriteStream，我们可以在写入之前检查WriteStream是否已满：
 
@@ -5359,7 +5354,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-这个例子不会用完RAM，单如果写入队列已满，我们最终会丢失数据。我们真正想要做的是在写入队列已满时暂停NetSocket：
+这个例子不会用完RAM，但如果写入队列已满，我们最终会丢失数据。我们真正想要做的是在写入队列已满时暂停读取NetSocket：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5375,7 +5370,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-我们几乎在那儿，单不完全相同。NetSocket现在在文件已满时暂停，但是当写队列处理挤压时，我们依然要取消暂停：
+我们已经快达到我们的目标，但还没有完全实现。现在NetSocket在文件已满时会暂停，但是当写队列处理完成时，我们需要取消暂停：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5394,7 +5389,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-在那里我们有它。当写队列准备好接收更多的数据时，[drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复NetSocket，允许读取更多的数据。
+在这里，我们的目标实现了。当写队列准备好接收更多的数据时，[drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复NetSocket，允许读取更多的数据。
 
 在编写Vert.x应用程序时，这样做是很常见的，因此我们提供了一个名为[Pump](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html)的帮助类，它为您完成所有这些艰苦的工作。您只需要给ReadStream追加上WriteStream，然后启动它：
 
@@ -5462,7 +5457,7 @@ buffer3: DOING OK
 buffer4:\n
 ```
 
-记录解析器将产生
+记录解析器将生成下结果：
 
 ```
 buffer1:HELLO
@@ -5495,11 +5490,11 @@ RecordParser.newFixed(4, h -> {
 
 ### 线程安全
 
-大多数Vert.x对象可以从不同的线程安全地访问，但是，当从相同的上下文访问它们时，性能会被优化。
+大多数Vert.x对象可以从被不同的线程安全地访问，但在相同的上下文中访问它们时，性能才是最优的。
 
 例如，若您部署了一个创建NetServer的Verticle，该NetServer在处理器中提供了NetSocket实例，则最好始终从该Verticle的Event Loop中访问Socket实例。
 
-若您坚持使用Vert.x中的Standard Verticle部署模型，可以避免在Verticle之间共享对象，那么您没有必要考虑这样的情况。
+如果您不是需要通过Vert.x中的Standard Verticle部署模型来避免在Verticle之间共享对象，那您没有必要考虑这样的情况。
 
 ### Metrics SPI
 
@@ -5593,7 +5588,7 @@ vertx run groovy:io.vertx.example.MyGroovyVerticle
 
 您还可以使用下边方式设置系统属性：`-Dkey=value`。
 
-这里有更多的例子：
+下面有更多的例子：
 
 使用默认设置运行JavaScript的Verticle：server.js：
 
@@ -5661,7 +5656,7 @@ java -jar my-application-fat.jar
 
 对于这点，Vert.x没什么特别的，您可以使用任何Java应用程序。
 
-您可以创建自己的主类并在MANIFEST中指定，单建议您将代码编写成Verticle，并使用Vert.x中的[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类（`io.vertx.core.Launcher`）作为您的主类。这是在命令行中运行Vert.x使用的主类，因此允许您指定命令行参数，如`-instances`以便更轻松地扩展应用程序。
+您可以创建自己的主类并在MANIFEST中指定，但建议您将代码编写成Verticle，并使用Vert.x中的[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类（`io.vertx.core.Launcher`）作为您的主类。这是在命令行中运行Vert.x使用的主类，因此允许您指定命令行参数，如`-instances`以便更轻松地扩展应用程序。
 
 要将您的Verticle全部部署在这个`fatjar`中时，您必须将下边信息写入MANIFEST：
 
@@ -5788,7 +5783,7 @@ java -jar build/libs/my-fat-jar.jar --redeploy="src/**/*.java" --on-redeploy='./
 
 集群管理器不处理Event Bus节点之间的传输，这是由Vert.x直接通过TCP连接完成。
 
-Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://hazelcast.com/)集群管理器，但是它可以轻松被替换成实现了Vert.x集群管理器接口的不同实现，因为Vert.x集群管理器可插拔的。
+Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://hazelcast.com/)集群管理器，但是它可以轻松被替换成实现了Vert.x集群管理器接口的不同实现，因为Vert.x集群管理器可替换的。
 
 集群管理器必须实现[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)接口，Vert.x在运行时使用Java的服务加载器【[Service Loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html)】功能查找集群管理器，以便在类路径中查找[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)的实例。
 
