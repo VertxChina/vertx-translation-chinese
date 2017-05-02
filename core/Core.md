@@ -7,8 +7,7 @@
 * Primitive：基本（描述类型）
 * Writing：编写（有些地方译为开发）
 * Fluent：流式的
-* Reactor：反应器
-* Multi-Reactor：多反应器
+* Reactor：反应器，Multi-Reactor即多反应器
 * Options：配置项，作为参数时候翻译成选项
 * Context：上下文环境
 * Undeploy：撤销（反部署，对应部署）
@@ -37,14 +36,15 @@
 * Pipe：管道
 * Round-Robin：轮询
 * Flush：刷新（指将缓冲区中已有的数据一次性压入，用这种方式清空缓冲区，传统上翻译成刷新）
+* Cipher Suite：密码套件
 * Datagram：数据报
 * Socket：套接字（有些地方未翻译，直接用的Socket）
 * Multicast：多播（组播）
 * Concurrent Composition：并发合并
 * High Availability：高可用性
 * Fail-Over：故障转移
-* Launcher：启动器
 * Hops：跳数（一台路由器/主机到另外一台路由器/主机所经过的路由器的数量，经过路由转发次数越多，跳数越大）
+* Launcher：启动器
 
 > 请注意：*Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
 
