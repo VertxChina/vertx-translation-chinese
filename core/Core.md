@@ -5494,7 +5494,7 @@ RecordParser.newFixed(4, h -> {
 
 例如，若您部署了一个创建NetServer的Verticle，该NetServer在处理器中提供了NetSocket实例，则最好始终从该Verticle的Event Loop中访问Socket实例。
 
-如果您不是需要通过Vert.x中的Standard Verticle部署模型来避免在Verticle之间共享对象，那您没有必要考虑这样的情况。
+如您坚持使用标准的Vert.x verticle部署模型，避免在verticles之间分享对象，那这种情况您无需考虑。
 
 ### Metrics SPI
 
