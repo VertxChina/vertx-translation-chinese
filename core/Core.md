@@ -44,6 +44,7 @@
 * High Availability：高可用性
 * Fail-Over：故障转移
 * Launcher：启动器
+* Hops：跳数（一台路由器/主机到另外一台路由器/主机所经过的路由器的数量，经过路由转发次数越多，跳数越大）
 
 > 请注意：*Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
 
@@ -4852,7 +4853,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 若您需要这样的保证，您可在TCP之上建立一些握手逻辑。
 
-#### 多播【Multicast】
+#### 多播
 
 **发送多播数据包**
 
@@ -4982,7 +4983,7 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 * [setTrafficClass](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setTrafficClass-int-)
 * [setBroadcast](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setBroadcast-boolean-)设置或清除`SO_BROADCAST`套接字选项，设置此选项时，数据报（UDP）数据包可能会发送到本地接口的广播地址。
 * [setMulticastNetworkInterface](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setMulticastNetworkInterface-java.lang.String-)设置或清除`IP_MULTICAST_LOOP`套接字选项，设置此选项时，多播数据包也将在本地接口上接收。
-* [setMulticastTimeToLive](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setMulticastTimeToLive-int-)设置`IP_MULTICAST_TTL`套接字选项。TTL表示“活动时间【Time To Live】”，单这种情况下，它指定允许数据包经过的IP跳数【Hops】，特别是用于多播流量。转发数据包的每个路由器或网管会递减TTL，如果路由器将TTL递减为0，则不会再转发。
+* [setMulticastTimeToLive](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setMulticastTimeToLive-int-)设置`IP_MULTICAST_TTL`套接字选项。TTL表示“活动时间”，单这种情况下，它指定允许数据包经过的IP跳数，特别是用于多播流量。转发数据包的每个路由器或网管会递减TTL，如果路由器将TTL递减为0，则不会再转发。
 
 **DatagramSocket本地地址**
 
@@ -5011,7 +5012,7 @@ DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 
 当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。它的操作方式和操作系统上使用`nslookup`类似。
 
-要为`vertx.io`的获取A/AAAA记录，您需要像下面那样做：
+要为`vertx.io`获取A/AAAA记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5043,7 +5044,7 @@ client.lookup4("vertx.io", ar -> {
 
 #### lookup6
 
-尝试查找给定名称的AAAA（ipv6）记录。第一返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用`nslookup`类似。
+尝试查找给定名称的AAAA（ipv6）记录。第一个返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用`nslookup`类似。
 
 要查找`vertx.io`的AAAA记录，您需要像下面那样做：
 
@@ -5303,7 +5304,7 @@ client.lookup("nonexisting.vert.xio", ar -> {
 });
 ```
 
-### 流【Stream】
+### 流
 
 Vert.x有多个对象可以用于文件的读取和写入。
 
@@ -5412,8 +5413,8 @@ ReadStream的实现类包括：[HttpClientResponse](http://vertx.io/docs/apidocs
 
 函数：
 
-* [handler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-)：设置一个处理器，它将从ReadStream读取项【items】
-* [pause](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--)：暂停处理器，暂停时，处理器中将不会受到任何项【items】
+* [handler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-)：设置一个处理器，它将从ReadStream读取项
+* [pause](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--)：暂停处理器，暂停时，处理器中将不会受到任何项
 * [resume](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--)：恢复处理器，若任何项到达则处理器将被调用
 * [exceptionHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#exceptionHandler-io.vertx.core.Handler-)若ReadStream发生异常，将被调用
 * [endHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#endHandler-io.vertx.core.Handler-)：当流到达时将被调用。这有可能是到达了描述文件的EOF、达到HTTP请求的请求结束、或TCP Socket的连接被关闭
@@ -5442,7 +5443,7 @@ WriteStream的实现类包括：[HttpClientRequest](http://vertx.io/docs/apidocs
 
 当泵首次创建时，它不会启动，您需要调用start()方法来启动它。
 
-### 记录解析器【Record Parser】
+### 记录解析器
 
 记录解析器允许您轻松解析由字节序列或固定尺寸带分隔符的记录的协议。
 
@@ -5730,7 +5731,7 @@ java -jar my-verticle-fat.jar list
 
 该命令集是可扩展的，请参考[Extending the vert.x Launcher](http://vertx.io/docs/vertx-core/java/#_extending_the_vert_x_launcher)部分。
 
-#### 实时重部署【Live Redeploy】
+#### 实时重部署
 
 在开发时，可以方便在文件更改时实时重新部署应用程序。`vertx`命令行工具和更普通`Launcher`类提供了这个功能，这里有些例子：
 
@@ -5754,7 +5755,7 @@ java io.vertx.core.Launcher run org.acme.MyVerticle --redeploy="**/*.class"  --l
 * **Eclipse**：创建一个运行配置，使用`io.vertx.core.Launcher`类作为主类。在*Program Arguments*区域（参数选项卡中），写入`run your-verticle-fully-qualified-name --redeploy=**/*.java --launcher-class=io.vertx.core.Launcher`，您还可以添加其他参数。随着Eclipse在保存时会增量编译您的文件，重部署工作会顺利进行。
 * **IntelliJ**：创建一个运行配置（应用）,将Main类设置为`io.vertx.core.Launcher`。在程序参数中写：`run your-verticle-fully-qualified-name --redeploy=**/*.class --launcher-class=io.vertx.core.Launcher`。要触发重新部署，您需要显示构造项目或模块（Build -> Make project）。
 
-要调试应用程序，请将运行配置创建为远程应用程序，并使用`--java-opts`配置调试器。每次重新部署后，请勿忘记重新插入【`re-plug`】调试器，因为它每次都会创建一个新进程。
+要调试应用程序，请将运行配置创建为远程应用程序，并使用`--java-opts`配置调试器。每次重新部署后，请勿忘记`重新插入`调试器，因为它每次都会创建一个新进程。
 
 您还可以在重新部署周期中挂接构建过程：
 
@@ -5785,7 +5786,7 @@ java -jar build/libs/my-fat-jar.jar --redeploy="src/**/*.java" --on-redeploy='./
 
 Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://hazelcast.com/)集群管理器，但是它可以轻松被替换成实现了Vert.x集群管理器接口的不同实现，因为Vert.x集群管理器可替换的。
 
-集群管理器必须实现[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)接口，Vert.x在运行时使用Java的服务加载器【[Service Loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html)】功能查找集群管理器，以便在类路径中查找[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)的实例。
+集群管理器必须实现[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)接口，Vert.x在运行时使用Java的服务加载器（[Service Loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html)）功能查找集群管理器，以便在类路径中查找[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)的实例。
 
 若您在命令行中使用Vert.x并要使用集群，则应确保Vert.x安装的`lib`目录包含您的集群管理器jar。
 
