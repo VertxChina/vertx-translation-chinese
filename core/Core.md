@@ -35,6 +35,7 @@
 * Body：请求/响应体（有些地方翻译成请求/响应正文）
 * Pipe：管道
 * Round-Robin：轮询
+* Application-Layer Protocol Negotiation：应用层协议协商
 * Flush：刷新（指将缓冲区中已有的数据一次性压入，用这种方式清空缓冲区，传统上翻译成刷新）
 * Cipher Suite：密码套件
 * Datagram：数据报
@@ -42,6 +43,7 @@
 * Multicast：多播（组播）
 * Concurrent Composition：并发合并
 * High Availability：高可用性
+* Multiplexing：多路复用
 * Fail-Over：故障转移
 * Hops：跳数（一台路由器/主机到另外一台路由器/主机所经过的路由器的数量，经过路由转发次数越多，跳数越大）
 * Launcher：启动器
@@ -3161,7 +3163,7 @@ Vert.x支持基于TLS h2和TCP h2c的HTTP/2协议。
 
 默认情况下，HTTP客户端会执行HTTP/1.1请求，若要执行HTTP/2请求，则调用[setProtocolVersion](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientOptions.html#setProtocolVersion-io.vertx.core.http.HttpVersion-)必须设置成[HTTP_2](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpVersion.html#HTTP_2)。
 
-对于h2请求，必须使用应用层协议协商【Application-Layer Protocol Negotiation】启用TLS：
+对于h2请求，必须使用应用层协议协商启用TLS：
 
 ```java
 HttpClientOptions options = new HttpClientOptions().
@@ -3260,7 +3262,7 @@ client.headNow("/other-uri", response -> {
 
 **写通用请求**
 
-在有些时候您在运行时【run-time】之前不知道发送请求的HTTP方法，对于该用例，我们提供通用请求方法[request](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html#request-io.vertx.core.http.HttpMethod-io.vertx.core.http.RequestOptions-)，允许您在运行时指定HTTP方法：
+有时您在运行时不知道发送请求的HTTP方法，对于该用例，我们提供通用请求方法[request](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html#request-io.vertx.core.http.HttpMethod-io.vertx.core.http.RequestOptions-)，允许您在运行时指定HTTP方法：
 
 ```java
 HttpClient client = vertx.createHttpClient();
@@ -3372,7 +3374,7 @@ headers.set("content-type", "application/json").set("other-header", "foo");
 request.putHeader("content-type", "application/json").putHeader("other-header", "foo");
 ```
 
-若您想写入（数据）请求头，则您必须在写入任何请求体之前这样做来设置请求头。
+若您想写入请求头，则您必须在写入任何请求体之前这样做来设置请求头。
 
 **非标准的HTTP方法**
 
@@ -3427,11 +3429,11 @@ request.end();
 
 您可使用[setTimeout](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html#setTimeout-long-)设置一个特定HTTP请求的超时时间。
 
-若请求在超时期限内未返回任何数据，则异常将会被传给异常处理器【exception handler】（若提供），并且请求将会被关闭。
+若请求在超时期限内未返回任何数据，则异常将会被传给异常处理器（若提供），并且请求将会被关闭。
 
 **处理异常**
 
-您可以通过在[HttpClientRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html)实例上设置异常处理器来处理（捕捉）和请求对应的异常：
+您可以通过在[HttpClientRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html)实例中设置异常处理器来处理请求时发生的异常：
 
 ```java
 HttpClientRequest request = client.post("some-uri", response -> {
@@ -3459,7 +3461,7 @@ HttpClientRequest request = client.post("some-uri", response -> {
 request.end();
 ```
 
-*重要：XXXNow方法不接收异常处理器（做参数）*
+>重要：*XXXNow方法不接收异常处理器*
 
 **客户端请求中指定处理器**
 
@@ -3476,7 +3478,7 @@ request.handler(response -> {
 
 [HttpClientRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html)实例也是一个[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)，这意味着您可以从任何[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)实例读取数据。
 
-例如，您可以将磁盘上的文件直接泵送【Pump】到HTTP请求体中，如下所示：
+例如，您可以将磁盘上的文件直接泵送到HTTP请求体中，如下所示：
 
 ```java
 request.setChunked(true);
@@ -3569,7 +3571,7 @@ String contentLength = response.headers().get("content-lengh");
 
 **读取请求体**
 
-当从报文【Wire】中读取到响应头时，响应处理器就会被调用。
+当从报文中读取到响应头时，响应处理器就会被调用。
 
 如果响应有响应体，它可能会在响应头被读取后的某个时间以分片的方式到达。 在调用响应处理器之前，我们不要等待所有的响应体到达，因为它可能非常大而要等待很长时间、又或者会花费大量内存。
 
@@ -3700,7 +3702,7 @@ client.redirectHandler(response -> {
 * 请求异常处理器
 * 请求超时
 
-**100-持续处理【Continue Handling】**
+**100-持续处理**
 
 根据[HTTP 1.1规范](http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html)，一个客户端可以设置请求头`Expect: 100-Continue`，并且在发送剩余请求体之前先发送请求头。
 
@@ -3906,7 +3908,7 @@ Keep Alive的连接将不会被客户端自动关闭，要关闭它们您可以�
 
 单个连接的管道请求限制数由[setPipeliningLimite](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientOptions.html#setPipeliningLimit-int-)设置，此选项定义了发送到服务器的等待响应的最大请求数。这个限制可以确保和同一个服务器的连接分发到客户端的公平性。
 
-#### HTTP/2 多路复用【Multiplexing】
+#### HTTP/2 多路复用
 
 HTTP/2提倡使用服务器的单一连接，默认情况下，HTTP客户端针对每个服务器都使用单一连接，同样服务器上的所有流都会复用到对应连接中。
 
@@ -3978,7 +3980,7 @@ HTTP/2的配置由[Http2Settings](http://vertx.io/docs/apidocs/io/vertx/core/htt
 
 每个Endpoint都必须遵守连接另一端的发送设置。
 
-当建立连接时，客户端和服务器交换（各自的）初始配置，初始设置由客户端上的[setInitialSettings](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientOptions.html#setInitialSettings-io.vertx.core.http.Http2Settings-)和服务器上的[setInitialSettings](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerOptions.html#setInitialSettings-io.vertx.core.http.Http2Settings-)配置。
+当建立连接时，客户端和服务器交换初始配置，初始设置由客户端上的[setInitialSettings](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientOptions.html#setInitialSettings-io.vertx.core.http.Http2Settings-)和服务器上的[setInitialSettings](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerOptions.html#setInitialSettings-io.vertx.core.http.Http2Settings-)配置。
 
 连接建立后可随时更改设置：
 
@@ -4004,7 +4006,7 @@ connection.remoteSettingsHandler(settings -> {
 });
 ```
 
-*注意：这仅适用于HTTP/2协议。*
+> 请注意：*这仅适用于HTTP/2协议。*
 
 **连接ping**
 
@@ -4030,7 +4032,7 @@ connection.pingHandler(ping -> {
 
 处理器只是接到通知，确认被发送，这个功能旨在基于HTTP/2协议之上实现。
 
-*注意：这仅适用于HTTP/2协议。*
+> 请注意：*这仅适用于HTTP/2协议。*
 
 **连接关闭/离开**
 
@@ -4085,9 +4087,9 @@ connection.shutdownHandler(v -> {
 
 HttpClient可以在一个Verticle中使用或者嵌入使用。
 
-在Verticle中使用时，Verticle__应该使用自己的客户端实例__。
+在Verticle中使用时，Verticle**应该使用自己的客户端实例**。
 
-一般来说，不应该在不同的Vert.x上下文环境之间共享客户端，因为它可能导致意外行为。
+一般来说，不应该在不同的Vert.x上下文环境之间共享客户端，因为它可能导致不可预知的意外。
 
 例如：保持活动连接将在打开连接的请求上下文环境调用客户端处理器，后续请求将使用相同上下文环境。
 
@@ -4143,7 +4145,7 @@ Hello from i.v.e.h.s.HttpServerVerticle@2
 ...
 ```
 
-因此，服务器可直接扩展可用的核，而每个Vert.x中的Verticle实例仍然严格使用单线程，您不需要像编写负载均衡器【Load-Balancers】那样使用任何特殊技巧去编写，以便在多核机器上扩展服务器。
+因此，服务器可直接扩展可用的核，而每个Vert.x中的Verticle实例仍然严格使用单线程，您不需要像编写负载均衡器那样使用任何特殊技巧去编写，以便在多核机器上扩展服务器。
 
 #### Vert.x中使用HTTPS
 
@@ -4339,7 +4341,7 @@ HttpClient client = vertx.createHttpClient(options);
 
 当客户端连接到HTTP URL时，它连接到代理服务器，并在HTTP请求中提供完整URL（"GET `http://www.somehost.com/path/file.html` HTTP/1.1"）。
 
-当客户端连接到HTTPS URL时，它要求代理使用CONNECT方法创建到远程主机的通道【tunnel】。
+当客户端连接到HTTPS URL时，它要求代理使用CONNECT方法创建到远程主机的通道。
 
 对于SOCKS5代理：
 
@@ -4361,17 +4363,17 @@ DNS解析会一直在代理服务器上执行，为了实现SOCKS4客户端的�
 
 共享数据包含的功能允许您可以安全地在应用程序的不同部分之间、同一Vert.x实例中的不同应用程序之间或集群中的不同Vert.x实例之间安全地共享数据。
 
-共享数据包括本地共享Map、分布式、集群范围Map、异步集群范围锁和异步集群范围计数器【local shared maps, distributed, cluster-wide maps, asynchronous cluster-wide locks, asynchronous cluster-wide counters.】。
+共享数据包括本地共享Map、分布式、集群范围Map、异步集群范围锁和异步集群范围计数器。
 
-*重要：分布式数据结构的行为取决于您使用的集群管理器，网络分区面临的备份（复制）和行为由集群管理器和它的配置来定义。请参阅集群管理器文档以及底层框架手册。*
+> 重要：*分布式数据结构的行为取决于您使用的集群管理器，网络分区面临的备份（复制）和行为由集群管理器和它的配置来定义。请参阅集群管理器文档以及底层框架手册。*
 
-#### 本地共享Map【Local shared map】
+#### 本地共享Map
 
-本地共享Map【[Local Shared Map](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/LocalMap.html)】允许您在同一个Vert.x实例中的不同Event Loop（如不同的Verticle中）之间安全共享数据。
+[本地共享Map](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/LocalMap.html)允许您在同一个Vert.x实例中的不同Event Loop（如不同的Verticle中）之间安全共享数据。
 
 本地共享Map仅允许将某些数据类型作为键值和值，这些类型必须是不可变的，或可以像[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)那样复制某些其他类型。在后一种情况中，键/值将被复制，然后再放到Map中。
 
-这样，我们可以确保在Vert.x应用程序不同线程之间——无法共享访问可变状态【*Shared Access to Mutable State*】，因此您不必担心通过同步访问来保护该状态。
+这样，我们可以确保在Vert.x应用程序不同线程之间——*无法共享访问可变状态*，因此您不必担心通过同步访问来保护该状态。
 
 以下是使用共享本地Map的示例：
 
@@ -4399,11 +4401,11 @@ map2 = sd.getLocalMap("mymap2");
 Buffer buff = map2.get("eek");
 ```
 
-#### 集群范围异步Map【Cluster-wide asynchronous map】
+#### 集群范围异步Map
 
 集群范围异步Map允许从集群的任何节点将数据放到Map中，并从任何其他节点读取。
 
-这使得它们对于托管Vert.x Web应用程序的服务器场【farm】中的会话状态存储非常有用。
+这使得它们对于托管Vert.x Web应用程序的服务器场中的会话状态存储非常有用。
 
 您可以使用[getClusterWideMap](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getClusterWideMap-java.lang.String-io.vertx.core.Handler-)获取[AsyncMap](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html)的实例。
 
@@ -4467,7 +4469,7 @@ map.get("foo", resGet -> {
 
 #### 集群范围锁
 
-集群范围锁【[Cluster wide locks](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)】允许您在集群中获取独占锁——当您想要在任何时间只在集群一个节点上执行某些操作或访问资源时，这很有用。
+[集群范围锁](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)允许您在集群中获取独占锁——当您想要在任何时间只在集群一个节点上执行某些操作或访问资源时，这很有用。
 
 集群范围锁具有异步API，它和大多数等待锁释放的阻塞调用线程的API锁不相同。
 
@@ -4497,7 +4499,7 @@ sd.getLock("mylock", res -> {
 });
 ```
 
-您可以为锁设置一个超时，若在超时时间期间无法获取锁，处理器将带着失败被调用：
+您可以为锁设置一个超时，若在超时时间期间无法获取锁，带有失败结果的处理器被调用：
 
 ```java
 sd.getLockWithTimeout("mylock", 10000, res -> {
@@ -4515,7 +4517,7 @@ sd.getLockWithTimeout("mylock", 10000, res -> {
 
 #### 集群范围计时器
 
-集群范围计时器【Cluster-wide counters】在应用程序不同节点之间维护原子计数器通常很有用。
+很多时候我们需要在集群范围内维护一个原子计数器。
 
 您可以用[Counter](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Counter.html)来做到这一点。
 
@@ -4626,7 +4628,7 @@ vertx.fileSystem().exists("target/classes/junk.txt", result -> {
 
 #### 异步文件
 
-Vert.x提供了异步文件抽象（对象），允许您操作文件系统上的文件。
+Vert.x提供了异步文件的抽象，允许您操作文件系统上的文件。
 
 您可以像下边代码打开一个[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)：
 
@@ -4652,8 +4654,8 @@ AsyncFile实现了ReadStream和WriteStream，因此您可以将文件和其他�
 
 这个方法的参数有：
 
-* `buffer`：要写入（数据）的（目标）Buffer
-* `position`：一个整数指定在文件中写入Buffer的位置，若位置大于或等于文件大小，文件将被扩展【放大】以适应偏移量
+* `buffer`：要写入的缓冲
+* `position`：一个整数指定在文件中写入缓冲的位置，若位置大于或等于文件大小，文件将被扩展以适应偏移的位置
 * `handler`：结果处理器
 
 这是随机访问写的示例：
@@ -4763,7 +4765,7 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 您还可以通过系统属性`vertx.disableFileCPResolving`设置为`true`来禁用整个类路径解析功能。
 
-*注意：当加载`io.vertx.core.impl.FileResolver`类时，这些系统属性将被评估【Evaluate】一次，因此，在加载此类之前应该设置这些属性，或者在启动它时作为JVM系统属性来设置。*
+> 请注意：*当加载`io.vertx.core.impl.FileResolver`类时，这些系统属性将被评估一次，因此，在加载此类之前应该设置这些属性，或者在启动它时作为JVM系统属性来设置。*
 
 **关闭AsyncFile**
 
@@ -4955,9 +4957,9 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 除了取消监听一个多播地址以外，也可以做到屏蔽指定发送者地址的多播。
 
-注意：这仅适用于某些操作系统和内核版本，所以请检查操作系统文档看是它是否支持（该功能）。
+请注意这仅适用于某些操作系统和内核版本，所以请检查操作系统文档看是它是否支持。
 
-这是一专用级的功能。
+这是专家级别的技巧。
 
 要屏蔽来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
 
