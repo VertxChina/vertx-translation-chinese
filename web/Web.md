@@ -2102,7 +2102,7 @@ router.route("/eventbus/*").handler(sockJSHandler);
 
 消息的原始内容是一个如下结构的 JSON 对象：
 
-```json
+```text
 {
   "type": "send"|"publish"|"receive"|"register"|"unregister",
   "address": the event bus address being sent/published/registered/unregistered
