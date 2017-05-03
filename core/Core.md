@@ -2756,9 +2756,9 @@ server.requestHandler(request -> {
 
 **处理表单文件上传**
 
-Vert.x可以在处理编码过的multi-part请求体中处理文件上传。
+Vert.x可以处理以multi-part编码形式上传的的文件。
 
-要接收文件，您可以告诉Vert.x系统使用multi-part表单，并根据请求设置[uploadHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#uploadHandler-io.vertx.core.Handler-)。
+要接收文件，您可以告诉Vert.x使用multi-part表单，并对请求设置[uploadHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#uploadHandler-io.vertx.core.Handler-)。
 
 当服务器每次接收到上传请求时，该处理器将被调用一次。
 
@@ -2773,7 +2773,7 @@ server.requestHandler(request -> {
 });
 ```
 
-文件上传可能很大，我们不会在单个缓冲区中提供（包含）整个上传（数据），因为这样会导致内存耗尽，相反上传数据是以块【Chunk】的形式被接收的：
+文件上传可能很大，我们不会在单个缓冲区中包含整个上传 数据，因为这样会导致内存耗尽，相反上传数据是以块的形式被接收的：
 
 ```java
 request.uploadHandler(upload -> {
@@ -2783,7 +2783,7 @@ request.uploadHandler(upload -> {
 });
 ```
 
-上传对象是一个[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)，因此您可以将请求体读取到任何[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)实例中。有关详细的说明，请参阅[流和泵](http://vertx.io/docs/vertx-core/java/#streams)的章节。
+上传对象是一个[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)，因此您可以将请求体读取到任何[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)实例中。详细说明请参阅[流和泵](http://vertx.io/docs/vertx-core/java/#streams)的章节。
 
 若您只是想将文件上传到服务器的某个磁盘，可以使用[streamToFileSystem](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerFileUpload.html#streamToFileSystem-java.lang.String-)：
 
@@ -2817,11 +2817,11 @@ request.customFrameHandler(frame -> {
 });
 ```
 
-HTTP/2帧不受流程控制——当接收到自定义帧时，不论请求（内容）是暂停或不存在，帧处理器都将立即被调用。
+HTTP/2帧不受流程控制——当接收到自定义帧时，不论请求是暂停或不存在，帧处理器都将立即被调用。
 
 **非标准的HTTP方法**
 
-[OTHER](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpMethod.html#OTHER)的HTTP方法可用于非标准方法，在这种情况下，[rawMethod](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#rawMethod--)返回客户端发送的（实际）HTTP方法。
+[OTHER](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpMethod.html#OTHER)的HTTP方法可用于非标准方法，在这种情况下，[rawMethod](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#rawMethod--)返回客户端发送的实际HTTP方法。
 
 #### 发回响应
 
@@ -2831,13 +2831,13 @@ HTTP/2帧不受流程控制——当接收到自定义帧时，不论请求（�
 
 **设置状态代码和消息**
 
-响应的默认HTTP状态代码为200，表示OK。
+默认的HTTP状态响应代码为200，表示OK。
 
 可使用[setStatusCode](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#setStatusCode-int-)设置不同状态代码。
 
 您还可用[setStatusMessage](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#setStatusMessage-java.lang.String-)指定自定义状态消息。
 
-若您不指定状态消息，默认将使用和状态代码对应的消息。
+若您不指定状态信息，将会使用默认的状态码响应。
 
 *注意：对于HTTP/2中的状态不会在响应中描述——因为协议不会将消息发送回客户端。*
 
@@ -2845,7 +2845,7 @@ HTTP/2帧不受流程控制——当接收到自定义帧时，不论请求（�
 
 想要将数据写入HTTP响应，您可使用任意一个[write](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#write-io.vertx.core.buffer.Buffer-)方法。
 
-它们可以在响应结束之前（ended)被多次调用，它们也可以通过以下几种方式调用：
+它们可以在响应结束之前被多次调用，它们可以通过以下几种方式调用：
 
 对用单个缓冲区：
 
@@ -2854,21 +2854,21 @@ HttpServerResponse response = request.response();
 response.write(buffer);
 ```
 
-写入字符串，这种请求字符串将使用UTF-8进行编码，并将结果写入到报文【wire】中。
+写入字符串，这种请求字符串将使用UTF-8进行编码，并将结果写入到报文中。
 
 ```java
 HttpServerResponse response = request.response();
 response.write("hello world!");
 ```
 
-写入带编码方式的字符串，这种情况字符串将使用指定的编码方式编码，并将结果写入到报文【wire】中。
+写入带编码方式的字符串，这种情况字符串将使用指定的编码方式编码，并将结果写入到报文中。
 
 ```java
 HttpServerResponse response = request.response();
 response.write("hello world!", "UTF-16");
 ```
 
-响应写入是异步的，并且在写操作队列（完成）之后会立即返回。
+响应写入是异步的，并且在写操作进入队列之后会立即返回。
 
 若您只需要将单个字符串或Buffer写入到HTTP响应，则可将它直接写入并使用[end](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#end-java.lang.String-)方法结束这次响应。
 
@@ -2944,7 +2944,7 @@ response.setChunked(true);
 
 *注意：分块响应在HTTP/2流中无效。*
 
-若要添加尾到响应，则可直接调用[trailers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#trailers--)。
+若要添加尾到响应，则直接增加到[trailers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#trailers--)里。
 
 ```java
 HttpServerResponse response = request.response();
@@ -2963,15 +2963,15 @@ response.putTrailer("X-wibble", "woobble").putTrailer("X-quux", "flooble");
 
 **直接从磁盘或类路径读文件**
 
-若您正在写一个Web服务器，一种从磁盘中（读取并）提供文件的方法是将文件作为[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)对象打开并其泵送到HTTP响应中。
+若您正在写一个Web服务器，一种从磁盘中读取并提供文件的方法是将文件作为[AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)对象打开并其传送到HTTP响应中。
 
 或您可以使用[readFile](http://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html#readFile-java.lang.String-io.vertx.core.Handler-)一次性加载它，并直接将其写入响应。
 
-或者，Vert.x提供了一种方法，允许您在一个操作中将文件从磁盘或文件系统中（读取并）提供给HTTP响应。若底层操作系统支持，这会导致操作系统不通过用户空间复制而直接将（文件内容中）字节数据从文件传输到Socket。
+或者，Vert.x提供了一种方法，允许您在一个操作中将文件从磁盘或文件系统中读取并提供给HTTP响应。若底层操作系统支持，这会导致操作系统不通过用户空间复制而直接将文件内容中字节数据从文件传输到Socket。
 
 这是使用[sendFile](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html#sendFile-java.lang.String-)完成的，对于大文件处理通常更有效，而这个方法对于小文件可能很慢。
 
-这儿是一个非常简单的Web服务器，它使用sendFile从文件系统中（读取并）提供文件：
+这儿是一个非常简单的Web服务器，它使用sendFile从文件系统中读取并提供文件：
 
 ```java
 vertx.createHttpServer().requestHandler(request -> {
@@ -2985,7 +2985,7 @@ vertx.createHttpServer().requestHandler(request -> {
 }).listen(8080);
 ```
 
-发送文件是异步的，可能在调用返回一段时间后才能完成。如果要在文件写入时收到通知，可以在sendFile（官缺：中设置一个处理器）。
+发送文件是异步的，可能在调用返回一段时间后才能完成。如果要在文件写入时收到通知，可以在sendFile中设置一个处理器。
 
 请阅读[从类路径提供文件](http://vertx.io/docs/vertx-core/java/#classpath)章节了解类路径的限制或禁用它。
 
