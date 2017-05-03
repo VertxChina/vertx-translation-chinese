@@ -2357,10 +2357,10 @@ NetServer server = vertx.createNetServer(options);
 
 引擎实现可以配置为使用OpenSSL而不是JDK实现（来支持SSL）。 OpenSSL提供比JDK引擎更好的性能和CPU使用率、以及JDK版本独立性。
 
-引擎选项的使用是：
+引擎选项可使用：
 
-* [getSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#getSslEngineOptions--)选项设置时
-* 否则[JdkSSLEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/JdkSSLEngineOptions.html)
+* 当[getSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#getSslEngineOptions--)选项设置时
+* 否则使用[JdkSSLEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/JdkSSLEngineOptions.html)
 
 ```java
 NetServerOptions options = new NetServerOptions().
@@ -2384,7 +2384,7 @@ options = new NetServerOptions().
 
 ##### 应用层协议协商【ALPN】
 
-ALPN【Application-Layer Protocol Negotiation】是应用层协议协商的TLS扩展，它被HTTP/2使用：在TLS握手期时，客户端给出其接受的应用协议列表，并且服务器使用（自身）支持的协议响应。
+ALPN【Application-Layer Protocol Negotiation】是应用层协议协商的TLS扩展，它被HTTP/2使用：在TLS握手期时，客户端给出其接受的应用协议列表，之后服务器使用它所支持的协议响应。
 
 标准的Java 8不支持ALPN，所以ALPN应该通过其他方式启用：
 
@@ -2416,7 +2416,7 @@ JVM必须将`alpn-boot-${version}.jar`放在它的bootclasspath中启动：
 
 其中${version}取决于JVM的版本，如*OpenJDK 1.8.0u74*中的*8.1.7.v20160121*，这个完整列表可以在[Jetty-ALPN](http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html)页面上找到。
 
-主要缺点就是版本取决于JVM。
+主要缺点是ALPN的实现版本依赖于JVM的版本。
 
 为了解决这个问题，可以使用[Jetty ALPN agent](https://github.com/jetty-project/jetty-alpn-agent)。agent是一个JVM代理，它会为运行它的JVM选择正确的ALPN版本：
 
@@ -2440,7 +2440,7 @@ NetClientOptions options = new NetClientOptions()
 NetClient client = vertx.createNetClient(options);
 ```
 
-DNS解析会一直在代理服务器上执行，为了实现SOCKS4客户端的功能，需要先在本地解析DNS地址。
+DNS解析总是在代理服务器上完成解析，为了实现SOCKS4客户端的功能，需要先在本地解析DNS地址。
 
 ### 编写HTTP服务器和客户端
 
@@ -2472,8 +2472,8 @@ HttpServer server = vertx.createHttpServer(options);
 
 Vert.x支持TLS `h2`和TCP `h2c`之上的HTTP/2协议。
 
-* `h2`用于通过应用层协议协商（ALPN）协商的TLS时识别HTTP/2协议
-* `h2c`在TCP上以明文形式使用时识别HTTP/2协议，这样的连接是使用HTTP/1.1升级请求或直接建立的
+* `h2`表示使用了TLS的应用层协议协商(ALPN)协议来协商的HTTP/2协议
+* `h2c`表示在TCP层上使用明文形式的HTTP/2协议，这样的连接是使用HTTP/1.1升级请求或者直接建立
 
 要处理h2请求，TLS必须调用[setUseAlpn](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerOptions.html#setUseAlpn-boolean-)启用：
 
@@ -2513,7 +2513,7 @@ HttpServerOptions options = new HttpServerOptions().setLogActivity(true);
 HttpServer server = vertx.createHttpServer(options);
 ```
 
-有关详细说明，请参阅有[记录网络活动](http://vertx.io/docs/vertx-core/java/#logging_network_activity)章节。
+详细说明,请参阅[记录网络活动](http://vertx.io/docs/vertx-core/java/#logging_network_activity)章节。
 
 #### 开始服务器监听
 
@@ -2535,7 +2535,7 @@ server.listen(8080, "myhost.com");
 
 默认主机名是`0.0.0.0`，它表示：监听所有可用地址；默认端口号是`80`。
 
-实际的绑定也是异步的，因此服务器也许并没有在调用listen返回时监听，而是在一段时间过后（才监听）。
+实际的绑定也是异步的，因此服务器也许并没有在调用listen返回时监听，而是在一段时间过后才监听。
 
 若您希望在服务器实际监听时收到通知，您可以向listen提供一个处理器。例如：
 
@@ -2550,14 +2550,13 @@ server.listen(8080, "myhost.com", res -> {
 });
 ```
 
-#### 收到传入请求【Incoming requests】的通知
+#### 收到传入请求的通知
 
 若您需要在收到请求时收到通知，则需要设置一个[requestHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServer.html#requestHandler-io.vertx.core.Handler-)
 
 ```java
 HttpServer server = vertx.createHttpServer();
 server.requestHandler(request -> {
-  // Handle the request in here
   // 在这里处理请求
 });
 ```
@@ -2570,7 +2569,7 @@ server.requestHandler(request -> {
 
 如果请求包含请求体，那么该请求体将在请求处理器被调用后的某个时间到达服务器。
 
-服务请求对象允许您检索[uri](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#uri--)，[path](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#path--)，[params](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#params--)和[headers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#headers--)等其他事。
+服务请求对象允许您检索[uri](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#uri--)，[path](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#path--)，[params](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#params--)和[headers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#headers--)等其他信息。
 
 每一个服务请求对象和一个服务响应对象绑定，您可以用[response](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#response--)获取一个[HttpServerResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html)对象的引用。
 
@@ -2634,9 +2633,9 @@ param1=abc&param2=xyz
 
 使用[headers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#headers--)获取HTTP请求中的请求头信息。
 
-这个方法返回一个[MultiMap](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html)的实例——它像一个普通的Map或Hash、单它还允许同一个键支持多个值——因为HTTP允许同一个键支持多个请求头的值。
+这个方法返回一个[MultiMap](http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html)的实例——它像一个普通的Map或Hash、并且它还允许同一个键支持多个值——因为HTTP允许同一个键支持多个请求头的值。
 
-它还具有不区分大小写的键，这意味着您可以执行以下操作：
+它的键值不区分大小写，这意味着您可以执行以下操作：
 
 ```java
 MultiMap headers = request.headers();
@@ -2675,7 +2674,7 @@ param1: 'abc'
 param2: 'xyz'
 ```
 
-请注意，这些请求参数是从请求的URI中解析读取的，若您已经将表单属性作为在`multi-part/form-data`请求正文中提交的HTML表单的一部分发送，那么它们将不会显示在此处的参数中。
+请注意，这些请求参数是从请求的URI中解析读取的，若您已经将表单属性存放在请求体中发送出去，并且该请求为multi-part/form-data类型请求，那么它们将不会显示在此处的参数中。
 
 **远程地址**
 
@@ -2695,7 +2694,7 @@ HTTP请求通常包含我们需要读取的主体。如前所述，当请求头�
 
 这是因为请求体可能非常大（如文件上传），并且我们不会在内容发送给您之前将其全部缓冲存储在内存中，这可能会导致服务器耗尽可用内存。
 
-要接收请求体，您可在请求中调用[handler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#handler-io.vertx.core.Handler-)设置一个处理器，每次请求体的一小块（数据）收到时，该处理器都会被调用。以下是一个例子：
+要接收请求体，您可在请求中调用[handler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#handler-io.vertx.core.Handler-)设置一个处理器，每次请求体的一小块数据收到时，该处理器都会被调用。以下是一个例子：
 
 ```java
 request.handler(buffer -> {
@@ -2721,23 +2720,21 @@ request.endHandler(v -> {
 });
 ```
 
-这是一个常见的情况，Vert.x为您提供了一个[bodyHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#bodyHandler-io.vertx.core.Handler-)来执行此操作，当所有请求体被收到时，bodyHandler处理器程序会被调用一次：
-
-```java
+这是一个常见的情况，Vert.x为您提供了一个[bodyHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#bodyHandler-io.vertx.core.Handler-)来执行此操作，当所有请求体被收到时，bodyHandler处理器程序会被调用一次：```java
 request.bodyHandler(totalBuffer -> {
   System.out.println("Full body received, length = " + totalBuffer.length());
 });
-```
+
 
 **Pumping请求**
 
 请求对象是一个[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)，因此您可以将请求体读取到任何[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)实例中。
 
-有关详细的说明，请参阅[流和泵](http://vertx.io/docs/vertx-core/java/#streams)的章节。
+详细请参阅[流和泵](http://vertx.io/docs/vertx-core/java/#streams)的章节。
 
 **处理HTML表单**
 
-您可使用内容类型为`application/x-www-form-urlencoded`或`multipart/form-data`提交HTML表单。
+您可使用媒体类型为`application/x-www-form-urlencoded`或`multipart/form-data`提交HTML表单。
 
 对于使用URL编码过的表单，表单属性会被URL编码，如同普通查询参数一样。
 
@@ -2745,13 +2742,12 @@ request.bodyHandler(totalBuffer -> {
 
 multi-part表单还可以包含文件上传。
 
-若您想要读取multi-part表单的属性，您应该告诉Vert.x您会在读取任何正文之前调用[setExpectMultipart(true)](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#setExpectMultipart-boolean-)，然后在整个请求体都被阅读后，您可以使用[formAttributes](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#formAttributes--)来读取实际的表单属性。
+若您想要读取multi-part表单的属性，您应该告诉Vert.x您会在读取任何正文之前调用[setExpectMultipart(true)](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#setExpectMultipart-boolean-)，然后在整个请求体都被读取后，您可以使用[formAttributes](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#formAttributes--)来读取实际的表单属性。
 
 ```java
 server.requestHandler(request -> {
   request.setExpectMultipart(true);
   request.endHandler(v -> {
-    // The body has now been fully read, so retrieve the form attributes
     // 请求体被完全读取，所以直接读取表单属性
     MultiMap formAttributes = request.formAttributes();
   });
