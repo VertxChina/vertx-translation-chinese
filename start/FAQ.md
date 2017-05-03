@@ -201,7 +201,7 @@ Future.<Message<String>>future((future) ->
 
 该方法的输入参数是一个 `Function`，该 `Function` 会以一个新的 `Future` 实例为参数被调用。由于 `Future` 自身实现了 `Handler<AsyncResult>`，因此你可以将它直接作为回调的 `Handler` 传入到异步方法里。该方法的返回值是提供给异步调用使用的 `Future` 实例。由此可以避免为嵌套的多个异步操作定义不同的 Future 变量，使代码更为简洁。
 
-3.4.0+之后，以下两种写法是等效的：
+以下两种写法是等效的：
 
 ```java
 vertx.eventBus().send("address","message", future.completer());
