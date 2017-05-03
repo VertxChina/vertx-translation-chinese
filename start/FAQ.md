@@ -136,9 +136,6 @@ future.setHandler(asyncResult -> {
 });
 //使用future之后，用completer方法填充参数
 vertx.eventBus().send("address","message", future.completer());
-//或
-vertx.eventBus().send("address","message", future);
-//以上两种写法等效，future继承自Handler<AsyncResult<T>>，completer方法会返回该部分代码，所以可直接使用future
 ```
 
 一个复杂一点的例子：
@@ -204,6 +201,29 @@ Future.<Message<String>>future((future) ->
 
 该方法的输入参数是一个 `Function`，该 `Function` 会以一个新的 `Future` 实例为参数被调用。由于 `Future` 自身实现了 `Handler<AsyncResult>`，因此你可以将它直接作为回调的 `Handler` 传入到异步方法里。该方法的返回值是提供给异步调用使用的 `Future` 实例。由此可以避免为嵌套的多个异步操作定义不同的 Future 变量，使代码更为简洁。
 
+3.4.0+之后，以下两种写法是等效的：
+
+```java
+vertx.eventBus().send("address","message", future.completer());
+//或
+vertx.eventBus().send("address","message", future);
+```
+
+复杂一点的例子：
+```java
+future.compose(message ->
+  Future.<Message<String>>future(f ->
+    vertx.eventBus().send("address", message.body(), f)
+  )
+);
+//以上和以下两种写法是等效的
+future.compose(message ->{
+  Future<Message<String>> f = Future.future();
+  vertx.eventBus().send("address",message.body(),f.completer());
+  return f;
+});
+```
+
 #### 使用组合来实现链式调用 (3.4.0+)
 
 Future 接口提供了 `compose` 方法来链式地组合多个异步操作。在介绍这个方法的用途时，我们先考虑一个传统的同步操作和异常处理的方式。**假设**我们有一个同步的方法 `send` 会抛出一些异常（注意，以下代码只是同步代码的示例，和 vert.x 无关）：
@@ -256,19 +276,3 @@ Future.<Message<String>>future(f ->
 通过 `compose` 方法来组织代码最大的价值在于可以 **让异步代码的执行顺序和代码的编写顺序看起来一致**，并在任何一步抛出异常时直接退出到最后一个 handler 来处理，**不需要针对每一个异步操作都编写异常处理的逻辑**。这对于编写复杂的异步流程时是非常有用的。
 
 [Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
-
-另外以下代码是等价的：
-```java
-//我们版本
-future.compose(message ->
-  Future.<Message<String>>future(f ->
-    vertx.eventBus().send("address", message.body(), f)
-  )
-);
-//官方版本
-future.compose(message ->{
-  Future<Message<String>> f = Future.future();
-  vertx.eventBus().send("address",message.body(),f.completer());
-  return f;
-});
-```
