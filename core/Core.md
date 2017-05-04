@@ -3001,16 +3001,14 @@ vertx.createHttpServer().requestHandler(request -> {
   try {
     offset = Long.parseLong(request.getParam("start"));
   } catch (NumberFormatException e) {
-    // error handling...
-    // 异常信息
+    // 异常处理
   }
 
   long end = Long.MAX_VALUE;
   try {
     end = Long.parseLong(request.getParam("end"));
   } catch (NumberFormatException e) {
-    // error handling...
-    // 异常信息
+    // 异常处理
   }
 
   request.response().sendFile("web/mybigfile.txt", offset, end);
@@ -3025,7 +3023,7 @@ vertx.createHttpServer().requestHandler(request -> {
   try {
     offset = Long.parseLong(request.getParam("start"));
   } catch (NumberFormatException e) {
-    // error handling...
+    //异常处理
   }
 
   request.response().sendFile("web/mybigfile.txt", offset);
@@ -3062,7 +3060,6 @@ int frameType = 40;
 int frameStatus = 10;
 Buffer payload = Buffer.buffer("some data");
 
-// Sending a frame to the client
 // 向客户端发送一帧
 response.writeCustomFrame(frameType, frameStatus, payload);
 ```
