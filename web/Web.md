@@ -863,7 +863,7 @@ Route route = router.get("/localized").handler( rc -> {
 如果没有为请求匹配到任何 router，Vert.x-Web 会声明一个 404 错误。
 
 这可以被您自己实现的处理器处理，或者被我们提供的专用错误处理器（failureHandler）处理。
-如果没有提供错误处理器，Vert.x-Web 会发送一个基本的 404 (Not  Found) 响应。
+如果没有提供错误处理器，Vert.x-Web 会发送一个基本的 404 (Not Found) 响应。
 
 ### 错误处理
 
@@ -891,7 +891,7 @@ route.failureHandler(frc -> {
 
 从一个处理器捕捉到异常时会标记一个状态码为 `500` 的错误。
 
-在处理这个错误时，[RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 会被传递到失败处理器里，失败处理器可以通过获取到的错误或错误编码来构造失败的响应。
+在处理这个错误时，[RoutingContext](http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html) 会被传递到失败处理器里，失败处理器可以通过获取到的错误或错误编码来构造失败的响应内容。
 
 ```java
 Route route1 = router.get("/somepath/path1/");
@@ -926,7 +926,7 @@ route3.failureHandler(failureRoutingContext -> {
 });
 ```
 
-某些情况下失败处理器会由于使用了不支持的字符集作为状态消息而导致错误。在这种情况下，会将状态消息替换为状态码的默认消息。
+某些情况下失败处理器会由于使用了不支持的字符集作为状态消息而导致错误。在这种情况下，Vert.x-Web 会将状态消息替换为状态码的默认消息。
 这是为了保证 HTTP 协议的语义，而不至于崩溃并断开 socket 导致协议运行的不完整。
 
 
@@ -2102,7 +2102,7 @@ router.route("/eventbus/*").handler(sockJSHandler);
 
 消息的原始内容是一个如下结构的 JSON 对象：
 
-```json
+```text
 {
   "type": "send"|"publish"|"receive"|"register"|"unregister",
   "address": the event bus address being sent/published/registered/unregistered

@@ -16,7 +16,7 @@ Vert.x MySQL/PostgreSQL Client（以下简称客户端）底层实现基于 Maur
 
 - vertx-mysql-postgresql-client 3.4.1 (此客户端)
 - scala-library 2.11.4
-- postgress-async-2.11 和 mysdql-async-2.11，来自 [https://github.com/mauricio/postgresql-async](https://github.com/mauricio/postgresql-async)
+- postgress-async-2.11 和 mysql-async-2.11，来自 [https://github.com/mauricio/postgresql-async](https://github.com/mauricio/postgresql-async)
 - joda time
 
 所有这些都可以从 Maven 中心库下载。
