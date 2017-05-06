@@ -48,6 +48,7 @@
 * Fail-Over：故障转移
 * Hops：跳数（一台路由器/主机到另外一台路由器/主机所经过的路由器的数量，经过路由转发次数越多，跳数越大）
 * Launcher：启动器
+* Application-Layer Protocol Negotiation：ALPN，应用层协议协商
 
 > 请注意：*Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
 
@@ -2354,9 +2355,9 @@ options = new NetServerOptions().
   setOpenSslEngineOptions(new OpenSSLEngineOptions());
 ```
 
-##### 应用层协议协商【ALPN】
+##### 应用层协议协商
 
-ALPN【Application-Layer Protocol Negotiation】是应用层协议协商的TLS扩展，它被HTTP/2使用：在TLS握手期时，客户端给出其接受的应用协议列表，之后服务器使用它所支持的协议响应。
+ALPN是应用层协议协商的TLS扩展，它被HTTP/2使用：在TLS握手期时，客户端给出其接受的应用协议列表，之后服务器使用它所支持的协议响应。
 
 标准的Java 8不支持ALPN，所以ALPN应该通过其他方式启用：
 
@@ -2372,7 +2373,7 @@ ALPN【Application-Layer Protocol Negotiation】是应用层协议协商的TLS�
 
 **OpenSSL ALPN支持**
 
-OpenSSL提供了原生【Native】的ALPN支持。
+OpenSSL提供了原生的ALPN支持。
 
 OpenSSL需要配置[setOpenSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#setOpenSslEngineOptions-io.vertx.core.net.OpenSSLEngineOptions-)并在类路径上使用[netty-tcnative](http://netty.io/wiki/forked-tomcat-native.html)的jar库。依赖于tcnative的实现它需要OpenSSL安装在您的操作系统中。
 
@@ -2553,15 +2554,15 @@ vertx.createHttpServer().requestHandler(request -> {
 }).listen(8080);
 ```
 
-**请求版本【version】**
+**请求版本**
 
 在请求中指定的HTTP版本可通过[version](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#version--)获取。
 
-**请求方法【method】**
+**请求方法**
 
 使用[method](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#method--)读取请求中的HTTP方法（即GET、POST、PUT、DELETE、HEAD、OPTIONS等）。
 
-**请求URI【uri】**
+**请求URI**
 
 使用[uri](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#uri--)读取请求中的URI路径。
 
@@ -2569,7 +2570,7 @@ vertx.createHttpServer().requestHandler(request -> {
 
 这个URI是在[Section 5.1.2 of the HTTP specification - Request-URI](http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)中定义的。
 
-**请求路径【path】**
+**请求路径**
 
 使用[path](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#path--)读取URI中的路径部分。
 
@@ -2585,7 +2586,7 @@ a/b/c/page.html?param1=abc&param2=xyz
 /a/b/c/page.html
 ```
 
-**请求查询【query】**
+**请求查询**
 
 使用[query](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#query--)读取URI中的查询部分。
 
@@ -2601,7 +2602,7 @@ a/b/c/page.html?param1=abc&param2=xyz
 param1=abc&param2=xyz
 ```
 
-**请求头【headers】**
+**请求头**
 
 使用[headers](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#headers--)获取HTTP请求中的请求头信息。
 
@@ -2621,13 +2622,13 @@ System.out.println("User agent is " + headers.get("user-agent"));
 System.out.println("User agent is " + headers.get("User-Agent"));
 ```
 
-**请求主机【host】**
+**请求主机**
 
 使用[host](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#host--)返回HTTP请求中的主机名。
 
 对于HTTP/1.x请求返回请求头中的`host`值，对于HTTP/1请求则返回伪头中的`:authority`的值。
 
-**请求参数【Parameters】**
+**请求参数**
 
 使用[params](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#params--)返回HTTP请求中的参数信息。
 
@@ -2656,7 +2657,7 @@ param2: 'xyz'
 
 HTTP请求中传递的URI通常是相对的，若您想要读取请求中和相对URI对应的绝对URI，可调用[absoluteURI](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#absoluteURI--)
 
-**结束处理器【End Handler】**
+**结束处理器**
 
 当整个请求（包括任何正文）已经被完全读取时，请求中的[endHandler](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html#endHandler-io.vertx.core.Handler-)会被调用。
 
@@ -5412,9 +5413,9 @@ WriteStream的实现类包括：[HttpClientRequest](http://vertx.io/docs/apidocs
 * [exceptionHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#exceptionHandler-io.vertx.core.Handler-)：若WriteStream发生异常，则被调用。
 * [drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)：若WriteStream被认为不再满，则处理器将被调用。
 
-#### Pump
+#### 泵
 
-泵【Pump】的实例有以下几种方法：
+泵的实例有以下几种方法：
 
 * [start](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#start--)：启动泵。
 * [stop](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#stop--)：停止泵，当泵启动时它要处于停止模式。
@@ -5558,7 +5559,7 @@ vertx run groovy:io.vertx.example.MyGroovyVerticle
 `vertx run`命令可以使用几个可选参数，它们是：
 
 * `-conf <config_file>`：提供了Verticle的一些配置，`config_file`是包含描述Verticle配置的JSON对象的文本文件的名称，该参数是可选的。
-* `-cp <path>`：搜索Verticle和它使用的其他任何资源的路径，默认为`.`（当前目录）。若您的Verticle引用了其他脚本、类或其他资源（例如jar文件），请确保这些脚本、其他资源存在此路径上。该路径可以包含由以下内容分隔的多个路径条目：`:`（冒号）或`;`（分号）——这取决于操作系统。每个路径条目可以是包含脚本的目录的绝对路径或相对路径，也可以是`jar`或`zip`文件的绝对或相对文件名。一个示例路径可能是`-cp classes:lib/otherscripts:jars/myjar.jar:jars/otherjar.jar`。始终使用路径引用您的Verticle需要的任何资源，不要将它们放在系统类路径【System Classpath】上，因为这会导致部署的Verticle之间的隔离问题。
+* `-cp <path>`：搜索Verticle和它使用的其他任何资源的路径，默认为`.`（当前目录）。若您的Verticle引用了其他脚本、类或其他资源（例如jar文件），请确保这些脚本、其他资源存在此路径上。该路径可以包含由以下内容分隔的多个路径条目：`:`（冒号）或`;`（分号）——这取决于操作系统。每个路径条目可以是包含脚本的目录的绝对路径或相对路径，也可以是`jar`或`zip`文件的绝对或相对文件名。一个示例路径可能是`-cp classes:lib/otherscripts:jars/myjar.jar:jars/otherjar.jar`。始终使用路径引用您的Verticle需要的任何资源，不要将它们放在系统类路径上，因为这会导致部署的Verticle之间的隔离问题。
 * `-instances <instances>`：要实例化的Verticle实例的数目，每个Verticle实例都是严格单线程（运行）的，以便在可用的核上扩展应用程序，您可能需要部署多个实例。若省略，则部署单个实例。
 * `-worker`：此选项可确定一个Verticle是否为Worker Verticle。
 * `-cluster`：此选项确定Vert.x实例是否尝试与网络上的其他Vert.x实例形成集群，集群Vert.x实例允许Vert.x与其他节点形成分布式Event Bus。默认为false（非集群模式）。
