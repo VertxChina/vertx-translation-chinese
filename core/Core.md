@@ -1,4 +1,4 @@
-# Vert.x Core Manual - Draft
+# Vert.x Core Manual
 
 ## 中英对照表
 
