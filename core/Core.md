@@ -2331,7 +2331,7 @@ NetServer server = vertx.createNetServer(options);
 
 引擎选项可使用：
 
-* 当[getSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#getSslEngineOptions--)选项设置时
+* 当[getSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#getSslEngineOptions--)被设置时，使用该选项
 * 否则使用[JdkSSLEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/JdkSSLEngineOptions.html)
 
 ```java
@@ -2365,7 +2365,7 @@ ALPN是应用层协议协商的TLS扩展，它被HTTP/2使用：在TLS握手期�
 
 引擎选项可使用:
 
-* [getSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#getSslEngineOptions--)选项设置时
+* 当[getSslEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/TCPSSLOptions.html#getSslEngineOptions--)被设置时，使用该选项
 * JDK中ALPN可用时使用[JdkSSLEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/JdkSSLEngineOptions.html)
 * OpenSSL中ALPN可用时使用[OpenSSLEngineOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/OpenSSLEngineOptions.html)
 * 否则失败
