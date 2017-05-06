@@ -2,7 +2,7 @@
 
 ## 2017-04-23
 
-- [ ] **Vert.x Core**：初稿翻译完成，正在进行校对
+- [x] **Vert.x Core**：已翻译校对完成
 - [x] **Vert.x Web**：已翻译校对完成
 - [x] **Vert.x Web Client**：已翻译校对完成
 - [ ] **Vert.x Data Access**
