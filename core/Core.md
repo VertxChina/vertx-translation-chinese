@@ -35,7 +35,7 @@
 * Body：请求/响应体（有些地方翻译成请求/响应正文）
 * Pipe：管道
 * Round-Robin：轮询
-* Application-Layer Protocol Negotiation：应用层协议协商
+* Application-Layer Protocol Negotiation：ALPN，应用层协议协商
 * Wire：报文
 * Flush：刷新（指将缓冲区中已有的数据一次性压入，用这种方式清空缓冲区，传统上翻译成刷新）
 * Cipher Suite：密码套件
@@ -48,7 +48,6 @@
 * Fail-Over：故障转移
 * Hops：跳数（一台路由器/主机到另外一台路由器/主机所经过的路由器的数量，经过路由转发次数越多，跳数越大）
 * Launcher：启动器
-* Application-Layer Protocol Negotiation：ALPN，应用层协议协商
 
 > 请注意：*Vert.x和Vertx的区别：文中所有Vert.x概念使用标准单词Vert.x，而Vertx通常表示Java中的类：_`io.vertx.core.Vertx`_。*
 
