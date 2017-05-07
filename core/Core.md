@@ -1,4 +1,4 @@
-# Vert.x Core Manual
+# Vert.x Core 文档手册
 
 ## 中英对照表
 
@@ -23,8 +23,8 @@
 * Consumer：消费者
 * Receiver/Recipient：接收者
 * Entry：条目（一条key=value的键值对）
-* Map：动词翻译成“映射”，名词为数据结构未翻译
-* Logging：动词翻译成“记录”，名词翻译成日志器
+* Map：动词翻译成 “映射”，名词为数据结构未翻译
+* Logging：动词翻译成 “记录”，名词翻译成日志器
 * Trust Store：受信存储
 * Frame：帧
 * Event Bus：事件总线
@@ -73,9 +73,7 @@ Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库�
 
 **Vert.x Core** 小而轻，您可以只使用您需要的部分。它可整体嵌入现存应用中。我们并不会强迫您用特定的方式构造您的应用。
 
-您亦可在其它Vert.x支持的语言中使用Core。很酷的是：我们并不强迫您在书写诸如 JavaScript 或 Ruby 时直接调用 Java API，毕竟不同的语言有不同的代码风格，若强行让 Ruby 开发人员遵循 Java 的代码风格会很怪异，所以我们根据 Java API 自动生成了适应不同语言代码风格的 API。
-
-从现在开始文中我们使用 core 代表 **Vert.x Core**。
+您亦可在其它Vert.x支持的语言中使用Vert.x Core。很酷的是：我们并不强迫您在书写诸如 JavaScript 或 Ruby 时直接调用 Java API，毕竟不同的语言有不同的代码风格，若强行让 Ruby 开发人员遵循 Java 的代码风格会很怪异，所以我们根据 Java API 自动生成了适应不同语言代码风格的 API。
 
 如果您在使用 Maven 或 Gradle（译者注：两种常用的项目构建工具），将以下依赖项添加到您的项目描述文件的 `dependencies` 节点中以使用 **Vert.x Core** 的API：
 
@@ -4245,23 +4243,23 @@ DNS 解析会一直在代理服务器上执行。为了实现 SOCKS4 客户端�
 
 如果您是在 Verticle 内部创建的 HTTP 服务端和客户端，则在撤销该Verticle时，它们将自动关闭。
 
-### 使用Vert.x共享数据
+## 使用 Vert.x 共享数据
 
-共享数据包含的功能允许您可以安全地在应用程序的不同部分之间、同一Vert.x实例中的不同应用程序之间或集群中的不同Vert.x实例之间安全地共享数据。
+共享数据（Shared Data）包含的功能允许您可以安全地在应用程序的不同部分之间、同一 Vert.x 实例中的不同应用程序之间或集群中的不同 Vert.x 实例之间安全地共享数据。
 
 共享数据包括本地共享Map、分布式、集群范围Map、异步集群范围锁和异步集群范围计数器。
 
-> 重要：*分布式数据结构的行为取决于您使用的集群管理器，网络分区面临的备份（复制）和行为由集群管理器和它的配置来定义。请参阅集群管理器文档以及底层框架手册。*
+> 重要提示：分布式数据结构的行为取决于您使用的集群管理器，网络分区面临的备份（复制）和行为由集群管理器和它的配置来定义。请参阅集群管理器文档以及底层框架手册。
 
-#### 本地共享Map
+### 本地共享Map
 
-[本地共享Map](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/LocalMap.html)允许您在同一个Vert.x实例中的不同Event Loop（如不同的Verticle中）之间安全共享数据。
+本地共享Map [`LocalMap`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/LocalMap.html) 允许您在同一个 Vert.x 实例中的不同 Event Loop（如不同的 Verticle 中）之间安全共享数据。
 
-本地共享Map仅允许将某些数据类型作为键值和值，这些类型必须是不可变的，或可以像[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)那样复制某些其他类型。在后一种情况中，键/值将被复制，然后再放到Map中。
+本地共享Map仅允许将某些数据类型作为键值和值，这些类型必须是不可变的，或可以像[`Buffer`](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)那样复制某些其他类型。在后一种情况中，键/值将被复制，然后再放到Map中。
 
-这样，我们可以确保在Vert.x应用程序不同线程之间——*无法共享访问可变状态*，因此您不必担心通过同步访问来保护该状态。
+这样，我们可以确保在Vert.x应用程序不同线程之间 **没有共享访问可变状态**，因此您不必担心需要通过同步访问来保护该状态。
 
-以下是使用共享本地Map的示例：
+以下是使用 `LocalMap` 的示例：
 
 ```java
 SharedData sd = vertx.sharedData();
@@ -4287,15 +4285,15 @@ map2 = sd.getLocalMap("mymap2");
 Buffer buff = map2.get("eek");
 ```
 
-#### 集群范围异步Map
+### 集群范围异步Map
 
-集群范围异步Map允许从集群的任何节点将数据放到Map中，并从任何其他节点读取。
+集群范围异步Map(Cluster-wide asynchronous maps)允许从集群的任何节点将数据放到 Map 中，并从任何其他节点读取。
 
 这使得它们对于托管Vert.x Web应用程序的服务器场中的会话状态存储非常有用。
 
-您可以使用[getClusterWideMap](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getClusterWideMap-java.lang.String-io.vertx.core.Handler-)获取[AsyncMap](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html)的实例。
+您可以使用 [`getClusterWideMap`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getClusterWideMap-java.lang.String-io.vertx.core.Handler-) 方法获取[`AsyncMap`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html)的实例。
 
-获取Map是异步的，返回结果可以传给您指定的处理器中，以下是一个例子：
+获取Map的过程是异步的，返回结果可以传给您指定的处理器中。以下是一个例子：
 
 ```java
 SharedData sd = vertx.sharedData();
@@ -4310,11 +4308,9 @@ sd.<String, String>getClusterWideMap("mymap", res -> {
 });
 ```
 
-**将数据放入Map**
+#### 将数据放入Map
 
-您可以使用[put](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html#put-java.lang.Object-java.lang.Object-io.vertx.core.Handler-)将数据放入Map。
-
-实际上put方法是异步的，一旦完成它会通知处理器：
+您可以使用 [`put`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html#put-java.lang.Object-java.lang.Object-io.vertx.core.Handler-) 方法将数据放入Map。`put`方法是异步的，一旦完成它会通知处理器：
 
 ```java
 map.put("foo", "bar", resPut -> {
@@ -4328,11 +4324,9 @@ map.put("foo", "bar", resPut -> {
 });
 ```
 
-**从Map读取数据**
+#### 从Map读取数据
 
-您可以使用[get](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html#get-java.lang.Object-io.vertx.core.Handler-)从Map读取数据。
-
-实际的get也是异步的，一段时间过后它会通知处理器并传入结果。
+您可以使用 [`get`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html#get-java.lang.Object-io.vertx.core.Handler-) 方法从Map读取数据。`get` 方法也是异步的，一段时间过后它会通知处理器并传入结果。
 
 ```java
 map.get("foo", resGet -> {
@@ -4347,25 +4341,25 @@ map.get("foo", resGet -> {
 });
 ```
 
-**其他Map操作**
+#### 其他Map操作
 
-您还可以从异步Map中删除条目、清除Map、读取它的尺寸。
+您还可以从异步Map中删除条目、清除Map、读取它的大小。
 
-有关更多信息，请参阅[API文档](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html)。
+有关更多信息，请参阅 [API 文档](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/AsyncMap.html)。
 
-#### 集群范围锁
+### 集群范围锁
 
-[集群范围锁](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)允许您在集群中获取独占锁——当您想要在任何时间只在集群一个节点上执行某些操作或访问资源时，这很有用。
+集群范围锁（[Lock](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)）允许您在集群中获取独占锁 —— 当您想要在任何时间只在集群一个节点上执行某些操作或访问资源时，这很有用。
 
 集群范围锁具有异步API，它和大多数等待锁释放的阻塞调用线程的API锁不相同。
 
-可使用[getLock](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getLock-java.lang.String-io.vertx.core.Handler-)获取锁。
+可使用 [`getLock`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getLock-java.lang.String-io.vertx.core.Handler-) 方法获取锁。
 
-它不会阻塞，但当锁可用时，将[Lock](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)的实例传入处理器并调用它，表示您现在拥有该锁。
+它不会阻塞，但当锁可用时，将 [`Lock`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html) 的实例传入处理器并调用它，表示您现在拥有该锁。
 
 若您拥有的锁没有其他调用者，集群上的任何地方都可以获得该锁。
 
-当您有用锁完成后，您可以调用[release](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html#release--)来释放它，所以另一个调用者可获得它。
+当您用完锁后，您可以调用 [`release`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html#release--) 方法来释放它，以便另一个调用者可获得它。
 
 ```java
 sd.getLock("mylock", res -> {
@@ -4385,7 +4379,7 @@ sd.getLock("mylock", res -> {
 });
 ```
 
-您可以为锁设置一个超时，若在超时时间期间无法获取锁，带有失败结果的处理器被调用：
+您可以为锁设置一个超时，若在超时时间期间无法获取锁，将会进入失败状态，处理器会去处理对应的异常：
 
 ```java
 sd.getLockWithTimeout("mylock", 10000, res -> {
@@ -4401,13 +4395,13 @@ sd.getLockWithTimeout("mylock", 10000, res -> {
 });
 ```
 
-#### 集群范围计时器
+### 集群范围计时器
 
 很多时候我们需要在集群范围内维护一个原子计数器。
 
-您可以用[Counter](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Counter.html)来做到这一点。
+您可以用 [`Counter`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Counter.html) 来做到这一点。
 
-您可以通过[getCounter](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getCounter-java.lang.String-io.vertx.core.Handler-)获取一个实例：
+您可以通过 [`getCounter`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/SharedData.html#getCounter-java.lang.String-io.vertx.core.Handler-) 方法获取一个实例：
 
 ```java
 sd.getCounter("mycounter", res -> {
@@ -4422,15 +4416,15 @@ sd.getCounter("mycounter", res -> {
 
 一旦您有了一个实例，您可以获取当前的计数，以原子方式递增、递减，并使用各种方法添加一个值。
 
-有更多信息，请参阅[API文档](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Counter.html)。
+有更多信息，请参阅 [API 文档](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Counter.html)。
 
 ## 访问文件系统
 
-Vert.x中的[FileSystem](http://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html)对象提供了许多操作文件系统的方法。
+Vert.x 中的 [`FileSystem`](http://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html) 对象提供了许多操作文件系统的方法。
 
-每个Vert.x实例有一个文件系统对象，您可以使用[fileSystem](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#fileSystem--)获取它。
+每个Vert.x 实例有一个文件系统对象，您可以使用 [`fileSystem`](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#fileSystem--) 方法获取它。
 
-（每个操作）都提供了阻塞和非阻塞版本，非阻塞版本采用处理器，当操作完成或发生错误时调用该处理器。
+每个操作都提供了阻塞和非阻塞版本，其中非阻塞版本接受一个处理器 `Handler`，当操作完成或发生错误时调用该处理器。
 
 以下是文件异步拷贝的示例：
 
@@ -4450,9 +4444,9 @@ fs.copy("foo.txt", "bar.txt", res -> {
 });
 ```
 
-阻塞的版本名为`xxxBlocking`，它要么返回结果或直接抛出异常。很多情况下，根据操作系统和文件系统，一些潜在的阻塞操作可以快速返回，这就是我们为什么提供它。但是强烈建议您在Event Loop中使用它之前测试使用它们究竟需要耗费多长时间，以避免打破黄金法则。
+阻塞版本的方法名为 `xxxBlocking`，它要么返回结果或直接抛出异常。很多情况下，一些潜在的阻塞操作可以快速返回（这取决于操作系统和文件系统），这就是我们为什么提供它。但是强烈建议您在 Event Loop 中使用它之前测试使用它们究竟需要耗费多长时间，以避免打破黄金法则。
 
-以下是使用阻塞API的拷贝示例：
+以下是使用阻塞 API的拷贝示例：
 
 ```java
 FileSystem fs = vertx.fileSystem();
@@ -4462,7 +4456,7 @@ FileSystem fs = vertx.fileSystem();
 fs.copyBlocking("foo.txt", "bar.txt");
 ```
 
-许多操作存在copy、move、truncate、chmod和许多其他文件操作，我们不会在这里列出所有内容，请参考[API文档](http://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html)获取完整列表。
+Vert.x 文件系统支持诸如 copy、move、truncate、chmod 和许多其他文件操作。我们不会在这里列出所有内容，请参考 [API 文档](http://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html) 获取完整列表。
 
 让我们看看使用异步方法的几个例子：
 
@@ -4530,13 +4524,13 @@ fileSystem.open("myfile.txt", options, res -> {
 });
 ```
 
-AsyncFile实现了ReadStream和WriteStream，因此您可以将文件和其他流对象配合*泵*工作，如网络Socket、HTTP请求和响应、WebSocket。
+`AsyncFile` 实现了 `ReadStream` 和 `WriteStream` 接口，因此您可以将文件和其他流对象配合 *泵* 工作，如 `NetSocket`、HTTP 请求和响应和 WebSocket 等。
 
 它们还允许您直接读写。
 
 #### 随机访问写
 
-要使用`AsyncFile`进行随机访问写，请使用[write](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#write-io.vertx.core.buffer.Buffer-long-io.vertx.core.Handler-)方法。
+要使用`AsyncFile`进行随机访问写，请使用 [`write`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#write-io.vertx.core.buffer.Buffer-long-io.vertx.core.Handler-) 方法。
 
 这个方法的参数有：
 
@@ -4571,12 +4565,12 @@ vertx.fileSystem().open("target/classes/hello.txt", new OpenOptions(), result ->
 
 #### 随机访问读
 
-要使用`AsyncFile`进行随机访问读，请使用[read](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#read-io.vertx.core.buffer.Buffer-int-long-int-io.vertx.core.Handler-)方法。
+要使用`AsyncFile`进行随机访问读，请使用 [`read`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#read-io.vertx.core.buffer.Buffer-int-long-int-io.vertx.core.Handler-) 方法。
 
 该方法的参数有：
 
-* `buffer`：读取数据的Buffer
-* `offset`：读取数据将被放到Buffer中的偏移量
+* `buffer`：读取数据的 Buffer
+* `offset`：读取数据将被放到 Buffer 中的偏移量
 * `position`：从文件中读取数据的位置
 * `length`：要读取的数据的字节数
 * `handler`：结果处理器
@@ -4606,21 +4600,21 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 #### 打开选项
 
-打开`AsyncFile`时，您可以传递一个[OpenOptions](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html)实例，这些选项描述了访问文件的行为。例如：您可使用[setRead](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setRead-boolean-)，[setWrite](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setWrite-boolean-)和[setPerm](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setPerms-java.lang.String-)方法配置文件访问权限。
+打开 `AsyncFile` 时，您可以传递一个 [`OpenOptions`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html) 实例，这些选项描述了访问文件的行为。例如：您可使用 [`setRead`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setRead-boolean-)、[`setWrite`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setWrite-boolean-) 和 [`setPerm`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setPerms-java.lang.String-) 方法配置文件访问权限。
 
-若打开的文件已经存在，则可以使用[setCreateNew](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setCreateNew-boolean-)和[setTruncateExisting](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setTruncateExisting-boolean-)配置对应行为。
+若打开的文件已经存在，则可以使用 [`setCreateNew`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setCreateNew-boolean-) 和 [`setTruncateExisting`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setTruncateExisting-boolean-) 配置对应行为。
 
-您可以使用[setDeleteOnClose](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setDeleteOnClose-boolean-)标记在关闭时或JVM停止时要删除的文件。
+您可以使用 [`setDeleteOnClose`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setDeleteOnClose-boolean-) 标记在关闭时或JVM停止时要删除的文件。
 
 #### 将数据刷新到底层存储
 
-在`OpenOptions`中，您可以使用[setDsync](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setDsync-boolean-)在每次写入时启用/禁用内容的自动同步。这种情况下，您可以使用[flush](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#flush--)方法手动刷新OS缓存中的数据写入。
+在 `OpenOptions` 中，您可以使用 [`setDsync`](http://vertx.io/docs/apidocs/io/vertx/core/file/OpenOptions.html#setDsync-boolean-) 方法在每次写入时启用/禁用内容的自动同步。这种情况下，您可以使用 [`flush`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#flush--) 方法手动刷新OS缓存中的数据写入。
 
-该方法也可使用一个处理器来调用，这个处理器在flush完成时被调用。
+该方法也可使用一个处理器来调用，这个处理器在 `flush` 完成时被调用。
 
 #### 将 AsyncFile 作为 ReadStream 和 WriteStream
 
-`AsyncFile`实现了`ReadStream`和`WriteStream`。您可以使用泵将数据与其他读取和写入流进行数据*泵*送。例如，这会将内容复制到另外一个`AsyncFile`：
+`AsyncFile`实现了 `ReadStream` 和 `WriteStream` 接口。您可以使用泵将数据与其他读取和写入流进行数据*泵*送。例如，这会将内容复制到另外一个`AsyncFile`：
 
 ```java
 Vertx vertx = Vertx.vertx();
@@ -4639,11 +4633,11 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 });
 ```
 
-您还可以使用泵将文件内容写入到HTTP响应中，或者写入任意`WriteStream`。
+您还可以使用泵将文件内容写入到HTTP 响应中，或者写入任意 `WriteStream`。
 
 #### 从 Classpath 访问文件
 
-当Vert.x找不到文件系统上的文件时，它尝试从类路径中解析该文件。请注意，类路径的资源路径不以`/`开头。
+当Vert.x找不到文件系统上的文件时，它尝试从类路径中解析该文件。请注意，类路径的资源路径不以 `/` 开头。
 
 由于Java不提供对类路径资源的异步方法，所以当类路径资源第一次被访问时，该文件将复制到工作线程中的文件系统。当第二次访问相同资源时，访问的文件直接从（工作线程的）文件系统提供。即使类路径资源发生变化（例如开发系统中），也会提供原始内容。
 
@@ -4655,7 +4649,7 @@ vertx.fileSystem().open("target/classes/les_miserables.txt", new OpenOptions(), 
 
 #### 关闭 AsyncFile
 
-您可调用[close](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#close--)来关闭一个`AsyncFile`。关闭是异步的，如果希望在关闭过后收到通知，您可指定一个处理器作为函数（close）参数传入。
+您可调用 [`close`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html#close--) 方法来关闭 `AsyncFile`。关闭是异步的，如果希望在关闭过后收到通知，您可指定一个处理器作为函数（`close`）参数传入。
 
 ## 数据报套接字（UDP）
 
@@ -4677,19 +4671,19 @@ UDP是无连接的传输，这意味着您与远程客户端没有建立持续�
 
 依照UDP的本质，它最适合一些允许丢弃数据包的应用（如监视应用程序）。
 
-其优点是与TCP相比具有更少的开销，而且可以由NetServer和NetClient处理（参考前文）。
+其优点是与TCP相比具有更少的开销，而且可以由`NetServer`和`NetClient`处理（参考前文）。
 
-#### 创建一个DatagramSocket
+### 创建 DatagramSocket
 
-要使用UDP，您首先要创建一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，无论您是要仅仅发送数据或者收发数据，这都是一样的。
+要使用UDP，您首先要创建一个 [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html) 实例，无论您是要仅仅发送数据或者收发数据，这都是一样的。
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
 ```
 
-返回的[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)实例不会绑定到特定端口，如果您只想发送数据（如作为客户端）的话，这是没问题的，但更多详细的内容在下一节。
+返回的 [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html) 实例不会绑定到特定端口，如果您只想发送数据（如作为客户端）的话，这是没问题的，但更多详细的内容在下一节。
 
-#### 发送数据报包
+### 发送数据报包
 
 如上所述，用户数据报协议（UDP）将数据分组发送给远程对等体，但是以不持续的方式来传送到它们。
 
@@ -4710,18 +4704,18 @@ socket.send("A string used as content", 1234, "10.0.0.1", asyncResult -> {
 });
 ```
 
-#### 接收数据报包
+### 接收数据报包
 
-若您想要接收数据包，则您需要调用`listen(...)`绑定一个[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)。
+若您想要接收数据包，则您需要调用 `listen(...)` 方法绑定 [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)。
 
-这样您就可以接收到被发送至[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)。
+这样您就可以接收到被发送至 [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html) 所监听的地址和端口的 [`DatagramPacket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)。
 
-除此之外，您还要设置一个Handler，每接收到一个[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)时它都会被调用。
+除此之外，您还要设置一个`Handler`，每接收到一个 [`DatagramPacket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html) 时它都会被调用。
 
-[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)有以下方法：
+[`DatagramPacket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html) 有以下方法：
 
-* [sender](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#sender--)：表示数据发送方的InetSocketAddress。
-* [data](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#data--)：保存接收数据的Buffer。
+* [`sender`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#sender--)：表示数据发送方的`InetSocketAddress`。
+* [`data`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html#data--)：保存接收数据的`Buffer`。
 
 当您需要监听一个特定地址和端口时，您可以像下边这样：
 
@@ -4738,13 +4732,13 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 });
 ```
 
-注意，即使AsyncResult成功，它只意味着它可能已经写入了网络堆栈，但不保证它已经到达或者将到达远程对等体。
+注意，即使 `AsyncResult` 成功，它只意味着它可能已经写入了网络堆栈，但不保证它已经到达或者将到达远端。
 
 若您需要这样的保证，您可在TCP之上建立一些握手逻辑。
 
-#### 多播
+### 多播
 
-**发送多播数据包**
+#### 发送多播数据包
 
 多播允许多个Socket接收相同的数据包，该目标可以通过加入到同一个可发送数据包的多播组来实现。
 
@@ -4752,7 +4746,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 现在让我们专注于如何发送多播报文，发送多播报文与发送普通数据报报文没什么不同。
 
-唯一的区别是您可以将多播组的地址传递给send方法发送出去。
+唯一的区别是您可以将多播组的地址传递给 `send` 方法发送出去。
 
 如下所示：
 
@@ -4766,20 +4760,20 @@ socket.send(buffer, 1234, "230.0.0.1", asyncResult -> {
 });
 ```
 
-所有已经加入多播组`230.0.0.1`的Socket都将收到该报文。
+所有已经加入多播组 `230.0.0.1` 的Socket都将收到该报文。
 
-**接收多播数据包**
+#### 接收多播数据包
 
-若要接收特定多播组的数据包，您需要通过调用[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)的`listen(...)`方法来绑定一个地址并且加入多播组，并加入多播组。
+若要接收特定多播组的数据包，您需要通过调用 [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html) 的`listen(...)`方法来绑定一个地址并且加入多播组，并加入多播组。
 
-这样，您将能够接收到被发送到[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)所监听的地址和端口的数据报，同时也可以接收被发送到该多播组的数据报。
+这样，您将能够接收到被发送到 [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html) 所监听的地址和端口的数据报，同时也可以接收被发送到该多播组的数据报。
 
-除此之外，您还可设置一个处理器，它在每次接收到DatagramPacket时会被调用。
+除此之外，您还可设置一个处理器，它在每次接收到 `DatagramPacket` 时会被调用。
 
-[DatagramPacket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html)有以下方法：
+[`DatagramPacket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramPacket.html) 有以下方法：
 
-* sender()：表示数据报发送方的InetSocketAddress
-* data()：保存接收数据的Buffer
+* `sender()`：表示数据报发送方的`InetSocketAddress`
+* `data()`：保存接收数据的`Buffer`
 
 因此，要监听指定的地址和端口、并且接收多播组`230.0.0.1`的数据报，您将执行如下操作：
 
@@ -4801,7 +4795,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 });
 ```
 
-**取消订阅/离开多播组**
+#### 取消订阅/离开多播组
 
 有时候您想只在特定时间内接收多播组的数据包。
 
@@ -4839,7 +4833,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 });
 ```
 
-**阻塞多播**
+#### 屏蔽多播
 
 除了取消监听一个多播地址以外，也可以做到屏蔽指定发送者地址的多播。
 
@@ -4847,7 +4841,7 @@ socket.listen(1234, "0.0.0.0", asyncResult -> {
 
 这是专家级别的技巧。
 
-要屏蔽来自特定地址的多播，您可以在DatagramSocket上调用`blockMulticastGroup(...)`，如下所示：
+要屏蔽来自特定地址的多播，您可以在 `DatagramSocket` 上调用 `blockMulticastGroup(...)`，如下所示：
 
 ```java
 DatagramSocket socket = vertx.createDatagramSocket(new DatagramSocketOptions());
@@ -4862,46 +4856,46 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 });
 ```
 
-**DatagramSocket属性**
+#### DatagramSocket 属性
 
-当创建[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)时，您可以通过[DatagramSocketOptions](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html)对象来设置多个属性以更改它的功能。这些（属性）列在这儿：
+当创建[`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)时，您可以通过[`DatagramSocketOptions`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html)对象来设置多个属性以更改它的功能。这些（属性）列在这儿：
 
-* [setSendBufferSize](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setSendBufferSize-int-)以字节为单位设置发送缓冲区的大小。
-* [setReceiveBufferSize](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setReceiveBufferSize-int-)设置TCP接收缓冲区大小（以字节为单位）。
-* [setReuseAddress](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setReuseAddress-boolean-)若为true，则`TIME_WAIT`状态中的地址在关闭后可重用。
-* [setTrafficClass](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setTrafficClass-int-)
-* [setBroadcast](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setBroadcast-boolean-)设置或清除`SO_BROADCAST`套接字选项，设置此选项时，数据报（UDP）数据包可能会发送到本地接口的广播地址。
-* [setMulticastNetworkInterface](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setMulticastNetworkInterface-java.lang.String-)设置或清除`IP_MULTICAST_LOOP`套接字选项，设置此选项时，多播数据包也将在本地接口上接收。
+* [`setSendBufferSize`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setSendBufferSize-int-)以字节为单位设置发送缓冲区的大小。
+* [`setReceiveBufferSize`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setReceiveBufferSize-int-)设置TCP接收缓冲区大小（以字节为单位）。
+* [`setReuseAddress`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setReuseAddress-boolean-)若为`true`，则`TIME_WAIT`状态中的地址在关闭后可重用。
+* [`setTrafficClass`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setTrafficClass-int-)
+* [`setBroadcast`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setBroadcast-boolean-)设置或清除`SO_BROADCAST`套接字选项，设置此选项时，数据报（UDP）数据包可能会发送到本地接口的广播地址。
+* [`setMulticastNetworkInterface`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setMulticastNetworkInterface-java.lang.String-)设置或清除`IP_MULTICAST_LOOP`套接字选项，设置此选项时，多播数据包也将在本地接口上接收。
 * [setMulticastTimeToLive](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocketOptions.html#setMulticastTimeToLive-int-)设置`IP_MULTICAST_TTL`套接字选项。TTL表示“活动时间”，单这种情况下，它指定允许数据包经过的IP跳数，特别是用于多播流量。转发数据包的每个路由器或网管会递减TTL，如果路由器将TTL递减为0，则不会再转发。
 
-**DatagramSocket本地地址**
+#### DatagramSocket本地地址
 
-若您在调用`listen(...)`之前已经绑定了[DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，您可以通过调用[localAddress](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#localAddress--)来查找套接字的本地地址（即UDP Socket这边的地址，它将返回一个InetSocketAddress，否则返回null。
+若您在调用`listen(...)`之前已经绑定了[`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html)，您可以通过调用[`localAddress`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#localAddress--)来查找套接字的本地地址（即UDP Socket这边的地址，它将返回一个InetSocketAddress，否则返回null。
 
-**关闭DatagramSocket**
+#### 关闭DatagramSocket
 
-您可以通过调用[close](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#close-io.vertx.core.Handler-)方法来关闭Socket，它将关闭Socket并释放所有资源。
+您可以通过调用[`close`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html#close-io.vertx.core.Handler-)方法来关闭Socket，它将关闭Socket并释放所有资源。
 
 
-### DNS客户端
+## DNS 客户端
 
 通常情况下，您需要以异步方式来获取DNS信息。
 
-但不幸的是，Java虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
+但不幸的是，Java 虚拟机本身附带的API是不可能的，因此Vert.x提供了它自己的完全异步解析DNS的API。
 
-若要获取DnsClient实例，您可以通过Vertx实例来创建一个。
+若要获取 `DnsClient` 实例，您可以通过 `Vertx` 实例来创建一个。
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 ```
 
-请注意，您可以传入InetSocketAddress参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
+请注意，您可以传入 `InetSocketAddress` 参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
 
-#### lookup
+### lookup
 
-当尝试为一个指定名称元素获取A（ipv4）或AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。它的操作方式和操作系统上使用`nslookup`类似。
+当尝试为一个指定名称元素获取A（ipv4）或 AAAA（ipv6）记录时，第一条被返回的（记录）将会被使用。它的操作方式和操作系统上使用 `nslookup` 类似。
 
-要为`vertx.io`获取A/AAAA记录，您需要像下面那样做：
+要为 `vertx.io` 获取 A/AAAA 记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -4914,11 +4908,11 @@ client.lookup("vertx.io", ar -> {
 });
 ```
 
-#### lookup4
+### lookup4
 
 尝试查找给定名称的A（ipv4）记录。第一个返回的（记录）将会被使用，因此它的操作方式与操作系统上使用`nslookup`类似。
 
-要查找`vertx.io`的A记录，您需要像下面那样做：
+要查找 `vertx.io` 的A记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -4931,11 +4925,11 @@ client.lookup4("vertx.io", ar -> {
 });
 ```
 
-#### lookup6
+### lookup6
 
-尝试查找给定名称的AAAA（ipv6）记录。第一个返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用`nslookup`类似。
+尝试查找给定名称的 AAAA（ipv6）记录。第一个返回的（记录）将会被使用，因此它的操作方式与在操作系统上使用 `nslookup` 类似。
 
-要查找`vertx.io`的AAAA记录，您需要像下面那样做：
+要查找 `vertx.io` 的 AAAA记录，您需要像下面那样做：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -4948,7 +4942,7 @@ client.lookup6("vertx.io", ar -> {
 });
 ```
 
-#### resolveA
+### resolveA
 
 尝试解析给定名称的所有A（ipv4）记录，这与在unix操作系统上使用`dig`类似。
 
@@ -4968,9 +4962,9 @@ client.resolveA("vertx.io", ar -> {
 });
 ```
 
-#### resolveAAAA
+### resolveAAAA
 
-尝试解析给定名称的所有AAAA（ipv6）记录，这与在unix操作系统上使用`dig`类似。
+尝试解析给定名称的所有AAAA（ipv6）记录，这与在Unix操作系统上使用`dig`类似。
 
 要查找`vertx.io`的所有AAAA记录，您通常会执行以下操作：
 
@@ -4988,9 +4982,9 @@ client.resolveAAAA("vertx.io", ar -> {
 });
 ```
 
-#### resolveCNAME
+### resolveCNAME
 
-尝试解析给定名称的所有CNAME记录，这与在unix操作系统上使用`dig`类似。
+尝试解析给定名称的所有CNAME记录，这与在Unix操作系统上使用`dig`类似。
 
 要查找`vertx.io`的所有CNAME记录，您通常会执行以下操作：
 
@@ -5008,7 +5002,7 @@ client.resolveCNAME("vertx.io", ar -> {
 });
 ```
 
-#### resolveMX
+### resolveMX
 
 尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器接受给定域的电子邮件。
 
@@ -5028,16 +5022,16 @@ client.resolveMX("vertx.io", ar -> {
 });
 ```
 
-请注意，列表将包含按照它们优先级排序的[MxRecord](http://vertx.io/docs/apidocs/io/vertx/core/dns/MxRecord.html)，这意味着列表中优先级低的MX记录会第一个优先出现在列表中。
+请注意，列表将包含按照它们优先级排序的[`MxRecord`](http://vertx.io/docs/apidocs/io/vertx/core/dns/MxRecord.html)，这意味着列表中优先级低的MX记录会第一个优先出现在列表中。
 
-[MxRecord](http://vertx.io/docs/apidocs/io/vertx/core/dns/MxRecord.html)允许您通过下边提供的方法访问MX记录的优先级和名称：
+[`MxRecord`](http://vertx.io/docs/apidocs/io/vertx/core/dns/MxRecord.html)允许您通过下边提供的方法访问MX记录的优先级和名称：
 
 ```java
 record.priority();
 record.name();
 ```
 
-#### resolveTXT
+### resolveTXT
 
 尝试解析给定名称的所有TXT记录，TXT记录通常用于定义域的额外信息。
 
@@ -5057,7 +5051,7 @@ client.resolveTXT("vertx.io", ar -> {
 });
 ```
 
-#### resolveNS
+### resolveNS
 
 尝试解析给定名称的所有NS记录，NS记录指定哪个DNS服务器托管给定域的DNS信息。
 
@@ -5077,7 +5071,7 @@ client.resolveNS("vertx.io", ar -> {
 });
 ```
 
-#### resolveSRV
+### resolveSRV
 
 尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这个额外信息。
 
@@ -5097,9 +5091,9 @@ client.resolveSRV("vertx.io", ar -> {
 });
 ```
 
-请注意，列表将包含按照它们优先级排序的[SrvRecord](http://vertx.io/docs/apidocs/io/vertx/core/dns/SrvRecord.html)，这意味着优先级低的记录会第一个优先出现在列表中。
+请注意，列表将包含按照它们优先级排序的[`SrvRecord`](http://vertx.io/docs/apidocs/io/vertx/core/dns/SrvRecord.html)，这意味着优先级低的记录会第一个优先出现在列表中。
 
-[SrvRecord](http://vertx.io/docs/apidocs/io/vertx/core/dns/SrvRecord.html)允许您访问SRV记录本身中包含的所有信息：
+[`SrvRecord`](http://vertx.io/docs/apidocs/io/vertx/core/dns/SrvRecord.html)允许您访问SRV记录本身中包含的所有信息：
 
 ```java
 record.priority();
@@ -5113,7 +5107,7 @@ record.target();
 
 有关详细信息，请参阅API文档。
 
-#### resolvePTR
+### resolvePTR
 
 尝试解析给定名称的PTR记录，PTR记录将`ipaddress`映射到名称。
 
@@ -5131,7 +5125,7 @@ client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
 });
 ```
 
-#### reverseLookup
+### reverseLookup
 
 尝试对ipaddress进行反向查找，这与解析PTR记录类似，但是允许您只传递ipaddress，而不是有效的PTR查询字符串。
 
@@ -5149,30 +5143,30 @@ client.reverseLookup("10.0.0.1", ar -> {
 });
 ```
 
-#### 错误处理
+### 错误处理
 
-如前边部分所述，DnsClient允许您传递一个Handler，一旦查询完成将会传入一个AsyncResult给Handler并通知它。
+如前边部分所述，`DnsClient` 允许您传递一个`Handler`，一旦查询完成将会传入一个`AsyncResult`给`Handler`并通知它。
 
-在出现错误的情况下，通知中将包含一个DnsException，该异常会包含一个说明为何失败的[DnsResponseCode](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html)。此DnsResponseCode可用于更详细检查原因。
+在出现错误的情况下，通知中将包含一个`DnsException`，该异常会包含一个说明为何失败的[`DnsResponseCode`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html)。此`DnsResponseCode`可用于更详细检查原因。
 
-可能的DnsResponseCode值是：
+可能的`DnsResponseCode`值是：
 
-* [NOERROR](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOERROR)没有找到给定查询的记录
-* [FORMERROR](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#FORMERROR)格式错误
-* [SERVFAIL](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#SERVFAIL)服务器故障
-* [NXDOMAIN](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXDOMAIN)名称错误
-* [NOTIMPL](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTIMPL)DNS服务器没实现
-* [REFUSED](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#REFUSED)DNS服务器拒绝查询
-* [YXDOMAIN](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXDOMAIN)域名不应该存在
-* [YXRESET](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXRRSET)资源记录不应该存在
-* [NXRRSET](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXRRSET)RRSET不存在
-* [NOTZONE](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTZONE)名称不在区域内
-* [BADVERS](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADVERS)版本的扩展机制不好
-* [BADSIG](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADSIG)非法签名
-* [BADKEY](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADKEY)非法密钥
-* [BADTIME](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADTIME)错误时间戳
+* [`NOERROR`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOERROR)没有找到给定查询的记录
+* [`FORMERROR`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#FORMERROR)格式错误
+* [`SERVFAIL`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#SERVFAIL)服务器故障
+* [`NXDOMAIN`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXDOMAIN)名称错误
+* [`NOTIMPL`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTIMPL)DNS服务器没实现
+* [`REFUSED`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#REFUSED)DNS服务器拒绝查询
+* [`YXDOMAIN`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXDOMAIN)域名不应该存在
+* [`YXRESET`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXRRSET)资源记录不应该存在
+* [`NXRRSET`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXRRSET)RRSET不存在
+* [`NOTZONE`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTZONE)名称不在区域内
+* [`BADVERS`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADVERS)版本的扩展机制不好
+* [`BADSIG`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADSIG)非法签名
+* [`BADKEY`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADKEY)非法密钥
+* [`BADTIME`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADTIME)错误时间戳
 
-所有这些错误都由DNS服务器本身“生成”，您可以从DnsException中获取DnsResponseCode，如：
+所有这些错误都由DNS服务器本身“生成”，您可以从`DnsException`中获取`DnsResponseCode`，如：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5193,25 +5187,25 @@ client.lookup("nonexisting.vert.xio", ar -> {
 });
 ```
 
-### 流
+## 流
 
 Vert.x有多个对象可以用于文件的读取和写入。
 
-在以前的版本中，`streams.adoc`软件包只能通过操作指定的[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象来实现文件读写。从现在开始，流不再与Buffer耦合，它们可以和任意类型的对象一起工作。
+在以前的版本中，只能通过操作指定的[`Buffer`](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象来实现文件读写。从现在开始，流不再与 `Buffer` 耦合，它们可以和任意类型的对象一起工作。
 
-在Vert.x中，写调用是立即返回的，而写操作的实际是在内部队列中排队写入。
+在 Vert.x 中，写调用是立即返回的，而写操作的实际是在内部队列中排队写入。
 
 不难看出，若写入对象的速度比实际写入底层数据资源速度快，那么写入队列就会无限增长，最终导致内存耗尽。
 
 为了解决这个问题，Vert.x API中的一些对象提供了简单的流程控制（回压）功能。
 
-任何可控制的写入流对象都实现了[WriteStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html)，相应的，任何可控制的读取流对象都实现了[ReadStream](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html)。
+任何可控制的写入流对象都实现了 [`WriteStream`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html) 接口，相应的，任何可控制的读取流对象都实现了 [`ReadStream`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html) 接口。
 
-让我们举个例子，我们要从ReadStream中读取数据，然后将数据写入WriteStream。
+让我们举个例子，我们要从`ReadStream`中读取数据，然后将数据写入`WriteStream`。
 
-一个非常简单的例子是从NetSocket读取然后写回到同一个NetSocket——因为NetSocket既实现了ReadStream也实现了WriteStream。请注意，这些操作适用于任何实现了ReadStream和WriteStream的对象，包括HTTP请求、HTTP响应、异步文件I/O、WebSocket等。
+一个非常简单的例子是从`NetSocket`读取然后写回到同一个`NetSocket` —— 因为`NetSocket`既实现了`ReadStream`也实现了`WriteStream` 接口。请注意，这些操作适用于任何实现了`ReadStream`和 `WriteStream` 接口的对象，包括HTTP 请求、HTTP 响应、异步文件 I/O 和 WebSocket等。
 
-这样做的一个原生的方法是直接获取已经读取的数据，并立即将其写入NetSocket：
+一个最简单的方法是直接获取已经读取的数据，并立即将其写入`NetSocket`：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5226,9 +5220,9 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-上面的例子有一个问题：如果从Socket读取数据的速度比写回Socket的速度快，那么它将在NetSocket的写队列中不断堆积，最终用完RAM。这是有可能会发生，例如，若Socket另一端的客户端读取速度不够快，无法快速地向连接的另一端回压。
+上面的例子有一个问题：如果从Socket读取数据的速度比写回Socket的速度快，那么它将在`NetSocket`的写队列中不断堆积，最终耗尽内存。这是有可能会发生，例如，若Socket另一端的客户端读取速度不够快，无法快速地向连接的另一端回压。
 
-由于NetSocket实现了WriteStream，我们可以在写入之前检查WriteStream是否已满：
+由于 `NetSocket` 实现了 `WriteStream` 接口，我们可以在写入之前检查 `WriteStream` 是否已满：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5244,7 +5238,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-这个例子不会用完RAM，但如果写入队列已满，我们最终会丢失数据。我们真正想要做的是在写入队列已满时暂停读取NetSocket：
+这个例子不会耗尽内存，但如果写入队列已满，我们最终会丢失数据。我们真正想要做的是在写入队列已满时暂停读取 `NetSocket`：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5260,7 +5254,7 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-我们已经快达到我们的目标，但还没有完全实现。现在NetSocket在文件已满时会暂停，但是当写队列处理完成时，我们需要取消暂停：
+我们已经快达到我们的目标，但还没有完全实现。现在 `NetSocket` 在文件已满时会暂停，但是当写队列处理完成时，我们需要取消暂停：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5279,9 +5273,9 @@ server.connectHandler(sock -> {
 }).listen();
 ```
 
-在这里，我们的目标实现了。当写队列准备好接收更多的数据时，[drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复NetSocket，允许读取更多的数据。
+在这里，我们的目标实现了。当写队列准备好接收更多的数据时，[`drainHandler`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复`NetSocket`的状态，允许读取更多的数据。
 
-在编写Vert.x应用程序时，这样做是很常见的，因此我们提供了一个名为[Pump](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html)的帮助类，它为您完成所有这些艰苦的工作。您只需要给ReadStream追加上WriteStream，然后启动它：
+在编写Vert.x 应用程序时，这样做是很常见的，因此我们提供了一个名为[`Pump`](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html)的帮助类，它为您完成所有这些艰苦的工作。您只需要给 `ReadStream` 追加上 `WriteStream`，然后启动它：
 
 ```java
 NetServer server = vertx.createNetServer(
@@ -5294,47 +5288,47 @@ server.connectHandler(sock -> {
 
 这和更加详细的例子完全一样。
 
-现在我们来看看ReadStream和WriteStream的方法。
+现在我们来看看 `ReadStream` 和 `WriteStream` 的方法。
 
-#### ReadStream
+### ReadStream
 
-ReadStream的实现类包括：[HttpClientResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html), [DatagramSocket](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html), [HttpClientRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html), [HttpServerFileUpload](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerFileUpload.html), [HttpServerRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html), [MessageConsumer](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html), [NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html), [WebSocket](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html), [TimeoutStream](http://vertx.io/docs/apidocs/io/vertx/core/TimeoutStream.html), [AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)。
-
-函数：
-
-* [handler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-)：设置一个处理器，它将从ReadStream读取项
-* [pause](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--)：暂停处理器，暂停时，处理器中将不会受到任何项
-* [resume](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--)：恢复处理器，若任何项到达则处理器将被调用
-* [exceptionHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#exceptionHandler-io.vertx.core.Handler-)若ReadStream发生异常，将被调用
-* [endHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#endHandler-io.vertx.core.Handler-)：当流到达时将被调用。这有可能是到达了描述文件的EOF、达到HTTP请求的请求结束、或TCP Socket的连接被关闭
-
-#### WriteStream
-
-WriteStream的实现类包括：[HttpClientRequest](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html), [HttpServerResponse](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html)，[WebSocket](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html), [NetSocket](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html), [AsyncFile](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html), [MessageProducer](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageProducer.html)
+`ReadStream`（可读流） 接口的实现类包括：[`HttpClientResponse`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html), [`DatagramSocket`](http://vertx.io/docs/apidocs/io/vertx/core/datagram/DatagramSocket.html), [`HttpClientRequest`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html), [`HttpServerFileUpload`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerFileUpload.html), [`HttpServerRequest`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html), [`MessageConsumer`](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html), [`NetSocket`](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html), [`WebSocket`](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html), [`TimeoutStream`](http://vertx.io/docs/apidocs/io/vertx/core/TimeoutStream.html), [`AsyncFile`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)。
 
 函数：
 
-* [write](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#write-java.lang.Object-)：写入一个对象到WriteStream，该方法将永远不会阻塞，内部是排队写入并且底层资源是异步写入。
-* [setWriteQueueMaxSize](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-)：设置写入队列被认为是*full*的对象的数量——方法writeQueueFull返回true。注意，当写队列被认为已满时，若写（操作）被调用则数据依然会被接收和排队。实际数量取决于流的实现，对于[Buffer](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)，尺寸代表实际写入的字节数，而并非缓冲区的数量。
-* [writeQueueFull](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#writeQueueFull--)：若写队列被认为已满，则返回true。
-* [exceptionHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#exceptionHandler-io.vertx.core.Handler-)：若WriteStream发生异常，则被调用。
-* [drainHandler](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)：若WriteStream被认为不再满，则处理器将被调用。
+* [`handler`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-)：设置一个处理器，它将从`ReadStream`读取项
+* [`pause`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--)：暂停处理器，暂停时，处理器中将不会受到任何项
+* [`resume`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--)：恢复处理器，若任何项到达则处理器将被调用
+* [`exceptionHandler`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#exceptionHandler-io.vertx.core.Handler-)若ReadStream发生异常，将被调用
+* [`endHandler`](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#endHandler-io.vertx.core.Handler-)：当流到达时将被调用。这有可能是到达了描述文件的EOF、达到HTTP请求的请求结束、或TCP Socket的连接被关闭
 
-#### 泵
+### WriteStream
 
-泵的实例有以下几种方法：
+`WriteStream`（可写流）接口的实现类包括：[`HttpClientRequest`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html), [`HttpServerResponse`](http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html)，[`WebSocket`](http://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html), [`NetSocket`](http://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html), [`AsyncFile`](http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html), [`MessageProducer`](http://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageProducer.html)
 
-* [start](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#start--)：启动泵。
-* [stop](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#stop--)：停止泵，当泵启动时它要处于停止模式。
-* [setWriteQueueMaxSize](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#setWriteQueueMaxSize-int-)：与WriteStream上的[setWriteQueueMaxSize](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-)相同。
+函数：
+
+* [`write`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#write-java.lang.Object-)：写入一个对象到 `WriteStream`，该方法将永远不会阻塞，内部是排队写入并且底层资源是异步写入。
+* [`setWriteQueueMaxSize`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-)：设置写入队列被认为是 *full* 的对象的数量——方法`writeQueueFull`返回`true`。注意，当写队列被认为已满时，若写（操作）被调用则数据依然会被接收和排队。实际数量取决于流的实现，对于[`Buffer`](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)，尺寸代表实际写入的字节数，而并非缓冲区的数量。
+* [`writeQueueFull`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#writeQueueFull--)：若写队列被认为已满，则返回`true`。
+* [`exceptionHandler`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#exceptionHandler-io.vertx.core.Handler-)：若`WriteStream`发生异常，则被调用。
+* [`drainHandler`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)：若`WriteStream`被认为不再满，则处理器将被调用。
+
+### 泵
+
+泵（Pump）的实例有以下几种方法：
+
+* [`start`](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#start--)：启动泵。
+* [`stop`](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#stop--)：停止泵，当泵启动时它要处于停止模式。
+* [`setWriteQueueMaxSize`](http://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#setWriteQueueMaxSize-int-)：与 `WriteStream` 接口的 [`setWriteQueueMaxSize`](http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-) 方法相同。
 
 一个泵可以启动和停止多次。
 
-当泵首次创建时，它不会启动，您需要调用start()方法来启动它。
+当泵首次创建时，它不会启动，您需要调用 `start()` 方法来启动它。
 
-### 记录解析器
+## 记录解析器
 
-记录解析器允许您轻松解析由字节序列或固定尺寸带分隔符的记录的协议。
+记录解析器（Record Parser）允许您轻松解析由字节序列或固定尺寸带分隔符的记录的协议。
 
 它将输入缓冲区序列转换为已配置的缓冲区序列（固定大小或带分隔符的记录）。
 
@@ -5376,27 +5370,27 @@ RecordParser.newFixed(4, h -> {
 });
 ```
 
-有关更多详细信息，请查看[RecordParser](http://vertx.io/docs/apidocs/io/vertx/core/parsetools/RecordParser.html)类。
+有关更多详细信息，请查看[`RecordParser`](http://vertx.io/docs/apidocs/io/vertx/core/parsetools/RecordParser.html)类。
 
-### 线程安全
+## 线程安全
 
-大多数Vert.x对象可以从被不同的线程安全地访问，但在相同的上下文中访问它们时，性能才是最优的。
+大多数Vert.x 对象可以从被不同的线程安全地访问，但在相同的上下文中访问它们时，性能才是最优的。
 
-例如，若您部署了一个创建NetServer的Verticle，该NetServer在处理器中提供了NetSocket实例，则最好始终从该Verticle的Event Loop中访问Socket实例。
+例如，若您部署了一个创建`NetServer`的Verticle，该`NetServer`在处理器中提供了`NetSocket` 实例，则最好始终从该Verticle的Event Loop中访问Socket 实例。
 
-如您坚持使用标准的Vert.x verticle部署模型，避免在verticles之间分享对象，那这种情况您无需考虑。
+如您坚持使用标准的Vert.x Verticle部署模型，避免在 Verticle 之间分享对象，那这种情况您无需考虑。
 
-### Metrics SPI
+## Metrics SPI
 
-默认情况下，Vert.x不会记录任何指标。相反，它为其他人提供了一个SPI，可以将其添加到类路径中。SPI是一项高级功能，允许实施者从Vert.x捕获事件以收集指标。有关详细信息，请参阅[API文档](http://vertx.io/docs/apidocs/io/vertx/core/spi/metrics/VertxMetrics.html)。
+默认情况下，Vert.x不会记录任何指标。相反，它为其他人提供了一个SPI，可以将其添加到类路径中。SPI是一项高级功能，允许实施者从Vert.x捕获事件以收集指标。有关详细信息，请参阅 [API 文档](http://vertx.io/docs/apidocs/io/vertx/core/spi/metrics/VertxMetrics.html)。
 
-若使用[setFactory](http://vertx.io/docs/apidocs/io/vertx/core/metrics/MetricsOptions.html#setFactory-io.vertx.core.spi.VertxMetricsFactory-)嵌入了Vert.x实例，也可以用编程方式指定度量工厂。
+若使用[`setFactory`](http://vertx.io/docs/apidocs/io/vertx/core/metrics/MetricsOptions.html#setFactory-io.vertx.core.spi.VertxMetricsFactory-)嵌入了Vert.x实例，也可以用编程方式指定度量工厂。
 
-### OSGi
+## OSGi
 
-Vert.x Core被打包成了OSGi Bundle，因此可以在任何OSGi R4.2+环境中使用，如`Apache Felix`或`Eclipse Equinox`，（这个）Bundle导出`io.vertx.core*`。
+Vert.x Core被打包成了 OSGi Bundle，因此可以在任何OSGi R4.2+环境中使用，如 `Apache Felix` 或 `Eclipse Equinox`，（这个）Bundle导出`io.vertx.core*`。
 
-但是Bundle对Jackson和Netty有一些依赖，若部署Vert.x Core Bundle则需要：
+但是 Bundle 对 Jackson 和 Netty 有一些依赖，若部署Vert.x Core Bundle则需要：
 
 * Jackson Annotation [2.6.0,3)
 * Jackson Core [2.6.2,3)
@@ -5427,15 +5421,15 @@ Vert.x Core被打包成了OSGi Bundle，因此可以在任何OSGi R4.2+环境中
 
 在Equinox上，您可能需要使用下边的框架属性禁用ContextFilter：`eclipse.bundle.setTCCL=false`。
 
-### 'vertx`命令行
+## vertx 命令行
 
-vertx命令用于和命令行中的Vert.x进行交互，主要用于运行Vert.x Verticle。为此，您需要下载并安装Vert.x发行版，并将安装目录中的`bin`添加到`PATH`环境变量中，还要确保您的`PATH`上有一个Java 8的JDK。
+vertx 命令行工具用于在终端中与 Vert.x 进行交互。主要用于运行 Vert.x Verticle。为此，您需要下载并安装Vert.x 发行版，并将安装目录中的`bin`添加到`PATH`环境变量中，还要确保您的`PATH`上有一个Java 8的JDK。
 
-*注意：JDK需要支持Java代码的快速编译。*
+> *请注意：JDK需要支持Java代码的快速编译。*
 
-#### 运行Verticle
+### 运行 Verticle
 
-您可以使用`vertx run`从命令行直接运行Vert.x的Verticle，以下是`run`命令的几个实例：
+您可以使用 `vertx run` 从命令行直接运行Vert.x 的 Verticle，以下是`run`命令的几个实例：
 
 ```
 vertx run my-verticle.js                                 (1)
@@ -5455,9 +5449,9 @@ vertx run MyVerticle.java                                (6)
 5. 部署一个已经打包成jar的Verticle，这个jar需要在类路径中
 6. 编译Java源代码并进行部署
 
-正如您在Java中可看到的，该Verticle的名称要么是Java完全限定类名，也可以指定Java源文件，Vert.x会为你编译它。
+正如您在Java中可看到的，该Verticle的名称要么是Java 完全限定类名，也可以指定Java 源文件，Vert.x会为你编译它。
 
-您可以用其他语言的前缀来指定Verticle的名称进行部署。例如：若Verticle是一个编译的Groovy类，您可以使用语言前缀`groovy:`，因此Vert.x知道它是一个Groovy类而不是Java类。
+您可以用其他语言的前缀来指定Verticle的名称进行部署。例如：若Verticle是一个编译的Groovy 类，您可以使用语言前缀`groovy:`，因此Vert.x 知道它是一个Groovy 类而不是Java 类。
 
 ```
 vertx run groovy:io.vertx.example.MyGroovyVerticle
@@ -5528,7 +5522,7 @@ vertx run my_verticle.rb -conf my_verticle.conf
 
 该配置可通过Core API在Verticle内部可用。
 
-当使用Vert.x的高可用功能时，您可能需要创建一个Vert.x的裸实例。此实例在启动时未部署任何Verticle，但它若接收到若集群中的另一个节点死亡，则会创建一个新的裸实例，并且启动：
+当使用Vert.x的高可用功能时，您可能需要创建一个Vert.x的 *裸* 实例。此实例在启动时未部署任何Verticle，但它若接收到若集群中的另一个节点死亡，则会在此节点运行之前挂掉的实例。如需要创建一个 *裸* 实例，执行以下命令：
 
 ```
 vertx bare
@@ -5536,45 +5530,45 @@ vertx bare
 
 根据您的集群配置，您可能需要添加`cluster-host`和`cluster-port`参数。
 
-#### 执行打包成fat-jar的Vert.x应用
+### 执行打包成 fat-jar 的Vert.x 应用
 
-一个fat-jar是一个包含了所有依赖项jar的可执行的jar，这意味着您不必在执行jar的机器上预先安装Vert.x。它像任何可执行的Java jar一样可直接执行：
+fat-jar 是一个包含了所有依赖项jar的可执行的jar，这意味着您不必在执行jar的机器上预先安装Vert.x。它像任何可执行的Java jar一样可直接执行：
 
 ```
 java -jar my-application-fat.jar
 ```
 
-对于这点，Vert.x没什么特别的，您可以使用任何Java应用程序。
+对于这点，Vert.x 没什么特别的，您可以使用任何Java应用程序。
 
-您可以创建自己的主类并在MANIFEST中指定，但建议您将代码编写成Verticle，并使用Vert.x中的[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类（`io.vertx.core.Launcher`）作为您的主类。这是在命令行中运行Vert.x使用的主类，因此允许您指定命令行参数，如`-instances`以便更轻松地扩展应用程序。
+您可以创建自己的主类并在 MANIFEST 中指定，但建议您将代码编写成Verticle，并使用Vert.x中的[`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类（`io.vertx.core.Launcher`）作为您的主类。这是在命令行中运行Vert.x使用的主类，因此允许您指定命令行参数，如 `-instances` 以便更轻松地扩展应用程序。
 
-要将您的Verticle全部部署在这个`fatjar`中时，您必须将下边信息写入MANIFEST：
+要将您的Verticle全部部署在这个`fat-jar`中时，您必须将下边信息写入MANIFEST：
 
 * `Main-Class`设置为`io.vertx.core.Launcher`
-* `Main-Verticle`指定主要Verticle（Java完全限定类名或脚本文件名）
+* `Main-Verticle`指定要运行的Main Verticle（Java完全限定类名或脚本文件名）
 
-您还可以提供您将传递给`vertx run`的常用命令行参数：
+您还可以提供您将传递给 `vertx run` 的常用命令行参数：
 
 ```
 java -jar my-verticle-fat.jar -cluster -conf myconf.json
 java -jar my-verticle-fat.jar -cluster -conf myconf.json -cp path/to/dir/conf/cluster_xml
 ```
 
-*注意：请参阅示例存Repository中的Maven/Gradle最简单的Maven/Gradle的Verticle示例了解如何构造fatjar的应用。*
+> 注意：请参阅官方 Vert.x Examples 仓库中中的 Maven/Gradle 相应示例来了解如何将应用打包成 *fat-jar*。
 
-一个fat jar默认会执行`run`命令。
+通过 fat jar 运行应用时，默认会执行 `run` 命令。
 
-#### 显示Vert.x的版本
+### 显示Vert.x的版本
 
-若想显示Vert.x的版本，则：
+若想显示Vert.x的版本，只需执行：
 
 ```
 vertx version
 ```
 
-#### 其他命令
+### 其他命令
 
-除了`run`和`version`以外，`vertx`命令行和`Launcher`还提供了其他命令：
+除了`run`和`version`以外，`vertx`命令行和 `Launcher` 还提供了其他命令：
 
 您可以使用下边命令创建一个`bare`实例：
 
@@ -5616,13 +5610,13 @@ java -jar my-verticle-fat.jar list
 
 若选项值包含空白，请不要忘记在“”（双引号）之间包装值。
 
-由于`start`命令产生一个新的进程，传递给JVM的java选项不会被传播，所以您必须使用`java-opts`来配置JVM（`-X`，`-D`...）。若您使用`CLASSPATH`环境变量，请确保路径下包含所有需要的jar（vertx-core、您的jar和所有依赖项）。
+由于`start`命令产生一个新的进程，传递给JVM的java选项不会被传播，所以您必须使用`java-opts`来配置JVM（`-X`，`-D`...）。若您使用 `CLASSPATH` 环境变量，请确保路径下包含所有需要的jar（vertx-core、您的jar和所有依赖项）。
 
-该命令集是可扩展的，请参考[Extending the vert.x Launcher](http://vertx.io/docs/vertx-core/java/#_extending_the_vert_x_launcher)部分。
+该命令集是可扩展的，请参考 [Extending the vert.x Launcher](http://vertx.io/docs/vertx-core/java/#_extending_the_vert_x_launcher) 部分。
 
-#### 实时重部署
+### 实时重部署
 
-在开发时，可以方便在文件更改时实时重新部署应用程序。`vertx`命令行工具和更普通`Launcher`类提供了这个功能，这里有些例子：
+在开发时，可以方便在文件更改时实时重新部署应用程序。`vertx` 命令行工具和更普遍的`Launcher`类提供了这个功能。这里有些例子：
 
 ```
 vertx run MyVerticle.groovy --redeploy="**/*.groovy" --launcher-class=io.vertx.core.Launcher
@@ -5633,20 +5627,20 @@ java io.vertx.core.Launcher run org.acme.MyVerticle --redeploy="**/*.class"  --l
 
 重新部署过程如下执行。首先，您的应用程序作为后台应用程序启动（使用`start`命令）。当发现文件更改时，该进程将停止并重新启动该应用、这样可避免泄露。
 
-要启用实时重新部署，请将`--redeploy`选项传递给`run`命令。`--redeploy`表示要监视的文件集，这个集合可使用`Ant`样式模式（使用**，*和?），您也可以使用逗号（,）分隔它们来指定多个集合。模式相当于当前工作目录。
+要启用实时重新部署，请将`--redeploy`选项传递给`run`命令。`--redeploy`表示要监视的文件集，这个集合可使用`Ant`样式模式（使用`**`，`*`和`?`），您也可以使用逗号（`,`）分隔它们来指定多个集合。模式相当于当前工作目录。
 
 传递给`run`命令的参数最终会传递给应用程序，可使用`--java-opts`配置JVM虚拟机选项。
 
-`--launcher-class`选项确定应用程序的主类启动器。它通常是一个[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)，单您已使用了您自己的主类。
+`--launcher-class`选项确定应用程序的主类启动器。它通常是一个 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)，单您已使用了您自己的主类。
 
 也可以在IDE中使用重部署功能：
 
-* **Eclipse**：创建一个运行配置，使用`io.vertx.core.Launcher`类作为主类。在*Program Arguments*区域（参数选项卡中），写入`run your-verticle-fully-qualified-name --redeploy=**/*.java --launcher-class=io.vertx.core.Launcher`，您还可以添加其他参数。随着Eclipse在保存时会增量编译您的文件，重部署工作会顺利进行。
-* **IntelliJ**：创建一个运行配置（应用）,将Main类设置为`io.vertx.core.Launcher`。在程序参数中写：`run your-verticle-fully-qualified-name --redeploy=**/*.class --launcher-class=io.vertx.core.Launcher`。要触发重新部署，您需要显示构造项目或模块（Build -> Make project）。
+* **Eclipse**：创建一个运行配置，使用`io.vertx.core.Launcher`类作为主类。在 *Program Arguments* 区域（参数选项卡中），写入`run your-verticle-fully-qualified-name --redeploy=**/*.java --launcher-class=io.vertx.core.Launcher`，您还可以添加其他参数。随着 Eclipse 在保存时会增量编译您的文件，重部署工作会顺利进行。
+* **IntelliJ IDEA**：创建一个运行配置（应用）,将主类设置为`io.vertx.core.Launcher`。在程序参数中写：`run your-verticle-fully-qualified-name --redeploy=**/*.class --launcher-class=io.vertx.core.Launcher`。要触发重新部署，您需要显示构造项目或模块（Build -> Make project）。
 
-要调试应用程序，请将运行配置创建为远程应用程序，并使用`--java-opts`配置调试器。每次重新部署后，请勿忘记`重新插入`调试器，因为它每次都会创建一个新进程。
+要调试应用程序，请将运行配置创建为远程应用程序，并使用`--java-opts`配置调试器。每次重新部署后，请勿忘记重新插入(re-plug)调试器，因为它每次都会创建一个新进程。
 
-您还可以在重新部署周期中挂接构建过程：
+您还可以在重新部署周期中挂接（hook）构建过程：
 
 ```
 java -jar target/my-fat-jar.jar --redeploy="**/*.java" --on-redeploy="mvn package"
@@ -5661,47 +5655,47 @@ java -jar build/libs/my-fat-jar.jar --redeploy="src/**/*.java" --on-redeploy='./
 * `redeploy-grace-period`：在2次重新部署之间等待的时间（以毫秒为单位），默认为1000ms
 * `redeploy-termination-period`：停止应用程序后等待的时间（在启动用户命令之前）。这个在Windows上非常有用，因为这个进程并没立即被杀死。时间以毫秒为单位，默认20ms
 
-### 集群管理器
+## 集群管理器
 
-在Vert.x中，集群管理器可用于各种功能，包括：
+在 Vert.x 中，集群管理器可用于各种功能，包括：
 
-* 对集群中Vert.x节点发现和分组
+* 对集群中 Vert.x 节点发现和分组
 * 维护集群范围中的主题订阅者列表（所以我们可知道哪些节点对哪个Event Bus地址感兴趣）
 * 分布式Map的支持
 * 分布式锁
 * 分布式计数器
 
-集群管理器不处理Event Bus节点之间的传输，这是由Vert.x直接通过TCP连接完成。
+集群管理器不处理Event Bus节点之间的传输，这是由 Vert.x 直接通过TCP连接完成。
 
 Vert.x发行版中使用的默认集群管理器是使用的[Hazelcast](http://hazelcast.com/)集群管理器，但是它可以轻松被替换成实现了Vert.x集群管理器接口的不同实现，因为Vert.x集群管理器可替换的。
 
-集群管理器必须实现[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)接口，Vert.x在运行时使用Java的服务加载器（[Service Loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html)）功能查找集群管理器，以便在类路径中查找[ClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)的实例。
+集群管理器必须实现[`ClusterManager`](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)接口，Vert.x在运行时使用Java的服务加载器（[Service Loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html)）功能查找集群管理器，以便在类路径中查找[`ClusterManager`](http://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html)的实例。
 
 若您在命令行中使用Vert.x并要使用集群，则应确保Vert.x安装的`lib`目录包含您的集群管理器jar。
 
-若您在Maven/Gradle项目使用Vert.x，则只需将集群管理器jar作为项目依赖添加。
+若您在 Maven/Gradle 项目使用Vert.x，则只需将集群管理器jar作为项目依赖添加。
 
-您也可以以编程的方式在嵌入Vert.x时使用[setClusterManager](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setClusterManager-io.vertx.core.spi.cluster.ClusterManager-)指定集群管理器。
+您也可以以编程的方式在嵌入Vert.x 时使用 [`setClusterManager`](http://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setClusterManager-io.vertx.core.spi.cluster.ClusterManager-) 指定集群管理器。
 
-### 日志记录
+## 日志记录
 
 Vert.x使用内置的日志API进行记录日志，默认实现使用JDK（JUL）日志，不需要额外的依赖项。
 
-#### 配置JUL日志记录
+### 配置JUL日志记录
 
 一个JUL日志记录配置文件可以使用普通的JUL方式指定——通过提供一个名为`java.util.logging.config.file`的系统属性值为您的配置文件。更多关于此部分以及JUL配置文件结构的内容，请参阅JUL日志记录文档。
 
 Vert.x还提供了一种更方便的方式指定配置文件，无需设置系统属性。您只需在您的类路径中提供名为`vertx-default-jul-logging.properties`的JUL配置文件（例如在您的fatjar中），Vert.x将使用该配置文件配置JUL。
 
-#### 使用另一个日志框架
+### 使用另一个日志框架
 
 如果您不希望Vert.x使用JUL记录日志，您可以为其配置另一个日志记录框架，例如Log4J或SLF4J。
 
-为此，您应该设置一个名为`vertx.logger-delegate-factory-class-name`的系统属性，该属性的值是一个实现了[LogDelegateFactory](http://vertx.io/docs/apidocs/io/vertx/core/spi/logging/LogDelegateFactory.html)接口的Java类名。我们为Log4J（版本1）、Log4J 2和SLF4J提供了预设的实现，类名为：`io.vertx.core.logging.Log4jLogDelegateFactory`，`io.vertx.core.logging.Log4j2LogDelegateFactory`和`io.vertx.core.logging.SLF4JLogDelegateFactory`。如您要使用这些实现，还应确保相关的Log4J或SLF4J的jar在您的类路径上。
+为此，您应该设置一个名为`vertx.logger-delegate-factory-class-name`的系统属性，该属性的值是一个实现了 [`LogDelegateFactory`](http://vertx.io/docs/apidocs/io/vertx/core/spi/logging/LogDelegateFactory.html) 接口的Java 类名。我们为Log4J（版本1）、Log4J 2和SLF4J提供了预设的实现，类名为：`io.vertx.core.logging.Log4jLogDelegateFactory`，`io.vertx.core.logging.Log4j2LogDelegateFactory`和`io.vertx.core.logging.SLF4JLogDelegateFactory`。如您要使用这些实现，还应确保相关的Log4J或SLF4J的jar在您的类路径上。
 
 请注意，提供的Log4J 1代理不支持参数化消息。Log4J 2的代理使用了像SLF4J代理这样的`{}`语法，JUL代理使用如`{x}`语法。
 
-#### 应用中记录日志
+### 应用中记录日志
 
 Vert.x本身只是一个库，您可以在自己的应用程序使用任何日志库的API来记录日志。
 
@@ -5716,7 +5710,7 @@ logger.info("something happened");
 logger.error("oops!", exception);
 ```
 
-#### Netty日志记录
+### Netty日志记录
 
 配置日志记录时，您也应该关心配置Netty日志记录。
 
@@ -5733,9 +5727,9 @@ Netty不依赖于外部日志配置（例如系统属性），而是根据Netty�
 InternalLoggerFactory.setDefaultFactory(Log4JLoggerFactory.INSTANCE);
 ```
 
-#### 故障排除
+### 故障排除
 
-**SLF4J启动警告**
+#### SLF4J启动警告
 
 若您在启动应用程序时看到以下信息：
 
@@ -5745,11 +5739,11 @@ SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 
-这意味着您的类路径中有`SLF4J-API`却没绑定。`SLF4J`记录的消息将会丢失。您应该将绑定加入您的类路径。检查[https://www.slf4j.org/manual.html#swapping](https://www.slf4j.org/manual.html#swapping)选择绑定并配置。
+这意味着您的类路径中有`SLF4J-API`却没绑定。`SLF4J`记录的消息将会丢失。您应该将绑定加入您的类路径。参考 [SLF4J user manual - Binding with a logging framework at deployment time](https://www.slf4j.org/manual.html#swapping) 选择绑定并配置。
 
 请注意，Netty会寻找`SLF4-API`的jar，并在缺省情况下使用它。
 
-**对等连接重置**
+#### 对等连接重置
 
 若您的日志显示一堆：
 
@@ -5759,7 +5753,7 @@ SEVERE: java.io.IOException: Connection reset by peer
 ```
 这意味着客户端正在重置HTTP连接，而不是关闭它。此消息还可能表示您没有读取完整的有效负荷（连接在读取完全之前被切断）。
 
-### 主机名解析
+## 主机名解析
 
 Vert.x使用地址解析器将主机名解析为IP地址，而不是JVM内置的阻塞解析器。
 
@@ -5768,9 +5762,9 @@ Vert.x使用地址解析器将主机名解析为IP地址，而不是JVM内置的
 * 操作系统的hosts文件
 * DNS查询服务器列表
 
-默认情况下，它将使用环境中系统DNS服务器地址的列表，若该列表无法检索，将使用Google的公共DNS服务器"8.8.8.8"和"8.8.4.4"。
+默认情况下，它将使用环境中系统DNS服务器地址的列表，若该列表无法检索，将使用Google的公共DNS服务器 `8.8.8.8` 和 `8.8.4.4`。
 
-创建[Vertx](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html)实例时也可配置DNS服务器：
+创建 [`Vertx`](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html) 实例时也可配置DNS 服务器：
 
 ```java
 Vertx vertx = Vertx.vertx(new VertxOptions().
@@ -5781,25 +5775,25 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 );
 ```
 
-DNS服务器的默认端口为`53`，当服务器使用不同的端口时，可以使用冒号分隔符设置该端口：`192.168.0.2:40000`。
+DNS 服务器的默认端口为`53`，当服务器使用不同的端口时，可以使用冒号分隔符设置该端口：`192.168.0.2:40000`。
 
-> 请注意： *有时可能需要使用JVM内置解析器，JVM系统属性`-Dvertx.disableDnsResolver=true`激活该行为*
+> 请注意：有时可能需要使用JVM内置解析器。可以在启动的时候加上JVM系统属性 `-Dvertx.disableDnsResolver=true` 激活该行为。
 
-#### 故障转移
+### 故障转移
 
-当服务器没有及时回复时，尝试从列表中选择下一个解析器，搜索（数量）的限制由[setMaxQueries](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setMaxQueries-int-)设置（默认值是4个查询）
+当服务器没有及时回应时，尝试从列表中选择下一个解析器，搜索（数量）的限制由[`setMaxQueries`](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setMaxQueries-int-)设置（默认值是4个查询）
 
-若解析器在[getQueryTimeout](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#getQueryTimeout--)毫秒内没有收到正确答案（默认为5秒），DNS查询被视为失败。
+若解析器在[`getQueryTimeout`](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#getQueryTimeout--)毫秒内没有收到正确答案（默认为5秒），DNS查询被视为失败。
 
 #### 服务器列表轮询
 
 默认情况下，DNS服务器选择使用第一个，其余的服务器用于故障转移。
 
-您可以配置[setRotateServers](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-)为true，让解析器使用轮询选择。它会在服务器之间传播查询负载，并避免所有的查找都找到列表中的第一个服务器。
+您可以配置 [`setRotateServers`](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-) 为 `true`，让解析器使用轮询选择。它会在服务器之间传播查询负载，并避免所有的查找都找到列表中的第一个服务器。
 
 故障转移仍然适用，并将使用列表中的下一个服务器。
 
-#### 主机映射
+### 主机映射
 
 操作系统的hosts文件用于对ipaddress执行主机名查找。
 
@@ -5813,7 +5807,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 );
 ```
 
-#### 搜索域名
+### 搜索域名
 
 默认情况下，解析器将使用环境中的系统DNS搜索域，或者，可提供明确的显示搜索域列表：
 
@@ -5824,35 +5818,35 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 );
 ```
 
-当使用搜索域列表时，点数的阀值为1或从Linux上的`/etc/resolv.conf`加载，也可使用[setNdots](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setNdots-int-)配置特定值。
+当使用搜索域列表时，点数的阈值为`1`，或从Linux上的`/etc/resolv.conf`加载，也可使用 [`setNdots`](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setNdots-int-) 方法配置特定值。
 
-### 高可用/故障转移
+## 高可用/故障转移
 
-Vert.x允许您运行支持高可用（HA——High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然死亡时，该Veritlce将迁移到另一个Vert.x实例。这个Vert.x实例必须在同一个集群中。
+Vert.x允许您运行支持高可用（HA，High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然挂掉时，该Veritlce将迁移到另一个Vert.x 实例。这个Vert.x 实例必须在同一个集群中。
 
-#### 自动故障转移
+### 自动故障转移
 
-当Vert.x启用HA运行时，若一个运行了Verticle的Vert.x实例失败或死亡，则Verticle将自动重新部署到集群中的另一个Vert.x实例中。我们称这个为Verticle故障转移。
+当Vert.x启用HA运行时，若一个运行了Verticle的Vert.x 实例失败或挂掉，则此Verticle将自动重新部署到集群中的另一个Vert.x 实例中。我们称这个为 Verticle 故障转移（failover）。
 
-若要启用HA运行Vert.x，需要添加`-ha`参数到命令行：
+若要启用HA模式，在启动 Vert.x 应用的时候需要添加`-ha`参数到命令行：
 
 ```
 vertx run my-verticle.js -ha
 ```
 
-现在开启了HA环境，在集群中需要多添加一个Vert.x实例，所以假设您已经有另一个已经启动的Vert.x实例，例如：
+现在开启了HA环境，在集群中需要多添加一个Vert.x 实例，所以假设您已经有另一个已经启动的Vert.x 实例，例如：
 
 ```
 vertx run my-other-verticle.js -ha
 ```
 
-如果运行了`my-verticle.js`的Vert.x实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x实例将自动重新部署`my-verticle.js`，所以现在这个Vert.x实例正在运行两个Verticle。
+如果运行了`my-verticle.js`的Vert.x 实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x 实例将自动重新部署`my-verticle.js`，所以现在这个Vert.x 实例正在运行两个Verticle。
 
-> 请注意： *只有当第二个Vert.x实例可访问verticle文件（这里是my-verticle.js）时，迁移才是可能的。*
+> 请注意：只有当第二个Vert.x 实例可访问对应的 verticle 文件（这里是 `my-verticle.js`）时，迁移才是可能的。
 
-> 重要： *请注意，干净地关闭Vert.x实例不会导致故障转移发生，例如：**CTRL-C**或**kill -SIGNINT***
+> 重要提示：请注意，干净地关闭Vert.x实例不会导致故障转移发生，例如：**CTRL-C** 或 **kill -SIGNINT**。
 
-您也可以启动裸的Vert.x实例——即最初不运行任何Verticle的实例，它们也将为集群中的节点进行故障转移。要启动一个裸实例，您只需做：
+您也可以启动裸的Vert.x 实例 —— 即最初不运行任何Verticle的实例，它们也将为集群中的节点进行故障转移。要启动一个裸实例，您只需做：
 
 ```
 vertx run -ha
@@ -5860,9 +5854,9 @@ vertx run -ha
 
 当使用`-ha`开关时，您不需要提供`-cluster`开关，因为若要使用HA就假定是集群。
 
-> 请注意： *根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机cluster-host和集群端口cluster-port参数。*
+> 请注意： 根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机 `cluster-host` 和集群端口 `cluster-port` 参数。
 
-#### HA组
+### HA组
 
 当使用Vert.x运行实例时，还可以选择指定的HA组。HA组表示集群中的逻辑节点组。只有具有相同HA组的节点能执行故障转移。若不指定HA组，则使用默认组`__DEFAULT__`。
 
@@ -5896,15 +5890,15 @@ vertx run yet-another-verticle.js -ha -hagroup g2
 
 若终端3中的实例被杀掉，因为这个组中没有其他Vert.x实例，则它不会故障转移。
 
-#### 处理网络分区——Quora
+### 处理网络分区 - Quora
 
-高可用HA实现支持Quora，Quorum是分布式事务必须获得的最小票数才能被允许在分布式系统中执行操作的一个参数。
+高可用HA实现同样支持 Quora（多数派机制）。Quorum 是分布式事务必须获得的最小票数才能被允许在分布式系统中执行操作的一个参数。
 
-在启动Vert.x实例时，您可以指示它在部署任何HA部署之前需要一个`quorum`。该上下文环境中，一个quorum是集群中特定组的最小节点数。通常您选择quorum大小为`Q = 1 + N / 2`，其中N是组中节点数。若集群中的Q节点少于HA节点，HA部署将被撤销。如果/当quorum重新获取时，他们将重新部署。通过这样做您可以防止网络分区，a.k.a. *split brain*
+在启动 Vert.x 实例时，您可以指示它在部署任何HA部署之前需要一个`quorum`。该上下文环境中，一个 quorum 是集群中特定组的最小节点数。通常您选择 quorum 大小为`Q = 1 + N / 2`，其中N是组中节点数。若集群中的Q节点少于HA节点，HA部署将被撤销。如果/当 quorum 重新获取时，他们将重新部署。通过这样做您可以防止网络分区，也就是脑裂（split brain）。
 
- [`这里`](https://zh.wikipedia.org/wiki/Quorum_(%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F))有更多关于quora的信息。
+更多关于Quorum（多数派机制）的信息，请参考 [`这里`](http://en.wikipedia.org/wiki/Quorum_(distributed_computing)。
 
-若要使用quorum运行Vert.x实例，您可以在命令行中指定`-quorum`，例如：
+若要使用 quorum 运行Vert.x实例，您可以在命令行中指定`-quorum`，例如：
 
 在第一个终端：
 
@@ -5926,43 +5920,43 @@ vertx run my-other-verticle.js -ha -quorum 3
 vertx run yet-another-verticle.js -ha -quorum 3
 ```
 
-妙极！——我们有三个节点，这是quorum设置的值，此时，模块将自动部署在所有实例上。
+妙极！—— 我们有三个节点，这是 quorum 设置的值，此时，模块将自动部署在所有实例上。
 
-若我们现在关闭或杀死其中一个节点，那么这些模块将在其他节点上自动撤销，因为不再满足quorum（法定人数）。
+若我们现在关闭或杀死其中一个节点，那么这些模块将在其他节点上自动撤销，因为不再满足 quorum（法定人数）。
 
-Quora也可以与HA组合使用，在这种情况下，每个特定组会解决Quora。
+Quora 也可以与HA组合使用，在这种情况下，每个特定组会解决 Quora。
 
-### 安全注意事项
+## 安全注意事项
 
-Vert.x是一个工具包，而不是一个舆论框架来强迫您以某种方式做事情。这赋予了开发人员以更强大的能力，同时也伴随着更大的责任（译者注：能力越大，责任越大，小蜘蛛他叔叔说的）。
+Vert.x 是一个工具包，而不是来强迫您以某种方式做事情的框架。这赋予了开发人员以更强大的能力，同时也伴随着更大的责任（译者注：能力越大，责任越大，小蜘蛛他叔叔说的）。
 
 搭配其它工具包，使得编写不安全的应用程序成为可能，因此在开发时需谨慎，尤其是当您将其对公众发布的时候（如在互联网上发布）。
 
-#### Web应用
+### Web 应用
 
-如果编写Web应用程序，强烈建议您直接使用Vert.x Web而非直接使用Vert.x Core以提供资源或处理文件上传。
+如果编写Web 应用程序，强烈建议您直接使用Vert.x Web而非直接使用Vert.x Core以提供资源或处理文件上传。
 
 Vert.x Web对请求中的路径进行了规范，以防止恶意客户端通过伪造URL来访问Web根目录以外的资源。
 
 类似地，对于文件上传Vert.x Web提供上传到磁盘上已知位置的功能，且不依赖客户端提供的文件名，客户端提供的文件名可被恶意伪装成上传到硬盘上的不同位置。
 
-Vert.x Core本身不提供这样的检查，所以这取决于开发者您自身如何实现了。
+Vert.x Core 本身不提供这样的检查，所以这取决于开发者您自身如何实现了。
 
-#### 集群Event Bus流量
+### 集群模式 Event Bus 流量
 
-当在网络上的不同Vert.x节点之间创建集群Event Bus时，流量将通过未加密报文发送，因此若您有要发送的机密数据，而您的Vert.x节点不在授信的网络上，请勿使用。
+当在网络上的不同Vert.x 节点之间创建集群模式下的 Event Bus 时，流量将通过未加密报文发送，因此若您有要发送的机密数据，而您的Vert.x 节点不在授信的网络上，请勿使用。
 
-#### 标准安全最佳实践
+### 标准安全最佳实践
 
 任何服务都可能存在潜在的漏洞，无论是使用Vert.x还是任何其他工具包，因此始终遵循安全最佳实践，特别是当您的服务面向公众。
 
 例如，您应该始终在DMZ中运行它们，并使用具有受限权限的用户账户，以限制服务受到损害的程度。
 
-### Vert.x命令行接口API
+## Vert.x 命令行接口API
 
 Vert.x Core提供了一个用于解析传递给程序的命令行参数API。
 
-它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类中使用，可以在fat-jar和`vertx`命令行工具中使用。另外，它支持多语言（可用于任何支持的语言），并可在Vert.x Shell中使用。
+它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类中使用，可以在 fat-jar 和 `vertx` 命令行工具中使用。另外，它支持多语言（可用于任何支持的语言），并可在Vert.x Shell中使用。
 
 Vert.x CLI提供了一个描述命令行界面的模型，同时也是一个解析器，这个解析器可支持不同的语法：
 
@@ -5978,9 +5972,9 @@ Vert.x CLI提供了一个描述命令行界面的模型，同时也是一个解�
 2. 解析用户命令行
 3. 查询/审问
 
-#### 定义阶段
+### 定义阶段
 
-每个命令行界面必须定义将要使用的选项和参数集合。它也需要一个名字。CLI API使用[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[Argument](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)类来描述选项和参数：
+每个命令行界面必须定义将要使用的选项和参数集合。它也需要一个名字。CLI API使用 [`Option`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 和 [`Argument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html) 类来描述选项和参数：
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6000,11 +5994,11 @@ CLI cli = CLI.create("copy")
         .setArgName("target"));
 ```
 
-您可以看到，您可以使用[CLI.create](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#create-java.lang.String-)创建一个新的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)。传递的字符串是CLI的名称。创建后，您可以设置摘要和描述，摘要的目的是简短（一行），而描述可以包含更多细节。每个选项和参数也使用[addArgument](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addArgument-io.vertx.core.cli.Argument-)和[addOption](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addOption-io.vertx.core.cli.Option-)方法添加到CLI对象上。
+您可以看到，您可以使用[`CLI.create`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#create-java.lang.String-)创建一个新的[`CLI`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)。传递的字符串是CLI的名称。创建后，您可以设置摘要和描述，摘要的目的是简短（一行），而描述可以包含更多细节。每个选项和参数也使用[`addArgument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addArgument-io.vertx.core.cli.Argument-)和[`addOption`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addOption-io.vertx.core.cli.Option-)方法添加到CLI对象上。
 
-**选项**
+#### 选项
 
-[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是由用户命令行中存在的*键*标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用`--`前缀，而短名称与单个`-`一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志，必须使用[setFlag](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)声明。默认情况下，选项会接受一个值，但是您可以使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)配置该选项接收多个值：
+[`Option`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 是由用户命令行中存在的 *键* 标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用 `--` 前缀，而短名称与单个 `-` 一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志(`flag`)，必须使用 [`setFlag`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-) 声明。默认情况下，选项会接受一个值，但是您可以使用 [`setMultiValued`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-) 方法配置该选项接收多个值：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6038,7 +6032,7 @@ CLI cli = CLI.create("some-name")
         .setDescription("an optional option with a default value"));
 ```
 
-可以使用[setHidden](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-)方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（针对高级用户）。
+可以使用 [`setHidden`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-) 方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（针对高级用户）。
 
 如果选项值被限制为一个固定集合，您可以设置不同的可接受选项：
 
@@ -6053,11 +6047,11 @@ CLI cli = CLI.create("some-name")
 
 也可以从JSON表单中实例化选项。
 
-**参数**
+#### 参数
 
-和选项不同，参数不具有*键*并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
+和选项不同，参数不具有 *键* 并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
 
-参数没有名称，使用基于0的索引进行标识。第一个参数的索引为0：
+参数没有名称，使用基于 0 的索引进行标识。第一个参数的索引为 0：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6085,20 +6079,20 @@ CLI cli = CLI.create("some-name")
         .setArgName("arg2"));
 ```
 
-`argName`是可选的，并在消息中使用。
+`argName` 是可选的，并在消息中使用。
 
-相比选项，[Argument](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)可以：
+相比选项，[`Argument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)可以：
 
-* 使用[setHidden](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setHidden-boolean-)隐藏
-* 使用[setRequired](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setRequired-boolean-)设置必填
-* 使用[setDefaultValue](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setDefaultValue-java.lang.String-)设置默认值
-* 使用[setMultiValued](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setMultiValued-boolean-)设置接收多个值——只有最后一个参数可以是多值的。
+* 使用[`setHidden`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setHidden-boolean-)隐藏
+* 使用[`setRequired`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setRequired-boolean-)设置必填
+* 使用[`setDefaultValue`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setDefaultValue-java.lang.String-)设置默认值
+* 使用[`setMultiValued`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setMultiValued-boolean-)设置接收多个值——只有最后一个参数可以是多值的。
 
 参数也可以从JSON表单中实例化。
 
-**生成Usage**
+#### 生成 usage 信息
 
-一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以生成Usage消息：
+一旦您的[`CLI`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以生成 *usage* 信息：
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6121,7 +6115,7 @@ StringBuilder builder = new StringBuilder();
 cli.usage(builder);
 ```
 
-上边生成的Usage消息如下：
+上边生成的 *usage* 信息如下：
 
 ```
 Usage: copy [-R] source target
@@ -6131,23 +6125,23 @@ A command line interface to copy files.
   -R,--directory   enables directory support
 ```
 
-若需要调整Usage消息，请查阅[UsageMessageFormatter](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html)类
+若需要调整 usage 信息，请查阅 [`UsageMessageFormatter`](http://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html) 类的文档。
 
-#### 解析阶段
+### 解析阶段
 
-一旦您的[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以解析用户命令行来解析每个选项和参数：
+一旦您的 [`CLI`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html) 实例配置好后，您可以解析用户命令行来解析每个选项和参数：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
 ```
 
-[parse](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-)解析方法返回包含值的[CommandLine](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象。默认情况下，它验证用户命令行，并检查每个必填选项和参数的设置以及每个选项接收的值的数量。您可以通过传递false作为[parse](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-)的第二个参数来禁用验证。如果要检查参数或选项，即使解析的命令行无效，这也是有用的。
+[`parse`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-)解析方法返回包含值的[`CommandLine`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象。默认情况下，它验证用户命令行，并检查每个必填选项和参数的设置以及每个选项接收的值的数量。您可以通过传递 `false` 作为[`parse`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-)的第二个参数来禁用验证。如果要检查参数或选项，即使解析的命令行无效，这也是有用的。
 
-您可以使用[isValid](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html#isValid--)来检查[CommandLine](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)是否有效。
+您可以使用[`isValid`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html#isValid--)来检查[`CommandLine`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)是否有效。
 
-#### 查询/审问阶段
+### 查询/审问阶段
 
-解析后，您可以从解析方法返回的[CommandLine](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象中读取选项和参数的值：
+解析后，您可以从解析方法返回的[`CommandLine`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象中读取选项和参数的值：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
@@ -6175,13 +6169,13 @@ if (!line.isValid() && line.isAskingForHelp()) {
 }
 ```
 
-#### 有类型选项和参数
+### 有类型选项和参数
 
-描述[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[Argument](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)类是无类型的，这意味着仅读取String值。
+描述[`Option`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[`Argument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)类是无类型的，这意味着仅读取String值。
 
-[TypedOption](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html)和[TypedArgument](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html)可以指定一个类型，因此（String）原始值将转换为指定的类型。
+[`TypedOption`](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html)和[`TypedArgument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html)可以指定一个类型，因此（String）原始值将转换为指定的类型。
 
-在[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)定义中使用[TypedOption](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html)和[TypedArgument](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html)，而不是[Option](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[Argument](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)。
+在[`CLI`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)定义中使用[`TypedOption`](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html)和[`TypedArgument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html)，而不是[`Option`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[`Argument`](http://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)。
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6215,11 +6209,11 @@ File target = commandLine.getArgumentValue("target");
 
 Vert.x CLI可以转换的类：
 
-* 具有单个[String](http://vertx.io/docs/apidocs/java/lang/String.html)参数的构造函数，例如[File](http://vertx.io/docs/apidocs/java/io/File.html)或[JsonObject](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)
+* 具有单个[`String`](http://vertx.io/docs/apidocs/java/lang/String.html)参数的构造函数，例如[`File`](http://vertx.io/docs/apidocs/java/io/File.html)或[`JsonObject`](http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)
 * 使用静态的`from`或`fromString`方法
 * 使用静态`valueOf`方法，如基础类型和枚举
 
-此外，您可以实现自己的转换器并指定CLI使用此转换器：
+此外，您可以实现自己的转换器（[`Converter`](http://vertx.io/docs/apidocs/io/vertx/core/cli/converters/Converter.html)）并指定CLI使用此转换器：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6231,11 +6225,11 @@ CLI cli = CLI.create("some-name")
 
 对于布尔值，布尔值将被评定为`true`:`on`，`yes`，`1`，`true`。
 
-若您的一个选项是`enum`类型，则（系统）会自动计算一组选项。
+若您的一个选项是 `enum` 类型，则（系统）会自动计算一组选项。
 
-#### 使用注解
+### 使用注解
 
-您还可以使用注解定义CLI。在类和setter方法上使用注解来定义：
+您还可以使用注解定义CLI。在类和 *setter* 方法上使用注解来定义：
 
 ```java
 @Name("some-name")
@@ -6264,7 +6258,7 @@ public class AnnotatedCli {
 }
 ```
 
-注解后，您可以使用以下命令来定义[CLI](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并注入值：
+注解后，您可以使用以下命令来定义[`CLI`](http://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并注入值：
 
 ```java
 CLI cli = CLI.create(AnnotatedCli.class);
@@ -6273,13 +6267,13 @@ AnnotatedCli instance = new AnnotatedCli();
 CLIConfigurator.inject(commandLine, instance);
 ```
 
-### Vert.x启动器
+## Vert.x Launcher
 
-Vert.x [Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)在fat-jar中作为主类，由`vertx`命令行实用程序调用。它可执行一组命令，如`run`, `bare`, `start`...
+Vert.x [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 在 fat-jar 中作为主类，由 `vertx` 命令行实用程序调用。它可执行一组命令，如`run`、`bare` 和 `start`等
 
-#### 扩展Vert.x启动器
+### 扩展 Vert.x 启动器
 
-您可以通过实现自己的[Command](http://vertx.io/docs/apidocs/io/vertx/core/spi/launcher/Command.html)来扩展命令集（仅限于Java）：
+您可以通过实现自己的 [`Command`](http://vertx.io/docs/apidocs/io/vertx/core/spi/launcher/Command.html) 类来扩展命令集（仅限于Java）：
 
 ```java
 @Name("my-command")
@@ -6300,7 +6294,7 @@ public class MyCommand extends DefaultCommand {
 }
 ```
 
-您还需要实现一个[CommandFactory](http://vertx.io/docs/apidocs/io/vertx/core/spi/launcher/CommandFactory.html)：
+您还需要实现一个 [`CommandFactory`](http://vertx.io/docs/apidocs/io/vertx/core/spi/launcher/CommandFactory.html)：
 
 ```java
 public class HelloCommandFactory extends DefaultCommandFactory<HelloCommand> {
@@ -6310,7 +6304,7 @@ public class HelloCommandFactory extends DefaultCommandFactory<HelloCommand> {
 }
 ```
 
-然后创建`src/main/resources/META-INF/services/io.vertx.core.spi.launcher.CommandFactory`并且添加一行表示工厂类的完全限定名称：
+然后创建 `src/main/resources/META-INF/services/io.vertx.core.spi.launcher.CommandFactory` 并且添加一行表示工厂类的完全限定名称：
 
 ```
 io.vertx.core.launcher.example.HelloCommandFactory
@@ -6324,39 +6318,39 @@ io.vertx.core.launcher.example.HelloCommandFactory
 vertx hello vert.x
 java -jar my-fat-jar.jar hello vert.x
 ```
-#### 使用fat-jar中的启动器
+### 在 fat-jar 中使用启动器
 
-要在fat-jar中使用[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类，只需要将*MANIFEST*的`Main-Class`设置为`io.vertx.core.Launcher`。另外，将*MANIFEST*中`Main-Verticle`条目设置为您的主Verticle的名称。
+要在 fat-jar 中使用 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类，只需要将 *MANIFEST* 的 `Main-Class` 设置为 `io.vertx.core.Launcher`。另外，将 *MANIFEST* 中 `Main-Verticle` 条目设置为您的Main Verticle的名称。
 
-默认情况下，它执行了`run`命令。但是，您可以通过设置*MANIFEST*的`Main-Command`条目来配置默认命令。若在没有命令的情况下启动fat-jar，则使用默认命令。
+默认情况下，它会执行 `run` 命令。但是，您可以通过设置 *MANIFEST* 的`Main-Command`条目来配置默认命令。若在没有命令的情况下启动 fat-jar，则使用默认命令。
 
-#### 子类启动器
+### 启动器子类
 
-您还可以创建[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)的子类来启动您的应用程序。这个类被设计成易于扩展的。
+您还可以创建 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 的子类来启动您的应用程序。这个类被设计成易于扩展的。
 
-一个[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)子类可以：
+一个 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 子类可以：
 
-* 在[beforeStartingVertx](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#beforeStartingVertx-io.vertx.core.VertxOptions-)中自定义Vert.x配置
-* 通过覆盖[afterStartingVertx](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#afterStartingVertx-io.vertx.core.Vertx-)来读取由“run”或“bare”命令创建的Vert.x实例
-* 使用[getMainVerticle](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#getMainVerticle--)和[getDefaultCommand](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#getDefaultCommand--)配置默认的Verticle和命令
-* 使用[register](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#register-java.lang.Class-)和[unregister](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#unregister-java.lang.String-)添加/删除命令
+* 在 [`beforeStartingVertx`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#beforeStartingVertx-io.vertx.core.VertxOptions-) 中自定义 Vert.x 配置
+* 通过覆盖 [`afterStartingVertx`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#afterStartingVertx-io.vertx.core.Vertx-) 来读取由“run”或“bare”命令创建的Vert.x实例
+* 使用 [`getMainVerticle`](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#getMainVerticle--) 和 [`getDefaultCommand`](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#getDefaultCommand--) 方法配置默认的Verticle和命令
+* 使用 [`register`](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#register-java.lang.Class-) 和 [`unregister`](http://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#unregister-java.lang.String-) 方法添加/删除命令
 
-#### 启动器和退出代码
+### 启动器和退出代码
 
-当您使用[Launcher](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)类作为主类时，它使用以下退出代码：
+当您使用 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类作为主类时，它使用以下退出代码：
 
 * 若进程顺利结束，或抛出未捕获的错误：`0`
 * 用于通用错误：`1`
 * 若Vert.x无法初始化：`11`
 * 若生成的进程无法启动、发现或停止：`12`，该错误代码一般由`start`和`stop`命令使用
-* 若系统配置不符合系统要求（如java命令找不到）：`14`
+* 若系统配置不符合系统要求（如找不到 `java` 命令）：`14`
 * 若主Verticle不能被部署：`15`
 
-### 配置Vert.x缓存
+## 配置Vert.x缓存
 
 当Vert.x需要从类路径中读取文件（嵌入在fat-jar中，类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从jar或从输入流读取文件是阻塞的。所以为了避免每次都付出代价，Vert.x会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
 
-首先，默认情况下，Vert.x使用`$CWD/.vertx`作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用`vertx.cacheDirBase`系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
+首先，默认情况下，Vert.x使用 `$CWD/.vertx` 作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用 `vertx.cacheDirBase` 系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
 
 ```java
 vertx run my.Verticle -Dvertx.cacheDirBase=/tmp/vertx-cache
@@ -6364,10 +6358,16 @@ vertx run my.Verticle -Dvertx.cacheDirBase=/tmp/vertx-cache
 java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 ```
 
->重要： *该目录必须是可写的。*
+> 重要提示： *该目录必须是可写的。*
 
 当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，但始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
 最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存。这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
 
+---
+
 ## 结语
+
+---
+
+> [原文档](http://vertx.io/docs/vertx-core/java/)更新于2017-03-15 15:54:14 CET
