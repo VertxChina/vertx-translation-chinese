@@ -133,7 +133,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 您可以向 `mset` 命令传入一个 JSON 对象以在 hash 中设置多个值。需要注意 key 和 value 都将被转换成字符串。
 
-```json
+```text
 {
   keyName: "value",
   otherKeyName: "other value"
@@ -144,7 +144,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 您可以向 `msetnx` 命令传入一个 JSON 对象以在 hash 中设置多个值（译者注：msetnx 命令，必须当且仅当所有给定 key 都不存在）。需要注意 key 和 value 都将被转换成字符串。
 
-```json
+```text
 {
   keyName: "value",
   otherKeyName: "other value"
@@ -155,7 +155,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 您可以向 `hmset` 命令传入一个 JSON 对象以在 hash 中设置多个值（译者注：hmset 命令，如果给定 key 不存在，将创建新的 key）。需要注意 key 和 value 都将被转换成字符串。
 
-```json
+```text
 {
   keyName: "value",
   otherKeyName: "other value"
@@ -170,7 +170,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 > 译者注：实际在 `zaddMany` 方法中，传入的是 `Map<String, Double>` 类型的参数。
 
-```json
+```text
 {
   score: "member",
   otherScore: "other member"
@@ -181,7 +181,7 @@ redis.publish("channel1", "Hello World!", res -> {
 
 为让返回的服务器信息易于操作，Vert.x Redis 客户端将会把服务器信息转换成利于理解的 JSON 格式。格式为：JSON 对象的每个部分都包装着属于着这部分的属性。不在这个部分的属性，将会以其他的顶级对象部分展现：
 
-```json
+```text
 {
   server: {
     redis_version: "2.5.13",
