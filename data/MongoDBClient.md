@@ -2,7 +2,9 @@
 
 > 原文档：[Vert.x MongoDB Client](http://vertx.io/docs/vertx-mongo-client/java/)
 
-您的 Vert.x 应用可以使用 Vert.x MongoDB Client （以下简称客户端）来与 MongoDB 进行交互，包括保存，获取，搜索和删除文档。
+## 组件介绍
+
+您的 Vert.x 应用可以使用 Vert.x MongoDB Client（以下简称客户端）来与 MongoDB 进行交互，包括保存，获取，搜索和删除文档。
 
 MongoDB 是在 Vert.x 应用进行数据持久化时的最佳选择，因为 MongoDB 天生就是处理 JSON（BSON）格式的文档数据库。
 
@@ -30,7 +32,7 @@ MongoDB 是在 Vert.x 应用进行数据持久化时的最佳选择，因为 Mon
 
 - Gradle (在 `build.gradle` 文件中):
 
-```
+```groovy
 compile 'io.vertx:vertx-mongo-client:3.4.1'
 ```
 
@@ -82,15 +84,13 @@ MongoClient client = MongoClient.createNonShared(vertx, config);
 
 每次调用此方法，就相当于在调用 `MongoClient.createShared` 方法时加上了具有唯一名称的数据源参数。
 
-## Using the API 使用客户端 API
+## 使用客户端 API
 
-`MongoClient` 定义了操作客户端的接口方法。
+[`MongoClient`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html) 接口定义了操作客户端的API 方法。您可以使用 [`MongoClient`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html) 来使用调用 API 方法。
 
-您可以使用 `MongoClient` 来使用调用 API 方法。
+### 保存文档
 
-### Saving documents 保存文档
-
-您可以使用 `save` 方法来保存文档。
+您可以使用 [`save`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#save-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法来保存文档。
 
 如果文档中没有 `_id` 字段，文档会被保存。若有，将执行 _upserted_。Upserted 意思是，如果此文档不存在，就保存此文档，此文档存在就更新。
 
@@ -135,7 +135,7 @@ mongoClient.save("books", document, res -> {
 
 ### 插入文档
 
-您可以使用 `insert` 方法来插入文档。
+您可以使用 [`insert`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#insert-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法来插入文档。
 
 如果被插入的文档没有包含 id，回调方法中可以获得保存后生成的 id 。
 
@@ -179,7 +179,7 @@ mongoClient.insert("books", document, res -> {
 
 您可以使用 `update` 方法来更新文档（译者注：建议使用 `updateCollection` 方法或者 `updateCollectionWithOptions` 方法）。
 
-此方法可以更新集合（译者注：MongoDB 中的集合概念对应 SQL 中的数据库表）中的一个或多个文档。其中 `update` 参数的 JSON 对象，必须包含  [Update Operators](http://docs.mongodb.org/manual/reference/operator/update-field/) ，因为由它决定更新的方式。
+此方法可以更新集合（译者注：MongoDB 中的集合概念对应 SQL 中的数据库表）中的一个或多个文档。其中 `update` 参数的 JSON 对象，必须包含 [Update Operators](http://docs.mongodb.org/manual/reference/operator/update-field/) ，因为由它决定更新的方式。
 
 其中 `query` 参数决定更新集合中的哪个文档。
 
@@ -205,9 +205,9 @@ mongoClient.update("books", query, update, res -> {
 });
 ```
 
-您可以使用 `updateWithOptions` 方法，
+您可以使用 [`updateWithOptions`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#updateWithOptions-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.json.JsonObject-io.vertx.ext.mongo.UpdateOptions-io.vertx.core.Handler-) 方法。
 
-如果要指定 update 操作到底是 upsert（upsert 意思是，如果此文档不存在，就保存此文档；此文档存在就更新）或者仅仅只更新，请使用 `updateWithOptions` 方法并传递参数 `UpdateOptions`.
+如果要指定 update 操作到底是 upsert（upsert 意思是，如果此文档不存在，就保存此文档；此文档存在就更新）或者仅仅只更新，请使用 `updateWithOptions` 方法并传递参数 [`UpdateOptions`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/UpdateOptions.html).
 
 参数 `UpdateOptions` 有以下选项：
 
@@ -224,7 +224,7 @@ mongoClient.update("books", query, update, res -> {
   写操作的可靠性（译者注：源码中是用 `writeOption` 枚举类型来代表的）
 
 ```java
-//译者注：mongoDB默认写操作级别是 WriteOption.ACKNOWLEDGED
+//译者注：MongoDB 默认写操作级别是 WriteOption.ACKNOWLEDGED
 
 JsonObject query = new JsonObject().put("title", "The Hobbit");
 
@@ -249,7 +249,7 @@ mongoClient.updateWithOptions("books", query, update, options, res -> {
 
 ### 替换文档
 
-您可以使用  `replace` 方法来替换文档
+您可以使用 [`replace`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#replace-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法来替换文档
 
 `replace` 方法和 `update` 方法类似，但是并不需要 `update` 中的 `UpdateOptions` 参数。因为 `replace` 方法替换的是 `query` 参数找到的整个文档。
 
@@ -277,7 +277,7 @@ mongoClient.replace("books", query, replace, res -> {
 
 ### 查找文档
 
-您可以使用 `find` 方法查找文档。
+您可以使用 [`find`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#find-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法查找文档。
 
 其中 `query` 参数用来匹配集合中的文档。
 
@@ -329,7 +329,7 @@ mongoClient.find("books", query, res -> {
 });
 ```
 
-查询的结果包装成了  JSON 对象的 List 集合。
+查询的结果包装成了 JSON 对象的 List 集合。
 
 如果您需要指定返回哪些域，又或者需要指定返回的数据条数，可以使用 `findWithOptions` 方法，在参数 `FindOptions` 中指定这些查询要求。
 
@@ -386,7 +386,7 @@ mongoClient.findBatch("book", query, res -> {
 
 ### 删除文档
 
-您可以使用 `removeDocuments` 方法来删除文档。
+您可以使用 [`removeDocuments`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#removeDocuments-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法来删除文档。
 
 其中 `query` 参数决定了要删除集合中的哪些文档。
 
@@ -411,9 +411,9 @@ mongoClient.remove("books", query, res -> {
 
 ### 删除单个文档
 
-您可以使用 `removeDocument` 方法来删除单个文档。
+您可以使用 [`removeDocument`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#removeDocument-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法来删除单个文档。
 
-这有点类似 `removeDocuments` 方法，但是 `removeDocument` 方法只返回匹配到的第一个文档。
+这有点类似 [`removeDocuments`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#removeDocuments-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法，但是 `removeDocument` 方法只返回匹配到的第一个文档。
 
 ### 文档计数
 
@@ -442,7 +442,7 @@ mongoClient.count("books", query, res -> {
 
 MongoDB 的所有文档数据都存储在集合中。
 
-您可以使用 `getCollections` 方法来获得所有的集合：
+您可以使用 [`getCollections`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#getCollections-io.vertx.core.Handler-) 方法来获得所有的集合：
 
 ```java
 mongoClient.getCollections(res -> {
@@ -459,7 +459,7 @@ mongoClient.getCollections(res -> {
 });
 ```
 
-您也可以使用 `createCollection` 方法来创建一个新的集合：
+您也可以使用 [`createCollection`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#createCollection-java.lang.String-io.vertx.core.Handler-) 方法来创建一个新的集合：
 
 ```java
 mongoClient.createCollection("mynewcollectionr", res -> {
@@ -476,7 +476,7 @@ mongoClient.createCollection("mynewcollectionr", res -> {
 });
 ```
 
-您也可以使用 `dropCollection` 方法来删除文档
+您也可以使用 [`dropCollection`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#dropCollection-java.lang.String-io.vertx.core.Handler-) 方法来删除文档
 
 > 请注意：*删除一个集合将会删除集合中所有的文档！*
 
@@ -497,7 +497,7 @@ mongoClient.dropCollection("mynewcollectionr", res -> {
 
 ### 执行 MongoDB 其他命令
 
-您可以使用 `runCommand` 方法来执行任何 MongoDB 命令。
+您可以使用 [`runCommand`](http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#runCommand-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-) 方法来执行任何 MongoDB 命令。
 
 使用这种方式，可以发挥出 MongoDB 更多优点，比如使用 MapReduce。更多详情，请参考说明文档  [Commands](http://docs.mongodb.org/manual/reference/command)。
 
@@ -689,7 +689,7 @@ mongoClient.save("books", document, res -> {
 
 ## 客户端参数配置
 
-此客户端把配置参数放在 json object 中。
+此客户端把配置参数放在 JSON 对象中。
 
 此客户端支持以下这些参数：
 
@@ -699,11 +699,11 @@ mongoClient.save("books", document, res -> {
 
 - `useObjectId`
 
-  此参数用来支持 ObjectId 的持久化和检索。如果设置为 `true` ，将会在集合的文档中，以 16 进制的字符串来保存 MongoDB 的 ObjectId 类型的字段。而且在设置为 `true` 后，可以让文档基于创建时间排序（译者注：前4个字节用来存储创建的时的时间戳，精确到秒）。您也可以通过使用 ObjectId::getDate() 方法，从这个 16进制的字符串中导出创建时间。若您选择其他类型作为 `_id` ，则设置此参数为 `false` 。如果您保存的文档中，没有设置 `_id` 字段的值，将会默认的生成 16进制的字符串作为 `_id` 。此参数默认为 `false `。
+  此参数用来支持 ObjectId 的持久化和检索。如果设置为 `true` ，将会在集合的文档中，以 16 进制的字符串来保存 MongoDB 的 ObjectId 类型的字段。而且在设置为 `true` 后，可以让文档基于创建时间排序（译者注：前4个字节用来存储创建的时的时间戳，精确到秒）。您也可以通过使用 `ObjectId::getDate()` 方法，从这个 16进制的字符串中导出创建时间。若您选择其他类型作为 `_id` ，则设置此参数为 `false` 。如果您保存的文档中，没有设置 `_id` 字段的值，将会默认的生成 16进制的字符串作为 `_id` 。此参数默认为 `false `。
 
 此客户端尝试着支持驱动所支持的大多数参数配置。有两种配置方式，一种是连接字符串，另一种是驱动配置选项。
 
-> 请注意：*如果使用了字符串连接的方式，此客户端将会忽略所有配置选项。*
+> 请注意：如果使用了字符串连接的方式，此客户端将会忽略所有配置选项。
 
 - `connection_string`
 
@@ -784,7 +784,7 @@ mongoClient.save("books", document, res -> {
 
 - `hosts`
 
-  表示支持 mongoDB 集群（分片／复制）的一组地址和端口
+  表示支持 MongoDB 集群（分片／复制）的一组地址和端口
 
 - `host`
 
@@ -804,15 +804,15 @@ mongoClient.save("books", document, res -> {
 
 - `maxPoolSize`
 
-  连接池最大连接数。默认为  `100`
+  连接池最大连接数。默认为 `100`
 
 - `minPoolSize`
 
-  连接池最小连接数。默认为  `100`
+  连接池最小连接数。默认为 `100`
 
 - `maxIdleTimeMS`
 
-  连接池的连接最大空闲时间。默认为 `0` ，表示一直存在
+  连接池的连接最大空闲时间。默认为 `0`，表示一直存在
 
 - `maxLifeTimeMS`
 
@@ -832,11 +832,11 @@ mongoClient.save("books", document, res -> {
 
 - `maintenanceInitialDelayMS`
 
-  连接池启动后，维护任务第一次启动的时间。默认为`0`
+  连接池启动后，维护任务第一次启动的时间。默认为 `0`。
 
 - `username`
 
-  授权的用户名。默认为 `null` （意味着不需要授权）
+  授权的用户名。默认为 `null`（意味着不需要授权）
 
 - `password`
 
@@ -848,7 +848,7 @@ mongoClient.save("books", document, res -> {
 
 - `authMechanism`
 
-  所使用的授权认证机制。请参考  [Authentication]([http://docs.mongodb.org/manual/core/authentication/](http://docs.mongodb.org/manual/core/authentication/))  来获取更多信息。
+  所使用的授权认证机制。请参考 [Authentication](http://docs.mongodb.org/manual/core/authentication/)  来获取更多信息。
 
 - `gssapiServiceName`
 
@@ -886,6 +886,8 @@ mongoClient.save("books", document, res -> {
 
   最小心跳频率。默认为 `1000` （1s）
 
-  > 请注意：*上面提到的各类参数的默认值，都是 MongoDB Java 驱动的默认值。请参考驱动文档来获取最新信息。*
+> 请注意：上面提到的各类参数的默认值，都是 MongoDB Java 驱动的默认值。请参考驱动文档来获取最新信息。
 
-[原文档](http://vertx.io/docs/vertx-mongo-client/java/)更新于 2017-03-15 15:54:14 CET
+---
+
+> [原文档](http://vertx.io/docs/vertx-mongo-client/java/)更新于 2017-03-15 15:54:14 CET
