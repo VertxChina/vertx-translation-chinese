@@ -58,7 +58,7 @@ jar {
 }
 ```
 
-然后我们在`src/main/java/io/example`目录下新建两个java文件，分别是`Main.java`和`MyFirstVerticle.java`，代码如下：
+然后我们在`src/main/java/io/example`目录（是的，您需要新建io和example两级文件夹）下新建两个java文件，分别是`Main.java`和`MyFirstVerticle.java`，代码如下：
 
 Main.java
 
