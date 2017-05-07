@@ -711,7 +711,7 @@ mongoClient.save("books", document, res -> {
 
 **驱动配置的具体选项**
 
-```json
+```text
 {
   // Single Cluster Settings
   "host" : "127.0.0.1", // string
