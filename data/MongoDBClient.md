@@ -478,7 +478,7 @@ mongoClient.createCollection("mynewcollectionr", res -> {
 
 您也可以使用 `dropCollection` 方法来删除文档
 
-> 注意：删除一个集合将会删除集合中所有的文档 
+> 请注意：*删除一个集合将会删除集合中所有的文档！*
 
 ```java
 mongoClient.dropCollection("mynewcollectionr", res -> {
