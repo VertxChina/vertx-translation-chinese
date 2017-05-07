@@ -308,7 +308,7 @@ vertx.executeBlocking(future -> {
 
 默认情况下，如果 `executeBlocking` 在同一个上下文环境中（如：同一个 Verticle 实例）被调用了多次，那么这些不同的 `executeBlocking` 代码块会 **顺序执行**（一个接一个）。
 
-若您不需要关心您调用 [`executeBlocking`](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-) 的顺序，可以将 `ordered` 参数的值设为false。这样任何 `executeBlocking` 都会在 Worker Pool 中并行执行。
+若您不需要关心您调用 [`executeBlocking`](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-) 的顺序，可以将 `ordered` 参数的值设为 `false`。这样任何 `executeBlocking` 都会在 Worker Pool 中并行执行。
 
 另外一种运行阻塞式代码的方法是使用 [Worker Verticle](http://vertx.io/docs/vertx-core/java/#worker_verticles)。
 
@@ -513,7 +513,7 @@ public class MyVerticle extends AbstractVerticle {
 
 有些时候您的 Verticle 启动会耗费一些时间，您想要在这个过程做一些事，并且您做的这些事并不想等到Verticle部署完成过后再发生。如：您想在 `start` 方法中部署其他的 Verticle。
 
-您不能在您的start方法中阻塞等待其他的 Verticle 部署完成，这样做会破坏 [黄金法则](http://vertx.io/docs/vertx-core/java/#golden_rule)。
+您不能在您的 `start` 方法中阻塞等待其他的 Verticle 部署完成，这样做会破坏 [黄金法则](#黄金法则不要阻塞event-loop)。
 
 所以您要怎么做？
 
@@ -4349,7 +4349,7 @@ map.get("foo", resGet -> {
 
 ### 集群范围锁
 
-集群范围锁（[Lock](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)）允许您在集群中获取独占锁 —— 当您想要在任何时间只在集群一个节点上执行某些操作或访问资源时，这很有用。
+集群范围锁（[`Lock`](http://vertx.io/docs/apidocs/io/vertx/core/shareddata/Lock.html)）允许您在集群中获取独占锁 —— 当您想要在任何时间只在集群一个节点上执行某些操作或访问资源时，这很有用。
 
 集群范围锁具有异步API，它和大多数等待锁释放的阻塞调用线程的API锁不相同。
 
@@ -5151,22 +5151,22 @@ client.reverseLookup("10.0.0.1", ar -> {
 
 可能的`DnsResponseCode`值是：
 
-* [`NOERROR`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOERROR)没有找到给定查询的记录
-* [`FORMERROR`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#FORMERROR)格式错误
-* [`SERVFAIL`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#SERVFAIL)服务器故障
-* [`NXDOMAIN`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXDOMAIN)名称错误
-* [`NOTIMPL`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTIMPL)DNS服务器没实现
-* [`REFUSED`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#REFUSED)DNS服务器拒绝查询
-* [`YXDOMAIN`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXDOMAIN)域名不应该存在
-* [`YXRESET`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXRRSET)资源记录不应该存在
-* [`NXRRSET`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXRRSET)RRSET不存在
-* [`NOTZONE`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTZONE)名称不在区域内
-* [`BADVERS`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADVERS)版本的扩展机制不好
-* [`BADSIG`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADSIG)非法签名
-* [`BADKEY`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADKEY)非法密钥
-* [`BADTIME`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADTIME)错误时间戳
+* [`NOERROR`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOERROR) 没有找到给定查询的记录
+* [`FORMERROR`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#FORMERROR) 格式错误
+* [`SERVFAIL`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#SERVFAIL) 服务器故障
+* [`NXDOMAIN`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXDOMAIN) 名称错误
+* [`NOTIMPL`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTIMPL) DNS 服务器没实现
+* [`REFUSED`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#REFUSED) DNS 服务器拒绝查询
+* [`YXDOMAIN`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXDOMAIN) 域名不应该存在
+* [`YXRESET`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXRRSET) 资源记录不应该存在
+* [`NXRRSET`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXRRSET) RRSET不存在
+* [`NOTZONE`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTZONE) 名称不在区域内
+* [`BADVERS`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADVERS) 版本的扩展机制不好
+* [`BADSIG`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADSIG) 非法签名
+* [`BADKEY`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADKEY) 非法密钥
+* [`BADTIME`](http://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADTIME) 错误时间戳
 
-所有这些错误都由DNS服务器本身“生成”，您可以从`DnsException`中获取`DnsResponseCode`，如：
+所有这些错误都由DNS服务器本身“生成”，您可以从 `DnsException` 中获取 `DnsResponseCode`，如：
 
 ```java
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
@@ -5191,7 +5191,7 @@ client.lookup("nonexisting.vert.xio", ar -> {
 
 Vert.x有多个对象可以用于文件的读取和写入。
 
-在以前的版本中，只能通过操作指定的[`Buffer`](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)对象来实现文件读写。从现在开始，流不再与 `Buffer` 耦合，它们可以和任意类型的对象一起工作。
+在以前的版本中，只能通过操作指定的 [`Buffer`](http://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html) 对象来实现文件读写。从现在开始，流不再与 `Buffer` 耦合，它们可以和任意类型的对象一起工作。
 
 在 Vert.x 中，写调用是立即返回的，而写操作的实际是在内部队列中排队写入。
 
@@ -5612,11 +5612,11 @@ java -jar my-verticle-fat.jar list
 
 由于`start`命令产生一个新的进程，传递给JVM的java选项不会被传播，所以您必须使用`java-opts`来配置JVM（`-X`，`-D`...）。若您使用 `CLASSPATH` 环境变量，请确保路径下包含所有需要的jar（vertx-core、您的jar和所有依赖项）。
 
-该命令集是可扩展的，请参考 [Extending the vert.x Launcher](http://vertx.io/docs/vertx-core/java/#_extending_the_vert_x_launcher) 部分。
+该命令集是可扩展的，请参考 [扩展 Vert.x 启动器](#扩展-vertx-启动器) 部分。
 
 ### 实时重部署
 
-在开发时，可以方便在文件更改时实时重新部署应用程序。`vertx` 命令行工具和更普遍的`Launcher`类提供了这个功能。这里有些例子：
+在开发时，可以方便在文件更改时实时重新部署应用程序。`vertx` 命令行工具和更普遍的 `Launcher` 类提供了这个功能。这里有些例子：
 
 ```
 vertx run MyVerticle.groovy --redeploy="**/*.groovy" --launcher-class=io.vertx.core.Launcher
@@ -5627,11 +5627,11 @@ java io.vertx.core.Launcher run org.acme.MyVerticle --redeploy="**/*.class"  --l
 
 重新部署过程如下执行。首先，您的应用程序作为后台应用程序启动（使用`start`命令）。当发现文件更改时，该进程将停止并重新启动该应用、这样可避免泄露。
 
-要启用实时重新部署，请将`--redeploy`选项传递给`run`命令。`--redeploy`表示要监视的文件集，这个集合可使用`Ant`样式模式（使用`**`，`*`和`?`），您也可以使用逗号（`,`）分隔它们来指定多个集合。模式相当于当前工作目录。
+要启用实时重新部署，请将 `--redeploy` 选项传递给 `run` 命令。`--redeploy` 表示要监视的文件集，这个集合可使用 `Ant` 样式模式（使用 `**`，`*` 和 `?`），您也可以使用逗号（`,`）分隔它们来指定多个集合。模式相当于当前工作目录。
 
-传递给`run`命令的参数最终会传递给应用程序，可使用`--java-opts`配置JVM虚拟机选项。
+传递给 `run` 命令的参数最终会传递给应用程序，可使用 `--java-opts` 配置JVM虚拟机选项。
 
-`--launcher-class`选项确定应用程序的主类启动器。它通常是一个 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)，单您已使用了您自己的主类。
+`--launcher-class` 选项确定应用程序的主类启动器。它通常是一个 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)，单您已使用了您自己的主类。
 
 也可以在IDE中使用重部署功能：
 
@@ -6346,11 +6346,11 @@ java -jar my-fat-jar.jar hello vert.x
 * 若系统配置不符合系统要求（如找不到 `java` 命令）：`14`
 * 若主Verticle不能被部署：`15`
 
-## 配置Vert.x缓存
+## 配置 Vert.x 缓存
 
-当Vert.x需要从类路径中读取文件（嵌入在fat-jar中，类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从jar或从输入流读取文件是阻塞的。所以为了避免每次都付出代价，Vert.x会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
+当 Vert.x 需要从类路径中读取文件（嵌入在 fat-jar 中，类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从 jar 或从输入流读取文件是阻塞的。所以为了避免每次都付出代价，Vert.x 会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
 
-首先，默认情况下，Vert.x使用 `$CWD/.vertx` 作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用 `vertx.cacheDirBase` 系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
+首先，默认情况下，Vert.x 使用 `$CWD/.vertx` 作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用 `vertx.cacheDirBase` 系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
 
 ```java
 vertx run my.Verticle -Dvertx.cacheDirBase=/tmp/vertx-cache
@@ -6360,7 +6360,7 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 
 > 重要提示： *该目录必须是可写的。*
 
-当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用`-Dvertx.disableFileCaching=true`启动应用程序。使用此设置，Vert.x仍然使用缓存，但始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
+当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用 `-Dvertx.disableFileCaching=true` 启动应用程序。使用此设置，Vert.x 仍然使用缓存，但始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x 会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
 最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存。这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
 
