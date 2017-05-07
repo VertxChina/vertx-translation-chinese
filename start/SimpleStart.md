@@ -23,12 +23,13 @@ Stay Hungry. Stay Foolish. 如果您是Java新手，对于命令行感到发怵�
 │   └── test
 │       └── java
 ├── build.gradle
+├── settings.gradle
 ```
 
 随后修改build.gradle为：
 
 ```gradle
-group 'io.example'
+group 'io.example'//对应刚刚向导中输入的 GroupId，ArtifactId在settings.gradle中
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
