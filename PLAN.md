@@ -6,8 +6,8 @@
 - [x] **Vert.x Web**：已翻译校对完成
 - [x] **Vert.x Web Client**：已翻译校对完成
 - [ ] **Vert.x Data Access**
-  - [ ] **Vert.x Mongo Client**：未进行
-  - [x] **Vert.x JDBC Client**：已翻译校对完成
+  - [ ] **Vert.x Mongo Client**：已翻译完成，等待校对
+  - [x] **Vert.x JDBC Client**：已翻译校对完成
   - [x] **Vert.x Common SQL Interface**：已翻译校对完成
   - [x] **Vert.x Redis Client**：已翻译校对完成
   - [x] **Vert.x MySQL/PostgreSQL Client**：已翻译校对完成
