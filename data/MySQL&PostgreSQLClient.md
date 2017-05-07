@@ -159,7 +159,7 @@ client.getConnection(res -> {
 
 PostgreSql 和 MySql 客户端的配置参数一样：
 
-```json
+```text
 {
   "host" : <主机地址>,
   "port" : <端口>,
