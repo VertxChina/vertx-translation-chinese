@@ -1,6 +1,10 @@
 # Vert.x 官方文档翻译工作计划
 
-## 2017-05-07
+## 当前进度
+
+截至：**2017-05-07**
+
+对应版本：**Vert.x 3.4.1**
 
 - [x] **Vert.x Core**：已翻译校对完成
 - [x] **Vert.x Web**：已翻译校对完成
@@ -19,13 +23,25 @@
   - [x] **Vert.x Config**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
 - [x] **Vert.x Service Proxy**：已重新翻译
-- [ ] **Vert.x IoT**：未进行
-- [ ] **Vert.x Cluster**：未做更新
+- [ ] **Vert.x Unit**：计划中
+- [ ] **Vert.x IoT**：计划中
+- [ ] **Vert.x Cluster**：待更新
 
-本次计划预计五月中旬完成。
+## 翻译计划
 
+### 2017-06
 
-## 2017-03-28  
+待 Vert.x 3.4.2 发布后，更新相应的文档翻译。
+
+### 2017-05
+
+- **Vert.x Unit**：待认领
+- **Vert.x IoT**：lizhenxiang负责翻译，943470549@qq.com负责校对  
+- **Vert.x Cluster**：boliza负责翻译，wuziqiang负责校对
+
+本次计划预计五月下旬完成。
+
+### 2017-03-28  
 
 - **Core：** silentbalanceyh负责翻译，chengenzhao、kkkoko、gy、hxl、Toyer、漓江校对
 - **Web：** gy负责翻译，chengenzhao校对
