@@ -33,7 +33,6 @@ group 'io.example'//对应刚刚向导中输入的 GroupId，ArtifactId在settin
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'eclipse'//新增插件
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8//新增
@@ -113,7 +112,6 @@ group 'io.example'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -130,7 +128,7 @@ dependencies {
 jar {
     manifest {
         attributes "Main-Class": "io.vertx.core.Launcher",//改为Launcher
-                    "Main-Verticle": "io.example.MainVerticle"//新增Main Verticle属性，对应MainVerticle类
+                "Main-Verticle": "io.example.MainVerticle"//新增Main Verticle属性，对应MainVerticle类
    }
 
     from {
