@@ -156,3 +156,7 @@ public class MainVerticle extends AbstractVerticle {
 然后重新打包后执行，便可再次看到Hello World!。
 
 至此，大功告成，欢迎来到Vert.x的世界。
+
+##一点知识
+
+jar文件本质上就是一个zip文件，可以用打开zip的压缩工具解压，读者可自行解压拆开jar包，看看相关依赖的文件是否在里面。比如例子中的代码除了生成io.example.MyFirstVerticle.class和io.example.MainVerticle.class文件以外，还同时将依赖的io.vertx.core中的内容压入jar包。
