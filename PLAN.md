@@ -9,7 +9,7 @@
 - [x] **Vert.x Core**：已翻译校对完成
 - [x] **Vert.x Web**：已翻译校对完成
 - [x] **Vert.x Web Client**：已翻译校对完成
-- [x] **Vert.x Data Access**
+- [x] **Vert.x Data Access**：已翻译校对完成
   - [x] **Vert.x Mongo Client**：已翻译校对完成
   - [x] **Vert.x JDBC Client**：已翻译校对完成
   - [x] **Vert.x Common SQL Interface**：已翻译校对完成
@@ -23,9 +23,10 @@
   - [x] **Vert.x Config**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
 - [x] **Vert.x Service Proxy**：已重新翻译
-- [ ] **Vert.x Unit**：计划中
+- [ ] **Vert.x Testing**
+  - [ ] **Vert.x Unit**：计划中
 - [ ] **Vert.x IoT**：计划中
-- [ ] **Vert.x Cluster**：待更新
+- [ ] **Vert.x Clustering**：待更新
 
 ## 翻译计划
 
@@ -37,7 +38,7 @@
 
 - **Vert.x Unit**：待认领
 - **Vert.x IoT**：lizhenxiang负责翻译，943470549@qq.com负责校对  
-- **Vert.x Cluster**：boliza负责翻译，wuziqiang负责校对
+- **Vert.x Clustering**：boliza负责翻译，wuziqiang负责校对
 
 本次计划预计五月下旬完成。
 
@@ -50,6 +51,6 @@
 - **Reactive：** cet63负责翻译  
 - **IoT：** lizhenxiang负责翻译，943470549@qq.com负责校对  
 - **data access：** DaC1989负责翻译，kkkoko校对  
-- **Cluster：** boliza负责翻译，wuziqiang负责校对  
+- **Clustering：** boliza负责翻译，wuziqiang负责校对  
 
 本次计划预计五月中旬完成。
