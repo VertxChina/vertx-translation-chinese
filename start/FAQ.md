@@ -279,7 +279,7 @@ Future.<Message<String>>future(f ->
 
 [Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
-### 问：Vert.x Web中如何将跟路径对应到某个特定的html文件？
+### 问：Vert.x Web中如何将根路径对应到某个特定的html文件？
 
 答：用reroute和staticHandler：
 
