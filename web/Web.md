@@ -715,7 +715,7 @@ route.handler(routingContext -> {
 一个路径为 `/some/path/other` 的请求会同时匹配两个 `Route`:
 
 ```java
-router.get("/some/path").handler(routingContext -> {
+router.get("/some/path/*").handler(routingContext -> {
 
   routingContext.put("foo", "bar");
   routingContext.next();
