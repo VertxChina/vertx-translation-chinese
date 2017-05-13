@@ -1416,7 +1416,7 @@ Vert.x Web 提供了一个开箱即用的处理器来提供静态的 Web 资源�
 router.route("/static/*").handler(StaticHandler.create());
 ```
 
-例如，对于一个路径为 `/static/css/mystyles.css` 的请求，静态处理器会在该路径中查找文件 `webroot/css/mystyle.css` (8)。
+例如，对于一个路径为 `/static/css/mystyles.css` 的请求，静态处理器会在该路径中查找文件 `webroot/css/mystyle.css`。
 
 它也会在 classpath 中查找文件 `webroot/css/mystyle.css`。这意味着您可以将所有的静态资源打包到一个 jar 文件（或 fat-jar）里进行分发。
 
@@ -1517,7 +1517,7 @@ TemplateEngine engine = HandlebarsTemplateEngine.create();
 TemplateHandler handler = TemplateHandler.create(engine);
 
 // 这会将所有以 `/dynamic` 开头的请求路由到模板处理器上
-// 例如 /dynamic/graph.hbs 会查找模板 /templates/dynamic/graph.hbs
+// 例如 /dynamic/graph.hbs 会查找模板 /templates/graph.hbs
 router.get("/dynamic/*").handler(handler);
 
 // 将所有以 `.hbs` 结尾的请求路由到模板处理器上
@@ -2378,10 +2378,9 @@ oauth2.setupCallback(router.route());
 5. 会话 Cookie 也即 Session Cookie，特指有效期为 `session` 的 Cookie。可参考 [MSDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Session_cookie)。
 6. 或可称之为不可枚举的。可防止碰撞攻击。
 7. 指通过 `vertx.executeBlocking` 方法来定期刷新生成器的种子，在 Event Loop 线程中同步执行生成随机数的过程。
-8. 此处原文中描述的目标文件为 `webroot/static/css/mystyle.css`。但经过实验是错误的，可以参考 [issue 419](https://github.com/vert-x3/vertx-web/issues/419#issuecomment-233572447)。
-9. 即 [`Route.failureHandler`](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#failureHandler-io.vertx.core.Handler-)。
-10. 实际上不同的 transport 具有不同的会话处理机制。sessionTimeout 主要针对轮询方式的 transport，例如 xhr。服务器端返回一个响应之后，客户端一旦接受了响应，会立刻再发一个 request 出来继续等下一个消息。如果超过了默认的 5 秒该会话没有收到新的请求，则会认为客户端断开了连接，会话过期。
-11. 关于 OAuth2 如何通过 JWT 来进行授权，可以 [参考这里](https://tools.ietf.org/html/rfc7523)。
+8. 即 [`Route.failureHandler`](http://vertx.io/docs/apidocs/io/vertx/ext/web/Route.html#failureHandler-io.vertx.core.Handler-)。
+9. 实际上不同的 transport 具有不同的会话处理机制。sessionTimeout 主要针对轮询方式的 transport，例如 xhr。服务器端返回一个响应之后，客户端一旦接受了响应，会立刻再发一个 request 出来继续等下一个消息。如果超过了默认的 5 秒该会话没有收到新的请求，则会认为客户端断开了连接，会话过期。
+10. 关于 OAuth2 如何通过 JWT 来进行授权，可以 [参考这里](https://tools.ietf.org/html/rfc7523)。
 
 ## 结语
 
