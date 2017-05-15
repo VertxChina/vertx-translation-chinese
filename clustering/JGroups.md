@@ -1,3 +1,5 @@
+> 从 Vert.x 3.4.0 开始，Vert.x 已经弃用 JGoups 实现，已经由 [infinispan]|(/clustering/Infinispan.md) 。**不建议在生产或测试环境中使用**
+
 # JGroups Cluster Manager
 
 在构建工具中添加依赖即可：
@@ -8,21 +10,21 @@
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-jgroups</artifactId>
-  <version>3.2.1</version>
+  <version>3.4.1</version>
 </dependency>
 ```
 
 - Gradle(build.gradle)
 
 ```
-compile 'io.vertx:vertx-jgroups:3.2.1'
+compile 'io.vertx:vertx-jgroups:3.4.1'
 ```
 
-如果通过命令行来使用Vert.x，jar包`vertx-jgroups-3.2.1.jar`，应该在Vert.x中安装包中。同时也要将`jgroups`的jar加到lib目录中。
+如果通过命令行来使用Vert.x，jar包`vertx-jgroups-3.4.1.jar`，应该在Vert.x中安装包中。同时也要将`jgroups` 的jar加到lib目录中。
 
-如果`vertx-jgroups-3.2.1.jar`在`classpath`中，Vert.x将自动检测到，并将其作为集群管理。需要注意的是，要确保Vert.x的`classpath`中没有其它的`ClusterManager`实现`jar`包。也可以通过设置启动参数:`-Dvertx.clusterManagerFactory=io.vertx.spi.cluster.jgroups.JGroupsClusterManager`,来指定集群管理器。
+如果 `vertx-jgroups-3.4.1.jar` 在 `classpath` 中，Vert.x将自动检测到，并将其作为集群管理。需要注意的是，要确保Vert.x的 `classpath` 中没有其它的 `ClusterManager` 实现 `jar` 包。也可以通过设置启动参数: `-Dvertx.clusterManagerFactory=io.vertx.spi.cluster.jgroups.JGroupsClusterManager` ,来指定集群管理器。
 
-同[hazlcast]|(/clustering/Hazelcast.md)，也通过编程的方式来指定：
+同 [hazlcast]|(/clustering/Hazelcast.md)，也可以通过编程的方式来实现：
 
 ```java
 ClusterManager mgr = new JGroupsClusterManager();
@@ -38,7 +40,7 @@ Vertx.clusteredVertx(options, res -> {
 
 ### 配置
 
-JGroups的配置文件`default-jgroups.xml`如下：
+JGroups 的配置文件 `default-jgroups.xml` 如下：
 
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -112,9 +114,9 @@ xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups.xsd">
 </config>
 ```
 
-`default-jgroups.xml`内嵌在对应jar包中。
+`default-jgroups.xml` 内嵌在对应jar包中。
 
-如果要覆盖此配置，可以在`classpath`中添加一个`jgroups.xml`文件。此配置文件必须是一个`JGroups`配置文件，在[JGroups](http://jgroups.org)的官方网站，可以找到具体的配置描述。
+如果要覆盖此配置，可以在 `classpath` 中添加一个 `jgroups.xml` 文件。此配置文件必须是一个 `JGroups` 配置文件，在 [JGroups](http://jgroups.org) 的官方网站中，可以找到具体的配置描述。
 
 
 JGroups支持多种传播方式，包括多播与TCP。默认配置时多播方式，所以需要确保网络是否启用多播。
@@ -139,17 +141,17 @@ sudo route add -net 232.0.0.0/5 192.168.1.3
 
 ### 错误配置的IPV6
 
-默认情况下，JVM使用IPv6，但路由表配置不正确，或使用IPv4解决方法：查看IPv6路由或强制使用IPv4（`-Djava.net.preferIPv4Stack=TRUE`）。有关这方面更多的细节可在https://developer.jboss.org/wiki/IPv6。
+默认情况下，JVM 使用 IPv6，但路由表配置不正确，或使用 IPv4 解决方法：查看 IPv6 路由或强制使用 IPv4 （`-Djava.net.preferIPv4Stack=TRUE`）。有关这方面更多的细节可在https://developer.jboss.org/wiki/IPv6。
 
 ### 使用错误的网络接口
 
 如果机器上上有多个网络接口（也有可能是在运行VPN的情况下），那么JGroups很有可能是使用了错误的网络接口。
 
-配置参数`jgroups.bind_addr`用来确定绑定的网络接口, 例如：`jgroups.bind_addr=192.168.1.5`。
+配置参数 `jgroups.bind_addr` 用来确定绑定的网络接口, 例如：`jgroups.bind_addr=192.168.1.5`。
 
 下面这些配置参数同样有效：
 
-- `global`:挑选一个可用的全局地址。如果不能，使用`site_local`地址。
+- `global`:挑选一个可用的全局地址。如果不能，使用 `site_local` 地址。
 - `site_local`:挑选一个本地（非路由）的IP地址，例如从192.168.0.0或10.0.0.0地址
 - `link_local`:挑选一个链接本地IP地址从169.254.1.0到169.254.254.255
 - `non_loopback`:挑选任何非回送地址
@@ -164,26 +166,26 @@ sudo route add -net 232.0.0.0/5 192.168.1.3
 vertx run myverticle.js -cluster -cluster-host your-ip-address
 ```
 
-其中`your-ip-address`必须与JGroups中的配置保持一致。
+其中 `your-ip-address` 必须与 JGroups 中的配置保持一致。
 
-当通过编程模式使用Vert.x时，可以调用方法`setClusterHost`来设置参数
+当通过编程模式使用 Vert.x 时，可以调用方法 `setClusterHost` 来设置参数
 
 ### 使用VPN
 
-VPN软件通常通过创建不支持多播虚拟网络接口来进行工作。如果有一个VPN运行，如果jgroups与Vert.x不正确配置的话，VPN接口将被选择，而不是正确的接口。
+VPN软件通常通过创建不支持多播虚拟网络接口来进行工作。如果有一个 VPN 运行，如果 JGroups与 Vert.x 不正确配置的话，VPN接口将被选择，而不是正确的接口。
 
-所以，如果你有一个VPN运行，参考上述章节，设置正确的网络接口。
+所以，如果你运行在 VPN 环境中，参考上述章节，设置正确的网络接口。
 
 
 ### 多播不可用
 
-在某些情况下，因为特殊的运行环境，可能无法使用多播。在这种情况下，应该配置其他网络传输，例如在TCP上使用TCP套接字，在亚马逊云上使用EC2。
+在某些情况下，因为特殊的运行环境，可能无法使用多播。在这种情况下，应该配置其他网络传输，例如在 TCP 上使用 TCP 套接字，在亚马逊云上使用 EC2。
 
-有关JGroups更多传输方式，以及如何配置它们，请咨询JGroups文档。
+有关 JGroups 更多传输方式，以及如何配置它们，请咨询JGroups文档。
 
 ### 开启日志
 
-在排除故障时，开启JGroups日志，将会给予很大的帮助。在classpath中添加`vertx-default-jul-logging.properties`文件（默认的JUL记录时），这是一个标准java.util.loging（JUL）配置文件。具体配置如下：
+在排除故障时，开启JGroups日志，将会给予很大的帮助。在 classpath 中添加 `vertx-default-jul-logging.properties` 文件（默认的JUL记录时），这是一个标准 java.util.loging（JUL）配置文件。具体配置如下：
 
 ```
 org.jgroups.level=INFO

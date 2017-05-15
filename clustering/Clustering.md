@@ -13,12 +13,12 @@
 - [Hazelcast](http://hazelcast.org)（默认实现）
   - [文档手册](Hazelcast.md)
   - [组件源码](https://github.com/vert-x3/vertx-hazelcast)
-- [Infinispan](http://infinispan.org/)
+- [Infinispan](http://infinispan.org/)（预览版）
   - [文档手册](Infinispan.md)
   - [组件源码](https://github.com/vert-x3/vertx-infinispan)
 - [Apache Ignite](http://ignite.apache.org/)
   - [文档手册](ApacheIgnite.md)
   - [组件源码](https://github.com/vert-x3/vertx-ignite)
-- [Apache Zookeeper](http://zookeeper.apache.org/)
+- [Apache Zookeeper](http://zookeeper.apache.org/)（预览版）
   - [文档手册](ApacheZookeeper.md)
   - [组件源码](https://github.com/vert-x3/vertx-zookeeper)
