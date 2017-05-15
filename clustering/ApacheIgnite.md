@@ -1,4 +1,4 @@
-# Apache Ignite Cluster Manager
+# Ignite Cluster Manager
 
 > 翻译：Ranger Tsao，校对 宋子豪、赵亮
 
