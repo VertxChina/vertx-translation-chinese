@@ -115,7 +115,7 @@ MacOS 默认禁用组播。Google一下启用组播。
 vertx run myverticle.js -cluster -cluster-host your-ip-address
 ```
 
-其中 `your-ip-address` 必须与 Hazelcast 中的配置保持一致。
+其中 `your-ip-address` 必须与 Ignite 中的配置保持一致。
 
 当通过编程模式使用 Vert.x 时，可以调用方法 `setClusterHost` 来设置参数
 

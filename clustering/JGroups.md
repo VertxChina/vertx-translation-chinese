@@ -1,4 +1,4 @@
-> 从 Vert.x 3.4.0 开始，Vert.x 已经弃用 JGoups 实现，已经由 [infinispan]|(/clustering/Infinispan.md) 替换
+> 从 Vert.x 3.4.0 开始，Vert.x 已经弃用 JGoups 实现，已经由 [infinispan]|(/clustering/Infinispan.md) 。**不建议在生产或测试环境中使用**
 
 # JGroups Cluster Manager
 
@@ -10,7 +10,7 @@
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-jgroups</artifactId>
-  <version>3.2.1</version>
+  <version>3.4.1</version>
 </dependency>
 ```
 

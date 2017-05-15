@@ -1,5 +1,6 @@
 # Zookeeper Cluster Manager
 
+> 请注意，当前版本还处于预览版，请慎重在生产环境中使用
 > 翻译：Ranger Tsao，校对 宋子豪、赵亮
 
 `ZookeeperClusterManager` 是基于 [Apache Zookeeper](https://zookeeper.apache.org) 实现。由于 Vert.x 集群管理的可插拔性，也可轻易切换至其它的集群管理器。
@@ -104,7 +105,7 @@ vertx run MyVerticle -cp . -cluster
 java -jar ... -cp conf -cluster
 ```
 
-还有一种方式来覆盖默认的配置文件，那就是利用系统配置 `vertx.hazelcast.config` 来实现：
+还有一种方式来覆盖默认的配置文件，那就是利用系统配置 `vertx.zookeeper.config` 来实现：
 
 ```bash
 # 指定一个外部文件为自定义配置文件
@@ -114,7 +115,7 @@ java -Dvertx.zookeeper.config=./config/my-zookeeper-conf.json -jar ... -cluster
 java -Dvertx.zookeeper.config=classpath:my/package/config/my-cluster-config.json -jar ... -cluster
 ```
 
-如果系统变量 `vertx.zookeeper.config` 值不为空时，将覆盖 `classpath` 中所有的 `zookeeper.json` 文件，但是如果加载 `vertx.zookeeper.config` 失败时，系统将选取 `classpath` 任意一个 `zookeeper.xml` ，甚至直接使用默认配置。
+如果系统变量 `vertx.zookeeper.config` 值不为空时，将覆盖 `classpath` 中所有的 `zookeeper.json` 文件，但是如果加载 `vertx.zookeeper.config` 失败时，系统将选取 `classpath` 任意一个 `zookeeper.json` ，甚至直接使用默认配置。
 
 在配置文件 `default-zookeeper.json` 中已经通过注释的形式，详细说明每个配置项的作用。
 
@@ -139,7 +140,7 @@ Vertx.clusteredVertx(options, res -> {
     // failed!
   }
 });
-``` 
+```
 
 > 注意：通过系统变量 `vertx.zookeeper.hosts` 也可以达到配置 zookeeper `hosts` 的目的。
 
