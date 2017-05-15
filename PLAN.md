@@ -23,10 +23,10 @@
   - [x] **Vert.x Config**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
 - [x] **Vert.x Service Proxy**：已重新翻译
+- [x] **Vert.x Clustering**：已翻译校对完成
 - [ ] **Vert.x Testing**
   - [ ] **Vert.x Unit**：计划中
 - [ ] **Vert.x IoT**：计划中
-- [ ] **Vert.x Clustering**：待更新
 
 ## 翻译计划
 
