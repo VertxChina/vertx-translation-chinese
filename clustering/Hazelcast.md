@@ -17,7 +17,7 @@
 - Gradle(build.gradle)
 
 ```groovy
-compile 'io.vertx:vertx-jgroups:3.4.1'
+compile 'io.vertx:vertx-hazelcast:3.4.1'
 ```
 
 Vert.x 集群管理器包含一下几个功能：
