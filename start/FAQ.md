@@ -292,3 +292,13 @@ Future.<Message<String>>future(f ->
 ```java
 router.route("/").handler(ctx->ctx.reroute("/static/index.html"));
 ```
+### 问：我之前有过Spring，Akka，Node.js或Go的经验，请问Vert.x的概念有我熟悉的吗？
+
+答：严格说来，不同框架和语言之间的概念无法一一对应，但如果我们不那么严格地去深究细节，Vert.x定义的概念可以从其它框架以及语言中找到一些痕迹，以下是Vert.x中定义概念跟其它框架和语言定义概念的比较，同一行中的概念可被认为是相似的：
+
+|Vert.x|Akka|Spring|EJB|Node.js|Go|
+|:---:|:---:|:---:|:---:|:---:|:---:|
+|Standard Verticle|-|-|-|Reactor|-|
+|Worker Verticle|-|-|Stateless Session Bean|-|-|
+|Multiple Threaded<br>Worker Verticle|-|Bean(Singleton)|-|-|-|
+|Handler|Actor|-|-|-|Goroutine|
