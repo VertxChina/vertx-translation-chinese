@@ -31,7 +31,7 @@ Vert.x 集群管理器包含一下几个功能：
 **注意事项**
 Vert.x 集群器并不处理节点之间的通信，在 Vert.x 中节点中的通信是直接由 TCP 链接处理的。
 
-## 使用 `HazelcastClusterManager`
+## 使用 Hazelcast cluster manager
 
 如果通过命令行来使用 Vert.x，对应集群管理器 `jar` 包( `vertx-hazelcast-${version}` )应该在 Vert.x 中安装包中。
 
@@ -55,7 +55,7 @@ Vertx.clusteredVertx(options, res -> {
 });
 ```
 
-## 配置 `HazelcastClusterManager`
+## 配置 Hazelcast cluster manager
 
 通常情况下，集群管理器的相关配置是由打包的jar中的默认配置文件 `default-cluster.xml` 决定的。
 
@@ -175,9 +175,9 @@ MacOS 默认禁用组播。Google一下启用组播。
 
 ### 使用错误的网络接口
 
-如果机器上上有多个网络接口（也有可能是在运行VPN的情况下），那么 Hazelcast 很有可能是使用了错误的网络接口。
+如果机器上有多个网络接口（也有可能是在运行 VPN 的情况下），那么 Hazelcast 很有可能是使用了错误的网络接口。
 
-告诉 Hazelcast 使用特定的接口，在配置文件中将 `interface` 设置为指定IP地址，同时确保 enabled 属性设置为 true 。 例如：
+为了确保 Hazelcast 使用正确的网络接口，在配置文件中将 `interface` 设置为指定IP地址，同时确保 enabled 属性设置为 true 。 例如：
 
 ```xml
 <interfaces enabled="true">
@@ -209,7 +209,7 @@ VPN 软件通常通过创建不支持组播的虚拟网络接口来进行工作�
 
 ### 开启日志
 
-在排除故障时，开启hazelcast日志，将会给予很大的帮助。在 `classpath` 中添加 `vertx-default-jul-logging.properties` 文件（默认的JUL记录时），这是一个标准 java.util.loging（JUL） 配置文件。具体配置如下：
+在排除故障时，开启 Hazelcast 日志，将会给予很大的帮助。在 `classpath` 中添加 `vertx-default-jul-logging.properties` 文件（默认的JUL记录时），这是一个标准 java.util.loging（JUL） 配置文件。具体配置如下：
 
 ```
 com.hazelcast.level=INFO
