@@ -4,7 +4,7 @@
 
 `IgniteClusterManager` 是基于 [Apache Ignite](https://ignite.apache.org) 实现。由于 Vert.x 集群管理的可插拔性，也可轻易切换至其它的集群管理器。
 
-Vert.x 集群管理器包含一下几个功能：
+Vert.x 集群管理器包含以下几个功能：
 
 1. 发现并管理集群中的节点
 2. 管理集群端的主题订阅清单（这样就可以轻松得知集群中的那些节点订阅了那些 EventBus 地址）

@@ -229,7 +229,7 @@ Hazelcast 的日志默认采用 JDK 实现（参考 JUL）。如果想切换至�
 
 ## 使用其他 Hazelcast 版本
 
-当前的 Vert.x HazelcastClusterManager 使用的 Hazelcast 版本为 `3.6.3` 。如果开发者想使用其他版本的 Hazelcast，需要做一下工作：
+当前的 Vert.x HazelcastClusterManager 使用的 Hazelcast 版本为 `3.6.3` 。如果开发者想使用其他版本的 Hazelcast，需要做以下工作：
 
 - 将目标版本的 Hazelcast 依赖添加至 classpath 中 
 - 如果是 fat jar 的形式，在构建工具中使用正确的版本
