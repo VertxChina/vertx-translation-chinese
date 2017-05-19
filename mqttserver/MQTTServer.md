@@ -39,4 +39,152 @@ compile io.vertx:vertx-mqtt-server:3.4.0-SNAPSHOT
 ### 处理客户端连接/断开
 这个例子展示了如何处理一个来自远程MQTT客户端的请求，首先，会创建一个`Mqttserver`实例和使用`endpontHandler`方法选定一个处理器用于处理远程客户端发送的CONNECT信息。
 `MqttEndpont`实例,会被当做Handler的参数，它携带了所有主要的与CONNECT消息相关联的信息，例如客户端标识符，用户名/密码，【"Will information"】，清除session标志，协议版本和保活超时。
-在Handler内,endpoint实例提供accept方法以响应CONNACK回应远程客户端，
+在Handler内,endpoint实例提供accept方法以响应CONNACK回应远程客户端；通过该方式，连接会被建立。最终，服务器通过`listen`方法以默认行为的行为(运行在localhost和默认MQTT端口1883)启动。存在一个相同的方法，允许选定一个Handler去检查是否服务器是否已经正常启动。
+
+```java
+MqttServer mqttServer = MqttServer.create(vertx);
+mqttServer.endpointHandler(endpoint -> {
+
+  // shows main connect info
+  System.out.println("MQTT client [" + endpoint.clientIdentifier() + "] request to connect, clean session = " + endpoint.isCleanSession());
+
+  if (endpoint.auth() != null) {
+    System.out.println("[username = " + endpoint.auth().userName() + ", password = " + endpoint.auth().password() + "]");
+  }
+  if (endpoint.will() != null) {
+    System.out.println("[will topic = " + endpoint.will().willTopic() + " msg = " + endpoint.will().willMessage() +
+      " QoS = " + endpoint.will().willQos() + " isRetain = " + endpoint.will().isWillRetain() + "]");
+  }
+
+  System.out.println("[keep alive timeout = " + endpoint.keepAliveTimeSeconds() + "]");
+
+  // accept connection from the remote client
+  endpoint.accept(false);
+
+})
+  .listen(ar -> {
+
+    if (ar.succeeded()) {
+
+      System.out.println("MQTT server is listening on port " + ar.result().actualPort());
+    } else {
+
+      System.out.println("Error on starting the server");
+      ar.cause().printStackTrace();
+    }
+  });
+```
+*endpoint*实例提供`disconnectHandler`用于选定一个handler当远程客户端发送 DISCONNECT消息会被调用，该handler没有参数。
+```java
+endpoint.disconnectHandler(v -> {
+
+  System.out.println("Received disconnect from client");
+});
+```
+
+### 使用SSL / TLS支持处理客户端连接/断开连接
+服务端支持以SSL/TLS方式接受连接请求用来验证和加密。为了做到这一点，`MqttServerOptions`类提供了`setSsl`方法用来设置SSL/TLS的用法(传递`true`作为值)和一些其他提供了服务器验证和私钥(as java key store reference，PEM或PFX格式)。在以下例子，`setKeyCertOptions`方法被用来传递一个PEM格式的证书。该方法需要一个实现了`KeyCertOptions`接口的实例，在这种情况下`PemKeyCertOptions`类被用来提供提供服务器证书和对应`setCertPath`与`setKeyPath`方法的私钥路径。MQTT服务器通常以传递一个Vert.x实例启动和以下的MQTT选项实例作为创建方法。
+```java
+MqttServerOptions options = new MqttServerOptions()
+  .setPort(8883)
+  .setKeyCertOptions(new PemKeyCertOptions()
+    .setKeyPath("./src/test/resources/tls/server-key.pem")
+    .setCertPath("./src/test/resources/tls/server-cert.pem"))
+  .setSsl(true);
+
+MqttServer mqttServer = MqttServer.create(vertx, options);
+mqttServer.endpointHandler(endpoint -> {
+
+  // shows main connect info
+  System.out.println("MQTT client [" + endpoint.clientIdentifier() + "] request to connect, clean session = " + endpoint.isCleanSession());
+
+  if (endpoint.auth() != null) {
+    System.out.println("[username = " + endpoint.auth().userName() + ", password = " + endpoint.auth().password() + "]");
+  }
+  if (endpoint.will() != null) {
+    System.out.println("[will topic = " + endpoint.will().willTopic() + " msg = " + endpoint.will().willMessage() +
+      " QoS = " + endpoint.will().willQos() + " isRetain = " + endpoint.will().isWillRetain() + "]");
+  }
+
+  System.out.println("[keep alive timeout = " + endpoint.keepAliveTimeSeconds() + "]");
+
+  // accept connection from the remote client
+  endpoint.accept(false);
+
+})
+  .listen(ar -> {
+
+    if (ar.succeeded()) {
+
+      System.out.println("MQTT server is listening on port " + ar.result().actualPort());
+    } else {
+
+      System.out.println("Error on starting the server");
+      ar.cause().printStackTrace();
+    }
+  });
+```
+所有其他与处理端点连接和断开连接相关在没有SSL/TLS支持下被以相同方式被管理。
+
+###处理客户端订阅和退订请求
+在客户端和服务端的连接被建立后，客户端可以以指定的主题发送订阅消息。`MqttEndpoint`接口允许使用`subscribeHandler`处理到来的订阅请求。
+这样的Handler接受一个`MqttSubscribeMessage`接口的实例，which brings the list of topics with related QoS levels as desired by the client.最终，端点实例提供`subscribeAckowledge`方法以包含了授予QoS级别的相关SUBACK消息回应客户端。
+```java
+endpoint.subscribeHandler(subscribe -> {
+
+  List<MqttQoS> grantedQosLevels = new ArrayList<>();
+  for (MqttTopicSubscription s: subscribe.topicSubscriptions()) {
+    System.out.println("Subscription for " + s.topicName() + " with QoS " + s.qualityOfService());
+    grantedQosLevels.add(s.qualityOfService());
+  }
+  // ack the subscriptions request
+  endpoint.subscribeAcknowledge(subscribe.messageId(), grantedQosLevels);
+
+});
+```
+以相同的方式，可以使用`unsubscribeHandler`方法在端点上选定一个handler，当客户端发送UNSUBSCRIBE消息时该handler会被调用。这个handler接受一个实现了`MqttUnsubscribeMessage`接口的实例作为参数，它携带了一个退订列表。最终，端点实例提供`unsubscribeAcknowledge`方法用于以相关的UNSUBACK消息回应客户。
+```java
+endpoint.unsubscribeHandler(unsubscribe -> {
+
+  for (String t: unsubscribe.topics()) {
+    System.out.println("Unsubscription for " + t);
+  }
+  // ack the subscriptions request
+  endpoint.unsubscribeAcknowledge(unsubscribe.messageId());
+});
+```
+###处理客户端发布消息
+为了处理远程客户端发布的消息，`MqttEndpoint`接口提供了`publishHandler`方法用于选定handler当客户端发送一个PUBLISH消息时。
+这个handler接受一个`MqttPublishMessage`接口的实例作为参数，with the payload, the QoS level, the duplicate and retain flags.
+
+假如QoS级别是0(最多一次)，就没有必要给客户端响应。
+
+假如QoS级别是1(至少一次)，端点需要通过`publishAcknowledge`方法回应一个PUBACK消息
+
+假如QoS级别是2(正好一次)，端点需要使用`publishReceived`方法回应一个PUBREC消息。在这种情况下端点应该处理来自于客户端的PUBREL消息并且(当收到来资源端点的PUBREC消息，远程客户端发送就会发送它)，可以通过`publishReleaseHandler`方法实现。为了关闭QoS级别2传递，端点可以使用`publishComplete`方法用来发送PUBCOMP消息到客户端。
+
+```java
+endpoint.publishHandler(message -> {
+
+  System.out.println("Just received message [" + message.payload().toString(Charset.defaultCharset()) + "] with QoS [" + message.qosLevel() + "]");
+
+  if (message.qosLevel() == MqttQoS.AT_LEAST_ONCE) {
+    endpoint.publishAcknowledge(message.messageId());
+  } else if (message.qosLevel() == MqttQoS.EXACTLY_ONCE) {
+    endpoint.publishRelease(message.messageId());
+  }
+
+}).publishReleaseHandler(messageId -> {
+
+  endpoint.publishComplete(messageId);
+});
+```
+
+###发布消息到客户端
+通过使用`publish`方法端点可以发布一个消息到远程客户端(发送一个PUBLISH消息)，它使用以下入参，要发布的主题，负载，QoS级别，复制和保留标志。
+
+假如QoS级别是0(最多一次)，端点不会收到任何客户端的响应。
+
+假如QoS级别是1(最多一次)，端点需要去处理来自客户端的PUBACK消息，为了收到最后的确认消息。可以使用`publishAcknowledgeHandler`方法。
+
+假如QoS级别是2(正好一次)，端点需要去处理来自客户端的PUBREC消息。可以通过`publishReceivedHandler`方法来完成该操作。
