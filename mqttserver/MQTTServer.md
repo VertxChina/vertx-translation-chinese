@@ -188,3 +188,63 @@ endpoint.publishHandler(message -> {
 假如QoS级别是1(最多一次)，端点需要去处理来自客户端的PUBACK消息，为了收到最后的确认消息。可以使用`publishAcknowledgeHandler`方法。
 
 假如QoS级别是2(正好一次)，端点需要去处理来自客户端的PUBREC消息。可以通过`publishReceivedHandler`方法来完成该操作。
+在该Handler内，端点可以使用`publishRelease`方法响应PUBREL消息给客户端。最后一步是处理来自客户端的PUBCOMP消息；可以使用`publishCompleteHandler`来指定一个handler当收到PUBCOMP消息时候调用。
+```java
+// just as example, publish a message with QoS level 2
+endpoint.publish("my_topic", Buffer.buffer("Hello from the Vert.x MQTT server"), MqttQoS.EXACTLY_ONCE, false, false)
+
+// specifing handlers for handling QoS 1 and 2
+endpoint.publishAcknowledgeHandler((messageId: java.lang.Integer) => {
+
+  println(s"Received ack for message = ${messageId}")
+
+}).publishReceivedHandler((messageId: java.lang.Integer) => {
+
+  endpoint.publishRelease(messageId)
+
+}).publishCompleteHandler((messageId: java.lang.Integer) => {
+
+  println(s"Received ack for message = ${messageId}")
+})
+```
+Be notified by client keep alive
+底层的MQTT保活机制是由服务器内部处理的。当接收到连接消息，服务器关注在该消息内的保活超时时间，用来检查客户端是否在该超市时间内没有发送任何消息。同时，对于接收到每个PINGREQ消息，服务器会以PINGRESP响应。
+
+即使对于高等级应用不需要处理它，`MqttEndpoint`接口提供`pingHandler`方法用来选定一个handler，当收到来自客户端的PINGREQ消息会被调用。
+对于应用程序来说这只是一个通知，客户端并没有发送任何有意义的信息，只是一个用于检测保活的ping消息。在任何情况下，PINGRESP会被服务器自动发送。
+
+### 关闭服务器
+`MqttServer`借口提供了`close`方法用于关闭服务器。它停止监听到来的连接和关闭所有远程客户端活跃的连接。该方法是一个异步方法并且有个重载方法提供了选定一个完成handler当服务器真正关闭时进行调用。
+```java
+mqttServer.closeFuture().onComplete{
+  case Success(result) => println("Success")
+  case Failure(cause) => println("Failure")
+}
+```
+### 在verticles中自动清理
+假如你是在verticles中创建的MQTT服务器，当verticle取消部署这些服务器会被自动关闭。
+
+### 扩展：共享MQTT服务器
+与MQTT服务器相关的handler总是在event loop线程中执行。这意味着在一个多核系统中，仅有一个实例被部署，一个核被使用。为了使用更多的核，可以部署更多的MQTT服务器实例
+可以通过编程方式实现：
+```java
+for ( i <- 0 until 10) {
+
+  var mqttServer = MqttServer.create(vertx)
+  mqttServer.endpointHandler((endpoint: io.vertx.scala.mqtt.MqttEndpoint) => {
+    // handling endpoint
+  }).listenFuture().onComplete{
+    case Success(result) => println("Success")
+    case Failure(cause) => println("Failure")
+  }
+
+}
+```
+或者使用一个verticle指定实例的数量：
+```java
+var options = DeploymentOptions()
+  .setInstances(10)
+
+vertx.deployVerticle("com.mycompany.MyVerticle", options)
+```
+真正是这样的，即使只有一个MQTT服务器被部署，但到来的连接会被Vert.x使用轮转算法分发到不同的连接handlers在不同的核上执行。
