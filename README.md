@@ -54,8 +54,10 @@ sudo npm install gitbook-cli -g
 
 进入项目根目录
 ```
-gitbook buil ./ docs
+rm -rf docs && gitbook build ./ docs
 ```
+
+构建之后将 docs 目录的所有更新提交
 
 > 注意一定要输出到 docs 目录，才能被 git pages 识别
 
