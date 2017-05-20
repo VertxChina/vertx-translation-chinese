@@ -46,7 +46,7 @@
 * [Clustering](clustering/Clustering.md)
   * [Hazelcast](clustering/Hazelcast.md)
   * [Infinispan](clustering/Infinispan.md)
-  * [Apache Ignite](clustering/ApacheZookeeper.md)
+  * [Apache Ignite](clustering/ApacheIgnite.md)
   * [Apache Zookeeper](clustering/ApacheZookeeper.md)
   * [JGroups ](clustering/JGroups.md)
 * [Services](services/Services.md)
