@@ -6,7 +6,7 @@
 
 答：Vert.x其实就是建立了一个Verticle内部的线程安全机制，让用户可以排除多线程并发冲突的干扰，专注于业务逻辑上的实现，用了Vert.x，您就不用操心多线程和并发的问题了。Verticle内部代码，除非声明Verticle是Worker Verticle，否则Verticle内部环境全部都是线程安全的，不会出现多个线程同时访问同一个Verticle内部代码的情况。
 
-> 请注意：*一般情况下，用了Vert.x的Verticle之后，原则上synchronized，Lock，volatile，static对象，java.util.concurrent, HashTable, Vector, Thread, Runnable, Callable, Executor, Task, ExecutorService等这些并发和线程相关的东西就不再需要使用了，可以由Verticle全面接管，如果您不得不在Vert.x代码中使用上诉内容，则多少暗示着您的设计或者使用Vert.x的姿势出现了问题，建议再斟酌商榷一下。*
+> 请注意：*一般情况下，用了Vert.x的Verticle之后，原则上synchronized，Lock，volatile，static对象，java.util.concurrent, HashTable, Vector, Thread, Runnable, Callable, Executor, Task, ExecutorService等这些并发和线程相关的东西就不再需要使用了，可以由Verticle全面接管，如果您不得不在Vert.x代码中使用上述内容，则多少暗示着您的设计或者使用Vert.x的姿势出现了问题，建议再斟酌商榷一下。*
 
 ### 问：Verticle对象和处理器（Handler）是什么关系？Vert.x如何保证Verticle内部线程安全？
 
