@@ -4,6 +4,8 @@
 
 当前文档翻译对应版本：**Vert.x 3.4.1**。
 
+在线地址：[https://vertxchina.github.io/vertx-translation-chinese](https://vertxchina.github.io/vertx-translation-chinese)
+
 ## 背景
 
 随着 Vert.x 在中国越来越受到关注，使用人数也越来越多，但相关的中文文档却寥寥可数，在这样的背景下，Vert.x 中国用户组发动社区内的志愿者翻译 [Vert.x 官方文档](http://vertx.io/docs)。
