@@ -1,0 +1,1153 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Shiro Auth · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="MongoDBAuth.html" />
+    
+    
+    <link rel="prev" href="JWTAuth.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Auth.html">
+            
+                <a href="Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="AuthCommon.html">
+            
+                <a href="AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="JDBCAuth.html">
+            
+                <a href="JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="JWTAuth.html">
+            
+                <a href="JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9.4" data-path="ShiroAuth.html">
+            
+                <a href="ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="MongoDBAuth.html">
+            
+                <a href="MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="Oauth2.html">
+            
+                <a href="Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Shiro Auth</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-shiro-auth">Vert.x Shiro Auth</h1>
+<h3 id="apache-shiro-auth&#x63D0;&#x4F9B;&#x8005;&#x5B9E;&#x73B0;">Apache Shiro Auth&#x63D0;&#x4F9B;&#x8005;&#x5B9E;&#x73B0;</h3>
+<h4 id="&#x57FA;&#x672C;&#x672F;&#x8BED;">&#x57FA;&#x672C;&#x672F;&#x8BED;</h4>
+<ul>
+<li>provider&#xFF1A;&#x63D0;&#x4F9B;&#x8005;</li>
+<li>authentication&#xFF1A;&#x9A8C;&#x8BC1;</li>
+<li>permissions&#xFF1A;&#x6743;&#x9650;</li>
+</ul>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4F7F;&#x7528;<a href="http://shiro.apache.org/" target="_blank">Apache Shiro</a>&#x7684;auth&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+<p>&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#xFF0C;&#x5C06;&#x4E0B;&#x9762;&#x7684;&#x4F9D;&#x8D56;&#x6DFB;&#x52A0;&#x5230;&#x6784;&#x5EFA;&#x63CF;&#x8FF0;&#x7B26;&#x91CC;&#x7684;dependencies&#x90E8;&#x5206;&#x3002;</p>
+<ul>
+<li><p>Maven&#xFF08;&#x5728;<code>pom.xml</code>&#x6587;&#x4EF6;&#x91CC;&#xFF09;</p>
+<pre><code>  &lt;dependency&gt;
+      &lt;groupId&gt;io.vertx&lt;/groupId&gt;
+      &lt;artifactId&gt;vertx-auth-shiro&lt;/artifactId&gt;
+      &lt;version&gt;3.2.1&lt;/version&gt;
+  &lt;/dependency&gt;
+</code></pre></li>
+<li><p>Gradle(&#x5728;<code>build.gradle</code>&#x6587;&#x4EF6;&#x91CC;)</p>
+<pre><code>  compile &apos;io.vertx:vertx-auth-shiro:3.2.1&apos;
+</code></pre></li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x4F7F;&#x7528;Shiro&#x63D0;&#x4F9B;&#x57FA;&#x4E8E;&#x8EAB;&#x4EFD;&#x8BA4;&#x8BC1;&#x5C5E;&#x6027;&#x548C;LDAP&#x5F00;&#x7BB1;&#x5373;&#x7528;&#x7684;&#x652F;&#x6301;&#xFF0C;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x63D2;&#x4EF6;&#xFF0C;&#x5728;&#x4EFB;&#x4F55;&#x5176;&#x4ED6;&#x7684;&#x671F;&#x671B;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;&#x4F5C;&#x4E3A;&#x51ED;&#x636E;&#x7684;Shiro Realm&#x91CC;&#x3002;</p>
+<p>&#x4F7F;&#x7528;<code>ShiroAuth</code>&#x521B;&#x5EFA;&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x5B9E;&#x4F8B;&#x3002;&#x4F7F;&#x7528;<code>ShiroAuthRealmType</code>&#x6307;&#x5B9A;Shiro auth&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5E76;&#x4E14;&#x4E5F;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;JSON&#x5BF9;&#x8C61;&#x7684;&#x914D;&#x7F6E;&#x3002;</p>
+<p>&#x8FD9;&#x662F;&#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x7C7B;&#x578B;&#x521B;&#x5EFA;Shiro auth&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code>JsonObject config = new JsonObject().put(&quot;properties_path&quot;, &quot;classpath:test-auth.properties&quot;);
+AuthProvider provider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, config);
+</code></pre><h3 id="&#x9A8C;&#x8BC1;">&#x9A8C;&#x8BC1;</h3>
+<p>&#x5F53;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x5B9E;&#x73B0;&#x4F5C;&#x4E3A;&#x8BA4;&#x8BC1;&#x65F6;&#xFF0C;&#x5B83;&#x9700;&#x8981;&#x5728;&#x8BA4;&#x8BC1;&#x4FE1;&#x606F;&#x91CC;&#x83B7;&#x53D6;<code>username</code>&#x548C;<code>password</code>&#xFF1A;</p>
+<pre><code>JsonObject authInfo = new JsonObject().put(&quot;username&quot;, &quot;tim&quot;).put(&quot;password&quot;, &quot;sausages&quot;);
+authProvider.authenticate(authInfo, res -&gt; {
+    if (res.succeeded()) {
+        User user = res.result();
+    } else {
+        // Failed!
+    }
+});
+</code></pre><h3 id="&#x6388;&#x6743;-&#x6743;&#x9650;-&#x89D2;&#x8272;&#x6A21;&#x578B;">&#x6388;&#x6743;-&#x6743;&#x9650;-&#x89D2;&#x8272;&#x6A21;&#x578B;</h3>
+<p>&#x5C3D;&#x7BA1;Vert.x auth&#x672C;&#x8EAB;&#x5E76;&#x6CA1;&#x6709;&#x6388;&#x6743;&#x4EFB;&#x4F55;&#x7279;&#x5B9A;&#x7684;&#x8BB8;&#x53EF;&#xFF08;&#x5B83;&#x4EEC;&#x4EC5;&#x662F;&#x4E0D;&#x900F;&#x660E;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF09;&#x6A21;&#x578B;&#xFF0C;&#x8FD9;&#x4E2A;&#x7684;&#x5B9E;&#x73B0;&#x548C; &#x7528;&#x6237;/&#x89D2;&#x8272;/&#x6743;&#x9650; &#x6A21;&#x578B;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x6709;0&#x5230;&#x591A;&#x4E2A;&#x89D2;&#x8272;&#xFF0C;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x53EF;&#x4EE5;&#x6709;0&#x5230;&#x591A;&#x4E2A;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x8981;&#x9A8C;&#x8BC1;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x662F;&#x5426;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7B80;&#x5355;&#x7684;&#x5C06;&#x6743;&#x9650;&#x4F20;&#x5165;&#x5230;<code>isAuthorised</code>&#x50CF;&#x63A5;&#x4E0B;&#x6765;&#x8FD9;&#x6837;&#x505A;&#xFF1A;</p>
+<pre><code>user.isAuthorised(&quot;newsletter:edit:13&quot;, res -&gt; {
+    if (res.succeeded()) {
+        boolean hasPermission = res.result();
+    } else {
+        // Failed to
+    }
+});
+</code></pre><p>&#x8981;&#x9A8C;&#x8BC1;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x662F;&#x5426;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x5728;&#x53C2;&#x6570;&#x524D;&#x9762;&#x52A0;&#x4E0A;&#x89D2;&#x8272;&#x524D;&#x7F00;&#x3002;</p>
+<pre><code>user.isAuthorised(&quot;role:manager&quot;, res -&gt; {
+    if (res.succeeded()) {
+        boolean hasRole = res.result();
+    } else {
+        // Failed to
+    }
+});
+</code></pre><p>&#x9ED8;&#x8BA4;&#x7684;&#x89D2;&#x8272;&#x524D;&#x7F00;&#x662F;<code>role:</code>&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;<code>setRolePrefix</code>&#x6539;&#x53D8;&#x9ED8;&#x8BA4;&#x7684;&#x3002;</p>
+<h4 id="the-shiro-properties-auth-provider">The Shiro properties auth provider</h4>
+<p>&#x8FD9;&#x4E2A;auth&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x4F7F;&#x7528;Apache Shiro&#x4ECE;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x91CC;&#x83B7;&#x53D6; &#x7528;&#x6237;/&#x89D2;&#x8272;/&#x6743;&#x9650; &#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x89D2;&#x8272;&#x5728;API&#x91CC;&#x5E76;&#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x53EF;&#x7528;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x4E8B;&#x5B9E;&#xFF0C;vertx-auth&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x5C1D;&#x8BD5;&#x8F7B;&#x4FBF;&#x3002;&#x7136;&#x800C;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x524D;&#x7F00;<code>role:</code>&#x6216;&#x8005;&#x901A;&#x8FC7;<code>setRolePrefix</code>&#x6307;&#x5B9A;&#x4F60;&#x60F3;&#x8981;&#x7684;&#x524D;&#x7F00;&#x5728;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x4E0A;&#x6267;&#x884C;&#x65AD;&#x8A00;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD9;&#x4E2A;&#x5B9E;&#x73B0;&#x5C06;&#x4F1A;&#x5728;&#x7C7B;&#x8DEF;&#x5F84;&#x91CC;&#x67E5;&#x627E;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;<code>vertx-users.properties</code>&#x7684;&#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x8981;&#x6539;&#x53D8;&#x8FD9;&#x4E2A;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>properties_path</code>&#x914D;&#x7F6E;&#x5143;&#x7D20;&#x6765;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;&#x503C;&#x662F;<code>classpath:vertx-users.properties</code>&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x503C;&#x5F97;&#x524D;&#x7F00;&#x662F;<code>classpath:</code>&#xFF0C;&#x5C06;&#x4F1A;&#x5728;&#x7C7B;&#x8DEF;&#x5F84;&#x67E5;&#x627E;&#x90A3;&#x4E2A;&#x540D;&#x5B57;&#x7684;&#x5C5E;&#x6027;&#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x503C;&#x7684;&#x524D;&#x7F00;&#x662F;<code>file:</code>&#xFF0C;&#x5C06;&#x5728;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E0A;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x503C;&#x5F97;&#x524D;&#x7F00;&#x662F;<code>url:</code>&#xFF0C;&#x5C06;&#x4F1A;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;URL&#x6765;&#x52A0;&#x8F7D;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x6587;&#x4EF6;&#x3002;</p>
+<p>&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x6587;&#x4EF6;&#x5E94;&#x8BE5;&#x9075;&#x4ECE;&#x4E0B;&#x9762;&#x7684;&#x7ED3;&#x6784;&#xFF1A;</p>
+<p>&#x6BCF;&#x4E00;&#x884C;&#x5E94;&#x8BE5;&#x8981;&#x4E48;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x7528;&#x6237;&#x540D;&#x3001;&#x5BC6;&#x7801;&#x548C;&#x89D2;&#x8272;&#xFF0C;&#x8981;&#x4E48;&#x5305;&#x542B;&#x89D2;&#x8272;&#x7684;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x884C;&#x5E94;&#x8BE5;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x6784;&#xFF1A;
+user.{username}={password},{roleName1},{roleName2},...,{roleNameN}</p>
+<p>&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x884C;&#x5E94;&#x8BE5;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x6784;&#xFF1A;
+role.{roleName}={permissionName1},{permissionName2},...,{permissionNameN}</p>
+<p>&#x8FD9;&#x662F;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code>user.tim = mypassword,administrator,developer
+user.bob = hispassword,developer
+user.joe = anotherpassword,manager
+role.administrator = *
+role.manager = play_golf,say_buzzwords
+role.developer = do_actual_work
+</code></pre><p>&#x5F53;&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x4F7F;&#x7528;&#x901A;&#x914D;&#x7B26;<code>*</code>&#x65F6;&#xFF0C;&#x8BF4;&#x660E;&#x8FD9;&#x4E2A;&#x89D2;&#x8272;&#x62E5;&#x6709;&#x6240;&#x6709;&#x7684;&#x6743;&#x9650;&#x3002;</p>
+<h4 id="the-shiro-ldap-auth-provider">The Shiro LDAP auth Provider</h4>
+<p>LDAP auth realm&#x4ECE;&#x4E00;&#x4E2A;LDAP&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x83B7;&#x53D6; &#x7528;&#x6237;/&#x89D2;&#x8272;/&#x6743;&#x9650; &#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x7684;&#x8FD9;&#x4E9B;&#x914D;&#x7F6E;&#x5C5E;&#x6027;&#x662F;&#x7528;&#x6765;&#x914D;&#x7F6E;&#x4E00;&#x4E2A;LDAP realm&#xFF1A;</p>
+<ul>
+<li><code>ldap-user-dn-template</code>&#xFF1A;&#x8FD9;&#x662F;&#x7528;&#x6765;&#x51B3;&#x5B9A;&#x5B9E;&#x9645;&#x7684;&#x67E5;&#x627E;&#x4F7F;&#x7528;&#x5F53;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;id&#x6765;&#x67E5;&#x627E;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x65F6;&#x5019;&#x3002;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x662F;<code>uid={0},ou=users,dc=foo,dc=com</code>-&#x8FD9;&#x4E2A;&#x5143;&#x7D20;<code>{0}</code>&#x662F;&#x521B;&#x5EFA;&#x5B9E;&#x9645;&#x7684;&#x67E5;&#x627E;&#x65F6;&#x66FF;&#x6362;&#x6210;&#x7528;&#x6237;&#x7684;id&#x3002;&#x8FD9;&#x4E2A;&#x8BBE;&#x7F6E;&#x662F;&#x5F3A;&#x5236;&#x7684;&#x3002;</li>
+<li><code>ldap_url</code>&#xFF1A;&#x8FD9;&#x4E2A;url&#x662F;&#x8BBE;&#x7F6E;LDAP&#x670D;&#x52A1;&#x5668;&#x3002;&#x8FD9;&#x4E2A;url&#x5FC5;&#x987B;&#x4EE5;<code>ldap://</code>&#x5F00;&#x5934;&#xFF0C;&#x7AEF;&#x53E3;&#x4E5F;&#x5FC5;&#x987B;&#x8981;&#x6307;&#x5B9A;&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;<code>ldap://myldapserver.mycompany.com:10389</code></li>
+<li><code>ldap-authentication-mechanism</code>&#xFF1A;TODO</li>
+<li><code>ldap-context-factory-class-name</code>&#xFF1A;TODO</li>
+<li><code>ldap-pooling-enabled</code>&#xFF1A;TODO</li>
+<li><code>ldap-referral</code>&#xFF1A;TODO</li>
+<li><code>ldap-system-username</code>&#xFF1A;TODO</li>
+<li><code>ldap-system-password</code>&#xFF1A;TODO</li>
+</ul>
+<h4 id="&#x4F7F;&#x7528;&#x53E6;&#x4E00;&#x4E2A;shiro-realm">&#x4F7F;&#x7528;&#x53E6;&#x4E00;&#x4E2A;Shiro Realm</h4>
+<p>&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x9884;&#x5148;&#x521B;&#x5EFA;&#x7684;Apache Shiro Realm&#x5BF9;&#x8C61;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;auth&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x793A;&#x4F8B;&#x662F;&#x53EF;&#x4EE5;&#x7684;&#x3002;</p>
+<p>&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#x505A;&#x7684;&#xFF1A;</p>
+<pre><code>AuthProvider provider = ShiroAuth.create(vertx, realm);
+</code></pre><p>&#x8FD9;&#x4E2A;&#x5B9E;&#x73B0;&#x5F53;&#x524D;&#x5047;&#x5B9A;&#x4E86;&#x5728;&#x57FA;&#x672C;&#x7684;&#x9A8C;&#x8BC1;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;&#x3002;</p>
+<p><a href="mailto:julien@julienviet.com" target="_blank">Julien Viet</a><a href="http://tfox.org" target="_blank">Tim Fox</a></p>
+<h5 id="translated-by-weiyiysw">translated by weiyiysw</h5>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="JWTAuth.html" class="navigation navigation-prev " aria-label="Previous page: JWT Auth">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="MongoDBAuth.html" class="navigation navigation-next " aria-label="Next page: MongoDB Auth">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Shiro Auth","level":"1.9.4","depth":2,"next":{"title":"MongoDB Auth","level":"1.9.5","depth":2,"path":"auth/MongoDBAuth.md","ref":"auth/MongoDBAuth.md","articles":[]},"previous":{"title":"JWT Auth","level":"1.9.3","depth":2,"path":"auth/JWTAuth.md","ref":"auth/JWTAuth.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"auth/ShiroAuth.md","mtime":"2017-04-12T09:05:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

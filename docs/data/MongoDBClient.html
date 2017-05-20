@@ -1,0 +1,1780 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>MongoDB Client · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="JDBCClient.html" />
+    
+    
+    <link rel="prev" href="Data.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Data.html">
+            
+                <a href="Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.6.1" data-path="MongoDBClient.html">
+            
+                <a href="MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="JDBCClient.html">
+            
+                <a href="JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="SQLCommon.html">
+            
+                <a href="SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="RedisClient.html">
+            
+                <a href="RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="MySQL&PostgreSQLClient.html">
+            
+                <a href="MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >MongoDB Client</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-mongodb-client">Vert.x MongoDB Client</h1>
+<blockquote>
+<p>&#x539F;&#x6587;&#x6863;&#xFF1A;<a href="http://vertx.io/docs/vertx-mongo-client/java/" target="_blank">Vert.x MongoDB Client</a></p>
+</blockquote>
+<h2 id="&#x7EC4;&#x4EF6;&#x4ECB;&#x7ECD;">&#x7EC4;&#x4EF6;&#x4ECB;&#x7ECD;</h2>
+<p>&#x60A8;&#x7684; Vert.x &#x5E94;&#x7528;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; Vert.x MongoDB Client&#xFF08;&#x4EE5;&#x4E0B;&#x7B80;&#x79F0;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6765;&#x4E0E; MongoDB &#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#xFF0C;&#x5305;&#x62EC;&#x4FDD;&#x5B58;&#xFF0C;&#x83B7;&#x53D6;&#xFF0C;&#x641C;&#x7D22;&#x548C;&#x5220;&#x9664;&#x6587;&#x6863;&#x3002;</p>
+<p>MongoDB &#x662F;&#x5728; Vert.x &#x5E94;&#x7528;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x6301;&#x4E45;&#x5316;&#x65F6;&#x7684;&#x6700;&#x4F73;&#x9009;&#x62E9;&#xFF0C;&#x56E0;&#x4E3A; MongoDB &#x5929;&#x751F;&#x5C31;&#x662F;&#x5904;&#x7406; JSON&#xFF08;BSON&#xFF09;&#x683C;&#x5F0F;&#x7684;&#x6587;&#x6863;&#x6570;&#x636E;&#x5E93;&#x3002;</p>
+<p><strong>&#x7279;&#x70B9;</strong></p>
+<ul>
+<li>&#x5B8C;&#x5168;&#x975E;&#x963B;&#x585E;</li>
+<li>&#x652F;&#x6301;&#x81EA;&#x5B9A;&#x4E49;&#x7F16;&#x89E3;&#x7801;&#x5668;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0; Vert.x JSON &#x5FEB;&#x901F;&#x5E8F;&#x5217;&#x5316;&#x548C;&#x53CD;&#x5E8F;&#x5217;&#x5316;</li>
+<li>&#x652F;&#x6301; MongoDB Java &#x9A71;&#x52A8;&#x5927;&#x90E8;&#x5206;&#x914D;&#x7F6E;&#x9879;</li>
+</ul>
+<p>&#x672C;&#x5BA2;&#x6237;&#x7AEF;&#x57FA;&#x4E8E; <a href="http://mongodb.github.io/mongo-java-driver/3.2/driver-async/getting-started" target="_blank">MongoDB Async Driver</a>&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;-vertx-mongodb-client">&#x4F7F;&#x7528; Vert.x MongoDB Client</h2>
+<p>&#x4F7F;&#x7528;&#x6B64;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E0B;&#x5217;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<ul>
+<li>Maven (&#x5728; <code>pom.xml</code> &#x6587;&#x4EF6;&#x4E2D;):</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-mongo-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle (&#x5728; <code>build.gradle</code> &#x6587;&#x4EF6;&#x4E2D;):</li>
+</ul>
+<pre><code class="lang-groovy">compile <span class="hljs-string">&apos;io.vertx:vertx-mongo-client:3.4.1&apos;</span>
+</code></pre>
+<h2 id="&#x521B;&#x5EFA;&#x5BA2;&#x6237;&#x7AEF;">&#x521B;&#x5EFA;&#x5BA2;&#x6237;&#x7AEF;</h2>
+<p>&#x60A8;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#x6765;&#x521B;&#x5EFA;&#x5BA2;&#x6237;&#x7AEF;&#xFF1A;</p>
+<h3 id="&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5171;&#x4EAB;&#x7684;&#x8FDE;&#x63A5;&#x6C60;">&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5171;&#x4EAB;&#x7684;&#x8FDE;&#x63A5;&#x6C60;</h3>
+<p>&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x60A8;&#x5E0C;&#x671B;&#x4E0D;&#x540C;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x6C60;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF1A;&#x6211;&#x4EEC;&#x5728;&#x90E8;&#x7F72; Verticle &#x65F6;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E86; Verticle &#x62E5;&#x6709;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#x5316;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x6BCF;&#x4E2A; Verticle &#x5B9E;&#x4F8B;&#x80FD;&#x591F;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5355;&#x72EC;&#x4E3A;&#x6BCF;&#x4E2A; Verticle &#x5B9E;&#x4F8B;&#x8BBE;&#x7F6E;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x8981;&#x89E3;&#x51B3;&#x4E0A;&#x9762;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8FD9;&#x4E48;&#x505A;&#xFF1A;</p>
+<pre><code class="lang-java">MongoClient client = MongoClient.createShared(vertx, config);
+</code></pre>
+<p>&#x53EA;&#x6709;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-" target="_blank"><code>MongoClient.createShared</code></a> &#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x4F1A;&#x771F;&#x6B63;&#x7684;&#x6839;&#x636E; <code>config</code> &#x53C2;&#x6570;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x518D;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x53EA;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;&#x8FD9;&#x65F6; <code>config</code> &#x53C2;&#x6570;&#x4E5F;&#x5C31;&#x4E0D;&#x518D;&#x6709;&#x4F5C;&#x7528;&#x3002;</p>
+<h3 id="&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;">&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;</h3>
+<p>&#x60A8;&#x8FD8;&#x53EF;&#x4EE5;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#xFF0C;&#x5728;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x65F6;&#x5019;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;&#x7684;&#x540D;&#x79F0;&#xFF1A;</p>
+<pre><code class="lang-java">MongoClient client = MongoClient.createShared(vertx, config, <span class="hljs-string">&quot;MyPoolName&quot;</span>);
+</code></pre>
+<p>&#x5982;&#x679C;&#x4E0D;&#x540C;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x4F7F;&#x7528;&#x4E86;&#x76F8;&#x540C;&#x7684; Vert.x &#x5BF9;&#x8C61;&#x548C;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4EEC;&#x5C06;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x540C;&#x6837;&#x7684;&#xFF08;&#x4E0E;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5171;&#x4EAB;&#x7684;&#x6570;&#x636E;&#x6E90;&#xFF09;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;<code>MongoClient.createShared</code>&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x4F1A;&#x771F;&#x6B63;&#x7684;&#x6839;&#x636E; <code>config</code> &#x53C2;&#x6570;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x518D;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x53EA;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;&#x8FD9;&#x65F6; <code>config</code> &#x53C2;&#x6570;&#x4E5F;&#x5C31;&#x4E0D;&#x518D;&#x6709;&#x4F5C;&#x7528;&#x3002;</p>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x4E0D;&#x540C;&#x542B;&#x4E49;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x62E5;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x6765;&#x521B;&#x5EFA;&#x5B83;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x6BD4;&#x5982;&#x5B83;&#x4EEC;&#x8981;&#x4E0E;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#x3002;</p>
+<h3 id="&#x521B;&#x5EFA;&#x4E0D;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;">&#x521B;&#x5EFA;&#x4E0D;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;</h3>
+<p>&#x5728;&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x5E0C;&#x671B;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x3002;&#x4F46;&#x6709;&#x65F6;&#x5019;&#xFF0C;&#x5374;&#x6070;&#x6070;&#x76F8;&#x53CD;&#x3002;</p>
+<p>&#x8FD9;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x7528; <code>MongoClient.createNonShared</code> &#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">MongoClient client = MongoClient.createNonShared(vertx, config);
+</code></pre>
+<p>&#x6BCF;&#x6B21;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x5728;&#x8C03;&#x7528; <code>MongoClient.createShared</code> &#x65B9;&#x6CD5;&#x65F6;&#x52A0;&#x4E0A;&#x4E86;&#x5177;&#x6709;&#x552F;&#x4E00;&#x540D;&#x79F0;&#x7684;&#x6570;&#x636E;&#x6E90;&#x53C2;&#x6570;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x5BA2;&#x6237;&#x7AEF;-api">&#x4F7F;&#x7528;&#x5BA2;&#x6237;&#x7AEF; API</h2>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html" target="_blank"><code>MongoClient</code></a> &#x63A5;&#x53E3;&#x5B9A;&#x4E49;&#x4E86;&#x64CD;&#x4F5C;&#x5BA2;&#x6237;&#x7AEF;&#x7684;API &#x65B9;&#x6CD5;&#x3002;&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html" target="_blank"><code>MongoClient</code></a> &#x6765;&#x4F7F;&#x7528;&#x8C03;&#x7528; API &#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="&#x4FDD;&#x5B58;&#x6587;&#x6863;">&#x4FDD;&#x5B58;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#save-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>save</code></a> &#x65B9;&#x6CD5;&#x6765;&#x4FDD;&#x5B58;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6587;&#x6863;&#x4E2D;&#x6CA1;&#x6709; <code>_id</code> &#x5B57;&#x6BB5;&#xFF0C;&#x6587;&#x6863;&#x4F1A;&#x88AB;&#x4FDD;&#x5B58;&#x3002;&#x82E5;&#x6709;&#xFF0C;&#x5C06;&#x6267;&#x884C; <em>upserted</em>&#x3002;Upserted &#x610F;&#x601D;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x6B64;&#x6587;&#x6863;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5C31;&#x4FDD;&#x5B58;&#x6B64;&#x6587;&#x6863;&#xFF0C;&#x6B64;&#x6587;&#x6863;&#x5B58;&#x5728;&#x5C31;&#x66F4;&#x65B0;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6587;&#x6863;&#x6CA1;&#x6709; <code>_id</code> &#x5B57;&#x6BB5;&#xFF0C;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x4E2D;&#x53EF;&#x4EE5;&#x83B7;&#x5F97;&#x4FDD;&#x5B58;&#x540E;&#x751F;&#x6210;&#x7684; id &#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+mongoClient.save(<span class="hljs-string">&quot;books&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    String id = res.result();
+    System.out.println(<span class="hljs-string">&quot;Saved book with id &quot;</span> + id);
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x6587;&#x6863;&#x5DF2;&#x6709; <code>_id</code> &#xFF1A;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>).put(<span class="hljs-string">&quot;_id&quot;</span>, <span class="hljs-string">&quot;123244&quot;</span>);
+
+mongoClient.save(<span class="hljs-string">&quot;books&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-comment">// ...</span>
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<h3 id="&#x63D2;&#x5165;&#x6587;&#x6863;">&#x63D2;&#x5165;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#insert-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>insert</code></a> &#x65B9;&#x6CD5;&#x6765;&#x63D2;&#x5165;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x88AB;&#x63D2;&#x5165;&#x7684;&#x6587;&#x6863;&#x6CA1;&#x6709;&#x5305;&#x542B; id&#xFF0C;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x4E2D;&#x53EF;&#x4EE5;&#x83B7;&#x5F97;&#x4FDD;&#x5B58;&#x540E;&#x751F;&#x6210;&#x7684; id &#x3002;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+mongoClient.insert(<span class="hljs-string">&quot;books&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    String id = res.result();
+    System.out.println(<span class="hljs-string">&quot;Inserted book with id &quot;</span> + id);
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x5982;&#x679C;&#x88AB;&#x63D2;&#x5165;&#x7684;&#x6587;&#x6863;&#x5305;&#x542B; id&#xFF0C;&#x4F46;&#x662F;&#x6B64; id &#x4EE3;&#x8868;&#x7684;&#x6587;&#x6863;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#xFF0C;&#x63D2;&#x5165;&#x5C31;&#x4F1A;&#x5931;&#x8D25;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>).put(<span class="hljs-string">&quot;_id&quot;</span>, <span class="hljs-string">&quot;123244&quot;</span>);
+
+mongoClient.insert(<span class="hljs-string">&quot;books&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-comment">//...</span>
+
+  } <span class="hljs-keyword">else</span> {
+
+    <span class="hljs-comment">// Will fail if the book with that id already exists.</span>
+  }
+
+});
+</code></pre>
+<h3 id="&#x66F4;&#x65B0;&#x6587;&#x6863;">&#x66F4;&#x65B0;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>update</code> &#x65B9;&#x6CD5;&#x6765;&#x66F4;&#x65B0;&#x6587;&#x6863;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; <code>updateCollection</code> &#x65B9;&#x6CD5;&#x6216;&#x8005; <code>updateCollectionWithOptions</code> &#x65B9;&#x6CD5;&#xFF09;&#x3002;</p>
+<p>&#x6B64;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x66F4;&#x65B0;&#x96C6;&#x5408;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;MongoDB &#x4E2D;&#x7684;&#x96C6;&#x5408;&#x6982;&#x5FF5;&#x5BF9;&#x5E94; SQL &#x4E2D;&#x7684;&#x6570;&#x636E;&#x5E93;&#x8868;&#xFF09;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x6587;&#x6863;&#x3002;&#x5176;&#x4E2D; <code>update</code> &#x53C2;&#x6570;&#x7684; JSON &#x5BF9;&#x8C61;&#xFF0C;&#x5FC5;&#x987B;&#x5305;&#x542B; <a href="http://docs.mongodb.org/manual/reference/operator/update-field/" target="_blank">Update Operators</a> &#xFF0C;&#x56E0;&#x4E3A;&#x7531;&#x5B83;&#x51B3;&#x5B9A;&#x66F4;&#x65B0;&#x7684;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>&#x5176;&#x4E2D; <code>query</code> &#x53C2;&#x6570;&#x51B3;&#x5B9A;&#x66F4;&#x65B0;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x54EA;&#x4E2A;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x66F4;&#x65B0; books &#x96C6;&#x5408;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+<span class="hljs-comment">// Set the author field</span>
+JsonObject update = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;$set&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>));
+
+mongoClient.update(<span class="hljs-string">&quot;books&quot;</span>, query, update, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    System.out.println(<span class="hljs-string">&quot;Book updated !&quot;</span>);
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#updateWithOptions-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.json.JsonObject-io.vertx.ext.mongo.UpdateOptions-io.vertx.core.Handler-" target="_blank"><code>updateWithOptions</code></a> &#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8981;&#x6307;&#x5B9A; update &#x64CD;&#x4F5C;&#x5230;&#x5E95;&#x662F; upsert&#xFF08;upsert &#x610F;&#x601D;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x6B64;&#x6587;&#x6863;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5C31;&#x4FDD;&#x5B58;&#x6B64;&#x6587;&#x6863;&#xFF1B;&#x6B64;&#x6587;&#x6863;&#x5B58;&#x5728;&#x5C31;&#x66F4;&#x65B0;&#xFF09;&#x6216;&#x8005;&#x4EC5;&#x4EC5;&#x53EA;&#x66F4;&#x65B0;&#xFF0C;&#x8BF7;&#x4F7F;&#x7528; <code>updateWithOptions</code> &#x65B9;&#x6CD5;&#x5E76;&#x4F20;&#x9012;&#x53C2;&#x6570; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/UpdateOptions.html" target="_blank"><code>UpdateOptions</code></a>.</p>
+<p>&#x53C2;&#x6570; <code>UpdateOptions</code> &#x6709;&#x4EE5;&#x4E0B;&#x9009;&#x9879;&#xFF1A;</p>
+<ul>
+<li><p><code>multi</code></p>
+<p>&#x82E5;&#x8BBE;&#x7F6E;&#x4E3A; true&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x66F4;&#x65B0;&#x591A;&#x4E2A;&#x6587;&#x6863;</p>
+</li>
+<li><p><code>upsert</code></p>
+<p>&#x82E5;&#x8BBE;&#x7F6E;&#x4E3A; true&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x5728;&#x6CA1;&#x6709;&#x67E5;&#x8BE2;&#x5230;&#x8981;&#x66F4;&#x65B0;&#x7684;&#x6587;&#x6863;&#x65F6;&#xFF0C;&#x65B0;&#x589E;&#x8BE5;&#x6587;&#x6863;</p>
+</li>
+<li><p><code>writeConcern</code></p>
+<p>&#x5199;&#x64CD;&#x4F5C;&#x7684;&#x53EF;&#x9760;&#x6027;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x6E90;&#x7801;&#x4E2D;&#x662F;&#x7528; <code>writeOption</code> &#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x6765;&#x4EE3;&#x8868;&#x7684;&#xFF09;</p>
+</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;MongoDB &#x9ED8;&#x8BA4;&#x5199;&#x64CD;&#x4F5C;&#x7EA7;&#x522B;&#x662F; WriteOption.ACKNOWLEDGED</span>
+
+JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+<span class="hljs-comment">// Set the author field</span>
+JsonObject update = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;$set&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>));
+
+UpdateOptions options = <span class="hljs-keyword">new</span> UpdateOptions().setMulti(<span class="hljs-keyword">true</span>);
+
+mongoClient.updateWithOptions(<span class="hljs-string">&quot;books&quot;</span>, query, update, options, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    System.out.println(<span class="hljs-string">&quot;Book updated !&quot;</span>);
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<h3 id="&#x66FF;&#x6362;&#x6587;&#x6863;">&#x66FF;&#x6362;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#replace-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>replace</code></a> &#x65B9;&#x6CD5;&#x6765;&#x66FF;&#x6362;&#x6587;&#x6863;</p>
+<p><code>replace</code> &#x65B9;&#x6CD5;&#x548C; <code>update</code> &#x65B9;&#x6CD5;&#x7C7B;&#x4F3C;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x4E0D;&#x9700;&#x8981; <code>update</code> &#x4E2D;&#x7684; <code>UpdateOptions</code> &#x53C2;&#x6570;&#x3002;&#x56E0;&#x4E3A; <code>replace</code> &#x65B9;&#x6CD5;&#x66FF;&#x6362;&#x7684;&#x662F; <code>query</code> &#x53C2;&#x6570;&#x627E;&#x5230;&#x7684;&#x6574;&#x4E2A;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x66FF;&#x6362; books &#x96C6;&#x5408;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+JsonObject replace = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Lord of the Rings&quot;</span>).put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>);
+
+mongoClient.replace(<span class="hljs-string">&quot;books&quot;</span>, query, replace, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    System.out.println(<span class="hljs-string">&quot;Book replaced !&quot;</span>);
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+
+});
+</code></pre>
+<h3 id="&#x67E5;&#x627E;&#x6587;&#x6863;">&#x67E5;&#x627E;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#find-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>find</code></a> &#x65B9;&#x6CD5;&#x67E5;&#x627E;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x5176;&#x4E2D; <code>query</code> &#x53C2;&#x6570;&#x7528;&#x6765;&#x5339;&#x914D;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x5339;&#x914D;&#x6240;&#x6709;&#x6587;&#x6863;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject();
+
+mongoClient.find(<span class="hljs-string">&quot;books&quot;</span>, query, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-keyword">for</span> (JsonObject json : res.result()) {
+
+      System.out.println(json.encodePrettily());
+
+    }
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+
+});
+</code></pre>
+<p>&#x53C8;&#x4F8B;&#x5982;&#x5339;&#x914D; books &#x96C6;&#x5408;&#x4E2D;&#x67D0;&#x4E00;&#x4E2A;&#x4F5C;&#x8005;&#x7684;&#x6240;&#x6709;&#x6587;&#x6863;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>);
+
+mongoClient.find(<span class="hljs-string">&quot;books&quot;</span>, query, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-keyword">for</span> (JsonObject json : res.result()) {
+
+      System.out.println(json.encodePrettily());
+
+    }
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+
+});
+</code></pre>
+<p>&#x67E5;&#x8BE2;&#x7684;&#x7ED3;&#x679C;&#x5305;&#x88C5;&#x6210;&#x4E86; JSON &#x5BF9;&#x8C61;&#x7684; List &#x96C6;&#x5408;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x60A8;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x54EA;&#x4E9B;&#x57DF;&#xFF0C;&#x53C8;&#x6216;&#x8005;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x6761;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>findWithOptions</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x53C2;&#x6570; <code>FindOptions</code> &#x4E2D;&#x6307;&#x5B9A;&#x8FD9;&#x4E9B;&#x67E5;&#x8BE2;&#x8981;&#x6C42;&#x3002;</p>
+<p><code>FindOptions</code> &#x4E2D;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x4EE5;&#x4E0B;&#x53C2;&#x6570;&#xFF1A;</p>
+<ul>
+<li><p><code>fields</code></p>
+<p>&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x54EA;&#x4E9B;&#x57DF;&#x3002;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; <code>null</code> &#xFF0C;&#x610F;&#x5473;&#x7740;&#x8FD4;&#x56DE;&#x6240;&#x6709;&#x57DF;&#x3002;</p>
+</li>
+<li><p><code>sort</code></p>
+<p>&#x6307;&#x5B9A;&#x6392;&#x5E8F;&#x5B57;&#x6BB5;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>null</code>&#x3002;</p>
+</li>
+<li><p><code>limit</code></p>
+<p>&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x6761;&#x6570;&#x3002;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; <code>-1</code>&#xFF0C;&#x610F;&#x5473;&#x7740;&#x8FD4;&#x56DE;&#x6240;&#x6709;&#x6570;&#x636E;&#x3002;</p>
+</li>
+<li><p><code>skip</code></p>
+<p>&#x8868;&#x793A;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8DF3;&#x8FC7;&#x7684;&#x6570;&#x636E;&#x884C;&#x6570;&#x3002;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; <code>0</code> &#x3002;</p>
+</li>
+</ul>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>);
+
+mongoClient.findBatch(<span class="hljs-string">&quot;book&quot;</span>, query, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-keyword">if</span> (res.result() == <span class="hljs-keyword">null</span>) {
+
+      System.out.println(<span class="hljs-string">&quot;End of research&quot;</span>);
+
+    } <span class="hljs-keyword">else</span> {
+
+      System.out.println(<span class="hljs-string">&quot;Found doc: &quot;</span> + res.result().encodePrettily());
+
+    }
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+});
+</code></pre>
+<p>&#x6240;&#x6709;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x5728;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x4E2D;&#x5F97;&#x5230;&#x3002;</p>
+<h3 id="&#x67E5;&#x8BE2;&#x5355;&#x4E2A;&#x6587;&#x6863;">&#x67E5;&#x8BE2;&#x5355;&#x4E2A;&#x6587;&#x6863;</h3>
+<p>&#x8981;&#x67E5;&#x8BE2;&#x5355;&#x4E2A;&#x6587;&#x6863;&#xFF0C;&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>findOne</code> &#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x8FD9;&#x6709;&#x70B9;&#x7C7B;&#x4F3C; <code>find</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;&#x4EC5;&#x4EC5;&#x8FD4;&#x56DE; <code>find</code> &#x65B9;&#x6CD5;&#x67E5;&#x8BE2;&#x5230;&#x7684;&#x7B2C;&#x4E00;&#x6761;&#x6570;&#x636E;&#x3002;</p>
+<h3 id="&#x5220;&#x9664;&#x6587;&#x6863;">&#x5220;&#x9664;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#removeDocuments-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>removeDocuments</code></a> &#x65B9;&#x6CD5;&#x6765;&#x5220;&#x9664;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x5176;&#x4E2D; <code>query</code> &#x53C2;&#x6570;&#x51B3;&#x5B9A;&#x4E86;&#x8981;&#x5220;&#x9664;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x54EA;&#x4E9B;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x5220;&#x9664;&#x4F5C;&#x8005;&#x4E3A; Tolkien &#x7684;&#x6240;&#x6709;&#x6587;&#x6863;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>);
+
+mongoClient.remove(<span class="hljs-string">&quot;books&quot;</span>, query, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    System.out.println(<span class="hljs-string">&quot;Never much liked Tolkien stuff!&quot;</span>);
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+});
+</code></pre>
+<h3 id="&#x5220;&#x9664;&#x5355;&#x4E2A;&#x6587;&#x6863;">&#x5220;&#x9664;&#x5355;&#x4E2A;&#x6587;&#x6863;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#removeDocument-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>removeDocument</code></a> &#x65B9;&#x6CD5;&#x6765;&#x5220;&#x9664;&#x5355;&#x4E2A;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x8FD9;&#x6709;&#x70B9;&#x7C7B;&#x4F3C; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#removeDocuments-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>removeDocuments</code></a> &#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x662F; <code>removeDocument</code> &#x65B9;&#x6CD5;&#x53EA;&#x8FD4;&#x56DE;&#x5339;&#x914D;&#x5230;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#x3002;</p>
+<h3 id="&#x6587;&#x6863;&#x8BA1;&#x6570;">&#x6587;&#x6863;&#x8BA1;&#x6570;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>count</code> &#x65B9;&#x6CD5;&#x6765;&#x8BA1;&#x7B97;&#x6587;&#x6863;&#x6570;&#x91CF;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x8BA1;&#x7B97;&#x4F5C;&#x8005;&#x4E3A; Tolkien &#x7684;&#x4E66;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x7ED3;&#x679C;&#x5305;&#x88C5;&#x5728;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x4E2D;&#x3002;</p>
+<pre><code class="lang-java">JsonObject query = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;author&quot;</span>, <span class="hljs-string">&quot;J. R. R. Tolkien&quot;</span>);
+
+mongoClient.count(<span class="hljs-string">&quot;books&quot;</span>, query, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-keyword">long</span> num = res.result();
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+});
+</code></pre>
+<h3 id="&#x7BA1;&#x7406;-mongodb-&#x96C6;&#x5408;">&#x7BA1;&#x7406; MongoDB &#x96C6;&#x5408;</h3>
+<p>MongoDB &#x7684;&#x6240;&#x6709;&#x6587;&#x6863;&#x6570;&#x636E;&#x90FD;&#x5B58;&#x50A8;&#x5728;&#x96C6;&#x5408;&#x4E2D;&#x3002;</p>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#getCollections-io.vertx.core.Handler-" target="_blank"><code>getCollections</code></a> &#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x5F97;&#x6240;&#x6709;&#x7684;&#x96C6;&#x5408;&#xFF1A;</p>
+<pre><code class="lang-java">mongoClient.getCollections(res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    List&lt;String&gt; collections = res.result();
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+});
+</code></pre>
+<p>&#x60A8;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#createCollection-java.lang.String-io.vertx.core.Handler-" target="_blank"><code>createCollection</code></a> &#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x96C6;&#x5408;&#xFF1A;</p>
+<pre><code class="lang-java">mongoClient.createCollection(<span class="hljs-string">&quot;mynewcollectionr&quot;</span>, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-comment">// Created ok!</span>
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+});
+</code></pre>
+<p>&#x60A8;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#dropCollection-java.lang.String-io.vertx.core.Handler-" target="_blank"><code>dropCollection</code></a> &#x65B9;&#x6CD5;&#x6765;&#x5220;&#x9664;&#x6587;&#x6863;</p>
+<blockquote>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;<em>&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x5C06;&#x4F1A;&#x5220;&#x9664;&#x96C6;&#x5408;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x6587;&#x6863;&#xFF01;</em></p>
+</blockquote>
+<pre><code class="lang-java">mongoClient.dropCollection(<span class="hljs-string">&quot;mynewcollectionr&quot;</span>, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    <span class="hljs-comment">// Dropped ok!</span>
+
+  } <span class="hljs-keyword">else</span> {
+
+    res.cause().printStackTrace();
+
+  }
+});
+</code></pre>
+<h3 id="&#x6267;&#x884C;-mongodb-&#x5176;&#x4ED6;&#x547D;&#x4EE4;">&#x6267;&#x884C; MongoDB &#x5176;&#x4ED6;&#x547D;&#x4EE4;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html#runCommand-java.lang.String-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>runCommand</code></a> &#x65B9;&#x6CD5;&#x6765;&#x6267;&#x884C;&#x4EFB;&#x4F55; MongoDB &#x547D;&#x4EE4;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x6325;&#x51FA; MongoDB &#x66F4;&#x591A;&#x4F18;&#x70B9;&#xFF0C;&#x6BD4;&#x5982;&#x4F7F;&#x7528; MapReduce&#x3002;&#x66F4;&#x591A;&#x8BE6;&#x60C5;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;&#x8BF4;&#x660E;&#x6587;&#x6863;  <a href="http://docs.mongodb.org/manual/reference/command" target="_blank">Commands</a>&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x6267;&#x884C; aggregate&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x805A;&#x5408;&#xFF09;&#x547D;&#x4EE4;&#x3002;&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x547D;&#x4EE4;&#x7684;&#x540D;&#x79F0;&#x8981;&#x505A;&#x4E3A; <code>runCommand</code> &#x65B9;&#x6CD5;&#x7684;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x540C;&#x65F6;&#x4E5F;&#x5FC5;&#x987B;&#x5305;&#x542B;&#x5728;&#x5305;&#x88C5;&#x547D;&#x4EE4;&#x7684; JSON &#x53C2;&#x6570;&#x4E2D;&#x3002;&#x8FD9;&#x4E48;&#x505A;&#x662F;&#x56E0;&#x4E3A; JSON &#x4E0D;&#x662F;&#x6709;&#x5E8F;&#x7684;&#xFF0C;&#x4F46; BSON &#x5374;&#x662F;&#xFF0C;&#x800C;&#x4E14; MongoDB &#x671F;&#x671B; BSON &#x53C2;&#x6570;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x952E;&#x503C;&#x5BF9;&#x662F;&#x547D;&#x4EE4;&#x7684;&#x540D;&#x79F0;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x4E3A;&#x4E86;&#x660E;&#x786E; JSON &#x4E2D;&#x7684;&#x54EA;&#x4E2A;&#x952E;&#x503C;&#x5BF9;&#x662F;&#x547D;&#x4EE4;&#x540D;&#x79F0;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x5C31;&#x5FC5;&#x987B;&#x628A;&#x547D;&#x4EE4;&#x540D;&#x79F0;&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#x4E3A;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject command = <span class="hljs-keyword">new</span> JsonObject()
+  .put(<span class="hljs-string">&quot;aggregate&quot;</span>, <span class="hljs-string">&quot;collection_name&quot;</span>)
+  .put(<span class="hljs-string">&quot;pipeline&quot;</span>, <span class="hljs-keyword">new</span> JsonArray());
+
+mongoClient.runCommand(<span class="hljs-string">&quot;aggregate&quot;</span>, command, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    JsonArray resArr = res.result().getJsonArray(<span class="hljs-string">&quot;result&quot;</span>);
+    <span class="hljs-comment">// etc</span>
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+});
+</code></pre>
+<h3 id="mongodb-&#x6269;&#x5C55;&#x7684;-json-&#x652F;&#x6301;">MongoDB &#x6269;&#x5C55;&#x7684; JSON &#x652F;&#x6301;</h3>
+<p>&#x76EE;&#x524D;&#xFF0C;MongoDB &#x53EA;&#x652F;&#x6301; date&#xFF0C;oid &#x548C; binary &#x7C7B;&#x578B;&#xFF08;&#x8BF7;&#x53C2;&#x8003;&#xFF1A;<a href="http://docs.mongodb.org/manual/reference/mongodb-extended-json" target="_blank">http://docs.mongodb.org/manual/reference/mongodb-extended-json</a> &#xFF09;</p>
+<p>&#x4F8B;&#x5982;&#x63D2;&#x5165;&#x542B;&#x6709; date &#x7C7B;&#x578B;&#x5B57;&#x6BB5;&#x7684;&#x6587;&#x6863;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>)
+  <span class="hljs-comment">//ISO-8601 date</span>
+  .put(<span class="hljs-string">&quot;publicationDate&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;$date&quot;</span>, <span class="hljs-string">&quot;1937-09-21T00:00:00+00:00&quot;</span>));
+
+mongoService.save(<span class="hljs-string">&quot;publishedBooks&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    String id = res.result();
+
+    mongoService.findOne(<span class="hljs-string">&quot;publishedBooks&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;_id&quot;</span>, id), <span class="hljs-keyword">null</span>, res2 -&gt; {
+      <span class="hljs-keyword">if</span> (res2.succeeded()) {
+
+        System.out.println(<span class="hljs-string">&quot;To retrieve ISO-8601 date : &quot;</span>
+                + res2.result().getJsonObject(<span class="hljs-string">&quot;publicationDate&quot;</span>).getString(<span class="hljs-string">&quot;$date&quot;</span>));
+
+      } <span class="hljs-keyword">else</span> {
+        res2.cause().printStackTrace();
+      }
+    });
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x4F8B;&#x5982;&#x63D2;&#x5165;&#x542B;&#x6709; binary &#x7C7B;&#x578B;&#x5B57;&#x6BB5;&#x7684;&#x6587;&#x6863;&#x4EE5;&#x53CA;&#x8BFB;&#x53D6;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">byte</span>[] binaryObject = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">40</span>];
+
+JsonObject document = <span class="hljs-keyword">new</span> JsonObject()
+        .put(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;Alan Turing&quot;</span>)
+        .put(<span class="hljs-string">&quot;binaryStuff&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;$binary&quot;</span>, binaryObject));
+
+mongoService.save(<span class="hljs-string">&quot;smartPeople&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    String id = res.result();
+
+    mongoService.findOne(<span class="hljs-string">&quot;smartPeople&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;_id&quot;</span>, id), <span class="hljs-keyword">null</span>, res2 -&gt; {
+      <span class="hljs-keyword">if</span>(res2.succeeded()) {
+
+        <span class="hljs-keyword">byte</span>[] reconstitutedBinaryObject = res2.result().getJsonObject(<span class="hljs-string">&quot;binaryStuff&quot;</span>).getBinary(<span class="hljs-string">&quot;$binary&quot;</span>);
+        <span class="hljs-comment">//This could now be de-serialized into an object in real life</span>
+      } <span class="hljs-keyword">else</span> {
+        res2.cause().printStackTrace();
+      }
+    });
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x4F8B;&#x5982;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A; base 64 &#x7F16;&#x7801;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5C06;&#x8FD9;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x4F5C;&#x4E3A; binary &#x5B57;&#x6BB5;&#x63D2;&#x5165;&#x3002;&#x5E76;&#x4E14;&#x8BFB;&#x53D6;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#xFF1A;</p>
+<pre><code class="lang-java">String base64EncodedString = <span class="hljs-string">&quot;a2FpbHVhIGlzIHRoZSAjMSBiZWFjaCBpbiB0aGUgd29ybGQ=&quot;</span>;
+
+JsonObject document = <span class="hljs-keyword">new</span> JsonObject()
+        .put(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;Alan Turing&quot;</span>)
+        .put(<span class="hljs-string">&quot;binaryStuff&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;$binary&quot;</span>, base64EncodedString));
+
+mongoService.save(<span class="hljs-string">&quot;smartPeople&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    String id = res.result();
+
+    mongoService.findOne(<span class="hljs-string">&quot;smartPeople&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;_id&quot;</span>, id), <span class="hljs-keyword">null</span>, res2 -&gt; {
+      <span class="hljs-keyword">if</span>(res2.succeeded()) {
+
+        String reconstitutedBase64EncodedString = res2.result().getJsonObject(<span class="hljs-string">&quot;binaryStuff&quot;</span>).getString(<span class="hljs-string">&quot;$binary&quot;</span>);
+        <span class="hljs-comment">//This could now converted back to bytes from the base 64 string</span>
+      } <span class="hljs-keyword">else</span> {
+        res2.cause().printStackTrace();
+      }
+    });
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x4F8B;&#x5982;&#x63D2;&#x5165;&#x4E00;&#x4E2A; object ID &#x5E76;&#x4E14;&#x8BFB;&#x53D6;&#x5B83;&#xFF1A;</p>
+<pre><code class="lang-java">String individualId = <span class="hljs-keyword">new</span> ObjectId().toHexString();
+
+JsonObject document = <span class="hljs-keyword">new</span> JsonObject()
+        .put(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;Stephen Hawking&quot;</span>)
+        .put(<span class="hljs-string">&quot;individualId&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;$oid&quot;</span>, individualId));
+
+mongoService.save(<span class="hljs-string">&quot;smartPeople&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    String id = res.result();
+
+    mongoService.findOne(<span class="hljs-string">&quot;smartPeople&quot;</span>, <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;_id&quot;</span>, id), <span class="hljs-keyword">null</span>, res2 -&gt; {
+      <span class="hljs-keyword">if</span>(res2.succeeded()) {
+        String reconstitutedIndividualId = res2.result().getJsonObject(<span class="hljs-string">&quot;individualId&quot;</span>).getString(<span class="hljs-string">&quot;$oid&quot;</span>);
+      } <span class="hljs-keyword">else</span> {
+        res2.cause().printStackTrace();
+      }
+    });
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x4F8B;&#x5982;&#x83B7;&#x53D6; distinct &#x540E;&#x7684;&#x503C;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+mongoClient.save(<span class="hljs-string">&quot;books&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    mongoClient.distinct(<span class="hljs-string">&quot;books&quot;</span>, <span class="hljs-string">&quot;title&quot;</span>, String.class.getName(), res2 -&gt; {
+      System.out.println(<span class="hljs-string">&quot;Title is : &quot;</span> + res2.result().getJsonArray(<span class="hljs-number">0</span>));
+    });
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<p>&#x4F8B;&#x5982;&#x83B7;&#x53D6;&#x6279;&#x91CF;&#x6A21;&#x5F0F;&#x4E0B; distinct &#x7684;&#x503C;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject document = <span class="hljs-keyword">new</span> JsonObject().put(<span class="hljs-string">&quot;title&quot;</span>, <span class="hljs-string">&quot;The Hobbit&quot;</span>);
+
+mongoClient.save(<span class="hljs-string">&quot;books&quot;</span>, document, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    mongoClient.distinctBatch(<span class="hljs-string">&quot;books&quot;</span>, <span class="hljs-string">&quot;title&quot;</span>, String.class.getName(), res2 -&gt; {
+      System.out.println(<span class="hljs-string">&quot;Title is : &quot;</span> + res2.result().getString(<span class="hljs-string">&quot;title&quot;</span>));
+    });
+
+  } <span class="hljs-keyword">else</span> {
+    res.cause().printStackTrace();
+  }
+
+});
+</code></pre>
+<h2 id="&#x5BA2;&#x6237;&#x7AEF;&#x53C2;&#x6570;&#x914D;&#x7F6E;">&#x5BA2;&#x6237;&#x7AEF;&#x53C2;&#x6570;&#x914D;&#x7F6E;</h2>
+<p>&#x6B64;&#x5BA2;&#x6237;&#x7AEF;&#x628A;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x653E;&#x5728; JSON &#x5BF9;&#x8C61;&#x4E2D;&#x3002;</p>
+<p>&#x6B64;&#x5BA2;&#x6237;&#x7AEF;&#x652F;&#x6301;&#x4EE5;&#x4E0B;&#x8FD9;&#x4E9B;&#x53C2;&#x6570;&#xFF1A;</p>
+<ul>
+<li><p><code>db_name</code></p>
+<p>&#x4F7F;&#x7528;&#x7684; mongoDB &#x5B9E;&#x4F8B;&#x7684;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#x3002;&#x9ED8;&#x8BA4;&#x662F; <code>default_db</code></p>
+</li>
+<li><p><code>useObjectId</code></p>
+<p>&#x6B64;&#x53C2;&#x6570;&#x7528;&#x6765;&#x652F;&#x6301; ObjectId &#x7684;&#x6301;&#x4E45;&#x5316;&#x548C;&#x68C0;&#x7D22;&#x3002;&#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E3A; <code>true</code> &#xFF0C;&#x5C06;&#x4F1A;&#x5728;&#x96C6;&#x5408;&#x7684;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x4EE5; 16 &#x8FDB;&#x5236;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x6765;&#x4FDD;&#x5B58; MongoDB &#x7684; ObjectId &#x7C7B;&#x578B;&#x7684;&#x5B57;&#x6BB5;&#x3002;&#x800C;&#x4E14;&#x5728;&#x8BBE;&#x7F6E;&#x4E3A; <code>true</code> &#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x6587;&#x6863;&#x57FA;&#x4E8E;&#x521B;&#x5EFA;&#x65F6;&#x95F4;&#x6392;&#x5E8F;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x524D;4&#x4E2A;&#x5B57;&#x8282;&#x7528;&#x6765;&#x5B58;&#x50A8;&#x521B;&#x5EFA;&#x7684;&#x65F6;&#x7684;&#x65F6;&#x95F4;&#x6233;&#xFF0C;&#x7CBE;&#x786E;&#x5230;&#x79D2;&#xFF09;&#x3002;&#x60A8;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528; <code>ObjectId::getDate()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4ECE;&#x8FD9;&#x4E2A; 16&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x4E2D;&#x5BFC;&#x51FA;&#x521B;&#x5EFA;&#x65F6;&#x95F4;&#x3002;&#x82E5;&#x60A8;&#x9009;&#x62E9;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x4F5C;&#x4E3A; <code>_id</code> &#xFF0C;&#x5219;&#x8BBE;&#x7F6E;&#x6B64;&#x53C2;&#x6570;&#x4E3A; <code>false</code> &#x3002;&#x5982;&#x679C;&#x60A8;&#x4FDD;&#x5B58;&#x7684;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E; <code>_id</code> &#x5B57;&#x6BB5;&#x7684;&#x503C;&#xFF0C;&#x5C06;&#x4F1A;&#x9ED8;&#x8BA4;&#x7684;&#x751F;&#x6210; 16&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x4F5C;&#x4E3A; <code>_id</code> &#x3002;&#x6B64;&#x53C2;&#x6570;&#x9ED8;&#x8BA4;&#x4E3A; <code>false</code>&#x3002;</p>
+</li>
+</ul>
+<p>&#x6B64;&#x5BA2;&#x6237;&#x7AEF;&#x5C1D;&#x8BD5;&#x7740;&#x652F;&#x6301;&#x9A71;&#x52A8;&#x6240;&#x652F;&#x6301;&#x7684;&#x5927;&#x591A;&#x6570;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x3002;&#x6709;&#x4E24;&#x79CD;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x8FDE;&#x63A5;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x53E6;&#x4E00;&#x79CD;&#x662F;&#x9A71;&#x52A8;&#x914D;&#x7F6E;&#x9009;&#x9879;&#x3002;</p>
+<blockquote>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E86;&#x5B57;&#x7B26;&#x4E32;&#x8FDE;&#x63A5;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x6B64;&#x5BA2;&#x6237;&#x7AEF;&#x5C06;&#x4F1A;&#x5FFD;&#x7565;&#x6240;&#x6709;&#x914D;&#x7F6E;&#x9009;&#x9879;&#x3002;</p>
+</blockquote>
+<ul>
+<li><p><code>connection_string</code></p>
+<p>&#x8FDE;&#x63A5;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x6307;&#x7684;&#x662F;&#x521B;&#x5EFA;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>mongodb://localhost:27017</code> &#x3002;&#x6709;&#x5173;&#x8FDE;&#x63A5;&#x5B57;&#x7B26;&#x4E32;&#x683C;&#x5F0F;&#x7684;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;&#x6587;&#x6863;&#x3002;</p>
+</li>
+</ul>
+<p><strong>&#x9A71;&#x52A8;&#x914D;&#x7F6E;&#x7684;&#x5177;&#x4F53;&#x9009;&#x9879;</strong></p>
+<pre><code class="lang-text">{
+  // Single Cluster Settings
+  &quot;host&quot; : &quot;127.0.0.1&quot;, // string
+  &quot;port&quot; : 27017,      // int
+
+  // Multiple Cluster Settings
+  &quot;hosts&quot; : [
+    {
+      &quot;host&quot; : &quot;cluster1&quot;, // string
+      &quot;port&quot; : 27000       // int
+    },
+    {
+      &quot;host&quot; : &quot;cluster2&quot;, // string
+      &quot;port&quot; : 28000       // int
+    },
+    ...
+  ],
+  &quot;replicaSet&quot; :  &quot;foo&quot;,    // string
+  &quot;serverSelectionTimeoutMS&quot; : 30000, // long
+
+  // Connection Pool Settings
+  &quot;maxPoolSize&quot; : 50,                // int
+  &quot;minPoolSize&quot; : 25,                // int
+  &quot;maxIdleTimeMS&quot; : 300000,          // long
+  &quot;maxLifeTimeMS&quot; : 3600000,         // long
+  &quot;waitQueueMultiple&quot;  : 10,         // int
+  &quot;waitQueueTimeoutMS&quot; : 10000,      // long
+  &quot;maintenanceFrequencyMS&quot; : 2000,   // long
+  &quot;maintenanceInitialDelayMS&quot; : 500, // long
+
+  // Credentials / Auth
+  &quot;username&quot;   : &quot;john&quot;,     // string
+  &quot;password&quot;   : &quot;passw0rd&quot;, // string
+  &quot;authSource&quot; : &quot;some.db&quot;   // string
+  // Auth mechanism
+  &quot;authMechanism&quot;     : &quot;GSSAPI&quot;,        // string
+  &quot;gssapiServiceName&quot; : &quot;myservicename&quot;, // string
+
+  // Socket Settings
+  &quot;connectTimeoutMS&quot; : 300000, // int
+  &quot;socketTimeoutMS&quot;  : 100000, // int
+  &quot;sendBufferSize&quot;    : 8192,  // int
+  &quot;receiveBufferSize&quot; : 8192,  // int
+  &quot;keepAlive&quot; : true           // boolean
+
+  // Heartbeat socket settings
+  &quot;heartbeat.socket&quot; : {
+  &quot;connectTimeoutMS&quot; : 300000, // int
+  &quot;socketTimeoutMS&quot;  : 100000, // int
+  &quot;sendBufferSize&quot;    : 8192,  // int
+  &quot;receiveBufferSize&quot; : 8192,  // int
+  &quot;keepAlive&quot; : true           // boolean
+  }
+
+  // Server Settings
+  &quot;heartbeatFrequencyMS&quot; :    1000 // long
+  &quot;minHeartbeatFrequencyMS&quot; : 500 // long
+}
+</code></pre>
+<p><strong>&#x9A71;&#x52A8;&#x53C2;&#x6570;&#x8BF4;&#x660E;</strong></p>
+<ul>
+<li><p><code>host</code></p>
+<p>mongoDB &#x5B9E;&#x4F8B;&#x8FD0;&#x884C;&#x7684;&#x5730;&#x5740;&#x3002;&#x9ED8;&#x8BA4;&#x662F; <code>127.0.0.1</code>&#x3002; &#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E86; <code>hosts</code> &#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x4F1A;&#x5FFD;&#x7565;<code>host</code> &#x53C2;&#x6570;</p>
+</li>
+<li><p><code>port</code></p>
+<p>mongoDB &#x5B9E;&#x4F8B;&#x76D1;&#x542C;&#x7684;&#x7AEF;&#x53E3;&#x3002;&#x9ED8;&#x8BA4;&#x662F; <code>27017</code>&#x3002;&#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E86; <code>hosts</code> &#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x4F1A;&#x5FFD;&#x7565; <code>port</code> &#x53C2;&#x6570;</p>
+</li>
+<li><p><code>hosts</code></p>
+<p>&#x8868;&#x793A;&#x652F;&#x6301; MongoDB &#x96C6;&#x7FA4;&#xFF08;&#x5206;&#x7247;&#xFF0F;&#x590D;&#x5236;&#xFF09;&#x7684;&#x4E00;&#x7EC4;&#x5730;&#x5740;&#x548C;&#x7AEF;&#x53E3;</p>
+</li>
+<li><p><code>host</code></p>
+<p>&#x96C6;&#x7FA4;&#x4E2D;&#x67D0;&#x4E2A;&#x8FD0;&#x884C;&#x5B9E;&#x4F8B;&#x7684;&#x5730;&#x5740;</p>
+</li>
+<li><p><code>port</code></p>
+<p>&#x96C6;&#x7FA4;&#x4E2D;&#x67D0;&#x4E2A;&#x8FD0;&#x884C;&#x5B9E;&#x4F8B;&#x76D1;&#x542C;&#x7684;&#x7AEF;&#x53E3;</p>
+</li>
+<li><p><code>replicaSet</code></p>
+<p>&#x67D0;&#x4E2A; mongoDB &#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x526F;&#x672C;&#x96C6;&#x7684;&#x540D;&#x79F0;</p>
+</li>
+<li><p><code>serverSelectionTimeoutMS</code></p>
+<p>&#x9A71;&#x52A8;&#x9009;&#x62E9;&#x670D;&#x52A1;&#x5668;&#x7684;&#x6700;&#x5927;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#x6BEB;&#x79D2;</p>
+</li>
+<li><p><code>maxPoolSize</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>100</code></p>
+</li>
+<li><p><code>minPoolSize</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x6700;&#x5C0F;&#x8FDE;&#x63A5;&#x6570;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>100</code></p>
+</li>
+<li><p><code>maxIdleTimeMS</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x7684;&#x8FDE;&#x63A5;&#x6700;&#x5927;&#x7A7A;&#x95F2;&#x65F6;&#x95F4;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code>&#xFF0C;&#x8868;&#x793A;&#x4E00;&#x76F4;&#x5B58;&#x5728;</p>
+</li>
+<li><p><code>maxLifeTimeMS</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x7684;&#x8FDE;&#x63A5;&#x6700;&#x5927;&#x5B58;&#x6D3B;&#x65F6;&#x95F4;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code>&#xFF0C;&#x8868;&#x793A;&#x6C38;&#x8FDC;&#x5B58;&#x6D3B;&#x3002;</p>
+</li>
+<li><p><code>waitQueueMultiple</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x4E2D;&#x6700;&#x5927;&#x7B49;&#x5F85;&#x8FDE;&#x63A5;&#x6570;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>500</code></p>
+</li>
+<li><p><code>waitQueueTimeoutMS</code></p>
+<p>&#x7EBF;&#x7A0B;&#x7B49;&#x5F85;&#x4F5C;&#x4E3A;&#x8FDE;&#x63A5;&#x7684;&#x6700;&#x957F;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>120000</code>&#xFF08;2&#x5206;&#x949F;&#xFF09;</p>
+</li>
+<li><p><code>maintenanceFrequencyMS</code></p>
+<p>&#x7EF4;&#x62A4;&#x4EFB;&#x52A1;&#x8FDB;&#x884C;&#x5FAA;&#x73AF;&#x68C0;&#x67E5;&#x8FDE;&#x63A5;&#x7684;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x7EF4;&#x62A4;&#x4EFB;&#x52A1;&#x4F1A;&#x5B9A;&#x65F6;&#x68C0;&#x67E5;&#x8FDE;&#x63A5;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x76F4;&#x5230;&#x8FDE;&#x63A5;&#x6C60;&#x5269;&#x4E0B;&#x6700;&#x5C0F;&#x8FDE;&#x63A5;&#x6570;&#xFF09;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code></p>
+</li>
+<li><p><code>maintenanceInitialDelayMS</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x7EF4;&#x62A4;&#x4EFB;&#x52A1;&#x7B2C;&#x4E00;&#x6B21;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x95F4;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code>&#x3002;</p>
+</li>
+<li><p><code>username</code></p>
+<p>&#x6388;&#x6743;&#x7684;&#x7528;&#x6237;&#x540D;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>null</code>&#xFF08;&#x610F;&#x5473;&#x7740;&#x4E0D;&#x9700;&#x8981;&#x6388;&#x6743;&#xFF09;</p>
+</li>
+<li><p><code>password</code></p>
+<p>&#x6388;&#x6743;&#x7684;&#x5BC6;&#x7801;</p>
+</li>
+<li><p><code>authSource</code></p>
+<p>&#x4E0E;&#x6388;&#x6743;&#x7528;&#x6237;&#x5173;&#x8054;&#x7684;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#x3002;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; <code>db_name</code></p>
+</li>
+<li><p><code>authMechanism</code></p>
+<p>&#x6240;&#x4F7F;&#x7528;&#x7684;&#x6388;&#x6743;&#x8BA4;&#x8BC1;&#x673A;&#x5236;&#x3002;&#x8BF7;&#x53C2;&#x8003; <a href="http://docs.mongodb.org/manual/core/authentication/" target="_blank">Authentication</a>  &#x6765;&#x83B7;&#x53D6;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+<li><p><code>gssapiServiceName</code></p>
+<p>&#x5F53;&#x4F7F;&#x7528; <code>GSSAPI</code> &#x7684;&#x6388;&#x6743;&#x673A;&#x5236;&#x65F6;&#xFF0C;&#x6240;&#x4F7F;&#x7528;&#x7684; Kerberos &#x670D;&#x52A1;&#x540D;&#x3002;</p>
+</li>
+<li><p><code>connectTimeoutMS</code></p>
+<p>&#x6253;&#x5F00;&#x8FDE;&#x63A5;&#x8D85;&#x65F6;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#x6BEB;&#x79D2;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A;<code>10000</code>&#xFF08;10 &#x79D2;&#xFF09;</p>
+</li>
+<li><p><code>socketTimeoutMS</code></p>
+<p>&#x5728; socket &#x4E0A;&#x63A5;&#x6536;&#x6216;&#x8005;&#x53D1;&#x9001;&#x8D85;&#x65F6;&#x7684;&#x65F6;&#x95F4;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code> &#xFF0C;&#x610F;&#x5473;&#x7740;&#x6C38;&#x8FDC;&#x4E0D;&#x8D85;&#x65F6;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x8FD9;&#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A; <em>insert</em> &#x8FBE;&#x5230;&#x4E86; socketTimeoutMS&#xFF0C; &#x5C06;&#x65E0;&#x6CD5;&#x5F97;&#x77E5;&#x670D;&#x52A1;&#x5668;&#x662F;&#x5426;&#x5DF2;&#x5199;&#x5165;&#xFF09;&#x3002;</p>
+</li>
+<li><p><code>sendBufferSize</code></p>
+<p>&#x8BBE;&#x7F6E; socket &#x53D1;&#x9001;&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#xFF08;SO_SNDBUF&#xFF09;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code>&#xFF0C;&#x8FD9;&#x5C06;&#x4F7F;&#x7528;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;&#x5927;&#x5C0F;&#x3002;</p>
+</li>
+<li><p><code>receiveBufferSize</code></p>
+<p>&#x8BBE;&#x7F6E; socket &#x63A5;&#x6536;&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#xFF08;SO_RCVBUF&#xFF09;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>0</code>&#xFF0C;&#x8FD9;&#x5C06;&#x4F7F;&#x7528;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;&#x5927;&#x5C0F;&#x3002;</p>
+</li>
+<li><p><code>keepAlive</code></p>
+<p>&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x590D;&#x7528; socket&#xFF08;SO_KEEPALIVE&#xFF09;&#x8FDE;&#x63A5;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>false</code></p>
+</li>
+<li><p><code>heartbeat.socket</code></p>
+<p>&#x914D;&#x7F6E;&#x96C6;&#x7FA4;&#x76D1;&#x89C6;&#x5668;&#x76D1;&#x63A7; MongoDB &#x96C6;&#x7FA4;&#x7684; socket &#x8FDE;&#x63A5;&#x60C5;&#x51B5;&#x7684;&#x53C2;&#x6570;</p>
+</li>
+<li><p><code>heartbeatFrequencyMS</code></p>
+<p>&#x96C6;&#x7FA4;&#x76D1;&#x89C6;&#x5668;&#x8BBF;&#x95EE;&#x6BCF;&#x4E2A;&#x96C6;&#x7FA4;&#x670D;&#x52A1;&#x5668;&#x7684;&#x9891;&#x7387;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>5000</code> &#xFF08;5s&#xFF09;</p>
+</li>
+<li><p><code>minHeartbeatFrequencyMS</code></p>
+<p>&#x6700;&#x5C0F;&#x5FC3;&#x8DF3;&#x9891;&#x7387;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; <code>1000</code> &#xFF08;1s&#xFF09;</p>
+</li>
+</ul>
+<blockquote>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x5404;&#x7C7B;&#x53C2;&#x6570;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x90FD;&#x662F; MongoDB Java &#x9A71;&#x52A8;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x3002;&#x8BF7;&#x53C2;&#x8003;&#x9A71;&#x52A8;&#x6587;&#x6863;&#x6765;&#x83B7;&#x53D6;&#x6700;&#x65B0;&#x4FE1;&#x606F;&#x3002;</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="http://vertx.io/docs/vertx-mongo-client/java/" target="_blank">&#x539F;&#x6587;&#x6863;</a>&#x66F4;&#x65B0;&#x4E8E; 2017-03-15 15:54:14 CET</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Data.html" class="navigation navigation-prev " aria-label="Previous page: Data Access">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="JDBCClient.html" class="navigation navigation-next " aria-label="Next page: JDBC Client">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"MongoDB Client","level":"1.6.1","depth":2,"next":{"title":"JDBC Client","level":"1.6.2","depth":2,"path":"data/JDBCClient.md","ref":"data/JDBCClient.md","articles":[]},"previous":{"title":"Data Access","level":"1.6","depth":1,"path":"data/Data.md","ref":"data/Data.md","articles":[{"title":"MongoDB Client","level":"1.6.1","depth":2,"path":"data/MongoDBClient.md","ref":"data/MongoDBClient.md","articles":[]},{"title":"JDBC Client","level":"1.6.2","depth":2,"path":"data/JDBCClient.md","ref":"data/JDBCClient.md","articles":[]},{"title":"SQL Common","level":"1.6.3","depth":2,"path":"data/SQLCommon.md","ref":"data/SQLCommon.md","articles":[]},{"title":"Redis Client","level":"1.6.4","depth":2,"path":"data/RedisClient.md","ref":"data/RedisClient.md","articles":[]},{"title":"MySQL/PostgreSQL Client","level":"1.6.5","depth":2,"path":"data/MySQL&PostgreSQLClient.md","ref":"data/MySQL&PostgreSQLClient.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"data/MongoDBClient.md","mtime":"2017-05-08T10:33:18.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

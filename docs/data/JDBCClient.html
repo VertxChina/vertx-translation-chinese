@@ -1,0 +1,1221 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>JDBC Client · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="SQLCommon.html" />
+    
+    
+    <link rel="prev" href="MongoDBClient.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Data.html">
+            
+                <a href="Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="MongoDBClient.html">
+            
+                <a href="MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.2" data-path="JDBCClient.html">
+            
+                <a href="JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="SQLCommon.html">
+            
+                <a href="SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="RedisClient.html">
+            
+                <a href="RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="MySQL&PostgreSQLClient.html">
+            
+                <a href="MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >JDBC Client</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-jdbc-client">Vert.x JDBC Client</h1>
+<blockquote>
+<p>&#x539F;&#x6587;&#x6863;&#xFF1A;<a href="http://vertx.io/docs/vertx-jdbc-client/java/" target="_blank">Vert.x JDBC Client</a> </p>
+</blockquote>
+<p><strong>&#x4F7F;&#x7528; Vert.x JDBC Client&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x7684; Vert.x &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x901A;&#x8FC7;&#x5F02;&#x6B65;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0E;&#x4EFB;&#x4F55;&#x652F;&#x6301; JDBC &#x7684;&#x6570;&#x636E;&#x5E93;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#x3002;</strong></p>
+<p>Vert.x JDBC Client &#x7684;&#x63A5;&#x53E3;&#x5B9A;&#x4E49;&#x4E3A; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html" target="_blank"><code>JDBCClient</code></a>&#x3002;</p>
+<p>&#x8981;&#x4F7F;&#x7528;Vert.x JDBC Client&#xFF0C;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E0B;&#x9762;&#x7684;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<ul>
+<li>Maven (&#x5728; <code>pom.xml</code> &#x6587;&#x4EF6;&#x4E2D;):</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-jdbc-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle (&#x5728; <code>build.gradle</code> &#x6587;&#x4EF6;&#x4E2D;):</li>
+</ul>
+<pre><code class="lang-groovy">compile <span class="hljs-string">&apos;io.vertx:vertx-jdbc-client:3.4.1&apos;</span>
+</code></pre>
+<h2 id="&#x521B;&#x5EFA;-vertx-jdbc-client-&#x5BF9;&#x8C61;">&#x521B;&#x5EFA; Vert.x JDBC Client &#x5BF9;&#x8C61;</h2>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x4E00;&#x8D77;&#x6765;&#x770B;&#x4E0B;&#x521B;&#x5EFA; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x7684;&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#x3002;</p>
+<h3 id="&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5171;&#x4EAB;&#x7684;&#x6570;&#x636E;&#x6E90;">&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5171;&#x4EAB;&#x7684;&#x6570;&#x636E;&#x6E90;</h3>
+<p>&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x5728;&#x4E0D;&#x540C;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x4E4B;&#x95F4;&#xFF0C;&#x5171;&#x4EAB;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x8003;&#x8651;&#x8FD9;&#x6837;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;&#x6211;&#x4EEC;&#x5728;&#x90E8;&#x7F72; Verticle &#x65F6;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E86; Verticle &#x62E5;&#x6709;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#x5316;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x6BCF;&#x4E2A; Verticle &#x5B9E;&#x4F8B;&#x80FD;&#x591F;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5355;&#x72EC;&#x4E3A;&#x6BCF;&#x4E2A; Verticle &#x5B9E;&#x4F8B;&#x8BBE;&#x7F6E;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x8981;&#x89E3;&#x51B3;&#x4E0A;&#x9762;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8FD9;&#x4E48;&#x505A;&#xFF1A;</p>
+<pre><code class="lang-java">JDBCClient client = JDBCClient.createShared(vertx, config);
+</code></pre>
+<p>&#x53EA;&#x6709;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-" target="_blank"><code>JDBCClient.createShared</code></a> &#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x4F1A;&#x771F;&#x6B63;&#x7684;&#x6839;&#x636E; <code>config</code> &#x53C2;&#x6570;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x518D;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x53EA;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;&#x8FD9;&#x65F6; <code>config</code> &#x53C2;&#x6570;&#x4E5F;&#x5C31;&#x4E0D;&#x518D;&#x6709;&#x4F5C;&#x7528;&#x3002;</p>
+<h3 id="&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;">&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;</h3>
+<p>&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#xFF0C;&#x5728;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x7684;&#x65F6;&#x5019;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;&#x7684;&#x540D;&#x79F0;&#xFF1A;</p>
+<pre><code class="lang-java">JDBCClient client = JDBCClient.createShared(vertx, config, <span class="hljs-string">&quot;MyDataSource&quot;</span>);
+</code></pre>
+<p>&#x5982;&#x679C;&#x4E0D;&#x540C;&#x7684; Vert.x JDBC client &#x5BF9;&#x8C61;&#x4F7F;&#x7528;&#x4E86;&#x76F8;&#x540C;&#x7684;Vert.x &#x5BF9;&#x8C61;&#x548C;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4EEC;&#x5C06;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x540C;&#x6837;&#x7684;&#xFF08;&#x4E0E;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5171;&#x4EAB;&#x7684;&#x6570;&#x636E;&#x6E90;&#xFF09;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-" target="_blank"><code>JDBCClient.createShared</code></a>&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x4F1A;&#x771F;&#x6B63;&#x7684;&#x6839;&#x636E; <code>config</code> &#x53C2;&#x6570;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x518D;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x53EA;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x3002;&#x8FD9;&#x65F6; <code>config</code> &#x53C2;&#x6570;&#x4E5F;&#x5C31;&#x4E0D;&#x518D;&#x6709;&#x4F5C;&#x7528;&#x3002;</p>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x4E0D;&#x540C;&#x542B;&#x4E49;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x62E5;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x6765;&#x521B;&#x5EFA;&#x5B83;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x6BD4;&#x5982;&#x5B83;&#x4EEC;&#x8981;&#x4E0E;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6E90;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#x3002;</p>
+<h3 id="&#x521B;&#x5EFA;&#x4E0D;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x7684;-vertx-jdbc-client-&#x5BF9;&#x8C61;">&#x521B;&#x5EFA;&#x4E0D;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;</h3>
+<p>&#x5728;&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x5E0C;&#x671B;&#x5728;&#x4E0D;&#x540C;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x3002;&#x4F46;&#x6709;&#x65F6;&#x5019;&#xFF0C;&#x5374;&#x6070;&#x6070;&#x76F8;&#x53CD;&#x3002;</p>
+<p>&#x8FD9;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createNonShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-" target="_blank"><code>JDBCClient.createNonShared</code></a> &#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">JDBCClient client = JDBCClient.createNonShared(vertx, config);
+</code></pre>
+<p>&#x6BCF;&#x6B21;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x5728;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#createShared-io.vertx.core.Vertx-io.vertx.core.json.JsonObject-" target="_blank"><code>JDBCClient.createShared</code></a> &#x65B9;&#x6CD5;&#x65F6;&#x52A0;&#x4E0A;&#x4E86;&#x5177;&#x6709;&#x552F;&#x4E00;&#x540D;&#x79F0;&#x7684;&#x6570;&#x636E;&#x6E90;&#x53C2;&#x6570;&#x3002;</p>
+<h3 id="&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;">&#x6307;&#x5B9A;&#x6570;&#x636E;&#x6E90;</h3>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x521B;&#x5EFA; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x76F4;&#x63A5;&#x6307;&#x5B9A;&#x5B83;&#xFF1A;</p>
+<pre><code class="lang-java">JDBCClient client = JDBCClient.create(vertx, dataSource);
+</code></pre>
+<h2 id="&#x5173;&#x95ED;&#x5BA2;&#x6237;&#x7AEF;">&#x5173;&#x95ED;&#x5BA2;&#x6237;&#x7AEF;</h2>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8F83;&#x957F;&#x65F6;&#x95F4;&#x7684;&#x6301;&#x6709; Vert.x JDBC Client &#x5BF9;&#x8C61;&#xFF08;&#x6BD4;&#x5982;&#x5728; Verticle &#x7684;&#x6574;&#x4E2A;&#x751F;&#x547D;&#x5468;&#x671F;&#x91CC;&#xFF09;&#xFF0C;&#x53EF;&#x4E00;&#x65E6;&#x4E0D;&#x518D;&#x4F7F;&#x7528;&#x5B83;&#x540E;&#xFF0C;&#x5C31;&#x5E94;&#x8BE5;&#x5173;&#x95ED;&#x5B83;&#x3002;</p>
+<p>&#x5728;&#x591A;&#x4E2A; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x5171;&#x4EAB;&#x6570;&#x636E;&#x6E90;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x5BF9;&#x8C61;&#x7EF4;&#x62A4;&#x7740;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x5668;&#x3002;&#x4E00;&#x65E6;&#x6B64;&#x6570;&#x636E;&#x6E90;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x5173;&#x95ED;&#x540E;&#xFF0C;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x4E5F;&#x5C31;&#x5173;&#x95ED;&#x4E86;&#x3002;</p>
+<h3 id="&#x5728;-verticle-&#x4E2D;&#x81EA;&#x52A8;&#x5173;&#x95ED;">&#x5728; Verticle &#x4E2D;&#x81EA;&#x52A8;&#x5173;&#x95ED;</h3>
+<p>&#x6211;&#x4EEC;&#x5728; Verticle &#x4E2D;&#x521B;&#x5EFA;&#x7684; Vert.x JDBC Client &#x5BF9;&#x8C61;&#xFF0C;&#x4F1A;&#x5728;&#x8FD9;&#x4E9B; Verticle &#x5378;&#x8F7D;&#xFF08;undeploy&#xFF09;&#x7684;&#x65F6;&#x5019;&#x81EA;&#x52A8;&#x5173;&#x95ED;&#x3002;</p>
+<h2 id="&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;">&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;</h2>
+<p>&#x5728;&#x521B;&#x5EFA; Vert.x JDBC Client &#x5BF9;&#x8C61;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/jdbc/JDBCClient.html#getConnection-io.vertx.core.Handler-" target="_blank"><code>getConnection</code></a> &#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x3002;</p>
+<p>&#x6B64;&#x65B9;&#x6CD5;&#x4ECE;&#x8FDE;&#x63A5;&#x6C60;&#x4E2D;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x7ED9;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">client.getConnection(res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    SQLConnection connection = res.result();
+
+    connection.query(<span class="hljs-string">&quot;SELECT * FROM some_table&quot;</span>, res2 -&gt; {
+      <span class="hljs-keyword">if</span> (res2.succeeded()) {
+
+        ResultSet rs = res2.result();
+        <span class="hljs-comment">// &#x7528;&#x7ED3;&#x679C;&#x96C6;results&#x8FDB;&#x884C;&#x5176;&#x4ED6;&#x64CD;&#x4F5C;</span>
+      }
+    });
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x8FDE;&#x63A5;&#x5931;&#x8D25; - &#x5904;&#x7406;&#x5931;&#x8D25;&#x7684;&#x60C5;&#x51B5;</span>
+  }
+});
+</code></pre>
+<p>&#x83B7;&#x53D6;&#x7684;&#x8FD9;&#x4E2A;&#x8FDE;&#x63A5;&#xFF0C;&#x662F;&#x63A5;&#x53E3; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html" target="_blank"><code>SQLConnection</code></a> &#x7684;&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x3002;&#x4F46;&#x662F; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html" target="_blank"><code>SQLConnection</code></a> &#x662F;&#x4E00;&#x4E2A;&#x901A;&#x7528;&#x63A5;&#x53E3;&#xFF0C;&#x4E0D;&#x53EA;&#x662F;&#x5728; Vert.x JDBC Client &#x4E2D;&#x6709;&#x7528;&#x5230;&#x3002;</p>
+<p>&#x66F4;&#x591A;&#x8BE6;&#x7EC6;&#x5185;&#x5BB9;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6587;&#x6863; <a href="http://vertx.io/docs/vertx-sql-common/java/" target="_blank">Vert.x Common SQL Interface</a> &#x3002;</p>
+<h2 id="&#x914D;&#x7F6E;&#x53C2;&#x6570;">&#x914D;&#x7F6E;&#x53C2;&#x6570;</h2>
+<p>&#x5728; Vert.x JDBC Client &#x521B;&#x5EFA;&#x6216;&#x8005;&#x90E8;&#x7F72;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x628A;&#x5BF9;&#x5E94;&#x7684;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x4F20;&#x7ED9;&#x5B83;&#x3002;</p>
+<p>&#x5E38;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x6709;&#x4E0B;&#x9762;&#x8FD9;&#x4E9B;&#xFF1A;</p>
+<ul>
+<li><p><code>provider_class</code></p>
+<p>&#x6B64;&#x53C2;&#x6570;&#x786E;&#x5B9A;&#x7BA1;&#x7406;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x6C60;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;<code>io.vertx.ext.jdbc.spi.impl.C3P0DataSourceProvider</code> &#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x8BBE;&#x7F6E;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x4F46;&#x53C2;&#x6570;&#x5BF9;&#x5E94;&#x7684;&#x7C7B;&#xFF0C;&#x5FC5;&#x987B;&#x5B9E;&#x73B0;&#x63A5;&#x53E3;<code>DataSourceProvider</code>&#x3002;</p>
+</li>
+<li><p><code>row_stream_fetch_size</code></p>
+<p>&#x4E3A;&#x4E86;&#x63D0;&#x5347;&#x6027;&#x80FD;&#xFF0C;<code>SQLRowStream</code> &#x8BBE;&#x7F6E;&#x6709;&#x5185;&#x90E8;&#x7F13;&#x5B58;&#x3002;&#x9ED8;&#x8BA4;&#x7F13;&#x5B58;&#x5927;&#x5C0F;&#x4E3A; <code>128</code>&#x3002;</p>
+</li>
+</ul>
+<p>&#x82E5;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x7684;&#x662F; Vert.x &#x9ED8;&#x8BA4;&#x7684; C3P0&#xFF08;<code>DataSourceProvider</code>&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0B;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#xFF1A;</p>
+<ul>
+<li><p><code>url</code></p>
+<p>&#x6570;&#x636E;&#x5E93; JDBC &#x8FDE;&#x63A5;&#x5730;&#x5740;</p>
+</li>
+<li><p><code>driver_class</code></p>
+<p>JDBC &#x9A71;&#x52A8;</p>
+</li>
+<li><p><code>user</code></p>
+<p>&#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x540D;</p>
+</li>
+<li><p><code>password</code></p>
+<p>&#x6570;&#x636E;&#x5E93;&#x5BC6;&#x7801;</p>
+</li>
+<li><p><code>max_pool_size</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;<code>15</code></p>
+</li>
+<li><p><code>initial_pool_size</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x521D;&#x59CB;&#x8FDE;&#x63A5;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;<code>3</code></p>
+</li>
+<li><p><code>min_pool_size</code></p>
+<p>&#x8FDE;&#x63A5;&#x6C60;&#x6700;&#x5C0F;&#x8FDE;&#x63A5;&#x6570;</p>
+</li>
+<li><p><code>max_statements</code></p>
+<p>&#x9884;&#x5904;&#x7406;SQL&#x8BED;&#x53E5;&#x6700;&#x5C0F;&#x7F13;&#x5B58;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4; <code>0</code></p>
+</li>
+<li><p><code>max_statements_per_connection</code></p>
+<p>&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x7684;&#x6700;&#x5927;&#x9884;&#x5904;&#x7406;SQL&#x7F13;&#x5B58;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;<code>0</code></p>
+</li>
+<li><p><code>max_idle_time</code></p>
+<p> &#x7A7A;&#x95F2;&#x8FDE;&#x63A5;&#x4FDD;&#x7559;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;<code>0</code> (&#x4EE3;&#x8868;&#x4E00;&#x76F4;&#x4FDD;&#x7559;)</p>
+</li>
+</ul>
+<p>&#x5176;&#x5B83;&#x8FDE;&#x63A5;&#x6C60;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<ul>
+<li>BoneCP</li>
+<li>Hikari</li>
+</ul>
+<p>&#x7C7B;&#x4F3C;&#x4E8E; C3P0&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x8FDE;&#x63A5;&#x6C60;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F20;&#x9012;&#x4E00;&#x4E2A; JsonObject &#x5BF9;&#x8C61;&#x6765;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x3002;&#x8003;&#x8651;&#x8FD9;&#x6837;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x8981;&#x8FD0;&#x884C;&#x5728;&#x4E00;&#x4E2A; Vert.x &#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x5374;&#x4E0D;&#x60F3;&#x901A;&#x8FC7; <em>fat jar</em> &#x7684;&#x65B9;&#x5F0F;&#x6765;&#x90E8;&#x7F72;&#xFF0C;&#x4E14;&#x5728;&#x6CA1;&#x6709;&#x6743;&#x9650;&#x628A; JDBC &#x9A71;&#x52A8;&#x5305;&#x52A0;&#x5230; Vert.x lib &#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; BoneCP&#xFF0C;&#x5E76;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E0A;&#x52A0;&#x4E0A;<code>-cp</code>&#x6807;&#x793A;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x914D;&#x7F6E; C3P0 &#x66F4;&#x591A;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728; classpath &#x4E0B;&#x6DFB;&#x52A0;&#x6587;&#x4EF6;<code>c3p0.properties</code>&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java">JsonObject config = <span class="hljs-keyword">new</span> JsonObject()
+  .put(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-string">&quot;jdbc:hsqldb:mem:test?shutdown=true&quot;</span>)
+  .put(<span class="hljs-string">&quot;driver_class&quot;</span>, <span class="hljs-string">&quot;org.hsqldb.jdbcDriver&quot;</span>)
+  .put(<span class="hljs-string">&quot;max_pool_size&quot;</span>, <span class="hljs-number">30</span>);
+
+JDBCClient client = JDBCClient.createShared(vertx, config);
+</code></pre>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;Hikari &#x4F7F;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x4E0D;&#x4E00;&#x6837;&#xFF1A;</p>
+<ul>
+<li><code>jdbcUrl</code> &#x6570;&#x636E;&#x5E93; JDBC &#x8FDE;&#x63A5;&#x5730;&#x5740;</li>
+<li><code>driverClassName</code>  JDBC &#x9A71;&#x52A8;&#x7C7B;&#x540D;</li>
+<li><code>maximumPoolSize</code> &#x8FDE;&#x63A5;&#x6C60;&#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;</li>
+<li><code>username</code> &#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x540D; (<code>password</code> &#x6570;&#x636E;&#x5E93;&#x5BC6;&#x7801;)</li>
+</ul>
+<p>&#x53EF;&#x4EE5;&#x9605;&#x8BFB; <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby" target="_blank">Hikari documentation</a> &#x548C; <a href="http://www.jolbox.com/configuration.html" target="_blank">BoneCP documentation</a> &#x6765;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x5173;&#x4E8E;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x6E90;&#x7684;&#x77E5;&#x8BC6;&#x3002;</p>
+<h2 id="jdbc-&#x9A71;&#x52A8;">JDBC &#x9A71;&#x52A8;</h2>
+<p>&#x5982;&#x679C;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x7684;<code>DataSourceProvider</code>&#x5B9E;&#x73B0;&#x7C7B;&#xFF08;C3P0&#x5B9E;&#x73B0;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x628A;JDBC &#x9A71;&#x52A8;jar&#x5305;&#x653E;&#x5728;&#x7F16;&#x8BD1;&#x8DEF;&#x5F84;&#x4E0B;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7684; Vert.x &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6253;&#x5305;&#x6210; <em>fat jar</em>&#xFF0C;&#x8981;&#x786E;&#x4FDD; JDBC &#x9A71;&#x52A8;&#x5305;&#x542B;&#x5728;&#x91CC;&#x9762;&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7684; Vert.x &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x901A;&#x8FC7; <code>vertx</code> &#x547D;&#x4EE4;&#x884C;&#x542F;&#x52A8;&#xFF0C;&#x8981;&#x786E;&#x4FDD; JDBC &#x9A71;&#x52A8;&#x5305;&#x5728; <code>${VERTX_HOME}/lib</code> &#x8DEF;&#x5F84;&#x91CC;&#x9762;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x8FDE;&#x63A5;&#x6C60;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x7A0D;&#x6709;&#x4E0D;&#x4E00;&#x6837;&#x3002;</p>
+<h2 id="&#x6570;&#x636E;&#x7C7B;&#x578B;">&#x6570;&#x636E;&#x7C7B;&#x578B;</h2>
+<p>&#x7531;&#x4E8E; Vert.x &#x4F7F;&#x7528; JSON &#x4F5C;&#x4E3A;&#x6807;&#x51C6;&#x7684;&#x6D88;&#x606F;&#x683C;&#x5F0F;&#xFF0C;&#x8FD9;&#x4F7F;&#x5F97;&#x5BA2;&#x6237;&#x7AEF;&#x5728;&#x63A5;&#x53D7;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x65F6;&#x53D7;&#x5230;&#x5F88;&#x591A;&#x9650;&#x5236;&#x3002;&#x6211;&#x4EEC;&#x53EA;&#x80FD;&#x4ECE; JsonObject &#x83B7;&#x5F97;&#x4E0B;&#x9762;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF1A;</p>
+<ul>
+<li>null</li>
+<li>boolean</li>
+<li>number</li>
+<li>string</li>
+</ul>
+<p>&#x65F6;&#x95F4;&#x7C7B;&#x578B; (TIME, DATE, TIMESTAMP) &#x53EF;&#x4EE5;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x6027;&#x7684;&#x4F7F;&#x7528; UUID &#x7684;&#x8F6C;&#x6362;&#x3002;&#x867D;&#x7136;&#x5927;&#x90E8;&#x5206;&#x6570;&#x636E;&#x5E93;&#x90FD;&#x652F;&#x6301; UUID&#xFF0C;&#x53EF;&#x5E76;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x90FD;&#x652F;&#x6301;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4; MySQL &#x5C31;&#x4E0D;&#x652F;&#x6301;&#x3002;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; VARCHAR(36) &#x7C7B;&#x578B;&#x7684;&#x5B57;&#x6BB5;&#x3002;&#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x652F;&#x6301; UUID &#x7684;&#x6570;&#x636E;&#x5E93;&#x6765;&#x8BF4;&#xFF0C;&#x4F7F;&#x7528;&#x4E0B;&#x9762;&#x7684;&#x53C2;&#x6570;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x5BF9; UUID &#x8FDB;&#x884C;&#x81EA;&#x52A8;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x3002;</p>
+<pre><code class="lang-json">{ <span class="hljs-string">&quot;castUUID&quot;</span>: <span class="hljs-literal">true</span> }
+</code></pre>
+<p>&#x8FD9;&#x6837;&#xFF0C;UUID &#x5C06;&#x4F1A;&#x88AB;&#x4F5C;&#x4E3A;&#x539F;&#x751F;&#x7C7B;&#x578B;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;<code>java.util.UUID</code>&#xFF09;&#x6765;&#x5904;&#x7406;&#x3002;</p>
+<h2 id="&#x4F5C;&#x4E3A;-osgi-&#x5E94;&#x7528;&#x7A0B;&#x5E8F;">&#x4F5C;&#x4E3A; OSGI &#x5E94;&#x7528;&#x7A0B;&#x5E8F;</h2>
+<p>Vert.x JDBC Client &#x4E5F;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A; OSGI &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5FC5;&#x987B;&#x9996;&#x5148;&#x90E8;&#x7F72;&#x5B83;&#x6240;&#x6709;&#x7684;&#x4F9D;&#x8D56;&#x3002;&#x4F46;&#x6709;&#x4E9B;&#x8FDE;&#x63A5;&#x6C60;&#x8981;&#x6C42;&#x5FC5;&#x987B;&#x4ECE; classpath &#x52A0;&#x8F7D; JDBC &#x9A71;&#x52A8;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x5C31;&#x4E0D;&#x80FD;&#x4F5C;&#x4E3A; OSGI &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x3002;</p>
+<hr>
+<p><a href="http://vertx.io/docs/vertx-jdbc-client/java/" target="_blank">&#x539F;&#x6587;&#x6863;</a>&#x66F4;&#x65B0;&#x4E8E;2017-03-15 15:54:14 CET</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="MongoDBClient.html" class="navigation navigation-prev " aria-label="Previous page: MongoDB Client">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="SQLCommon.html" class="navigation navigation-next " aria-label="Next page: SQL Common">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"JDBC Client","level":"1.6.2","depth":2,"next":{"title":"SQL Common","level":"1.6.3","depth":2,"path":"data/SQLCommon.md","ref":"data/SQLCommon.md","articles":[]},"previous":{"title":"MongoDB Client","level":"1.6.1","depth":2,"path":"data/MongoDBClient.md","ref":"data/MongoDBClient.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"data/JDBCClient.md","mtime":"2017-04-12T09:05:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

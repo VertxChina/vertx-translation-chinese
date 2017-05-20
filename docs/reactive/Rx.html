@@ -1,0 +1,1470 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Vert.x Rx · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Reactivestreams.html" />
+    
+    
+    <link rel="prev" href="Reactive.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Reactive.html">
+            
+                <a href="Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.10.1" data-path="Rx.html">
+            
+                <a href="Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="Reactivestreams.html">
+            
+                <a href="Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="Sync.html">
+            
+                <a href="Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Vert.x Rx</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-rx">Vert.x Rx</h1>
+<ul>
+<li><a href="http://vertx.io/docs/vertx-rx/java/" target="_blank">&#x539F;&#x6587;&#x6863;</a></li>
+<li><a href="https://github.com/vert-x3/vertx-rx" target="_blank">&#x7EC4;&#x4EF6;&#x6E90;&#x7801;</a></li>
+<li><a href="https://github.com/vert-x3/vertx-examples/tree/master/rx-examples" target="_blank">&#x7EC4;&#x4EF6;&#x793A;&#x4F8B;</a></li>
+</ul>
+<h2 id="&#x4E2D;&#x82F1;&#x6587;&#x5BF9;&#x7167;&#x8868;">&#x4E2D;&#x82F1;&#x6587;&#x5BF9;&#x7167;&#x8868;</h2>
+<ul>
+<li>observable sequences&#xFF1A;&#x53EF;&#x89C2;&#x5BDF;&#x5E8F;&#x5217;</li>
+<li>Rxified&#xFF1A;Rx&#x5316;</li>
+<li>operator&#xFF1A;&#x64CD;&#x4F5C;&#x7B26;</li>
+<li>lift&#xFF1A;&#x53D8;&#x6362;</li>
+<li>flow&#xFF1A;&#x6D41;</li>
+<li>read stream&#xFF1A;&#x53EF;&#x8BFB;&#x6D41;</li>
+<li>write stream&#xFF1A;&#x53EF;&#x5199;&#x6D41;</li>
+<li>observer&#xFF1A;&#x89C2;&#x5BDF;&#x8005;</li>
+<li>subscriber&#xFF1A;&#x8BA2;&#x9605;&#x8005;</li>
+<li>item&#xFF1A;&#x5BF9;&#x8C61;</li>
+<li>handler&#xFF1A;&#xFF08;&#x4E8B;&#x4EF6;&#xFF09;&#x5904;&#x7406;&#x5668;</li>
+<li>timer&#xFF1A;&#x5B9A;&#x65F6;&#x5668;</li>
+<li>subscription(n.)&#xFF1A;&#x8BA2;&#x9605;</li>
+<li>unmarshall&#xFF1A;&#x91CD;&#x7EC4;</li>
+</ul>
+<h2 id="vertx-api-for-rxjava">Vert.x API for RxJava</h2>
+<p><a href="https://github.com/ReactiveX/RxJava" target="_blank">RxJava</a> &#x662F; JVM &#x4E0A;&#x4E00;&#x4E2A;&#x6D41;&#x884C;&#x7684;&#x5E93;&#xFF0C;&#x7528;&#x4E8E;&#x7EC4;&#x5408;&#x5F02;&#x6B65;&#x7684;&#x3001;&#x4F7F;&#x7528;&#x53EF;&#x89C2;&#x5BDF;&#x5E8F;&#x5217;&#x7684;&#x3001;&#x57FA;&#x4E8E;&#x4E8B;&#x4EF6;&#x7684;&#x7A0B;&#x5E8F;&#x3002;</p>
+<p>Vert.x &#x4E0E; RxJava &#x96C6;&#x6210;&#x8D77;&#x6765;&#x5F88;&#x81EA;&#x7136;&#xFF1A;&#x5B83;&#x4F7F;&#x5F97;&#x65E0;&#x8BBA;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#xFF0C;&#x53EA;&#x8981;&#x6211;&#x4EEC;&#x80FD;&#x4F7F;&#x7528;&#x6D41;&#x548C;&#x5F02;&#x6B65;&#x7ED3;&#x679C;&#xFF0C;&#x5C31;&#x80FD;&#x4F7F;&#x7528; Observable&#x3002;</p>
+<p>&#x8981;&#x4F7F;&#x7528; Vert.x &#x7684; RxJava API&#xFF0C;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<ul>
+<li>&#x901A;&#x8FC7;&#x539F;&#x59CB;&#x7684; Vert.x API &#x8F85;&#x4EE5;<a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html" target="_blank"> <code>RxHelper</code> </a>&#x7C7B;&#xFF0C;&#x8FD9;&#x4E2A;&#x8F85;&#x52A9;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x7528;&#x4E8E; Vert.x Core API &#x548C; RxJava API &#x4E4B;&#x95F4;&#x4E92;&#x76F8;&#x8F6C;&#x5316;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x3002;</li>
+<li>&#x901A;&#x8FC7;&#x57FA;&#x4E8E; Vert.x Core API &#x589E;&#x5F3A;&#x7684;Rx&#x5316;&#x7684; Vert.x API&#x3002;</li>
+</ul>
+<h3 id="&#x53EF;&#x8BFB;&#x6D41;&#x652F;&#x6301;">&#x53EF;&#x8BFB;&#x6D41;&#x652F;&#x6301;</h3>
+<p>RxJava &#x4E2D; <code>Observable</code> &#x7684;&#x6982;&#x5FF5;&#x548C; Vert.x &#x4E2D; <code>ReadStream</code> &#x7C7B;&#x662F;&#x4E00;&#x5BF9;&#x5B8C;&#x7F8E;&#x7684;&#x5339;&#x914D;&#xFF1A;&#x90FD;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x6D41;&#x3002;</p>
+<p>&#x9759;&#x6001;&#x65B9;&#x6CD5;<a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#toObservable-io.vertx.core.streams.ReadStream-" target="_blank"> <code>RxHelper.toObservable</code> </a>&#x7528;&#x4E8E;&#x5C06; Vert.x &#x53EF;&#x8BFB;&#x6D41;&#x8F6C;&#x6362;&#x4E3A; <code>rx.Observable</code>&#xFF1A;</p>
+<pre><code class="lang-java">FileSystem fileSystem = vertx.fileSystem();
+fileSystem.open(<span class="hljs-string">&quot;/data.txt&quot;</span>, <span class="hljs-keyword">new</span> OpenOptions(), result -&gt; {
+  AsyncFile file = result.result();
+  Observable&lt;Buffer&gt; observable = RxHelper.toObservable(file);
+  observable.forEach(data -&gt; System.out.println(<span class="hljs-string">&quot;Read data: &quot;</span> + data.toString(<span class="hljs-string">&quot;UTF-8&quot;</span>)));
+});
+</code></pre>
+<p>&#x800C; Rx&#x5316;&#x7684; Vert.x API &#x5728; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/streams/ReadStream.html" target="_blank"><code>ReadStream</code></a> &#x7C7B;&#x4E0A;&#x63D0;&#x4F9B;&#x4E86;<a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/streams/ReadStream.html#toObservable--" target="_blank"> <code>toObservable</code> </a>&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">FileSystem fs = vertx.fileSystem();
+fs.open(<span class="hljs-string">&quot;/data.txt&quot;</span>, <span class="hljs-keyword">new</span> OpenOptions(), result -&gt; {
+  AsyncFile file = result.result();
+  Observable&lt;Buffer&gt; observable = file.toObservable();
+  observable.forEach(data -&gt; System.out.println(<span class="hljs-string">&quot;Read data: &quot;</span> + data.toString(<span class="hljs-string">&quot;UTF-8&quot;</span>)));
+});
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x7684; <code>Observable</code> &#x662F;&#x6240;&#x8C13; <strong>hot</strong> observable&#xFF0C;&#x5373;&#x4E0D;&#x7BA1;&#x662F;&#x5426;&#x6709;&#x8BA2;&#x9605;&#xFF0C;&#x5B83;&#x4EEC;&#x90FD;&#x4F1A;&#x4EA7;&#x751F;&#x901A;&#x77E5;&#x3002;</p>
+<blockquote>
+<p>&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x5728; RxJava &#x91CC;&#xFF0C;<code>Observable</code> &#x6709;&#x201C;&#x51B7;&#x70ED;&#x201D;(cold/hot)&#x4E4B;&#x5206;&#x3002;&#x533A;&#x522B;&#x5728;&#x4E8E; cold observable &#x53EA;&#x6709;&#x5F53;&#x8BA2;&#x9605;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x624D;&#x4F1A;&#x5F00;&#x59CB;&#x53D1;&#x5C04;&#x6570;&#x636E;&#xFF0C;&#x800C; hot observable &#x5728;&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x540E;&#x5C31;&#x4F1A;&#x5F00;&#x59CB;&#x53D1;&#x5C04;&#x6570;&#x636E;&#x3002;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x4FE1;&#x606F;&#x8BF7;&#x67E5;&#x9605;<a href="http://reactivex.io/documentation/observable.html" target="_blank"> RxJava &#x5173;&#x4E8E; Observable &#x7684;&#x6587;&#x6863;</a>&#x3002;</p>
+</blockquote>
+<p>&#x540C;&#x6837;&#x7684;&#xFF0C;&#x5C06;&#x4E00;&#x4E2A; <code>Observable</code> &#x8F6C;&#x53D8;&#x4E3A; Vert.x <code>ReadStream</code> &#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x7684;&#x3002;</p>
+<p>&#x9759;&#x6001;&#x65B9;&#x6CD5; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#toReadStream-rx.Observable-" target="_blank"><code>RxHelper.toReadStream</code></a> &#x7528;&#x4E8E;&#x5C06; <code>rx.Observable</code> &#x8F6C;&#x6362;&#x4E3A; Vert.x &#x53EF;&#x8BFB;&#x6D41;&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;Buffer&gt; observable = getObservable();
+ReadStream&lt;Buffer&gt; readStream = RxHelper.toReadStream(observable);
+Pump pump = Pump.pump(readStream, response);
+pump.start();
+</code></pre>
+<h3 id="&#x5904;&#x7406;&#x5668;&#x652F;&#x6301;">&#x5904;&#x7406;&#x5668;&#x652F;&#x6301;</h3>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html" target="_blank"><code>RxHelper</code></a> &#x7C7B;&#x53EF;&#x4EE5;&#x521B;&#x5EFA; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/ObservableHandler.html" target="_blank"><code>ObservableHandler</code></a> &#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A; <code>Observable</code> &#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x7684; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/ObservableHandler.html#toHandler--" target="_blank"><code>toHandler</code></a> &#x65B9;&#x6CD5;&#x4F1A;&#x8FD4;&#x56DE; <code>Handler&lt;T&gt;</code> &#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-java">ObservableHandler&lt;Long&gt; observable = RxHelper.observableHandler();
+observable.subscribe(id -&gt; {
+  <span class="hljs-comment">// Fired</span>
+});
+vertx.setTimer(<span class="hljs-number">1000</span>, observable.toHandler());
+</code></pre>
+<p>Rx&#x5316;&#x7684; Vert.x API &#x672A;&#x63D0;&#x4F9B;&#x9488;&#x5BF9; <code>Handler</code> &#x7684; API&#x3002;</p>
+<h3 id="&#x5F02;&#x6B65;&#x7ED3;&#x679C;&#x652F;&#x6301;">&#x5F02;&#x6B65;&#x7ED3;&#x679C;&#x652F;&#x6301;</h3>
+<p>&#x4EE5;&#x4E00;&#x4E2A;&#x73B0;&#x6709;&#x7684; Vert.x <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code> &#x5BF9;&#x8C61;&#x4E3A;&#x57FA;&#x7840;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; RxJava <code>Subscriber</code>&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x5176;&#x6CE8;&#x518C;&#x5728; <code>Observable</code> &#x6216; <code>Single</code> &#x4E0A;&#xFF1A;</p>
+<pre><code class="lang-java">observable.subscribe(RxHelper.toSubscriber(handler1));
+
+<span class="hljs-comment">// Subscribe to a Single</span>
+single.subscribe(RxHelper.toSubscriber(handler2));
+</code></pre>
+<p>&#x5728;&#x6784;&#x9020;(construct)&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x4F5C;&#x4E3A;&#x5F02;&#x6B65;&#x65B9;&#x6CD5;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x7684; Vert.x <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code> &#x53EF;&#x4EE5;&#x88AB;&#x6620;&#x5C04;&#x4E3A;&#x5355;&#x4E2A;&#x5143;&#x7D20;&#x7684; <code>Observable</code>&#xFF1A;</p>
+<ul>
+<li>&#x5F53;&#x56DE;&#x8C03;&#x6210;&#x529F;&#x65F6;&#xFF0C;&#x89C2;&#x5BDF;&#x8005;&#x7684; <code>onNext</code> &#x65B9;&#x6CD5;&#x5C06;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x53C2;&#x6570;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#xFF1B;&#x4E14;&#x5176;&#x540E; <code>onComplete</code> &#x65B9;&#x6CD5;&#x4F1A;&#x7ACB;&#x5373;&#x88AB;&#x8C03;&#x7528;&#x3002;</li>
+<li>&#x5F53;&#x56DE;&#x8C03;&#x5931;&#x8D25;&#x65F6;&#xFF0C;&#x89C2;&#x5BDF;&#x8005;&#x7684; <code>onError</code> &#x65B9;&#x6CD5;&#x5C06;&#x88AB;&#x8C03;&#x7528;&#x3002;</li>
+</ul>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#observableFuture--" target="_blank"><code>RxHelper.observableFuture</code></a> &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/ObservableFuture.html" target="_blank"><code>ObservableFuture</code></a> &#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x8FD9;&#x662F;&#x4E00;&#x4E2A; <code>Observable</code> &#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x7684; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/ObservableFuture.html#toHandler--" target="_blank"><code>toHandler</code></a> &#x65B9;&#x6CD5;&#x4F1A;&#x8FD4;&#x56DE; <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code> &#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-java">ObservableFuture&lt;HttpServer&gt; observable = RxHelper.observableFuture();
+observable.subscribe(
+    server -&gt; {
+      <span class="hljs-comment">// Server is listening</span>
+    },
+    failure -&gt; {
+      <span class="hljs-comment">// Server could not start</span>
+    }
+);
+vertx.createHttpServer(<span class="hljs-keyword">new</span> HttpServerOptions().
+    setPort(<span class="hljs-number">1234</span>).
+    setHost(<span class="hljs-string">&quot;localhost&quot;</span>)
+).listen(observable.toHandler());
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4ECE; <code>ObservableFuture&lt;Server&gt;</code> &#x4E2D;&#x83B7;&#x53D6;&#x5355;&#x4E2A; <code>HttpServer</code> &#x5BF9;&#x8C61;&#x3002;&#x5982;&#x679C;&#x7AEF;&#x53E3;&#x76D1;&#x542C;&#x5931;&#x8D25;&#xFF0C;&#x8BA2;&#x9605;&#x8005;&#x5C06;&#x4F1A;&#x5F97;&#x5230;&#x901A;&#x77E5;&#x3002;</p>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#toHandler-rx.Observer-" target="_blank"><code>RxHelper.toHandler</code></a> &#x65B9;&#x6CD5;&#x4E3A;&#x89C2;&#x5BDF;&#x8005;&#xFF08;<code>Observer</code>&#xFF09;&#x548C;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x5668;&#xFF08;<code>Handler</code>&#xFF09;&#x505A;&#x4E86;&#x9002;&#x914D;&#xFF1A;</p>
+<pre><code class="lang-java">Observer&lt;HttpServer&gt; observer = <span class="hljs-keyword">new</span> Observer&lt;HttpServer&gt;() {
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onNext</span><span class="hljs-params">(HttpServer o)</span> </span>{
+  }
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onError</span><span class="hljs-params">(Throwable e)</span> </span>{
+  }
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCompleted</span><span class="hljs-params">()</span> </span>{
+  }
+};
+Handler&lt;AsyncResult&lt;HttpServer&gt;&gt; handler = RxHelper.toFuture(observer);
+</code></pre>
+<p>&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x7684;&#xFF08;&#x76F4;&#x63A5;&#x57FA;&#x4E8E;<code>Action</code>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java">Action1&lt;HttpServer&gt; onNext = httpServer -&gt; {};
+Action1&lt;Throwable&gt; onError = httpServer -&gt; {};
+Action0 onComplete = () -&gt; {};
+
+Handler&lt;AsyncResult&lt;HttpServer&gt;&gt; handler1 = RxHelper.toFuture(onNext);
+Handler&lt;AsyncResult&lt;HttpServer&gt;&gt; handler2 = RxHelper.toFuture(onNext, onError);
+Handler&lt;AsyncResult&lt;HttpServer&gt;&gt; handler3 = RxHelper.toFuture(onNext, onError, onComplete);
+</code></pre>
+<p>Rx&#x5316;&#x7684; Vert.x API &#x590D;&#x5236;&#x4E86;&#x7C7B;&#x4F3C;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x51A0;&#x4EE5; <code>rx</code> &#x7684;&#x524D;&#x7F00;&#xFF0C;&#x5B83;&#x4EEC;&#x90FD;&#x8FD4;&#x56DE; RxJava &#x7684; <code>Single</code> &#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code class="lang-java">Single&lt;HttpServer&gt; single = vertx
+  .createHttpServer()
+  .rxListen(<span class="hljs-number">1234</span>, <span class="hljs-string">&quot;localhost&quot;</span>);
+
+<span class="hljs-comment">// &#x8BA2;&#x9605;&#x7ED1;&#x5B9A;&#x7AEF;&#x53E3;&#x7684;&#x4E8B;&#x4EF6;</span>
+single.
+    subscribe(
+        server -&gt; {
+          <span class="hljs-comment">// Server is listening</span>
+        },
+        failure -&gt; {
+          <span class="hljs-comment">// Server could not start</span>
+        }
+    );
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x7684; Single &#x662F; <strong>&#x201C;&#x51B7;&#x7684;&#x201D;(cold)</strong>&#xFF0C;&#x5BF9;&#x5E94;&#x7684; API &#x65B9;&#x6CD5;&#x5C06;&#x5728;&#x6CE8;&#x518C;&#x65F6;&#x88AB;&#x8C03;&#x7528;&#x3002;</p>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x7C7B;&#x4F3C; <code>rx*</code> &#x7684;&#x65B9;&#x6CD5;&#x66FF;&#x6362;&#x4E86;&#x4EE5;&#x524D;&#x7248;&#x672C;&#x4E2D; <code>*Observable</code> &#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x8BED;&#x4E49;&#x4E0A;&#x7684;&#x6539;&#x53D8;&#x662F;&#x4E3A;&#x4E86;&#x4E0E; RxJava &#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</p>
+</blockquote>
+<h3 id="&#x8C03;&#x5EA6;&#x5668;&#x652F;&#x6301;">&#x8C03;&#x5EA6;&#x5668;&#x652F;&#x6301;</h3>
+<p>&#x6709;&#x65F6;&#x5019; Reactive &#x6269;&#x5C55;&#x5E93;&#x9700;&#x8981;&#x6267;&#x884C;&#x4E00;&#x4E9B;&#x53EF;&#x8C03;&#x5EA6;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x4F8B;&#x5982; <code>Observable#timer</code> &#x65B9;&#x6CD5;&#x5C06;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x80FD;&#x5468;&#x671F;&#x6027;&#x53D1;&#x5C04;&#x4E8B;&#x4EF6;&#x7684;&#x5B9A;&#x65F6;&#x5668;&#x5E76;&#x8FD4;&#x56DE;&#x4E4B;&#x3002;&#x7F3A;&#x7701;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD9;&#x4E9B;&#x53EF;&#x8C03;&#x5EA6;&#x7684;&#x64CD;&#x4F5C;&#x7531; RxJava &#x7BA1;&#x7406;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5B9A;&#x65F6;&#x5668;&#x7EBF;&#x7A0B;&#x5E76;&#x975E; Vert.x &#x7EBF;&#x7A0B;&#xFF0C;&#x56E0;&#x6B64;&#xFF08;&#x8FD9;&#x4E9B;&#x64CD;&#x4F5C;&#xFF09;&#x5E76;&#x4E0D;&#x662F;&#x5728; Vert.x Event Loop &#x7EBF;&#x7A0B;&#x4E0A;&#x6267;&#x884C;&#x7684;&#x3002;</p>
+<p>&#x5728; RxJava &#x4E2D;&#xFF0C;&#x6709;&#x4E9B;&#x64CD;&#x4F5C;&#x901A;&#x5E38;&#x4F1A;&#x6709;&#x63A5;&#x53D7;&#x4E00;&#x4E2A; <code>rx.Scheduler</code> &#x53C2;&#x6570;&#x7684;&#x91CD;&#x8F7D;&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x8BBE;&#x5B9A; <code>Scheduler</code>&#x3002;<code>RxHelper</code> &#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#scheduler-io.vertx.core.Vertx-" target="_blank"><code>RxHelper.scheduler</code></a> &#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x8FD4;&#x56DE;&#x7684;&#x8C03;&#x5EA6;&#x5668;&#x53EF;&#x4F9B; RxJava &#x7684;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x4F7F;&#x7528;&#x3002;&#x6BD4;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java">Scheduler scheduler = RxHelper.scheduler(vertx);
+Observable&lt;Long&gt; timer = Observable.timer(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>, TimeUnit.MILLISECONDS, scheduler);
+</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x963B;&#x585E;&#x578B;&#x7684;&#x53EF;&#x8C03;&#x5EA6;&#x64CD;&#x4F5C;&#xFF08;blocking scheduled actions&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#blockingScheduler-io.vertx.core.Vertx-" target="_blank"><code>RxHelper.blockingScheduler</code></a> &#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x9002;&#x7528;&#x7684;&#x8C03;&#x5EA6;&#x5668;&#xFF1A;</p>
+<pre><code class="lang-java">Scheduler scheduler = RxHelper.blockingScheduler(vertx);
+Observable&lt;Integer&gt; obs = blockingObservable.observeOn(scheduler);
+</code></pre>
+<p>RxJava &#x4E5F;&#x80FD;&#x88AB;&#x914D;&#x7F6E;&#x6210;&#x4F7F;&#x7528; Vert.x &#x7684;&#x8C03;&#x5EA6;&#x5668;&#xFF0C;&#x8FD9;&#x5F97;&#x76CA;&#x4E8E; <a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#schedulerHook-io.vertx.core.Vertx-" target="_blank"><code>RxHelper.schedulerHook</code></a> &#x65B9;&#x6CD5;&#x521B;&#x5EFA;&#x7684;&#x8C03;&#x5EA6;&#x5668;&#x94A9;&#x5B50;&#x5BF9;&#x8C61;&#x3002;&#x5BF9;&#x4E8E; IO &#x64CD;&#x4F5C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x4E86;&#x963B;&#x585E;&#x578B;&#x7684;&#x8C03;&#x5EA6;&#x5668;&#xFF1A;</p>
+<pre><code class="lang-java">RxJavaSchedulersHook hook = RxHelper.schedulerHook(vertx);
+RxJavaHooks.setOnIOScheduler(f -&gt; hook.getIOScheduler());
+RxJavaHooks.setOnNewThreadScheduler(f -&gt; hook.getNewThreadScheduler());
+RxJavaHooks.setOnComputationScheduler(f -&gt; hook.getComputationScheduler());
+</code></pre>
+<p>Rx&#x5316;&#x7684; Vert.x API &#x5728; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html" target="_blank"><code>RxHelper</code></a> &#x7C7B;&#x4E2D;&#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x76F8;&#x4F3C;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">Scheduler scheduler = io.vertx.rxjava.core.RxHelper.scheduler(vertx);
+Observable&lt;Long&gt; timer = Observable.interval(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>, TimeUnit.MILLISECONDS, scheduler);
+</code></pre>
+<pre><code class="lang-java">RxJavaSchedulersHook hook = io.vertx.rxjava.core.RxHelper.schedulerHook(vertx);
+RxJavaHooks.setOnIOScheduler(f -&gt; hook.getIOScheduler());
+RxJavaHooks.setOnNewThreadScheduler(f -&gt; hook.getNewThreadScheduler());
+RxJavaHooks.setOnComputationScheduler(f -&gt; hook.getComputationScheduler());
+</code></pre>
+<p>&#x57FA;&#x4E8E;&#x4E00;&#x4E2A;&#x547D;&#x540D;&#x7684;&#x5DE5;&#x4F5C;&#x7EBF;&#x7A0B;&#x6C60;&#xFF08;named worker pool&#xFF09;&#x521B;&#x5EFA;&#x8C03;&#x5EA6;&#x5668;&#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x4E3A;&#x4E86;&#x8C03;&#x5EA6;&#x963B;&#x585E;&#x64CD;&#x4F5C;&#x590D;&#x7528;&#x7279;&#x5B9A;&#x7684;&#x7EBF;&#x7A0B;&#x6C60;&#xFF0C;&#x8FD9;&#x5C06;&#x4F1A;&#x5F88;&#x6709;&#x5E2E;&#x52A9;&#xFF1A;</p>
+<pre><code class="lang-java">Scheduler scheduler = io.vertx.rxjava.core.RxHelper.scheduler(workerExecutor);
+Observable&lt;Long&gt; timer = Observable.interval(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>, TimeUnit.MILLISECONDS, scheduler);
+</code></pre>
+<h3 id="json&#x89E3;&#x7801;">JSON&#x89E3;&#x7801;</h3>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-" target="_blank">RxHelper.unmarshaller</a> &#x65B9;&#x6CD5;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A; <code>rx.Observable.Operator</code> &#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x5C06; <code>Observable&lt;Buffer&gt;</code> &#x53D8;&#x6362;&#x4E3A;&#x5BF9;&#x8C61;&#x7684; Observable&#xFF1A;</p>
+<pre><code class="lang-java">fileSystem.open(<span class="hljs-string">&quot;/data.txt&quot;</span>, <span class="hljs-keyword">new</span> OpenOptions(), result -&gt; {
+  AsyncFile file = result.result();
+  Observable&lt;Buffer&gt; observable = RxHelper.toObservable(file);
+  observable.lift(RxHelper.unmarshaller(MyPojo.class)).subscribe(
+      mypojo -&gt; {
+        <span class="hljs-comment">// &#x5904;&#x7406;&#x5BF9;&#x8C61;</span>
+      }
+  );
+});
+</code></pre>
+<p>Rx&#x5316;&#x7684;&#x8F85;&#x52A9;&#x7C7B;&#x4E5F;&#x80FD;&#x505A;&#x540C;&#x6837;&#x7684;&#x4E8B;&#xFF1A;</p>
+<pre><code class="lang-java">fileSystem.open(<span class="hljs-string">&quot;/data.txt&quot;</span>, <span class="hljs-keyword">new</span> OpenOptions(), result -&gt; {
+  AsyncFile file = result.result();
+  Observable&lt;Buffer&gt; observable = file.toObservable();
+  observable.lift(io.vertx.rxjava.core.RxHelper.unmarshaller(MyPojo.class)).subscribe(
+      mypojo -&gt; {
+        <span class="hljs-comment">// &#x5904;&#x7406;&#x5BF9;&#x8C61;</span>
+      }
+  );
+});
+</code></pre>
+<h3 id="&#x90E8;&#x7F72;verticle">&#x90E8;&#x7F72;Verticle</h3>
+<p>Rx&#x5316;&#x7684; API &#x4E0D;&#x80FD;&#x90E8;&#x7F72;&#x4E00;&#x4E2A;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x7684; Verticle &#x5B9E;&#x4F8B;&#x3002;<a href="http://vertx.io/docs/apidocs/io/vertx/rx/java/RxHelper.html#observableFuture--" target="_blank">RxHelper.observableFuture</a> &#x65B9;&#x6CD5;&#x4E3A;&#x6B64;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+<p>&#x6240;&#x6709;&#x5DE5;&#x4F5C;&#x90FD;&#x5728; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#deployVerticle-io.vertx.rxjava.core.Vertx-io.vertx.core.Verticle-" target="_blank">RxHelper.deployVerticle</a> &#x65B9;&#x6CD5;&#x91CC;&#x81EA;&#x52A8;&#x5B8C;&#x6210;&#xFF0C;&#x5B83;&#x4F1A;&#x90E8;&#x7F72;&#x4E00;&#x4E2A; <code>Verticle</code> &#x5E76;&#x8FD4;&#x56DE;&#x5305;&#x542B;&#x90E8;&#x7F72; ID &#x7684; <code>Observable&lt;String&gt;</code>&#x3002;</p>
+<pre><code class="lang-java">Observable&lt;String&gt; deployment = RxHelper.deployVerticle(vertx, verticle);
+
+deployment.subscribe(id -&gt; {
+  <span class="hljs-comment">// &#x90E8;&#x7F72;&#x6210;&#x529F;</span>
+}, err -&gt; {
+  <span class="hljs-comment">// &#x90E8;&#x7F72;&#x5931;&#x8D25;</span>
+});
+</code></pre>
+<h3 id="httpclient-get-on-subscription">HttpClient GET on subscription</h3>
+<p>&#x5BF9;&#x4E8E;&#x901A;&#x8FC7;&#x8BA2;&#x9605;&#x6267;&#x884C;&#x4E00;&#x4E2A; HTTP GET &#x8BF7;&#x6C42;&#x8FD9;&#x6837;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x5229;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#get-io.vertx.rxjava.core.http.HttpClient-int-java.lang.String-java.lang.String-" target="_blank">RxHelper.get</a> &#x65B9;&#x6CD5;&#x662F;&#x5F88;&#x9002;&#x5408;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;HttpClientResponse&gt; get = RxHelper.get(client, <span class="hljs-string">&quot;http://the-server&quot;</span>);
+
+<span class="hljs-comment">// &#x6267;&#x884C;&#x8BF7;&#x6C42;</span>
+get.subscribe(resp -&gt; {
+  <span class="hljs-comment">// &#x83B7;&#x5F97;&#x54CD;&#x5E94;</span>
+}, err -&gt; {
+  <span class="hljs-comment">// &#x51FA;&#x9519;&#x4E86;</span>
+});
+</code></pre>
+<blockquote>
+<p>&#x8B66;&#x544A;&#xFF1A;&#x6267;&#x884C; GET &#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A; API &#x548C; <code>HttpClient</code> &#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x5F53;&#x65B9;&#x6CD5;&#x88AB;&#x8C03;&#x7528;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x6B21;&#x6027;&#x7684; <code>Observable</code>&#x3002;</p>
+</blockquote>
+<h2 id="rxified-api">Rxified API</h2>
+<p>Rx&#x5316;&#x7684; API &#x662F; Vert.x API &#x7684;&#x4E00;&#x4E2A;&#x4EE3;&#x7801;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7248;&#x672C;&#xFF0C;&#x5C31;&#x50CF; Vert.x &#x7684; <em>JavaScript</em> &#x6216; <em>Groovy</em> &#x7248;&#x672C;&#x4E00;&#x6837;&#x3002;&#x8FD9;&#x4E2A; API &#x4EE5; <code>io.vertx.rxjava</code> &#x4E3A;&#x5305;&#x540D;&#x524D;&#x7F00;&#xFF0C;&#x4F8B;&#x5982; <code>io.vertx.core.Vertx</code> &#x7C7B;&#x88AB;&#x8F6C;&#x5316;&#x4E3A; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/Vertx.html" target="_blank">&#xB7;io.vertx.rxjava.core.Vertx&#xB7;</a>&#x7C7B;&#x3002;</p>
+<h3 id="embedding-rxfified-vertx">Embedding Rxfified Vert.x</h3>
+<p>&#x53EA;&#x9700;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/Vertx.html#vertx--" target="_blank">Vertx.vertx</a> &#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">Vertx vertx = io.vertx.rxjava.core.Vertx.vertx();
+</code></pre>
+<h3 id="&#x4F5C;&#x4E3A;verticle">&#x4F5C;&#x4E3A;Verticle</h3>
+<p>&#x901A;&#x8FC7;&#x7EE7;&#x627F; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/AbstractVerticle.html" target="_blank"><code>AbstractVerticle</code></a> &#x7C7B;&#xFF0C;&#x5B83;&#x4F1A;&#x505A;&#x4E00;&#x4E9B;&#x5305;&#x88C5;&#xFF08;&#x4F60;&#x5C06;&#x83B7;&#x5F97;&#x4E00;&#x4E2A; RxJava Verticle&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyVerticle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">io</span>.<span class="hljs-title">vertx</span>.<span class="hljs-title">rxjava</span>.<span class="hljs-title">core</span>.<span class="hljs-title">AbstractVerticle</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Use Rxified Vertx here</span>
+  }
+}
+</code></pre>
+<p>&#x90E8;&#x7F72;&#x4E00;&#x4E2A; RxJava Verticle &#x4E0D;&#x9700;&#x8981;&#x7279;&#x522B;&#x7684;&#x90E8;&#x7F72;&#x5668;&#xFF0C;&#x4F7F;&#x7528; Java &#x90E8;&#x7F72;&#x5668;&#x5373;&#x53EF;&#x3002;</p>
+<h3 id="api-&#x6837;&#x4F8B;">API &#x6837;&#x4F8B;</h3>
+<p>&#x8BA9;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x7814;&#x7A76;&#x4E00;&#x4E9B;&#x6837;&#x4F8B;&#x6765;&#x4E86;&#x89E3;&#x76F8;&#x5173; API &#x5427;&#x3002;</p>
+<h4 id="event-bus-&#x6D88;&#x606F;&#x6D41;">Event Bus &#x6D88;&#x606F;&#x6D41;</h4>
+<p>&#x5F88;&#x81EA;&#x7136;&#x5730;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/MessageConsumer.html" target="_blank"><code>MessageConsumer</code></a> &#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x76F8;&#x5173;&#x7684; <code>Observable&lt;Message&lt;T&gt;&gt;</code>&#xFF1A;</p>
+<pre><code class="lang-java">EventBus eb = vertx.eventBus();
+MessageConsumer&lt;String&gt; consumer = eb.&lt;String&gt;consumer(<span class="hljs-string">&quot;the-address&quot;</span>);
+Observable&lt;Message&lt;String&gt;&gt; observable = consumer.toObservable();
+Subscription sub = observable.subscribe(msg -&gt; {
+  <span class="hljs-comment">// &#x83B7;&#x5F97;&#x6D88;&#x606F;</span>
+});
+
+<span class="hljs-comment">// 10&#x79D2;&#x540E;&#x6CE8;&#x9500;</span>
+vertx.setTimer(<span class="hljs-number">10000</span>, id -&gt; {
+  sub.unsubscribe();
+});
+</code></pre>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/MessageConsumer.html" target="_blank">MessageConsumer</a> &#x7C7B;&#x63D0;&#x4F9B;&#x4E86; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/Message.html" target="_blank">Message</a> &#x7684;&#x6D41;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/eventbus/Message.html#body--" target="_blank">body</a> &#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x6D88;&#x606F;&#x4F53;&#x7EC4;&#x6210;&#x7684;&#x65B0;&#x6D41;&#xFF1A;</p>
+<pre><code class="lang-java">EventBus eb = vertx.eventBus();
+MessageConsumer&lt;String&gt; consumer = eb.&lt;String&gt;consumer(<span class="hljs-string">&quot;the-address&quot;</span>);
+Observable&lt;String&gt; observable = consumer.bodyStream().toObservable();
+</code></pre>
+<p>RxJava &#x7684; map/reduce &#x7EC4;&#x5408;&#x98CE;&#x683C;&#x5728;&#x8FD9;&#x91CC;&#x662F;&#x76F8;&#x5F53;&#x6709;&#x7528;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;Double&gt; observable = vertx.eventBus().
+    &lt;Double&gt;consumer(<span class="hljs-string">&quot;heat-sensor&quot;</span>).
+    bodyStream().
+    toObservable();
+
+observable.
+    buffer(<span class="hljs-number">1</span>, TimeUnit.SECONDS).
+    map(samples -&gt; samples.
+        stream().
+        collect(Collectors.averagingDouble(d -&gt; d))).
+    subscribe(heat -&gt; {
+      vertx.eventBus().send(<span class="hljs-string">&quot;news-feed&quot;</span>, <span class="hljs-string">&quot;Current heat is &quot;</span> + heat);
+    });
+</code></pre>
+<h4 id="&#x5B9A;&#x65F6;&#x5668;">&#x5B9A;&#x65F6;&#x5668;</h4>
+<p>&#x5B9A;&#x65F6;&#x5668;&#x4EFB;&#x52A1;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/Vertx.html#timerStream-long-" target="_blank"><code>timerStream</code></a> &#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#xFF1A;</p>
+<pre><code class="lang-java">vertx.timerStream(<span class="hljs-number">1000</span>).
+    toObservable().
+    subscribe(
+        id -&gt; {
+          System.out.println(<span class="hljs-string">&quot;Callback after 1 second&quot;</span>);
+        }
+    );
+</code></pre>
+<p>&#x5468;&#x671F;&#x6027;&#x7684;&#x4EFB;&#x52A1;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/Vertx.html#periodicStream-long-" target="_blank"><code>periodicStream</code></a> &#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA;&#xFF1A;</p>
+<pre><code class="lang-java">vertx.periodicStream(<span class="hljs-number">1000</span>).
+    toObservable().
+    subscribe(
+        id -&gt; {
+          System.out.println(<span class="hljs-string">&quot;Callback every second&quot;</span>);
+        }
+    );
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x6CE8;&#x9500;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x53D6;&#x6D88;&#x5BF9; Observable &#x7684;&#x8BA2;&#x9605;&#xFF1A;</p>
+<pre><code>vertx.periodicStream(1000).
+    toObservable().
+    subscribe(new Subscriber&lt;Long&gt;() {
+      public void onNext(Long aLong) {
+        // &#x56DE;&#x8C03;
+        unsubscribe();
+      }
+      public void onError(Throwable e) {}
+      public void onCompleted() {}
+    });
+</code></pre><h4 id="http&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;">HTTP&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;</h4>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpClientRequest.html#toObservable--" target="_blank"><code>toObservable</code></a> &#x65B9;&#x6CD5;&#x63D0;&#x4F9B;&#x4E86;&#x5E26;&#x6709; <a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientResponse.html" target="_blank"><code>HttpClientResponse</code></a> &#x5BF9;&#x8C61;&#x7684;&#x4E00;&#x6B21;&#x6027;&#x56DE;&#x8C03;&#xFF0C;&#x8BF7;&#x6C42;&#x9519;&#x8BEF;&#x540C;&#x6837;&#x4F1A;&#x5728; Observable &#x4E2D;&#x53CD;&#x6620;&#x5904;&#x7406;&#x3002;</p>
+<pre><code class="lang-java">HttpClient client = vertx.createHttpClient(<span class="hljs-keyword">new</span> HttpClientOptions());
+HttpClientRequest request = client.request(HttpMethod.GET, <span class="hljs-number">8080</span>, <span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-string">&quot;/the_uri&quot;</span>);
+request.toObservable().subscribe(
+    response -&gt; {
+      <span class="hljs-comment">// &#x5904;&#x7406;&#x54CD;&#x5E94;</span>
+    },
+    error -&gt; {
+      <span class="hljs-comment">// &#x65E0;&#x6CD5;&#x8FDE;&#x63A5;</span>
+    }
+);
+request.end();
+</code></pre>
+<p>&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpClientResponse.html#toObservable--" target="_blank"><code>toObservable</code></a> &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x5C06;&#x54CD;&#x5E94;&#x5F53;&#x6210; <code>Observable&lt;Buffer&gt;</code> &#x6765;&#x5904;&#x7406;&#xFF1A;</p>
+<pre><code class="lang-java">request.toObservable().
+    subscribe(
+        response -&gt; {
+          Observable&lt;Buffer&gt; observable = response.toObservable();
+          observable.forEach(
+              buffer -&gt; {
+                <span class="hljs-comment">// &#x5904;&#x7406; buffer</span>
+              }
+          );
+        }
+    );
+</code></pre>
+<p><code>flatMap</code> &#x64CD;&#x4F5C;&#x4E5F;&#x80FD;&#x83B7;&#x5F97;&#x540C;&#x6837;&#x7684;&#x6D41;&#xFF1A;</p>
+<pre><code class="lang-java">request.toObservable().
+    flatMap(HttpClientResponse::toObservable).
+    forEach(
+        buffer -&gt; {
+          <span class="hljs-comment">// Process buffer</span>
+        }
+    );
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x9759;&#x6001;&#x65B9;&#x6CD5; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-" target="_blank"><code>RxHelper.unmarshaller</code></a> &#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x80FD;&#x5C06; <code>Observable&lt;Buffer&gt;</code> &#x91CD;&#x7EC4;&#x4E3A;&#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A; <code>Rx.Observable.Operator</code>&#xFF08;Rx &#x64CD;&#x4F5C;&#x7B26;&#xFF09;&#x4F9B;&#x91CD;&#x7EC4;&#x64CD;&#x4F5C;&#x4F7F;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-java">request.toObservable().
+    flatMap(HttpClientResponse::toObservable).
+    lift(io.vertx.rxjava.core.RxHelper.unmarshaller(MyPojo.class)).
+    forEach(
+        pojo -&gt; {
+          <span class="hljs-comment">// Process pojo</span>
+        }
+    );
+</code></pre>
+<h4 id="http&#x670D;&#x52A1;&#x7AEF;&#x8BF7;&#x6C42;">HTTP&#x670D;&#x52A1;&#x7AEF;&#x8BF7;&#x6C42;</h4>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpServer.html#requestStream--" target="_blank">requestStream</a> &#x65B9;&#x6CD5;&#x5BF9;&#x5230;&#x8FBE;&#x7684;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x90FD;&#x63D0;&#x4F9B;&#x4E86;&#x56DE;&#x8C03;&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;HttpServerRequest&gt; requestObservable = server.requestStream().toObservable();
+requestObservable.subscribe(request -&gt; {
+  <span class="hljs-comment">// &#x5904;&#x7406;&#x8BF7;&#x6C42;</span>
+});
+</code></pre>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerRequest.html" target="_blank"><code>HttpServerRequest</code></a> &#x53EF;&#x4EE5;&#x88AB;&#x9002;&#x914D;&#x4E3A; <code>Observable&lt;Buffer&gt;</code>&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;HttpServerRequest&gt; requestObservable = server.requestStream().toObservable();
+requestObservable.subscribe(request -&gt; {
+  Observable&lt;Buffer&gt; observable = request.toObservable();
+});
+</code></pre>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/RxHelper.html#unmarshaller-java.lang.Class-" target="_blank"><code>RxHelper.unmarshaller</code></a> &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x89E3;&#x6790; JSON &#x683C;&#x5F0F;&#x7684;&#x8BF7;&#x6C42;&#x5E76;&#x5C06;&#x5176;&#x6620;&#x5C04;&#x4E3A;&#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;HttpServerRequest&gt; requestObservable = server.requestStream().toObservable();
+requestObservable.subscribe(request -&gt; {
+  Observable&lt;MyPojo&gt; observable = request.
+      toObservable().
+      lift(io.vertx.rxjava.core.RxHelper.unmarshaller(MyPojo.class));
+});
+</code></pre>
+<h4 id="websocket&#x5BA2;&#x6237;&#x7AEF;">WebSocket&#x5BA2;&#x6237;&#x7AEF;</h4>
+<p>&#x5F53; WebSocket &#x8FDE;&#x63A5;&#x4E0A;&#x6216;&#x5931;&#x8D25;&#x65F6;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpClient.html#websocketStream-io.vertx.core.http.RequestOptions-" target="_blank"><code>websocketStream</code></a> &#x65B9;&#x6CD5;&#x5BF9;&#x6B64;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x6B21;&#x6027;&#x7684;&#x56DE;&#x8C03;&#xFF1A;</p>
+<pre><code class="lang-java">HttpClient client = vertx.createHttpClient(<span class="hljs-keyword">new</span> HttpClientOptions());
+client.websocketStream(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-string">&quot;/the_uri&quot;</span>).toObservable().subscribe(
+    ws -&gt; {
+      <span class="hljs-comment">// Use the websocket</span>
+    },
+    error -&gt; {
+      <span class="hljs-comment">// Could not connect</span>
+    }
+);
+</code></pre>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/WebSocket.html" target="_blank">WebSocket</a> &#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x5730;&#x8F6C;&#x6362;&#x4E3A; <code>Observable&lt;Buffer&gt;</code>&#xFF1A;</p>
+<pre><code class="lang-java">socketObservable.subscribe(
+    socket -&gt; {
+      Observable&lt;Buffer&gt; dataObs = socket.toObservable();
+      dataObs.subscribe(buffer -&gt; {
+        System.out.println(<span class="hljs-string">&quot;Got message &quot;</span> + buffer.toString(<span class="hljs-string">&quot;UTF-8&quot;</span>));
+      });
+    }
+);
+</code></pre>
+<h4 id="websocket&#x670D;&#x52A1;&#x7AEF;">WebSocket&#x670D;&#x52A1;&#x7AEF;</h4>
+<p>&#x6BCF;&#x5F53;&#x6709;&#x65B0;&#x8FDE;&#x63A5;&#x5230;&#x8FBE;&#x65F6;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/core/http/HttpServer.html#websocketStream--" target="_blank"><code>websocketStream</code></a> &#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x63D0;&#x4F9B;&#x4E00;&#x6B21;&#x56DE;&#x8C03;&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;ServerWebSocket&gt; socketObservable = server.websocketStream().toObservable();
+socketObservable.subscribe(
+    socket -&gt; System.out.println(<span class="hljs-string">&quot;Web socket connect&quot;</span>),
+    failure -&gt; System.out.println(<span class="hljs-string">&quot;Should never be called&quot;</span>),
+    () -&gt; {
+      System.out.println(<span class="hljs-string">&quot;Subscription ended or server closed&quot;</span>);
+    }
+);
+</code></pre>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/core/http/ServerWebSocket.html" target="_blank"><code>ServerWebSocket</code></a> &#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x5730;&#x8F6C;&#x6362;&#x4E3A; <code>Observable&lt;Buffer&gt;</code>&#xFF1A;</p>
+<pre><code class="lang-java">socketObservable.subscribe(
+    socket -&gt; {
+      Observable&lt;Buffer&gt; dataObs = socket.toObservable();
+      dataObs.subscribe(buffer -&gt; {
+        System.out.println(<span class="hljs-string">&quot;Got message &quot;</span> + buffer.toString(<span class="hljs-string">&quot;UTF-8&quot;</span>));
+      });
+    }
+);
+</code></pre>
+<hr>
+<blockquote>
+<p><a href="http://vertx.io/docs/vertx-rx/java/" target="_blank">&#x539F;&#x6587;&#x6863;</a>&#x6700;&#x540E;&#x66F4;&#x65B0;&#x4E8E; 2017-03-15 15:54:14 CET</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Reactive.html" class="navigation navigation-prev " aria-label="Previous page: Reactive">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Reactivestreams.html" class="navigation navigation-next " aria-label="Next page: Reactive streams">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Vert.x Rx","level":"1.10.1","depth":2,"next":{"title":"Reactive streams","level":"1.10.2","depth":2,"path":"reactive/Reactivestreams.md","ref":"reactive/Reactivestreams.md","articles":[]},"previous":{"title":"Reactive","level":"1.10","depth":1,"path":"reactive/Reactive.md","ref":"reactive/Reactive.md","articles":[{"title":"Vert.x Rx","level":"1.10.1","depth":2,"path":"reactive/Rx.md","ref":"reactive/Rx.md","articles":[]},{"title":"Reactive streams","level":"1.10.2","depth":2,"path":"reactive/Reactivestreams.md","ref":"reactive/Reactivestreams.md","articles":[]},{"title":"Vert.x Sync","level":"1.10.3","depth":2,"path":"reactive/Sync.md","ref":"reactive/Sync.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"reactive/Rx.md","mtime":"2017-04-12T09:05:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

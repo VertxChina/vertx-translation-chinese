@@ -1,0 +1,1544 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Web Client · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../data/Data.html" />
+    
+    
+    <link rel="prev" href="../web/Web.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="WebClient.html">
+            
+                <a href="WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Web Client</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-web-client">Vert.x Web Client</h1>
+<ul>
+<li><a href="http://vertx.io/docs/vertx-web-client/java/" target="_blank">&#x539F;&#x6587;&#x6863;</a></li>
+<li><a href="https://github.com/vert-x3/vertx-web/tree/master/vertx-web-client" target="_blank">&#x7EC4;&#x4EF6;&#x6E90;&#x7801;</a></li>
+<li><a href="https://github.com/vert-x3/vertx-examples/tree/master/web-client-examples" target="_blank">&#x7EC4;&#x4EF6;&#x793A;&#x4F8B;</a></li>
+</ul>
+<h2 id="&#x4E2D;&#x82F1;&#x5BF9;&#x7167;&#x8868;">&#x4E2D;&#x82F1;&#x5BF9;&#x7167;&#x8868;</h2>
+<ul>
+<li>Pump&#xFF1A;&#x6CF5;&#xFF08;&#x5E73;&#x6ED1;&#x6D41;&#x5F0F;&#x6570;&#x636E;&#x8BFB;&#x5165;&#x5185;&#x5B58;&#x7684;&#x673A;&#x5236;&#xFF0C;&#x9632;&#x6B62;&#x4E00;&#x6B21;&#x6027;&#x5C06;&#x5927;&#x91CF;&#x6570;&#x636E;&#x8BFB;&#x5165;&#x5185;&#x5B58;&#x5BFC;&#x81F4;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#xFF09;</li>
+<li>Response Codec&#xFF1A;&#x54CD;&#x5E94;&#x7F16;&#x89E3;&#x7801;&#x5668;&#xFF08;&#x7F16;&#x7801;&#x53CA;&#x89E3;&#x7801;&#x5DE5;&#x5177;&#xFF09;</li>
+<li>Body Codec&#xFF1A;&#x54CD;&#x5E94;&#x4F53;&#x7F16;&#x89E3;&#x7801;&#x5668;</li>
+</ul>
+<h2 id="&#x7EC4;&#x4EF6;&#x4ECB;&#x7ECD;">&#x7EC4;&#x4EF6;&#x4ECB;&#x7ECD;</h2>
+<p>Vert.x Web Client&#xFF08;Web&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x662F;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x7684; HTTP &#x548C; HTTP/2 &#x5BA2;&#x6237;&#x7AEF;&#x3002;</p>
+<p>Web Client&#x4F7F;&#x5F97;&#x53D1;&#x9001; HTTP &#x8BF7;&#x6C42;&#x4EE5;&#x53CA;&#x4ECE; Web &#x670D;&#x52A1;&#x5668;&#x63A5;&#x6536; HTTP &#x54CD;&#x5E94;&#x53D8;&#x5F97;&#x66F4;&#x52A0;&#x4FBF;&#x6377;&#xFF0C;&#x540C;&#x65F6;&#x63D0;&#x4F9B;&#x4E86;&#x989D;&#x5916;&#x7684;&#x9AD8;&#x7EA7;&#x529F;&#x80FD;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<ul>
+<li><p>JSON&#x4F53;&#x7684;&#x7F16;&#x7801;&#x548C;&#x89E3;&#x7801;</p>
+</li>
+<li><p>&#x8BF7;&#x6C42;&#x548C;&#x54CD;&#x5E94;&#x6CF5;</p>
+</li>
+<li><p>&#x8BF7;&#x6C42;&#x53C2;&#x6570;&#x7684;&#x5904;&#x7406;</p>
+</li>
+<li><p>&#x7EDF;&#x4E00;&#x7684;&#x9519;&#x8BEF;&#x5904;&#x7406;</p>
+</li>
+<li><p>&#x63D0;&#x4EA4;&#x8868;&#x5355;</p>
+</li>
+</ul>
+<p>&#x5236;&#x4F5C;Web Client&#x7684;&#x76EE;&#x7684;&#x5E76;&#x975E;&#x4E3A;&#x4E86;&#x66FF;&#x6362;Vert.x Core&#x4E2D;&#x7684; <a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html" target="_blank"><code>HttpClient</code></a>&#xFF0C;&#x800C;&#x662F;&#x57FA;&#x4E8E;&#x8BE5;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x6269;&#x5C55;&#x5E76;&#x4FDD;&#x7559;&#x5176;&#x4FBF;&#x5229;&#x7684;&#x8BBE;&#x7F6E;&#x548C;&#x7279;&#x6027;&#xFF0C;&#x4F8B;&#x5982;&#x8BF7;&#x6C42;&#x8FDE;&#x63A5;&#x6C60;&#xFF08;Pooling&#xFF09;&#xFF0C;HTTP/2&#x7684;&#x652F;&#x6301;&#xFF0C;&#x6D41;&#x6C34;&#x7EBF;&#xFF0F;&#x7BA1;&#x7EBF;&#x7684;&#x652F;&#x6301;&#x7B49;&#x3002;&#x5F53;&#x60A8;&#x9700;&#x8981;&#x5BF9; HTTP &#x8BF7;&#x6C42;&#x548C;&#x54CD;&#x5E94;&#x505A;&#x7EC6;&#x5FAE;&#x7C92;&#x5EA6;&#x63A7;&#x5236;&#x65F6;&#xFF0C;&#x60A8;&#x5E94;&#x5F53;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html" target="_blank"><code>HttpClient</code></a>&#x3002;</p>
+<p>&#x53E6;&#x5916;Web Client&#x5E76;&#x672A;&#x63D0;&#x4F9B; WebSocket API&#xFF0C;&#x6B64;&#x65F6;&#x60A8;&#x5E94;&#x5F53;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html" target="_blank"><code>HttpClient</code></a>&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;web-client">&#x4F7F;&#x7528;Web Client</h2>
+<p>&#x5982;&#x9700;&#x4F7F;&#x7528;Vert.x Web Client&#xFF0C;&#x8BF7;&#x5148;&#x52A0;&#x5165;&#x4EE5;&#x4E0B;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<ul>
+<li><p>Maven&#xFF08;&#x5728; <code>pom.xml</code>&#x6587;&#x4EF6;&#x4E2D;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-web-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+</li>
+<li><p>Gradle&#xFF08;&#x5728;<code>build.gradle</code>&#x6587;&#x4EF6;&#x4E2D;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-gradle"><span class="hljs-keyword">dependencies</span> {
+  <span class="hljs-keyword">compile</span> <span class="hljs-string">&apos;io.vertx:vertx-web-client:3.4.1&apos;</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="&#x5BF9;vertx-core-http-client&#x7684;&#x56DE;&#x987E;">&#x5BF9;Vert.x Core HTTP Client&#x7684;&#x56DE;&#x987E;</h2>
+<p>Vert.x Web Client&#x4F7F;&#x7528;Vert.x Core&#x7684;API&#xFF0C;&#x5982;&#x60A8;&#x5BF9;&#x6B64;&#x8FD8;&#x4E0D;&#x719F;&#x6089;&#xFF0C;&#x8BF7;&#x5148;&#x719F;&#x6089; <a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html" target="_blank"><code>HttpClient</code></a> &#x7684;&#x4E00;&#x4E9B;&#x57FA;&#x672C;&#x6982;&#x5FF5;&#x3002;</p>
+<h2 id="&#x521B;&#x5EFA;web-client">&#x521B;&#x5EFA;Web Client</h2>
+<p>&#x60A8;&#x53EF;&#x4F7F;&#x7528;&#x7F3A;&#x7701;&#x8BBE;&#x7F6E;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClient.html" target="_blank"><code>WebClient</code></a>&#xFF1A;</p>
+<pre><code class="lang-java">WebClient client = WebClient.create(vertx);
+</code></pre>
+<p>&#x60A8;&#x4EA6;&#x53EF;&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x9009;&#x9879;&#x6765;&#x521B;&#x5EFA;&#x5BA2;&#x6237;&#x7AEF;&#xFF1A;</p>
+<pre><code class="lang-java">WebClientOptions options = <span class="hljs-keyword">new</span> WebClientOptions()
+  .setUserAgent(<span class="hljs-string">&quot;My-App/1.2.3&quot;</span>);
+options.setKeepAlive(<span class="hljs-keyword">false</span>);
+WebClient client = WebClient.create(vertx, options);
+</code></pre>
+<p>Web Client&#x914D;&#x7F6E;&#x9009;&#x9879;&#x7EE7;&#x627F;&#x81EA; <code>HttpClient</code> &#x914D;&#x7F6E;&#x9009;&#x9879;&#xFF0C;&#x4F7F;&#x7528;&#x65F6;&#x53EF;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x9009;&#x62E9;&#x3002;</p>
+<p>&#x5982;&#x5DF2;&#x5728;&#x7A0B;&#x5E8F;&#x4E2D;&#x521B;&#x5EFA; <code>HttpClient</code>&#xFF0C;&#x53EF;&#x7528;&#x4EE5;&#x4E0B;&#x65B9;&#x5F0F;&#x590D;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-java">WebClient client = WebClient.wrap(httpClient);
+</code></pre>
+<h2 id="&#x53D1;&#x9001;&#x8BF7;&#x6C42;">&#x53D1;&#x9001;&#x8BF7;&#x6C42;</h2>
+<h3 id="&#x65E0;&#x8BF7;&#x6C42;&#x4F53;&#x7684;&#x7B80;&#x5355;&#x8BF7;&#x6C42;">&#x65E0;&#x8BF7;&#x6C42;&#x4F53;&#x7684;&#x7B80;&#x5355;&#x8BF7;&#x6C42;</h3>
+<p>&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;HTTP GET&#xFF0C;OPTIONS&#x4EE5;&#x53CA;HEAD&#x8BF7;&#x6C42;&#x6CA1;&#x6709;&#x8BF7;&#x6C42;&#x4F53;&#xFF0C;&#x53EF;&#x7528;&#x4EE5;&#x4E0B;&#x65B9;&#x5F0F;&#x53D1;&#x9001;&#x65E0;&#x8BF7;&#x6C42;&#x4F53;&#x7684;HTTP Requests&#xFF08;HTTP&#x8BF7;&#x6C42;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java">WebClient client = WebClient.create(vertx);
+
+<span class="hljs-comment">// &#x53D1;&#x9001;GET&#x8BF7;&#x6C42;</span>
+client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// &#x83B7;&#x53D6;&#x54CD;&#x5E94;</span>
+      HttpResponse&lt;Buffer&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+
+<span class="hljs-comment">//&#x53D1;&#x9001;HEAD&#x8BF7;&#x6C42;</span>
+client
+  .head(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// &#x83B7;&#x53D6;&#x54CD;&#x5E94;</span>
+      HttpResponse&lt;Buffer&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<p>&#x60A8;&#x53EF;&#x7528;&#x4EE5;&#x4E0B;&#x94FE;&#x5F0F;&#x65B9;&#x5F0F;&#x5411;&#x8BF7;&#x6C42;URI&#x6DFB;&#x52A0;&#x67E5;&#x8BE2;&#x53C2;&#x6570;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .addQueryParam(<span class="hljs-string">&quot;param&quot;</span>, <span class="hljs-string">&quot;param_value&quot;</span>)
+  .send(ar -&gt; {});
+</code></pre>
+<p>&#x5728;&#x8BF7;&#x6C42;URI&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x5C06;&#x4F1A;&#x88AB;&#x9884;&#x586B;&#x5145;</p>
+<pre><code class="lang-java">HttpRequest&lt;Buffer&gt; request = client.get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri?param1=param1_value&amp;param2=param2_value&quot;</span>);
+
+<span class="hljs-comment">// &#x6DFB;&#x52A0;param3&#xFF08;&#x53C2;&#x6570;3&#xFF09;</span>
+request.addQueryParam(<span class="hljs-string">&quot;param3&quot;</span>, <span class="hljs-string">&quot;param3_value&quot;</span>);
+
+<span class="hljs-comment">// &#x8986;&#x76D6;param2&#xFF08;&#x53C2;&#x6570;2&#xFF09;</span>
+request.setQueryParam(<span class="hljs-string">&quot;param2&quot;</span>, <span class="hljs-string">&quot;another_param2_value&quot;</span>);
+</code></pre>
+<p>&#x8BBE;&#x7F6E;&#x8BF7;&#x6C42;URI&#x5C06;&#x4F1A;&#x81EA;&#x52A8;&#x6E05;&#x9664;&#x5DF2;&#x6709;&#x7684;&#x67E5;&#x8BE2;&#x53C2;&#x6570;</p>
+<pre><code class="lang-java">HttpRequest&lt;Buffer&gt; request = client.get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>);
+
+<span class="hljs-comment">// &#x6DFB;&#x52A0;param1&#xFF08;&#x53C2;&#x6570;1&#xFF09;</span>
+request.addQueryParam(<span class="hljs-string">&quot;param1&quot;</span>, <span class="hljs-string">&quot;param1_value&quot;</span>);
+
+<span class="hljs-comment">// &#x8986;&#x76D6;param1&#xFF08;&#x53C2;&#x6570;1&#xFF09;&#x540C;&#x65F6;&#x65B0;&#x589E;param2&#xFF08;&#x53C2;&#x6570;2&#xFF09;</span>
+request.uri(<span class="hljs-string">&quot;/some-uri?param1=param1_value&amp;param2=param2_value&quot;</span>);
+</code></pre>
+<h3 id="&#x586B;&#x5145;&#x8BF7;&#x6C42;&#x4F53;">&#x586B;&#x5145;&#x8BF7;&#x6C42;&#x4F53;</h3>
+<p>&#x5982;&#x9700;&#x8981;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x4F53;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;&#x76F8;&#x540C;&#x7684;API&#x5E76;&#x5728;&#x6700;&#x540E;&#x52A0;&#x4E0A; <code>sendXXX</code> &#x65B9;&#x6CD5;&#x53D1;&#x9001;&#x76F8;&#x5E94;&#x7684;&#x8BF7;&#x6C42;&#x4F53;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendBuffer-io.vertx.core.buffer.Buffer-io.vertx.core.Handler-" target="_blank"><code>sendBuffer</code></a> &#x65B9;&#x6CD5;&#x53D1;&#x9001;&#x4E00;&#x4E2A;&#x7F13;&#x51B2;&#x4F53;&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .sendBuffer(buffer, ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// Ok</span>
+    }
+  });
+</code></pre>
+<p>&#x6709;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x5E0C;&#x671B;&#x5C06;&#x6240;&#x6709;&#x6570;&#x636E;&#x4E00;&#x6B21;&#x6027;&#x5168;&#x90E8;&#x8BFB;&#x5165;&#x5185;&#x5B58;&#xFF0C;&#x56E0;&#x4E3A;&#x6587;&#x4EF6;&#x592A;&#x5927;&#x6216;&#x5E0C;&#x671B;&#x540C;&#x65F6;&#x5904;&#x7406;&#x591A;&#x4E2A;&#x8BF7;&#x6C42;&#xFF0C;&#x5E0C;&#x671B;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x4EC5;&#x4F7F;&#x7528;&#x6700;&#x5C0F;&#x7684;&#x5185;&#x5B58;&#x3002;&#x51FA;&#x4E8E;&#x6B64;&#x76EE;&#x7684;&#xFF0C;Web Client&#x53EF;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendStream-io.vertx.core.streams.ReadStream-io.vertx.core.Handler-" target="_blank"><code>sendStream</code></a> &#x65B9;&#x6CD5;&#x53D1;&#x9001;&#x6D41;&#x5F0F;&#x6570;&#x636E; <code>ReadStream&lt;Buffer&gt;</code>&#xFF08;&#x4F8B;&#x5982; <a href="http://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html" target="_blank"><code>AsyncFile</code></a> &#x4FBF;&#x662F;&#x4E00;&#x4E2A; <code>ReadStream&lt;Buffer&gt;</code>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .sendStream(stream, resp -&gt; {});
+</code></pre>
+<p>Web Client&#x4F1A;&#x4E3A;&#x60A8;&#x8BBE;&#x7F6E;&#x597D;&#x4F20;&#x8F93;&#x6CF5;&#x4EE5;&#x5E73;&#x6ED1;&#x4F20;&#x8F93;&#x6D41;&#x3002;&#x5982;&#x679C;&#x6D41;&#x957F;&#x5EA6;&#x672A;&#x77E5;&#x5219;&#x4F7F;&#x7528;&#x5206;&#x5757;&#x4F20;&#x8F93;&#xFF08;chunked transfer&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x5DF2;&#x77E5;&#x6D41;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x53EF;&#x5728;HTTP&#x534F;&#x8BAE;&#x5934;&#x4E2D;&#x8BBE;&#x7F6E; <code>content-length</code> &#x5C5E;&#x6027;</p>
+<pre><code class="lang-java">fs.open(<span class="hljs-string">&quot;content.txt&quot;</span>, <span class="hljs-keyword">new</span> OpenOptions(), fileRes -&gt; {
+  <span class="hljs-keyword">if</span> (fileRes.succeeded()) {
+    ReadStream&lt;Buffer&gt; fileStream = fileRes.result();
+
+    String fileLen = <span class="hljs-string">&quot;1024&quot;</span>;
+
+    <span class="hljs-comment">// &#x7528;POST&#x65B9;&#x6CD5;&#x53D1;&#x9001;&#x6587;&#x4EF6;</span>
+    client
+      .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+      .putHeader(<span class="hljs-string">&quot;content-length&quot;</span>, fileLen)
+      .sendStream(fileStream, ar -&gt; {
+        <span class="hljs-keyword">if</span> (ar.succeeded()) {
+          <span class="hljs-comment">// Ok</span>
+        }
+      });
+  }
+});
+</code></pre>
+<p>&#x6B64;&#x65F6;POST&#x65B9;&#x6CD5;&#x4E0D;&#x4F1A;&#x4F7F;&#x7528;&#x5206;&#x5757;&#x4F20;&#x8F93;&#x3002;</p>
+<h4 id="json&#x4F53;">JSON&#x4F53;</h4>
+<p>&#x6709;&#x65F6;&#x60A8;&#x9700;&#x8981;&#x5728;&#x8BF7;&#x6C42;&#x4F53;&#x4E2D;&#x4F7F;&#x7528;JSON&#x683C;&#x5F0F;&#xFF0C;&#x53EF;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJsonObject-io.vertx.core.json.JsonObject-io.vertx.core.Handler-" target="_blank"><code>sendJsonObject</code></a> &#x65B9;&#x6CD5;&#x53D1;&#x9001; <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html" target="_blank"><code>JsonObject</code></a>&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .sendJsonObject(<span class="hljs-keyword">new</span> JsonObject()
+    .put(<span class="hljs-string">&quot;firstName&quot;</span>, <span class="hljs-string">&quot;Dale&quot;</span>)
+    .put(<span class="hljs-string">&quot;lastName&quot;</span>, <span class="hljs-string">&quot;Cooper&quot;</span>), ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// Ok</span>
+    }
+  });
+</code></pre>
+<p>&#x5728;Java&#xFF0C;Groovy&#x4EE5;&#x53CA;Kotlin&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x60A8;&#x4EA6;&#x53EF;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendJson-java.lang.Object-io.vertx.core.Handler-" target="_blank"><code>sendJson</code></a> &#x65B9;&#x6CD5;&#x53D1;&#x9001;POJO&#xFF08;Plain Old Java Object&#xFF09;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x4F1A;&#x81EA;&#x52A8;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-" target="_blank"><code>Json.encode</code></a> &#x65B9;&#x6CD5;&#x5C06; POJO &#x6620;&#x5C04;&#x4E3A; JSON&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .sendJson(<span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;Dale&quot;</span>, <span class="hljs-string">&quot;Cooper&quot;</span>), ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// Ok</span>
+    }
+  });
+</code></pre>
+<blockquote>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A; <em><a href="http://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#encode-java.lang.Object-" target="_blank"><code>Json.encode</code></a> &#x65B9;&#x6CD5;&#x4F7F;&#x7528;Jackson&#x7684; mapper&#x5C06; POJO &#x6620;&#x5C04;&#x6210; JSON&#x3002;</em></p>
+</blockquote>
+<h4 id="&#x8868;&#x5355;&#x63D0;&#x4EA4;">&#x8868;&#x5355;&#x63D0;&#x4EA4;</h4>
+<p>&#x60A8;&#x53EF;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#sendForm-io.vertx.core.MultiMap-io.vertx.core.Handler-" target="_blank"><code>sendForm</code></a> &#x65B9;&#x6CD5;&#x53D1;&#x9001;HTTP&#x8868;&#x5355;&#x3002;</p>
+<pre><code class="lang-java">MultiMap form = MultiMap.caseInsensitiveMultiMap();
+form.set(<span class="hljs-string">&quot;firstName&quot;</span>, <span class="hljs-string">&quot;Dale&quot;</span>);
+form.set(<span class="hljs-string">&quot;lastName&quot;</span>, <span class="hljs-string">&quot;Cooper&quot;</span>);
+
+<span class="hljs-comment">// &#x7528;URL&#x7F16;&#x7801;&#x65B9;&#x5F0F;&#x63D0;&#x4EA4;&#x8868;&#x5355;</span>
+client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .sendForm(form, ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// Ok</span>
+    }
+  });
+</code></pre>
+<p>&#x7F3A;&#x7701;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x63D0;&#x4EA4;&#x8868;&#x5355;&#x7684;&#x8BF7;&#x6C42;&#x5934;&#x4E2D;&#x7684; <code>content-type</code> &#x5C5E;&#x6027;&#x503C;&#x4E3A; <code>application/x-www-form-urlencoded</code>&#xFF0C;&#x60A8;&#x4EA6;&#x53EF;&#x5C06;&#x5176;&#x8BBE;&#x7F6E;&#x4E3A; <code>multipart/form-data</code>&#xFF1A;</p>
+<pre><code class="lang-java">MultiMap form = MultiMap.caseInsensitiveMultiMap();
+form.set(<span class="hljs-string">&quot;firstName&quot;</span>, <span class="hljs-string">&quot;Dale&quot;</span>);
+form.set(<span class="hljs-string">&quot;lastName&quot;</span>, <span class="hljs-string">&quot;Cooper&quot;</span>);
+
+<span class="hljs-comment">// &#x7528;&#x5206;&#x5757;&#x65B9;&#x5F0F;&#x7F16;&#x7801;&#x63D0;&#x4EA4;&#x8868;&#x5355;</span>
+client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .putHeader(<span class="hljs-string">&quot;content-type&quot;</span>, <span class="hljs-string">&quot;multipart/form-data&quot;</span>)
+  .sendForm(form, ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// Ok</span>
+    }
+  });
+</code></pre>
+<blockquote>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;<em>&#x5F53;&#x524D;&#x7248;&#x672C;&#x5E76;&#x4E0D;&#x652F;&#x6301;&#x5206;&#x5757;&#x6587;&#x4EF6;&#x7F16;&#x7801;&#xFF08;multipart files&#xFF0C;&#x5373;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#xFF09;&#xFF0C;&#x8BE5;&#x529F;&#x80FD;&#x53EF;&#x80FD;&#x5728;&#x5C06;&#x6765;&#x7248;&#x672C;&#x4E2D;&#x4E88;&#x4EE5;&#x652F;&#x6301;&#x3002;</em></p>
+</blockquote>
+<h3 id="&#x586B;&#x5145;&#x8BF7;&#x6C42;&#x5934;">&#x586B;&#x5145;&#x8BF7;&#x6C42;&#x5934;</h3>
+<p>&#x60A8;&#x53EF;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x65B9;&#x5F0F;&#x586B;&#x5145;&#x8BF7;&#x6C42;&#x5934;&#xFF1A;</p>
+<pre><code class="lang-java">HttpRequest&lt;Buffer&gt; request = client.get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>);
+MultiMap headers = request.headers();
+headers.set(<span class="hljs-string">&quot;content-type&quot;</span>, <span class="hljs-string">&quot;application/json&quot;</span>);
+headers.set(<span class="hljs-string">&quot;other-header&quot;</span>, <span class="hljs-string">&quot;foo&quot;</span>);
+</code></pre>
+<p>&#x6B64;&#x5904; Headers &#x662F;&#x4E00;&#x4E2A; <a href="http://vertx.io/docs/apidocs/io/vertx/core/MultiMap.html" target="_blank"><code>MultiMap</code></a> &#x5BF9;&#x8C61;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x589E;&#x52A0;&#x3001;&#x8BBE;&#x7F6E;&#x4EE5;&#x53CA;&#x5220;&#x9664;&#x5934;&#x5C5E;&#x6027;&#x64CD;&#x4F5C;&#x7684;&#x5165;&#x53E3;&#x3002;HTTP&#x5934;&#x7684;&#x67D0;&#x4E9B;&#x7279;&#x5B9A;&#x5C5E;&#x6027;&#x5141;&#x8BB8;&#x8BBE;&#x7F6E;&#x591A;&#x4E2A;&#x503C;&#x3002;</p>
+<p>&#x60A8;&#x4EA6;&#x53EF;&#x901A;&#x8FC7; <code>putHeader</code> &#x65B9;&#x6CD5;&#x5199;&#x5165;&#x5934;&#x5C5E;&#x6027;&#xFF1A;</p>
+<pre><code class="lang-java">HttpRequest&lt;Buffer&gt; request = client.get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>);
+request.putHeader(<span class="hljs-string">&quot;content-type&quot;</span>, <span class="hljs-string">&quot;application/json&quot;</span>);
+request.putHeader(<span class="hljs-string">&quot;other-header&quot;</span>, <span class="hljs-string">&quot;foo&quot;</span>);
+</code></pre>
+<h3 id="&#x91CD;&#x7528;&#x8BF7;&#x6C42;">&#x91CD;&#x7528;&#x8BF7;&#x6C42;</h3>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#send-io.vertx.core.Handler-" target="_blank"><code>send</code></a> &#x65B9;&#x6CD5;&#x53EF;&#x88AB;&#x91CD;&#x590D;&#x591A;&#x6B21;&#x8C03;&#x7528;&#xFF0C;&#x8FD9;&#x4F7F;&#x5F97;&#x914D;&#x7F6E;&#x4EE5;&#x53CA;&#x91CD;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html" target="_blank"><code>HttpRequest</code></a> &#x5BF9;&#x8C61;&#x53D8;&#x5F97;&#x66F4;&#x52A0;&#x4FBF;&#x6377;&#xFF1A;</p>
+<pre><code class="lang-java">HttpRequest&lt;Buffer&gt; get = client.get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>);
+get.send(ar -&gt; {
+  <span class="hljs-keyword">if</span> (ar.succeeded()) {
+    <span class="hljs-comment">// Ok</span>
+  }
+});
+
+<span class="hljs-comment">// &#x518D;&#x6B21;&#x53D1;&#x9001;&#x540C;&#x6837;&#x7684;&#x8BF7;&#x6C42;</span>
+get.send(ar -&gt; {
+  <span class="hljs-keyword">if</span> (ar.succeeded()) {
+    <span class="hljs-comment">// Ok</span>
+  }
+});
+</code></pre>
+<p>&#x5F53;&#x60A8;&#x9700;&#x8981;&#x66F4;&#x6539;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x53EF;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#copy--" target="_blank"><code>copy</code></a> &#x65B9;&#x6CD5;&#x590D;&#x5236;&#x4E00;&#x4EFD;&#x8BF7;&#x6C42;&#x7684;&#x62F7;&#x8D1D;&#xFF1A;</p>
+<pre><code class="lang-java">HttpRequest&lt;Buffer&gt; get = client.get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>);
+get.send(ar -&gt; {
+  <span class="hljs-keyword">if</span> (ar.succeeded()) {
+    <span class="hljs-comment">// Ok</span>
+  }
+});
+
+<span class="hljs-comment">// &#x83B7;&#x53D6;&#x540C;&#x6837;&#x7684;&#x8BF7;&#x6C42;</span>
+get.copy()
+  .putHeader(<span class="hljs-string">&quot;an-header&quot;</span>, <span class="hljs-string">&quot;with-some-value&quot;</span>)
+  .send(ar -&gt; {
+  <span class="hljs-keyword">if</span> (ar.succeeded()) {
+    <span class="hljs-comment">// Ok</span>
+  }
+</code></pre>
+<h3 id="&#x8D85;&#x65F6;">&#x8D85;&#x65F6;</h3>
+<p>&#x60A8;&#x53EF;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#timeout-long-" target="_blank"><code>timeout</code></a> &#x65B9;&#x6CD5;&#x8BBE;&#x7F6E;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .timeout(<span class="hljs-number">5000</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// Ok</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// &#x6B64;&#x5904;&#x53EF;&#x586B;&#x5165;&#x8D85;&#x65F6;&#x5904;&#x7406;&#x90E8;&#x5206;&#x4EE3;&#x7801;</span>
+    }
+  });
+</code></pre>
+<p>&#x82E5;&#x8BF7;&#x6C42;&#x5728;&#x8BBE;&#x5B9A;&#x65F6;&#x95F4;&#x5185;&#x6CA1;&#x8FD4;&#x56DE;&#x4EFB;&#x4F55;&#x6570;&#x636E;&#xFF0C;&#x5219;&#x4E00;&#x4E2A;&#x8D85;&#x65F6;&#x5F02;&#x5E38;&#x5C06;&#x4F1A;&#x4F20;&#x9012;&#x7ED9;&#x54CD;&#x5E94;&#x5904;&#x7406;&#x4EE3;&#x7801;&#x3002;</p>
+<h2 id="&#x5904;&#x7406;http&#x54CD;&#x5E94;">&#x5904;&#x7406;HTTP&#x54CD;&#x5E94;</h2>
+<p>Web Client&#x8BF7;&#x6C42;&#x53D1;&#x9001;&#x4E4B;&#x540E;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x5C06;&#x4F1A;&#x88AB;&#x5305;&#x88C5;&#x5728;&#x5F02;&#x6B65;&#x7ED3;&#x679C; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpResponse.html" target="_blank"><code>HttpResponse</code></a> &#x4E2D;&#x3002;</p>
+<p>&#x5F53;&#x54CD;&#x5E94;&#x88AB;&#x6210;&#x529F;&#x63A5;&#x6536;&#x5230;&#x4E4B;&#x540E;&#xFF0C;&#x76F8;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5C06;&#x4F1A;&#x88AB;&#x89E6;&#x53D1;&#x3002;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+
+      HttpResponse&lt;Buffer&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<blockquote>
+<p>&#x8B66;&#x544A;&#xFF1A;<em>&#x7F3A;&#x7701;&#x72B6;&#x51B5;&#x4E0B;&#xFF0C;&#x54CD;&#x5E94;&#x4F1A;&#x88AB;&#x5B8C;&#x5168;&#x7F13;&#x51B2;&#x8BFB;&#x5165;&#x5185;&#x5B58;&#xFF0C;&#x8BF7;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-" target="_blank"><code>BodyCodec.pipe</code></a> &#x65B9;&#x6CD5;&#x5C06;&#x54CD;&#x5E94;&#x5199;&#x5165;&#x6D41;&#x3002;</em></p>
+</blockquote>
+<h3 id="&#x54CD;&#x5E94;&#x7F16;&#x89E3;&#x7801;&#x5668;">&#x54CD;&#x5E94;&#x7F16;&#x89E3;&#x7801;&#x5668;</h3>
+<p>&#x7F3A;&#x7701;&#x72B6;&#x51B5;&#x4E0B;&#xFF0C;&#x54CD;&#x5E94;&#x4EE5;&#x7F13;&#x51B2;&#x5F62;&#x5F0F;&#x63D0;&#x4F9B;&#xFF0C;&#x5E76;&#x4E0D;&#x63D0;&#x4F9B;&#x4EFB;&#x4F55;&#x5F62;&#x5F0F;&#x7684;&#x89E3;&#x7801;&#x3002;</p>
+<p>&#x53EF;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html" target="_blank"><code>BodyCodec</code></a> &#x5C06;&#x54CD;&#x5E94;&#x5B9A;&#x5236;&#x6210;&#x4EE5;&#x4E0B;&#x7C7B;&#x578B;&#xFF1A;</p>
+<ul>
+<li>&#x666E;&#x901A;&#x5B57;&#x7B26;&#x4E32;</li>
+<li>JSON&#x5BF9;&#x8C61;</li>
+<li>&#x5C06;JSON&#x6620;&#x5C04;&#x6210;POJO</li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html" target="_blank"><code>WriteStream</code></a></li>
+</ul>
+<p>&#x54CD;&#x5E94;&#x4F53;&#x7F16;&#x89E3;&#x7801;&#x5668;&#x5BF9;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x636E;&#x6D41;&#x89E3;&#x7801;&#xFF0C;&#x4EE5;&#x8282;&#x7701;&#x60A8;&#x5728;&#x54CD;&#x5E94;&#x5904;&#x7406;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<p>&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#jsonObject--" target="_blank"><code>BodyCodec.jsonObject</code></a> &#x5C06;&#x7ED3;&#x679C;&#x89E3;&#x7801;&#x4E3A;JSON&#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .as(BodyCodec.jsonObject())
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      HttpResponse&lt;JsonObject&gt; response = ar.result();
+
+      JsonObject body = response.body();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode() + <span class="hljs-string">&quot; with body &quot;</span> + body);
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<p>&#x5728;Java&#xFF0C;Groovy&#x4EE5;&#x53CA;Kotlin&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;JSON&#x5BF9;&#x8C61;&#x53EF;&#x88AB;&#x89E3;&#x7801;&#x6620;&#x5C04;&#x6210;POJO&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .as(BodyCodec.json(User.class))
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      HttpResponse&lt;User&gt; response = ar.result();
+
+      User user = response.body();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode() + <span class="hljs-string">&quot; with body &quot;</span> +
+        user.getFirstName() + <span class="hljs-string">&quot; &quot;</span> + user.getLastName());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<p>&#x5F53;&#x54CD;&#x5E94;&#x7ED3;&#x679C;&#x8F83;&#x5927;&#x65F6;&#xFF0C;&#x8BF7;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#pipe-io.vertx.core.streams.WriteStream-" target="_blank"><code>BodyCodec.pipe</code></a> &#x65B9;&#x6CD5;&#x3002;&#x54CD;&#x5E94;&#x4F53;&#x7F16;&#x89E3;&#x7801;&#x5668;&#x5C06;&#x54CD;&#x5E94;&#x7ED3;&#x679C;&#x538B;&#x5165; <code>WriteStream</code> &#x5E76;&#x5728;&#x6700;&#x540E;&#x53D1;&#x51FA;&#x6210;&#x529F;&#x6216;&#x5931;&#x8D25;&#x7684;&#x4FE1;&#x53F7;&#x3002;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .as(BodyCodec.pipe(writeStream))
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+
+      HttpResponse&lt;Void&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<p>&#x6700;&#x540E;&#xFF0C;&#x5982;&#x60A8;&#x5BF9;&#x54CD;&#x5E94;&#x7ED3;&#x679C;&#x4E0D;&#x611F;&#x5174;&#x8DA3;&#xFF0C;&#x53EF;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/codec/BodyCodec.html#none--" target="_blank"><code>BodyCodec.none</code></a> &#x5E9F;&#x5F03;&#x54CD;&#x5E94;&#x4F53;&#x3002;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .as(BodyCodec.none())
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+
+      HttpResponse&lt;Void&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<p>&#x82E5;&#x65E0;&#x6CD5;&#x9884;&#x77E5;&#x54CD;&#x5E94;&#x5185;&#x5BB9;&#x7C7B;&#x578B;&#xFF0C;&#x60A8;&#x4F9D;&#x65E7;&#x53EF;&#x4EE5;&#x5728;&#x83B7;&#x53D6;&#x7ED3;&#x679C;&#x4E4B;&#x540E;&#xFF0C;&#x7528; <code>bodyAsXXX()</code> &#x65B9;&#x6CD5;&#x5C06;&#x5176;&#x8F6C;&#x6362;&#x6210;&#x7279;&#x5B9A;&#x7684;&#x7C7B;&#x578B;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+
+      HttpResponse&lt;Buffer&gt; response = ar.result();
+
+      <span class="hljs-comment">// &#x5C06;&#x7ED3;&#x679C;&#x89E3;&#x7801;&#x4E3A;Json&#x5BF9;&#x8C61;</span>
+      JsonObject body = response.bodyAsJsonObject();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode() + <span class="hljs-string">&quot; with body &quot;</span> + body);
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<blockquote>
+<p>&#x8B66;&#x544A;&#xFF1A;<em>&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x4EC5;&#x5BF9;&#x54CD;&#x5E94;&#x7ED3;&#x679C;&#x4E3A;&#x7F13;&#x51B2;&#x4F53;&#x6709;&#x6548;&#x3002;</em></p>
+</blockquote>
+<h3 id="&#x5904;&#x7406;30x&#x91CD;&#x5B9A;&#x5411;">&#x5904;&#x7406;30x&#x91CD;&#x5B9A;&#x5411;</h3>
+<p>&#x7F3A;&#x7701;&#x72B6;&#x51B5;&#x4E0B;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x5C06;&#x4F1A;&#x4F9D;&#x7167;30x&#x72B6;&#x6001;&#x7801;&#x81EA;&#x52A8;&#x91CD;&#x5B9A;&#x5411;&#xFF0C;&#x60A8;&#x53EF;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html" target="_blank"><code>WebClientOptions</code></a> &#x4E88;&#x4EE5;&#x914D;&#x7F6E;&#xFF1A;</p>
+<pre><code class="lang-java">WebClient client = WebClient.create(vertx, <span class="hljs-keyword">new</span> WebClientOptions().setFollowRedirects(<span class="hljs-keyword">false</span>));
+</code></pre>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x5C06;&#x4F1A;&#x6267;&#x884C;&#x6700;&#x591A;&#x8FBE;<code>16</code>&#x6B21;&#x91CD;&#x5B9A;&#x5411;&#xFF0C;&#x8BE5;&#x53C2;&#x6570;&#x4EA6;&#x53EF;&#x5728; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/client/WebClientOptions.html" target="_blank"><code>WebClientOptions</code></a> &#x914D;&#x7F6E;&#xFF1A;</p>
+<pre><code class="lang-java">WebClient client = WebClient.create(vertx, <span class="hljs-keyword">new</span> WebClientOptions().setMaxRedirects(<span class="hljs-number">5</span>));
+</code></pre>
+<h2 id="&#x4F7F;&#x7528;https">&#x4F7F;&#x7528;HTTPS</h2>
+<p>Vert.x Web Client&#x53EF;&#x7528;&#x4E0E; <a href="http://vertx.io/docs/apidocs/io/vertx/core/http/HttpClient.html" target="_blank"><code>HttpClient</code></a> &#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x914D;&#x7F6E;HTTPS&#x534F;&#x8BAE;&#x3002;</p>
+<p>&#x60A8;&#x53EF;&#x5BF9;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .get(<span class="hljs-number">443</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .ssl(<span class="hljs-keyword">true</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// &#x83B7;&#x53D6;&#x54CD;&#x5E94;</span>
+      HttpResponse&lt;Buffer&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<p>&#x6216;&#x4F7F;&#x7528;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#xFF1A;</p>
+<pre><code class="lang-java">client
+  .getAbs(<span class="hljs-string">&quot;https://myserver.mycompany.com:4043/some-uri&quot;</span>)
+  .send(ar -&gt; {
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+      <span class="hljs-comment">// &#x83B7;&#x53D6;&#x54CD;&#x5E94;</span>
+      HttpResponse&lt;Buffer&gt; response = ar.result();
+
+      System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+    } <span class="hljs-keyword">else</span> {
+      System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + ar.cause().getMessage());
+    }
+  });
+</code></pre>
+<h2 id="rxjava-api">RxJava API</h2>
+<p>RxJava&#x7684; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html" target="_blank"><code>HttpRequest</code></a> &#x63D0;&#x4F9B;&#x4E86;&#x539F;&#x7248;API&#x7684;&#x54CD;&#x5E94;&#x5F0F;&#x7248;&#x672C;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#rxSend--" target="_blank"><code>rxSend</code></a> &#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x88AB;&#x8BA2;&#x9605;&#x7684; <code>Single&lt;HttpResponse&lt;Buffer&gt;&gt;</code>&#xFF0C;&#x6545;&#x5355;&#x4E2A; <code>Single</code> &#x53EF;&#x88AB;&#x591A;&#x6B21;&#x8BA2;&#x9605;&#x3002;</p>
+<pre><code class="lang-java">Single&lt;HttpResponse&lt;Buffer&gt;&gt; single = client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .rxSend();
+
+<span class="hljs-comment">// &#x53D1;&#x9001;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#xFF0C;&#x5E76;&#x5904;&#x7406;&#x5176;&#x54CD;&#x5E94;&#xFF0C;rx&#x901A;&#x5E38;&#x901A;&#x8FC7;&#x8BA2;&#x9605;&#x89E6;&#x53D1;&#x5404;&#x79CD;&#x54CD;&#x5E94;</span>
+single.subscribe(response -&gt; {
+  System.out.println(<span class="hljs-string">&quot;Received 1st response with status code&quot;</span> + response.statusCode());
+}, error -&gt; {
+  System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + error.getMessage());
+});
+
+<span class="hljs-comment">// &#x518D;&#x6B21;&#x53D1;&#x9001;&#x8BF7;&#x6C42;</span>
+single.subscribe(response -&gt; {
+  System.out.println(<span class="hljs-string">&quot;Received 2nd response with status code&quot;</span> + response.statusCode());
+}, error -&gt; {
+  System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + error.getMessage());
+});
+</code></pre>
+<p>&#x83B7;&#x53D6;&#x5230;&#x7684; <code>Single</code> &#x53EF;&#x4E0E;&#x5176;&#x5B83;RxJava API&#x81EA;&#x7136;&#x7EC4;&#x5408;&#x6210;&#x94FE;&#x5F0F;&#x5904;&#x7406;</p>
+<pre><code class="lang-java">Single&lt;String&gt; url = client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .rxSend()
+  .map(HttpResponse::bodyAsString);
+
+<span class="hljs-comment">// &#x7528;flatMap&#x5C06;&#x8FD4;&#x56DE;&#x503C;&#x5185;&#x7684;&#x94FE;&#x63A5;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x5165;lambda&#xFF0C;&#x5728;lambda&#x4E2D;&#x5C06;&#x5176;&#x8BBE;&#x7F6E;&#x6210;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;Single&#xFF0C;&#x5728;&#x4E0B;&#x4E00;&#x6B65;&#x8BA2;&#x9605;&#x4E2D;&#x4E88;&#x4EE5;&#x89E6;&#x53D1;</span>
+url
+  .flatMap(u -&gt; client.getAbs(u).rxSend())
+  .subscribe(response -&gt; {
+    System.out.println(<span class="hljs-string">&quot;Received response with status code&quot;</span> + response.statusCode());
+  }, error -&gt; {
+    System.out.println(<span class="hljs-string">&quot;Something went wrong &quot;</span> + error.getMessage());
+  });
+</code></pre>
+<p>&#x4E4B;&#x524D;&#x7684;&#x4F8B;&#x5B50;&#x53EF;&#x5199;&#x6210;</p>
+<pre><code class="lang-java">Single&lt;HttpResponse&lt;JsonObject&gt;&gt; single = client
+  .get(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .putHeader(<span class="hljs-string">&quot;some-header&quot;</span>, <span class="hljs-string">&quot;header-value&quot;</span>)
+  .addQueryParam(<span class="hljs-string">&quot;some-param&quot;</span>, <span class="hljs-string">&quot;param value&quot;</span>)
+  .as(BodyCodec.jsonObject())
+  .rxSend();
+single.subscribe(resp -&gt; {
+  System.out.println(resp.statusCode());
+  System.out.println(resp.body());
+});
+</code></pre>
+<p>&#x5F53;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x4F53;&#x4E3A; <code>Observable&lt;Buffer&gt;</code> &#x65F6;&#xFF0C;&#x5E94;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/rxjava/ext/web/client/HttpRequest.html#sendStream-rx.Observable-io.vertx.core.Handler-" target="_blank"><code>sendStream</code></a>&#xFF1A;</p>
+<pre><code class="lang-java">Observable&lt;Buffer&gt; body = getPayload();
+
+Single&lt;HttpResponse&lt;Buffer&gt;&gt; single = client
+  .post(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;myserver.mycompany.com&quot;</span>, <span class="hljs-string">&quot;/some-uri&quot;</span>)
+  .rxSendStream(body);
+single.subscribe(resp -&gt; {
+  System.out.println(resp.statusCode());
+  System.out.println(resp.body());
+});
+</code></pre>
+<p>&#x5F53;&#x8BA2;&#x9605;&#x65F6;&#xFF0C;<code>body</code> &#x5C06;&#x4F1A;&#x88AB;&#x8BA2;&#x9605;&#xFF0C;&#x5176;&#x5185;&#x5BB9;&#x5C06;&#x4F1A;&#x88AB;&#x7528;&#x4E8E;&#x8BF7;&#x6C42;&#x4E2D;&#x3002;</p>
+<hr>
+<blockquote>
+<p><a href="http://vertx.io/docs/vertx-web-client/java/" target="_blank">&#x539F;&#x6587;</a>&#x4E0A;&#x6B21;&#x7F16;&#x8F91;&#x4E8E;2017-03-15 15:54:14 &#x6B27;&#x6D32;&#x4E2D;&#x90E8;&#x65F6;&#x95F4;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../web/Web.html" class="navigation navigation-prev " aria-label="Previous page: Web">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../data/Data.html" class="navigation navigation-next " aria-label="Next page: Data Access">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Web Client","level":"1.5","depth":1,"next":{"title":"Data Access","level":"1.6","depth":1,"path":"data/Data.md","ref":"data/Data.md","articles":[{"title":"MongoDB Client","level":"1.6.1","depth":2,"path":"data/MongoDBClient.md","ref":"data/MongoDBClient.md","articles":[]},{"title":"JDBC Client","level":"1.6.2","depth":2,"path":"data/JDBCClient.md","ref":"data/JDBCClient.md","articles":[]},{"title":"SQL Common","level":"1.6.3","depth":2,"path":"data/SQLCommon.md","ref":"data/SQLCommon.md","articles":[]},{"title":"Redis Client","level":"1.6.4","depth":2,"path":"data/RedisClient.md","ref":"data/RedisClient.md","articles":[]},{"title":"MySQL/PostgreSQL Client","level":"1.6.5","depth":2,"path":"data/MySQL&PostgreSQLClient.md","ref":"data/MySQL&PostgreSQLClient.md","articles":[]}]},"previous":{"title":"Web","level":"1.4","depth":1,"path":"web/Web.md","ref":"web/Web.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"webclient/WebClient.md","mtime":"2017-04-22T12:34:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

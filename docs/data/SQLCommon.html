@@ -1,0 +1,1343 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>SQL Common · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="RedisClient.html" />
+    
+    
+    <link rel="prev" href="JDBCClient.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Data.html">
+            
+                <a href="Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="MongoDBClient.html">
+            
+                <a href="MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="JDBCClient.html">
+            
+                <a href="JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.3" data-path="SQLCommon.html">
+            
+                <a href="SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="RedisClient.html">
+            
+                <a href="RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="MySQL&PostgreSQLClient.html">
+            
+                <a href="MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >SQL Common</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-common-sql-interface">Vert.x Common SQL Interface</h1>
+<blockquote>
+<p>&#x539F;&#x6587;&#x6863;&#xFF1A;<a href="http://vertx.io/docs/vertx-sql-common/java/" target="_blank">Vert.x Common SQL interface</a></p>
+</blockquote>
+<p>Vert.x Common SQL Interface&#x7EC4;&#x4EF6;&#x5B9A;&#x4E49;&#x4E86; Vert.x &#x4E0E;&#x5404;&#x79CD; SQL &#x670D;&#x52A1;&#x4EA4;&#x4E92;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x60A8;&#x5FC5;&#x987B;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x7279;&#x5B9A;&#x7684; SQL &#x670D;&#x52A1;&#xFF08;&#x4F8B;&#x5982; JDBC/MySQL/PostgreSQL&#xFF09;&#x7684;&#x63A5;&#x53E3;&#x6765;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x3002;</p>
+<p>&#x8981;&#x4F7F;&#x7528;&#x6B64;&#x7EC4;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E0B;&#x5217;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<ul>
+<li>Maven (&#x5728; <code>pom.xml</code>&#x6587;&#x4EF6;&#x4E2D;):</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-sql-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle (&#x5728; <code>build.gradle</code> &#x6587;&#x4EF6;&#x4E2D;):</li>
+</ul>
+<pre><code class="lang-groovy">compile <span class="hljs-string">&apos;io.vertx:vertx-sql-common:3.4.1&apos;</span>
+</code></pre>
+<h2 id="sql-&#x8FDE;&#x63A5;">SQL &#x8FDE;&#x63A5;</h2>
+<p>&#x6211;&#x4EEC;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html" target="_blank"><code>SQLConnection</code></a> &#x63A5;&#x53E3;&#x6765;&#x8868;&#x793A;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x6B64;&#x63A5;&#x53E3;&#x4E2D;&#x5305;&#x542B;&#x5404;&#x79CD;&#x57FA;&#x672C;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#xFF09;&#x3002;</p>
+<h3 id="&#x81EA;&#x52A8;&#x63D0;&#x4EA4;">&#x81EA;&#x52A8;&#x63D0;&#x4EA4;</h3>
+<p>&#x5F53;&#x60A8;&#x83B7;&#x53D6;&#x7684;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#xFF0C;&#x5176;&#x81EA;&#x52A8;&#x63D0;&#x4EA4;&#x9009;&#x9879;&#xFF08;auto commit&#xFF09;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E3A; <code>true</code>&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x60A8;&#x7684;&#x6BCF;&#x4E2A;&#x64CD;&#x4F5C;&#x90FD;&#x5C06;&#x5728;&#x5355;&#x72EC;&#x7684;&#x4E8B;&#x52A1;&#x4E2D;&#x6709;&#x6548;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x60A8;&#x5E0C;&#x671B;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x4E2D;&#x6267;&#x884C;&#x591A;&#x4E2A;&#x64CD;&#x4F5C;&#xFF0C;&#x5C31;&#x5E94;&#x8BE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#setAutoCommit-boolean-io.vertx.core.Handler-" target="_blank"><code>setAutoCommit</code></a> &#x65B9;&#x6CD5;&#x8BBE;&#x7F6E;&#x81EA;&#x52A8;&#x63D0;&#x4EA4;&#x4E3A;<code>false</code>&#x3002;</p>
+<p>&#x5F53;&#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#x65F6;&#xFF0C;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x5C06;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#xFF1A;</p>
+<pre><code class="lang-java">connection.setAutoCommit(<span class="hljs-keyword">false</span>, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    <span class="hljs-comment">// &#x6210;&#x529F;&#xFF01;</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x6267;&#x884C;&#x67E5;&#x8BE2;">&#x6267;&#x884C;&#x67E5;&#x8BE2;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#query-java.lang.String-io.vertx.core.Handler-" target="_blank"><code>query</code></a> &#x65B9;&#x6CD5;&#x6267;&#x884C;&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#xFF08;&#x539F;&#x751F;SQL&#xFF09;&#x4F20;&#x7ED9;&#x6570;&#x636E;&#x5E93;&#x65F6;&#xFF0C;&#x4E0D;&#x4F1A;&#x7ECF;&#x8FC7;&#x4EFB;&#x4F55;&#x4FEE;&#x6539;&#x3002;</p>
+<p>&#x5F53;&#x67E5;&#x8BE2;&#x7ED3;&#x675F;&#x65F6;&#xFF0C;&#x5C06;&#x6267;&#x884C;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x5904;&#x7406;&#x7ED3;&#x679C;&#x3002;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x5305;&#x88C5;&#x5728; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/ResultSet.html" target="_blank"><code>ResultSet</code></a> &#x4E2D;&#x3002;</p>
+<pre><code class="lang-java">connection.query(<span class="hljs-string">&quot;SELECT ID, FNAME, LNAME, SHOE_SIZE from PEOPLE&quot;</span>, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    <span class="hljs-comment">// &#x83B7;&#x5F97; result set</span>
+    ResultSet resultSet = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<p><a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/ResultSet.html" target="_blank"><code>ResultSet</code></a> &#x7C7B;&#x4EE3;&#x8868;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/ResultSet.html#getColumnNames--" target="_blank"><code>getColumnNames</code></a> &#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x7684;&#x5217;&#x540D; List &#x96C6;&#x5408;&#xFF0C;&#x5B9E;&#x9645;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/ResultSet.html#getResults--" target="_blank"><code>getResults</code></a> &#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x3002;&#x7ED3;&#x679C;&#x96C6;&#x88AB;&#x5305;&#x88C5;&#x6210;&#x4E86;&#x4E00;&#x7EC4;  <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x5217;&#x8868;&#xFF0C;&#x5176;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x4EE3;&#x8868;&#x4E00;&#x884C;&#x7ED3;&#x679C;&#x3002;</p>
+<pre><code class="lang-java">List&lt;String&gt; columnNames = resultSet.getColumnNames();
+
+List&lt;JsonArray&gt; results = resultSet.getResults();
+
+<span class="hljs-keyword">for</span> (JsonArray row : results) {
+
+  String id = row.getString(<span class="hljs-number">0</span>);
+  String fName = row.getString(<span class="hljs-number">1</span>);
+  String lName = row.getString(<span class="hljs-number">2</span>);
+  <span class="hljs-keyword">int</span> shoeSize = row.getInteger(<span class="hljs-number">3</span>);
+
+}
+</code></pre>
+<p>&#x60A8;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;  <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/ResultSet.html#getRows--" target="_blank"><code>getRows</code></a> &#x65B9;&#x6CD5;&#x6765;&#x83B7;&#x5F97;&#x88AB;&#x5305;&#x88C5;&#x6210;&#x4E86; JSON &#x5BF9;&#x8C61;&#x5217;&#x8868;&#xFF08;<code>List&lt;JsonObject&gt;</code>&#xFF09;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x8FD9;&#x6837;&#x80FD;&#x8BA9; API &#x7684;&#x64CD;&#x4F5C;&#x66F4;&#x7B80;&#x5355;&#x4E9B;&#x3002;&#x4F46;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x67E5;&#x8BE2;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#x4E2D;&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;&#x91CD;&#x590D;&#x7684;&#x5217;&#x540D;&#x3002;&#x82E5;&#x9047;&#x5230;&#x8FD9;&#x6837;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x60A8;&#x5E94;&#x8BE5;&#x9009;&#x62E9;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/ResultSet.html#getResults--" target="_blank"><code>getResults</code></a> &#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x5C06;&#x7ED3;&#x679C;&#x96C6;&#x4F5C;&#x4E3A; <code>JsonObject</code> &#x8FDB;&#x884C;&#x8FED;&#x4EE3;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-java">List&lt;JsonObject&gt; rows = resultSet.getRows();
+
+<span class="hljs-keyword">for</span> (JsonObject row : rows) {
+
+  String id = row.getString(<span class="hljs-string">&quot;ID&quot;</span>);
+  String fName = row.getString(<span class="hljs-string">&quot;FNAME&quot;</span>);
+  String lName = row.getString(<span class="hljs-string">&quot;LNAME&quot;</span>);
+  <span class="hljs-keyword">int</span> shoeSize = row.getInteger(<span class="hljs-string">&quot;SHOE_SIZE&quot;</span>);
+
+}
+</code></pre>
+<h3 id="&#x9884;&#x7F16;&#x8BD1;&#x67E5;&#x8BE2;">&#x9884;&#x7F16;&#x8BD1;&#x67E5;&#x8BE2;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#queryWithParams-java.lang.String-io.vertx.core.json.JsonArray-io.vertx.core.Handler-" target="_blank"><code>queryWithParams</code></a> &#x65B9;&#x6CD5;&#x6267;&#x884C;&#x9884;&#x7F16;&#x8BD1;&#x67E5;&#x8BE2;&#xFF08;prepared statement queries&#xFF09;&#x3002;&#x6B64;&#x65B9;&#x6CD5;&#x63A5;&#x53D7;&#x542B;&#x53C2;&#x6570;&#x5360;&#x4F4D;&#x7B26;&#x7684;SQL&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x4EE5;&#x53CA; <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x5BF9;&#x8C61;&#xFF08;&#x7528;&#x4E8E;&#x4F20;&#x9012;&#x53C2;&#x6570;&#xFF09;&#x6216;&#x53C2;&#x6570;&#x503C;&#x3002;</p>
+<pre><code class="lang-java">String query = <span class="hljs-string">&quot;SELECT ID, FNAME, LNAME, SHOE_SIZE from PEOPLE WHERE LNAME=? AND SHOE_SIZE &gt; ?&quot;</span>;
+JsonArray params = <span class="hljs-keyword">new</span> JsonArray().add(<span class="hljs-string">&quot;Fox&quot;</span>).add(<span class="hljs-number">9</span>);
+
+connection.queryWithParams(query, params, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    <span class="hljs-comment">// &#x83B7;&#x5F97; result set</span>
+    ResultSet resultSet = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x6267;&#x884C;-insertupdatedelete-&#x8BED;&#x53E5;">&#x6267;&#x884C; INSERT/UPDATE/DELETE &#x8BED;&#x53E5;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#update-java.lang.String-io.vertx.core.Handler-" target="_blank"><code>update</code></a> &#x65B9;&#x6CD5;&#x6765;&#x6267;&#x884C;&#x66F4;&#x65B0;&#x6570;&#x636E;&#x5E93;&#x7684;&#x64CD;&#x4F5C;&#xFF08;&#x5305;&#x62EC;&#x589E;&#x3001;&#x5220;&#x3001;&#x6539;&#xFF09;&#x3002;</p>
+<p>&#x66F4;&#x65B0;&#x8BED;&#x53E5;&#xFF08;&#x539F;&#x751F;SQL&#xFF09;&#x4F20;&#x7ED9;&#x6570;&#x636E;&#x5E93;&#x65F6;&#xFF0C;&#x4E0D;&#x4F1A;&#x7ECF;&#x8FC7;&#x4EFB;&#x4F55;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x5F53;&#x66F4;&#x65B0;&#x7ED3;&#x675F;&#x65F6;&#xFF0C;&#x5C06;&#x6267;&#x884C;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x5904;&#x7406;&#x7ED3;&#x679C;&#x3002;&#x66F4;&#x65B0;&#x7ED3;&#x679C;&#x5305;&#x88C5;&#x5728;  <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/UpdateResult.html" target="_blank"><code>UpdateResult</code></a> &#x5BF9;&#x8C61;&#x4E2D;&#x3002;</p>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/UpdateResult.html#getUpdated--" target="_blank"><code>getUpdated</code></a> &#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x66F4;&#x65B0;&#x7684;&#x6570;&#x636E;&#x6761;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x5982;&#x679C;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;&#x6709;&#x751F;&#x6210;&#x4E3B;&#x952E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/UpdateResult.html#getKeys--" target="_blank"><code>getKeys</code></a>&#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x5BF9;&#x5E94;&#x7684;&#x4E3B;&#x952E;&#x3002;</p>
+<pre><code class="lang-java">connection.update(<span class="hljs-string">&quot;INSERT INTO PEOPLE VALUES (null, &apos;john&apos;, &apos;smith&apos;, 9)&quot;</span>, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    UpdateResult result = res.result();
+    System.out.println(<span class="hljs-string">&quot;Updated no. of rows: &quot;</span> + result.getUpdated());
+    System.out.println(<span class="hljs-string">&quot;Generated keys: &quot;</span> + result.getKeys());
+
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Failed!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x9884;&#x7F16;&#x8BD1;&#x66F4;&#x65B0;">&#x9884;&#x7F16;&#x8BD1;&#x66F4;&#x65B0;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#updateWithParams-java.lang.String-io.vertx.core.json.JsonArray-io.vertx.core.Handler-" target="_blank"><code>updateWithParams</code></a> &#x65B9;&#x6CD5;&#x6765;&#x6267;&#x884C;&#x9884;&#x7F16;&#x8BD1;&#x66F4;&#x65B0;&#xFF08;prepared statement updates&#xFF09;&#x3002;&#x6B64;&#x65B9;&#x6CD5;&#x63A5;&#x53D7;&#x542B;&#x53C2;&#x6570;&#x5360;&#x4F4D;&#x7B26;&#x7684;SQL&#x66F4;&#x65B0;&#x8BED;&#x53E5;&#x4EE5;&#x53CA; <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x5BF9;&#x8C61;&#xFF08;&#x7528;&#x4E8E;&#x4F20;&#x9012;&#x53C2;&#x6570;&#xFF09;&#x6216;&#x53C2;&#x6570;&#x503C;&#x3002;</p>
+<pre><code class="lang-java">String update = <span class="hljs-string">&quot;UPDATE PEOPLE SET SHOE_SIZE = 10 WHERE LNAME=?&quot;</span>;
+JsonArray params = <span class="hljs-keyword">new</span> JsonArray().add(<span class="hljs-string">&quot;Fox&quot;</span>);
+
+connection.updateWithParams(update, params, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+
+    UpdateResult updateResult = res.result();
+
+    System.out.println(<span class="hljs-string">&quot;No. of rows updated: &quot;</span> + updateResult.getUpdated());
+
+  } <span class="hljs-keyword">else</span> {
+
+    <span class="hljs-comment">// Failed!</span>
+
+  }
+});
+</code></pre>
+<h3 id="&#x53EF;&#x8C03;&#x7528;&#x8BED;&#x53E5;">&#x53EF;&#x8C03;&#x7528;&#x8BED;&#x53E5;</h3>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#callWithParams-java.lang.String-io.vertx.core.json.JsonArray-io.vertx.core.json.JsonArray-io.vertx.core.Handler-" target="_blank"><code>callWithParams</code></a> &#x65B9;&#x6CD5;&#x6765;&#x6267;&#x884C;&#x53EF;&#x8C03;&#x7528;&#x8BED;&#x53E5;&#xFF08;callable statements&#xFF09;&#xFF0C;&#x4F8B;&#x5982; SQL &#x51FD;&#x6570;&#x6216;&#x8005;&#x5B58;&#x50A8;&#x8FC7;&#x7A0B;&#x3002;&#x6B64;&#x65B9;&#x6CD5;&#x63A5;&#x53D7;&#x4EE5;&#x4E0B;&#x53C2;&#x6570;&#xFF1A;</p>
+<ul>
+<li>&#x53EF;&#x8C03;&#x7528;&#x8BED;&#x53E5;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6807;&#x51C6; JDBC &#x683C;&#x5F0F; <code>{ call func_proc_name() }</code>&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4F7F;&#x7528;&#x5360;&#x4F4D;&#x7B26;&#x4F20;&#x53C2;&#x6570;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>{ call func_proc_name(?, ?) }</code></li>
+<li>&#x8F93;&#x5165;&#x53C2;&#x6570;&#x96C6;&#xFF08;<code>params</code>&#xFF09;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x7C7B;&#x578B;</li>
+<li>&#x5305;&#x542B;&#x8F93;&#x51FA;&#x7C7B;&#x578B;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x96C6;&#xFF08;<code>output</code>&#xFF09;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x7C7B;&#x578B;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>[null, &apos;VARCHAR&apos;]</code></li>
+<li>&#x5BF9;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF08;<code>resultHandler</code>&#xFF09;</li>
+</ul>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x96C6;&#x7684; <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x7684;&#x4E0B;&#x6807;&#x548C;&#x8F93;&#x5165;&#x53C2;&#x6570;&#x7684;  <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x540C;&#x6837;&#x91CD;&#x8981;&#x3002;&#x5982;&#x679C;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x4EE3;&#x8868;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x90A3;&#x4E48;&#x5E94;&#x8BE5;&#x8BBE;&#x7F6E;&#x7ED3;&#x679C;&#x96C6;&#x7684; <a href="http://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html" target="_blank"><code>JsonArray</code></a> &#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x4E3A; null&#x3002;</p>
+<p>&#x6709;&#x4E9B; SQL &#x51FD;&#x6570;&#x53EA;&#x4F7F;&#x7528; <code>return</code> &#x5173;&#x952E;&#x5B57;&#x8FD4;&#x56DE;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x8FD9;&#x65F6;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-java">String func = <span class="hljs-string">&quot;{ call one_hour_ago() }&quot;</span>;
+
+connection.call(func, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    ResultSet result = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Failed!</span>
+  }
+});
+</code></pre>
+<p>&#x4F46;&#x662F;&#x5F53;&#x60A8;&#x4F7F;&#x7528;&#x5B58;&#x50A8;&#x8FC7;&#x7A0B;&#x65F6;&#xFF0C;&#x8FD8;&#x662F;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x6765;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x96C6;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x8FC7;&#x7A0B;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-java">String func = <span class="hljs-string">&quot;{ call new_customer(?, ?) }&quot;</span>;
+
+connection.callWithParams(func, <span class="hljs-keyword">new</span> JsonArray().add(<span class="hljs-string">&quot;John&quot;</span>).add(<span class="hljs-string">&quot;Doe&quot;</span>), <span class="hljs-keyword">null</span>, res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    <span class="hljs-comment">// &#x6210;&#x529F;!</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<p>&#x4F46;&#x662F;&#x5982;&#x679C;&#x5B58;&#x50A8;&#x8FC7;&#x7A0B;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x8BDD;&#xFF0C;&#x9700;&#x8981;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#x8C03;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-java">String func = <span class="hljs-string">&quot;{ call customer_lastname(?, ?) }&quot;</span>;
+
+connection.callWithParams(func, <span class="hljs-keyword">new</span> JsonArray().add(<span class="hljs-string">&quot;John&quot;</span>), <span class="hljs-keyword">new</span> JsonArray().addNull().add(<span class="hljs-string">&quot;VARCHAR&quot;</span>), res -&gt; {
+
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    ResultSet result = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x53C2;&#x6570;&#x7684;&#x4E0B;&#x6807;&#x5FC5;&#x987B;&#x5339;&#x914D; <code>?</code> &#x7684;&#x4E0B;&#x6807;&#xFF0C;&#x5E76;&#x4E14;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x96C6;&#x5143;&#x7D20;&#x7684;&#x503C;&#x5FC5;&#x987B;&#x662F;&#x7ED3;&#x679C;&#x96C6;&#x7C7B;&#x578B;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8868;&#x793A;&#x3002;</p>
+<p>&#x4E3A;&#x907F;&#x514D;&#x6B67;&#x4E49;&#xFF0C;&#x5B9E;&#x73B0;&#x7C7B;&#x9700;&#x8981;&#x9075;&#x5FAA;&#x4EE5;&#x4E0B;&#x89C4;&#x5219;&#xFF08;&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x53EF;&#x53C2;&#x8003; Vert.x JDBC Client &#x7684;&#x5B9E;&#x73B0;&#x6E90;&#x7801; <a href="https://github.com/vert-x3/vertx-jdbc-client/blob/master/src/main/java/io/vertx/ext/jdbc/impl/actions/JDBCStatementHelper.java#L97" target="_blank"><code>JDBCStatementHelper.fillStatement(statement, in, out)</code></a>&#xFF09;&#xFF1A;</p>
+<ul>
+<li>&#x5F53; <code>IN</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x662F; <code>NOT NULL</code> &#x65F6;&#xFF0C;&#x6B64;&#x5143;&#x7D20;&#x5C06;&#x88AB;&#x6CE8;&#x518C;&#x4E3A;&#x8F93;&#x5165;&#x53C2;&#x6570;</li>
+<li>&#x5F53; <code>IN</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x662F; null &#x65F6;&#xFF0C;&#x5C06;&#x8FDB;&#x4E00;&#x6B65;&#x53BB;&#x68C0;&#x67E5; <code>OUT</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x503C;&#xFF0C;&#x518D;&#x505A;&#x5224;&#x65AD;</li>
+<li>&#x82E5;&#x5F53; <code>IN</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x662F; null&#xFF0C;&#x4E14; <code>OUT</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x503C;&#x4E0D;&#x662F; null &#x65F6;&#xFF0C;<code>OUT</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x503C;&#x5C06;&#x88AB;&#x6CE8;&#x518C;&#x4E3A;&#x8F93;&#x51FA;&#x53C2;&#x6570;</li>
+<li>&#x82E5;&#x5F53; <code>IN</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x662F; null&#xFF0C;&#x4E14; <code>OUT</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x503C;&#x4E5F;&#x662F; null &#x65F6;&#xFF0C; <code>IN</code> &#x53C2;&#x6570;&#x7684;&#x5143;&#x7D20;&#x5C06;&#x88AB;&#x5F53;&#x4F5C; <code>NULL</code> &#x503C;&#x4F20;&#x5165;&#x5B58;&#x50A8;&#x8FC7;&#x7A0B;</li>
+</ul>
+<p>&#x6CE8;&#x518C;&#x4E3A; <code>OUT</code> &#x7684;&#x53C2;&#x6570;&#xFF0C;&#x8BBE;&#x7F6E;&#x6210;&#x4E86; <code>ResultSet</code> &#x7684; <code>output</code> &#x5C5E;&#x6027;&#x3002;</p>
+<h3 id="&#x6279;&#x91CF;&#x64CD;&#x4F5C;">&#x6279;&#x91CF;&#x64CD;&#x4F5C;</h3>
+<p>Vert.x SQL &#x516C;&#x5171;&#x63A5;&#x53E3;&#x5B9A;&#x4E49;&#x4E86;3&#x79CD;&#x6279;&#x91CF;&#x64CD;&#x4F5C;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li>&#x6279;&#x91CF;&#x64CD;&#x4F5C; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#batch-java.util.List-io.vertx.core.Handler-" target="_blank"><code>batch</code></a></li>
+<li>&#x6279;&#x91CF;&#x9884;&#x7F16;&#x8BD1;&#x64CD;&#x4F5C;  <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#batchWithParams-java.lang.String-java.util.List-io.vertx.core.Handler-" target="_blank"><code>batchWithParams</code></a></li>
+<li>&#x6279;&#x91CF;&#x8C03;&#x7528;&#x8BED;&#x53E5;  <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#batchCallableWithParams-java.lang.String-java.util.List-java.util.List-io.vertx.core.Handler-" target="_blank"><code>batchCallableWithParams</code></a></li>
+</ul>
+<p>&#x6279;&#x91CF;&#x64CD;&#x4F5C;&#x80FD;&#x6267;&#x884C;&#x4E00;&#x7EC4; SQL &#x8BED;&#x53E5;&#xFF08;<code>List</code> &#x7C7B;&#x578B;&#xFF09;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java">List&lt;String&gt; batch = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+batch.add(<span class="hljs-string">&quot;INSERT INTO emp (NAME) VALUES (&apos;JOE&apos;)&quot;</span>);
+batch.add(<span class="hljs-string">&quot;INSERT INTO emp (NAME) VALUES (&apos;JANE&apos;)&quot;</span>);
+
+connection.batch(batch, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    List&lt;Integer&gt; result = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<p>&#x9884;&#x7F16;&#x8BD1;&#x6216;&#x8005;&#x8C03;&#x7528;&#x8BED;&#x53E5;&#x5C06;&#x4F1A;&#x6839;&#x636E;&#x53C2;&#x6570;&#x5217;&#x8868;&#xFF0C;&#x6765;&#x91CD;&#x590D;&#x4F7F;&#x7528; SQL &#x8BED;&#x53E5;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java">List&lt;JsonArray&gt; batch = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+batch.add(<span class="hljs-keyword">new</span> JsonArray().add(<span class="hljs-string">&quot;joe&quot;</span>));
+batch.add(<span class="hljs-keyword">new</span> JsonArray().add(<span class="hljs-string">&quot;jane&quot;</span>));
+
+connection.batchWithParams(<span class="hljs-string">&quot;INSERT INTO emp (name) VALUES (?)&quot;</span>, batch, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    List&lt;Integer&gt; result = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Failed!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x6267;&#x884C;&#x5176;&#x4ED6;&#x64CD;&#x4F5C;">&#x6267;&#x884C;&#x5176;&#x4ED6;&#x64CD;&#x4F5C;</h3>
+<p>&#x82E5;&#x9700;&#x8981;&#x6267;&#x884C;&#x5176;&#x4ED6;&#x6570;&#x636E;&#x5E93;&#x64CD;&#x4F5C;&#xFF0C;&#x4F8B;&#x5982;&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#execute-java.lang.String-io.vertx.core.Handler-" target="_blank"><code>execute</code></a> &#x65B9;&#x6CD5;&#x6765;&#x6267;&#x884C; <code>CREATE TABLE</code> &#x8BED;&#x53E5;&#x3002;</p>
+<p>SQL&#x8BED;&#x53E5;&#x4F20;&#x7ED9;&#x6570;&#x636E;&#x5E93;&#x65F6;&#xFF0C;&#x4E0D;&#x4F1A;&#x7ECF;&#x8FC7;&#x4EFB;&#x4F55;&#x5904;&#x7406;&#x3002;&#x64CD;&#x4F5C;&#x7ED3;&#x675F;&#x65F6;&#x5C06;&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-java">String sql = <span class="hljs-string">&quot;CREATE TABLE PEOPLE (ID int generated by default as identity (start with 1 increment by 1) not null,&quot;</span> +
+  <span class="hljs-string">&quot;FNAME varchar(255), LNAME varchar(255), SHOE_SIZE int);&quot;</span>;
+
+connection.execute(sql, execute -&gt; {
+  <span class="hljs-keyword">if</span> (execute.succeeded()) {
+    System.out.println(<span class="hljs-string">&quot;Table created !&quot;</span>);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x8FD4;&#x56DE;&#x591A;&#x4E2A;&#x7ED3;&#x679C;&#x96C6;">&#x8FD4;&#x56DE;&#x591A;&#x4E2A;&#x7ED3;&#x679C;&#x96C6;</h3>
+<p>&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x60A8;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x53EF;&#x80FD;&#x8FD4;&#x56DE;&#x591A;&#x4E2A;&#x7ED3;&#x679C;&#x96C6; <code>ResultSet</code>&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#x4F1A;&#x88AB;&#x8F6C;&#x6210;&#x7EAF; JSON&#xFF0C;&#x5E76;&#x4E14;&#x4E3A;&#x4E86;&#x4FDD;&#x6301;&#x7A33;&#x5B9A;&#x6027;&#xFF0C;&#x4E0B;&#x4E00;&#x4E2A; <code>ResultSet</code> &#x88AB;&#x4F5C;&#x4E3A;&#x5F53;&#x524D; <code>ResultSet</code> &#x7684; <code>next</code> &#x5C5E;&#x6027;&#x94FE;&#x63A5;&#x7740;&#x3002;&#x4E00;&#x79CD;&#x7B80;&#x5355;&#x7684;&#x904D;&#x5386;&#x6240;&#x6709;&#x7ED3;&#x679C;&#x96C6;&#x7684;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">while</span> (rs != <span class="hljs-keyword">null</span>) {
+  <span class="hljs-comment">// do something with the result set...</span>
+
+  <span class="hljs-comment">// next step</span>
+  rs = rs.getNext();
+}
+</code></pre>
+<h3 id="streaming">Streaming</h3>
+<p>&#x5728;&#x5904;&#x7406;&#x5927;&#x6570;&#x636E;&#x7ED3;&#x679C;&#x96C6;&#x65F6;&#xFF0C;&#x4E0D;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;API&#xFF0C;&#x800C;&#x662F;&#x4F7F;&#x7528;&#x6570;&#x636E;&#x6D41;&#xFF08;stream data&#xFF09;&#x7684;&#x65B9;&#x5F0F;&#x3002;&#x56E0;&#x4E3A;&#x5B83;&#x80FD;&#x591F;&#x907F;&#x514D;&#x628A;&#x6240;&#x6709;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x800C;&#x4E14;&#x5F97;&#x5230;&#x7684; JSON &#x683C;&#x5F0F;&#x7684;&#x6570;&#x636E;&#x4E5F;&#x80FD;&#x591F;&#x4E00;&#x884C;&#x884C;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java">connection.queryStream(<span class="hljs-string">&quot;SELECT * FROM large_table&quot;</span>, stream -&gt; {
+  <span class="hljs-keyword">if</span> (stream.succeeded()) {
+    stream.result().handler(row -&gt; {
+      <span class="hljs-comment">// &#x5904;&#x7406; row...</span>
+    });
+  }
+});
+</code></pre>
+<p>&#x60A8;&#x8FD8;&#x53EF;&#x4EE5;&#x63A7;&#x5236; Stream &#x4F55;&#x65F6;&#x505C;&#x6B62;&#xFF0C;&#x4F55;&#x65F6;&#x6062;&#x590D;&#xFF0C;&#x4F55;&#x65F6;&#x7ED3;&#x675F;&#x3002;&#x5BF9;&#x4E8E;&#x67E5;&#x8BE2;&#x8FD4;&#x56DE;&#x591A;&#x4E2A;&#x7ED3;&#x679C;&#x96C6;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x60A8;&#x5E94;&#x8BE5;&#x4F7F;&#x7528; ended event &#x6765;&#x83B7;&#x5F97;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;&#x96C6;&#x3002;&#x5982;&#x679C;&#x6709;&#xFF0C;Stream &#x5C06;&#x4F1A;&#x5F97;&#x5230;&#x65B0;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x82E5;&#x6CA1;&#x6709;&#xFF0C;&#x5C06;&#x4F1A;&#x8C03;&#x7528;&#x7ED3;&#x675F;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-java">connection.queryStream(<span class="hljs-string">&quot;SELECT * FROM large_table; SELECT * FROM other_table&quot;</span>, stream -&gt; {
+  <span class="hljs-keyword">if</span> (stream.succeeded()) {
+    SQLRowStream sqlRowStream = stream.result();
+
+    sqlRowStream
+      .resultSetClosedHandler(v -&gt; {
+        <span class="hljs-comment">// &#x5982;&#x679C;&#x6709;&#x65B0;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x5C06;&#x4F1A;&#x91CD;&#x542F; stream</span>
+        sqlRowStream.moreResults();
+      })
+      .handler(row -&gt; {
+        <span class="hljs-comment">// &#x5904;&#x7406;row</span>
+      })
+      .endHandler(v -&gt; {
+        <span class="hljs-comment">// &#x6CA1;&#x6709;&#x65B0;&#x7684;&#x7ED3;&#x679C;&#x96C6;&#x9700;&#x8981;&#x5904;&#x7406;</span>
+      });
+  }
+});
+</code></pre>
+<h3 id="&#x4F7F;&#x7528;&#x4E8B;&#x52A1;">&#x4F7F;&#x7528;&#x4E8B;&#x52A1;</h3>
+<p>&#x8981;&#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x7528;  <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#setAutoCommit-boolean-io.vertx.core.Handler-" target="_blank"><code>setAutoCommit</code></a> &#x65B9;&#x6CD5;&#x8BBE;&#x7F6E; auto-commit &#x4E3A; <code>false</code>&#x3002;</p>
+<p>&#x7136;&#x540E;&#x60A8;&#x5C31;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5728;&#x9700;&#x8981;&#x63D0;&#x4EA4;&#x4E8B;&#x52A1;&#x65F6;&#xFF0C;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#commit-io.vertx.core.Handler-" target="_blank"><code>commit</code></a> &#x65B9;&#x6CD5;&#xFF1B;&#x5728;&#x9700;&#x8981;&#x56DE;&#x6EDA;&#x65F6;&#xFF0C;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#rollback-io.vertx.core.Handler-" target="_blank"><code>rollback</code></a> &#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x4E00;&#x65E6; <code>commit</code>/<code>rollback</code> &#x65B9;&#x6CD5;&#x6267;&#x884C;&#x7ED3;&#x675F;&#xFF0C;&#x5C06;&#x4F1A;&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x3002;&#x7136;&#x540E;&#x4E0B;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x4E5F;&#x5C06;&#x81EA;&#x52A8;&#x5F00;&#x59CB;&#x3002;</p>
+<pre><code class="lang-java">connection.commit(res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    <span class="hljs-comment">// &#x4E8B;&#x7269;&#x63D0;&#x4EA4;&#x6210;&#x529F;!</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x4E8B;&#x7269;&#x63D0;&#x4EA4;&#x5931;&#x8D25;!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x5173;&#x95ED;&#x8FDE;&#x63A5;">&#x5173;&#x95ED;&#x8FDE;&#x63A5;</h3>
+<p>&#x60A8;&#x5728;&#x7528;&#x5B8C;&#x8FDE;&#x63A5;&#x540E;&#xFF0C;&#x5FC5;&#x987B;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/sql/SQLConnection.html#close-io.vertx.core.Handler-" target="_blank"><code>close</code></a> &#x65B9;&#x6CD5;&#x628A;&#x8FDE;&#x63A5;&#x8FD4;&#x56DE;&#x7ED9;&#x8FDE;&#x63A5;&#x6C60;&#x3002;</p>
+<hr>
+<blockquote>
+<p><a href="http://vertx.io/docs/vertx-sql-common/java/" target="_blank">&#x539F;&#x6587;&#x6863;</a>&#x66F4;&#x65B0;&#x4E8E;2017-03-15 15:54:14 CET</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="JDBCClient.html" class="navigation navigation-prev " aria-label="Previous page: JDBC Client">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="RedisClient.html" class="navigation navigation-next " aria-label="Next page: Redis Client">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"SQL Common","level":"1.6.3","depth":2,"next":{"title":"Redis Client","level":"1.6.4","depth":2,"path":"data/RedisClient.md","ref":"data/RedisClient.md","articles":[]},"previous":{"title":"JDBC Client","level":"1.6.2","depth":2,"path":"data/JDBCClient.md","ref":"data/JDBCClient.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"data/SQLCommon.md","mtime":"2017-04-12T09:05:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

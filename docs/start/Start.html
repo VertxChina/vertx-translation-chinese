@@ -1,0 +1,1389 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>开始使用 · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="SimpleStart.html" />
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="Start.html">
+            
+                <a href="Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="SimpleStart.html">
+            
+                <a href="SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="FAQ.html">
+            
+                <a href="FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >开始使用</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="start">Start</h1>
+<h2 id="hello-world">Hello World</h2>
+<p>&#x6B22;&#x8FCE;&#x6765;&#x5230;Vert.x&#x7684;&#x4E16;&#x754C;&#xFF0C;&#x76F8;&#x4FE1;&#x60A8;&#x5728;&#x63A5;&#x89E6;Vert.x&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x8FEB;&#x4E0D;&#x53CA;&#x5F85;&#x60F3;&#x52A8;&#x624B;&#x8BD5;&#x4E00;&#x8BD5;&#xFF0C;&#x5982;&#x60A8;&#x5728;&#x5B66;&#x4E60;&#x8BA1;&#x7B97;&#x673A;&#x5176;&#x5B83;&#x77E5;&#x8BC6;&#x4E00;&#x6837;&#xFF0C;&#x603B;&#x662F;&#x4ECE;Hello World&#x5F00;&#x59CB;&#xFF0C;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5C06;&#x5F15;&#x5BFC;&#x60A8;&#x5236;&#x4F5C;&#x4E00;&#x4E2A;&#x6700;&#x57FA;&#x672C;&#x7B80;&#x5355;&#x7684;Hello World&#x4F8B;&#x5B50;&#xFF0C;&#x4F46;&#x5728;&#x6B64;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x60A8;&#x5177;&#x5907;&#x6709;&#x4EE5;&#x4E0B;&#x57FA;&#x7840;&#x77E5;&#x8BC6;&#xFF1A;</p>
+<ol>
+<li><p>Java&#x57FA;&#x7840;&#x77E5;&#x8BC6;&#xFF0C;&#x60A8;&#x4E0D;&#x9700;&#x8981;&#x4E86;&#x89E3;Java EE&#x6216;&#x8005;&#x662F;Java ME&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x4F46;&#x662F;&#x9700;&#x8981;&#x60A8;&#x5BF9;Java&#x6709;&#x6240;&#x4E86;&#x89E3;&#xFF0C;&#x5728;&#x6B64;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x4F1A;&#x4ECB;&#x7ECD;&#x4EFB;&#x4F55;&#x5173;&#x4E8E;Java SE&#x53C8;&#x79F0;Core Java&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x3002;&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;Vert.x 3&#x4EE5;&#x4E0A;&#x7248;&#x672C;&#x9700;&#x8981;Java 8&#x4EE5;&#x4E0A;&#x7248;&#x672C;&#x65B9;&#x80FD;&#x8FD0;&#x884C;&#xFF1B;</p>
+</li>
+<li><p>Maven&#x76F8;&#x5173;&#x77E5;&#x8BC6;&#xFF0C;&#x60A8;&#x9700;&#x8981;&#x77E5;&#x9053;&#x4EC0;&#x4E48;Maven&#x662F;&#x505A;&#x4EC0;&#x4E48;&#x7528;&#x7684;&#xFF0C;&#x4EE5;&#x53CA;&#x5982;&#x4F55;&#x4F7F;&#x7528;Maven&#xFF1B;</p>
+</li>
+<li><p>&#x4E92;&#x8054;&#x7F51;&#x7684;&#x57FA;&#x7840;&#x77E5;&#x8BC6;&#xFF0C;&#x77E5;&#x9053;&#x4EC0;&#x4E48;&#x662F;&#x7F51;&#x7EDC;&#x534F;&#x8BAE;&#xFF0C;&#x5C24;&#x5176;&#x662F;TCP&#xFF0C;HTTP&#x534F;&#x8BAE;&#x3002;</p>
+</li>
+</ol>
+<p>&#x672C;&#x6587;&#x5C06;&#x4F1A;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x7684;HTTP&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5E76;&#x76D1;&#x542C;8080&#x7AEF;&#x53E3;&#xFF0C;&#x5BF9;&#x4E8E;&#x4EFB;&#x4F55;&#x53D1;&#x5F80;&#x8BE5;&#x670D;&#x52A1;&#x5668;&#x4EE5;&#x53CA;&#x7AEF;&#x53E3;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;Hello World&#x5B57;&#x7B26;&#x4E32;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;Maven&#x9879;&#x76EE;&#xFF0C;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x7684;Maven&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>&#x251C;&#x2500;&#x2500; pom.xml
+&#x251C;&#x2500;&#x2500; src
+&#x2502;   &#x251C;&#x2500;&#x2500; main
+&#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; java
+&#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; resources
+&#x2502;   &#x2514;&#x2500;&#x2500; test
+&#x2502;       &#x2514;&#x2500;&#x2500; java
+</code></pre><p>&#x968F;&#x540E;&#x5728;<code>pom.xml</code>&#x4E2D;&#x52A0;&#x5165;&#x76F8;&#x5173;&#x7684;&#x4F9D;&#x8D56;&#x548C;&#x63D2;&#x4EF6;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-example<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">vertx.version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">vertx.version</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">main.class</span>&gt;</span>io.example.Main<span class="hljs-tag">&lt;/<span class="hljs-name">main.class</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${vertx.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">target</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-shade-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.4.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>package<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>shade<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">transformers</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">transformer</span> <span class="hljs-attr">implementation</span>=<span class="hljs-string">&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">manifestEntries</span>&gt;</span>
+                                        <span class="hljs-tag">&lt;<span class="hljs-name">Main-Class</span>&gt;</span>${main.class}<span class="hljs-tag">&lt;/<span class="hljs-name">Main-Class</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">manifestEntries</span>&gt;</span>
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">transformer</span>&gt;</span>
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">transformers</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">artifactSet</span> /&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">outputFile</span>&gt;</span>${project.build.directory}/${project.artifactId}-${project.version}-prod.jar<span class="hljs-tag">&lt;/<span class="hljs-name">outputFile</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span>
+</code></pre>
+<p>&#x8DDF;&#x5176;&#x5B83;Maven&#x9879;&#x76EE;&#x4E00;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x5B9A;&#x4E49;&#x4E86;&#x9879;&#x76EE;&#x7684;GroupId&#xFF0C;ArtifactId&#x4EE5;&#x53CA;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x968F;&#x540E;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4E86;&#x4E24;&#x4E2A;&#x5C5E;&#x6027;&#xFF0C;&#x5206;&#x522B;&#x662F;&#xFF1A;<code>vertx.version</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;Vert.x&#x7684;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x6700;&#x65B0;&#x7684;Vert.x&#x7248;&#x672C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;3.4.1&#xFF1B;&#x4EE5;&#x53CA;<code>main.class</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x5305;&#x542B;&#x6709;main&#x51FD;&#x6570;&#x7684;&#x4E3B;&#x7C7B;&#x3002;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x5F15;&#x5165;&#x4E86;&#x4E24;&#x4E2A;Maven&#x63D2;&#x4EF6;&#xFF0C;&#x5206;&#x522B;&#x662F;<code>maven-compiler-plugin</code>&#x548C;<code>maven-shade-plugin</code>&#xFF0C;&#x524D;&#x8005;&#x7528;&#x6765;&#x5C06;.java&#x7684;&#x6E90;&#x6587;&#x4EF6;&#x7F16;&#x8BD1;&#x6210;.class&#x7684;&#x5B57;&#x8282;&#x7801;&#x6587;&#x4EF6;&#xFF0C;&#x540E;&#x8005;&#x53EF;&#x5C06;&#x7F16;&#x8BD1;&#x540E;&#x7684;.class&#x5B57;&#x8282;&#x7801;&#x6587;&#x4EF6;&#x6253;&#x5305;&#x6210;&#x53EF;&#x6267;&#x884C;&#x7684;jar&#x6587;&#x4EF6;&#xFF0C;&#x4FD7;&#x79F0;<code>fat-jar</code>&#x3002;</p>
+<p>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5728;<code>src/main/java/io/example</code>&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x5EFA;&#x4E24;&#x4E2A;java&#x6587;&#x4EF6;&#xFF0C;&#x5206;&#x522B;&#x662F;<code>Main.java</code>&#x548C;<code>MyFirstVerticle.java</code>&#xFF0C;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>Main.java</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> io.example;
+
+<span class="hljs-keyword">import</span> io.vertx.core.Vertx;
+
+<span class="hljs-comment">/**
+ * Created by chengen on 26/04/2017.
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Vertx vertx = Vertx.vertx();
+
+        vertx.deployVerticle(MyFirstVerticle.class.getName());
+    }
+}
+</code></pre>
+<p>MyFirstVerticle.java</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> io.example;
+
+<span class="hljs-keyword">import</span> io.vertx.core.AbstractVerticle;
+
+<span class="hljs-comment">/**
+ * Created by chengen on 26/04/2017.
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFirstVerticle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractVerticle</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span> </span>{
+        vertx.createHttpServer().requestHandler(req -&gt; {
+            req.response()
+                    .putHeader(<span class="hljs-string">&quot;content-type&quot;</span>, <span class="hljs-string">&quot;text/plain&quot;</span>)
+                    .end(<span class="hljs-string">&quot;Hello World!&quot;</span>);
+        }).listen(<span class="hljs-number">8080</span>);
+    }
+}
+</code></pre>
+<p>&#x7136;&#x540E;&#x7528;Maven&#x7684;<code>mvn package</code>&#x547D;&#x4EE4;&#x6253;&#x5305;&#xFF0C;&#x968F;&#x540E;&#x5728;src&#x7684;&#x540C;&#x7EA7;&#x76EE;&#x5F55;&#x4E0B;&#x4F1A;&#x51FA;&#x73B0;target&#x76EE;&#x5F55;&#xFF0C;&#x8FDB;&#x5165;&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;<code>vert-example-1.0-SNAPSHOT.jar</code>&#x548C;<code>vert-example-1.0-SNAPSHOT-prod.jar</code>&#x4E24;&#x4E2A;jar&#x6587;&#x4EF6;&#xFF0C;&#x540E;&#x8005;&#x662F;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x6709;&#x56FE;&#x5F62;&#x754C;&#x9762;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x60A8;&#x53EF;&#x53CC;&#x51FB;&#x6267;&#x884C;&#xFF0C;&#x6216;&#x8005;&#x7528;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#xFF1A;<code>java -jar vert-example-1.0-SNAPSHOT-prod.jar</code>&#x6267;&#x884C;&#x3002;</p>
+<p>&#x968F;&#x540E;&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x7684;&#x5730;&#x5740;&#x680F;&#x4E2D;&#x8F93;&#x5165;&#xFF1A;<a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> &#x4FBF;&#x53EF;&#x770B;&#x5230;&#x719F;&#x6089;&#x7684;Hello World!&#x5566;&#x3002;</p>
+<h2 id="&#x542F;&#x52A8;&#x5668;">&#x542F;&#x52A8;&#x5668;</h2>
+<p>&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>Launcher</code>&#x6765;&#x66FF;&#x4EE3;<code>Main</code>&#x7C7B;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x5B98;&#x65B9;&#x63A8;&#x8350;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5728;<code>pom.xml</code>&#x4E2D;&#x52A0;&#x5165;<code>main.verticle</code>&#x5C5E;&#x6027;&#xFF0C;&#x5E76;&#x5C06;&#x8BE5;&#x5C5E;&#x6027;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A;<code>maven-shade-plugin</code>&#x63D2;&#x4EF6;&#x7684;<code>manifestEntries</code>&#x7684;<code>Main-Verticle</code>&#x5BF9;&#x5E94;&#x7684;&#x503C;&#xFF0C;&#x6700;&#x540E;&#x4FEE;&#x6539;<code>main.class</code>&#x4E3A;<code>io.vertx.core.Launcher</code>&#xFF0C;&#x4FEE;&#x6539;&#x540E;&#x7684;<code>pom.xml</code>&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-example<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">vertx.version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">vertx.version</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">main.class</span>&gt;</span>io.vertx.core.Launcher<span class="hljs-tag">&lt;/<span class="hljs-name">main.class</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">main.verticle</span>&gt;</span>io.example.MainVerticle<span class="hljs-tag">&lt;/<span class="hljs-name">main.verticle</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${vertx.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">target</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-shade-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.4.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>package<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>shade<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">transformers</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">transformer</span> <span class="hljs-attr">implementation</span>=<span class="hljs-string">&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">manifestEntries</span>&gt;</span>
+                                        <span class="hljs-tag">&lt;<span class="hljs-name">Main-Class</span>&gt;</span>${main.class}<span class="hljs-tag">&lt;/<span class="hljs-name">Main-Class</span>&gt;</span>
+                                        <span class="hljs-tag">&lt;<span class="hljs-name">Main-Verticle</span>&gt;</span>${main.verticle}<span class="hljs-tag">&lt;/<span class="hljs-name">Main-Verticle</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">manifestEntries</span>&gt;</span>
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">transformer</span>&gt;</span>
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">transformers</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">artifactSet</span> /&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">outputFile</span>&gt;</span>${project.build.directory}/${project.artifactId}-${project.version}-prod.jar<span class="hljs-tag">&lt;/<span class="hljs-name">outputFile</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span>
+</code></pre>
+<p>&#x7136;&#x540E;&#x5728;<code>src/main/java/io/example</code>&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;<code>MainVerticle.java</code>&#x6587;&#x4EF6;&#xFF0C;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> io.example;
+
+<span class="hljs-keyword">import</span> io.vertx.core.AbstractVerticle;
+
+<span class="hljs-comment">/**
+ * Created by chengen on 26/04/2017.
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainVerticle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractVerticle</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span> </span>{
+        vertx.deployVerticle(MyFirstVerticle.class.getName());
+    }
+}
+</code></pre>
+<p>&#x7136;&#x540E;&#x91CD;&#x65B0;&#x6253;&#x5305;&#x540E;&#x6267;&#x884C;&#xFF0C;&#x4FBF;&#x53EF;&#x518D;&#x6B21;&#x770B;&#x5230;Hello World!&#x3002;</p>
+<blockquote>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF1A;<em>&#x91CD;&#x65B0;&#x6253;&#x5305;&#x4E4B;&#x524D;&#xFF0C;&#x60A8;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x6E05;&#x9664;&#x4E4B;&#x524D;&#x7F16;&#x8BD1;&#x540E;&#x7559;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x7528;mvn clean package&#x547D;&#x4EE4;&#x6253;&#x5305;&#x3002;</em></p>
+</blockquote>
+<h2 id="&#x6D4B;&#x8BD5;">&#x6D4B;&#x8BD5;</h2>
+<p>&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5C06;&#x4F1A;&#x4ECB;&#x7ECD;&#x6D4B;&#x8BD5;&#x90E8;&#x5206;&#xFF0C;&#x9996;&#x5148;&#x5F15;&#x5165;&#x4E24;&#x4E2A;&#x65B0;&#x7684;&#x6D4B;&#x8BD5;&#x4F9D;&#x8D56;&#xFF0C;&#x4FEE;&#x6539;&#x540E;&#x7684;<code>pom.xml</code>&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-example<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">vertx.version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">vertx.version</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">main.class</span>&gt;</span>io.vertx.core.Launcher<span class="hljs-tag">&lt;/<span class="hljs-name">main.class</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">main.verticle</span>&gt;</span>io.example.MainVerticle<span class="hljs-tag">&lt;/<span class="hljs-name">main.verticle</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${vertx.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-unit<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${vertx.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.12<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">target</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-shade-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.4.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>package<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>shade<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">transformers</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">transformer</span> <span class="hljs-attr">implementation</span>=<span class="hljs-string">&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">manifestEntries</span>&gt;</span>
+                                        <span class="hljs-tag">&lt;<span class="hljs-name">Main-Class</span>&gt;</span>${main.class}<span class="hljs-tag">&lt;/<span class="hljs-name">Main-Class</span>&gt;</span>
+                                        <span class="hljs-tag">&lt;<span class="hljs-name">Main-Verticle</span>&gt;</span>${main.verticle}<span class="hljs-tag">&lt;/<span class="hljs-name">Main-Verticle</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">manifestEntries</span>&gt;</span>
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">transformer</span>&gt;</span>
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">transformers</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">artifactSet</span> /&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">outputFile</span>&gt;</span>${project.build.directory}/${project.artifactId}-${project.version}-prod.jar<span class="hljs-tag">&lt;/<span class="hljs-name">outputFile</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span>
+</code></pre>
+<p>&#x968F;&#x540E;&#x5728;<code>src/test/java/io/example</code>&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;<code>MyFirstVerticleTest.java</code>&#x6587;&#x4EF6;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> io.example;
+
+<span class="hljs-keyword">import</span> io.vertx.core.Vertx;
+<span class="hljs-keyword">import</span> io.vertx.ext.unit.Async;
+<span class="hljs-keyword">import</span> io.vertx.ext.unit.TestContext;
+<span class="hljs-keyword">import</span> io.vertx.ext.unit.junit.VertxUnitRunner;
+<span class="hljs-keyword">import</span> org.junit.After;
+<span class="hljs-keyword">import</span> org.junit.Before;
+<span class="hljs-keyword">import</span> org.junit.Test;
+<span class="hljs-keyword">import</span> org.junit.runner.RunWith;
+
+<span class="hljs-comment">/**
+ * Created by chengen on 26/04/2017.
+ */</span>
+<span class="hljs-meta">@RunWith</span>(VertxUnitRunner.class)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFirstVerticleTest</span> </span>{
+
+    <span class="hljs-keyword">private</span> Vertx vertx;
+
+    <span class="hljs-meta">@Before</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUp</span><span class="hljs-params">(TestContext context)</span> </span>{
+        vertx = Vertx.vertx();
+        vertx.deployVerticle(MyFirstVerticle.class.getName(), context.asyncAssertSuccess());
+    }
+
+    <span class="hljs-meta">@After</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tearDown</span><span class="hljs-params">(TestContext context)</span> </span>{
+        vertx.close(context.asyncAssertSuccess());
+    }
+
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testApplication</span><span class="hljs-params">(TestContext context)</span> </span>{
+        <span class="hljs-keyword">final</span> Async async = context.async();
+
+        vertx.createHttpClient().getNow(<span class="hljs-number">8080</span>, <span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>, response -&gt; {
+            response.handler(body -&gt; {
+                context.assertTrue(body.toString().contains(<span class="hljs-string">&quot;Hello&quot;</span>));
+                async.complete();
+            });
+        });
+    }
+}
+</code></pre>
+<p>&#x6267;&#x884C;&#x8BE5;&#x6D4B;&#x8BD5;&#x6848;&#x4F8B;&#x4FBF;&#x53EF;&#x5F97;&#x5230;&#x671F;&#x671B;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x7406;&#x89E3;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x5E76;&#x4E0D;&#x96BE;&#xFF0C;&#x7559;&#x7ED9;&#x8BFB;&#x8005;&#x4F5C;&#x4E3A;&#x7EC3;&#x4E60;&#x3002;</p>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x5927;&#x529F;&#x544A;&#x6210;&#xFF0C;&#x6B22;&#x8FCE;&#x6765;&#x5230;Vert.x&#x7684;&#x4E16;&#x754C;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: 介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="SimpleStart.html" class="navigation navigation-next " aria-label="Next page: 简易教程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"开始使用","level":"1.2","depth":1,"next":{"title":"简易教程","level":"1.2.1","depth":2,"path":"start/SimpleStart.md","ref":"start/SimpleStart.md","articles":[]},"previous":{"title":"介绍","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"start/Start.md","mtime":"2017-05-08T10:33:18.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:06:11.131Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

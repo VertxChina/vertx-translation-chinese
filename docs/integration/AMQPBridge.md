@@ -1,0 +1,1 @@
+# Vert.x AMQP Bridge
