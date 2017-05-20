@@ -1,0 +1,1254 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Hazelcast · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Infinispan.html" />
+    
+    
+    <link rel="prev" href="Clustering.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clustering.html">
+            
+                <a href="Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.14.1" data-path="Hazelcast.html">
+            
+                <a href="Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="Infinispan.html">
+            
+                <a href="Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="ApacheIgnite.html">
+            
+                <a href="ApacheIgnite.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="ApacheZookeeper.html">
+            
+                <a href="ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="JGroups.html">
+            
+                <a href="JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Hazelcast</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="hazelcast-cluster-manager">Hazelcast Cluster Manager</h1>
+<blockquote>
+<p>&#x7FFB;&#x8BD1;&#xFF1A;Ranger Tsao&#xFF0C;&#x6821;&#x5BF9; &#x5B8B;&#x5B50;&#x8C6A;&#x3001;&#x8D75;&#x4EAE;</p>
+</blockquote>
+<p><code>HazelcastClusterManager</code> &#x662F;&#x57FA;&#x4E8E; <a href="http://hazelcast.org" target="_blank">Hazelcast</a> &#x5B9E;&#x73B0; ,&#x662F;Vert.x &#x4E2D;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x4E2D;&#x7684;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x3002;&#x7531;&#x4E8E; Vert.x &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x7684;&#x53EF;&#x63D2;&#x62D4;&#x6027;&#xFF0C;&#x4E5F;&#x53EF;&#x8F7B;&#x6613;&#x5207;&#x6362;&#x81F3;&#x5176;&#x5B83;&#x7684;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x3002;</p>
+<ul>
+<li>Maven(pom.xml)</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-hazelcast<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle(build.gradle)</li>
+</ul>
+<pre><code class="lang-groovy">compile <span class="hljs-string">&apos;io.vertx:vertx-hazelcast:3.4.1&apos;</span>
+</code></pre>
+<p>Vert.x &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x5305;&#x542B;&#x4E00;&#x4E0B;&#x51E0;&#x4E2A;&#x529F;&#x80FD;&#xFF1A;</p>
+<ol>
+<li>&#x53D1;&#x73B0;&#x5E76;&#x7BA1;&#x7406;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x8282;&#x70B9;</li>
+<li>&#x7BA1;&#x7406;&#x96C6;&#x7FA4;&#x7AEF;&#x7684;&#x4E3B;&#x9898;&#x8BA2;&#x9605;&#x6E05;&#x5355;&#xFF08;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x5F97;&#x77E5;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x90A3;&#x4E9B;&#x8282;&#x70B9;&#x8BA2;&#x9605;&#x4E86;&#x90A3;&#x4E9B; EventBus &#x5730;&#x5740;&#xFF09;</li>
+<li>&#x5206;&#x5E03;&#x5F0F; Map &#x652F;&#x6301;</li>
+<li>&#x5206;&#x5E03;&#x5F0F;&#x9501;</li>
+<li>&#x5206;&#x5E03;&#x5F0F;&#x8BA1;&#x6570;&#x5668;</li>
+</ol>
+<p><strong>&#x6CE8;&#x610F;&#x4E8B;&#x9879;</strong>
+Vert.x &#x96C6;&#x7FA4;&#x5668;&#x5E76;&#x4E0D;&#x5904;&#x7406;&#x8282;&#x70B9;&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x5728; Vert.x &#x4E2D;&#x8282;&#x70B9;&#x4E2D;&#x7684;&#x901A;&#x4FE1;&#x662F;&#x76F4;&#x63A5;&#x7531; TCP &#x94FE;&#x63A5;&#x5904;&#x7406;&#x7684;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;-hazelcast-cluster-manager">&#x4F7F;&#x7528; Hazelcast cluster manager</h2>
+<p>&#x5982;&#x679C;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x6765;&#x4F7F;&#x7528; Vert.x&#xFF0C;&#x5BF9;&#x5E94;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668; <code>jar</code> &#x5305;( <code>vertx-hazelcast-${version}</code> )&#x5E94;&#x8BE5;&#x5728; Vert.x &#x4E2D;&#x5B89;&#x88C5;&#x5305;&#x4E2D;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5728; <code>Maven</code> &#x6216;&#x8005; <code>Gradle</code> &#x5DE5;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528; Vert.x &#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x5DE5;&#x7A0B;&#x4F9D;&#x8D56;&#x4E2D;&#x52A0;&#x4E0A;&#x76F8;&#x5E94;&#x7684; <code>ClusterManager</code> &#x5B9E;&#x73B0;&#x4F9D;&#x8D56;&#xFF1A;<code>io.vertx:vertx-hazelcast:${version}</code>&#x3002;</p>
+<p>&#x5982;&#x679C; <code>vertx-hazelcast-${version}</code> &#x5728; <code>classpath</code> &#x4E2D;&#xFF0C;Vert.x&#x5C06;&#x81EA;&#x52A8;&#x68C0;&#x6D4B;&#x5230;&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x4F5C;&#x4E3A;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x8981;&#x786E;&#x4FDD; Vert.x &#x7684; <code>classpath</code> &#x4E2D;&#x6CA1;&#x6709;&#x5176;&#x5B83;&#x7684; <code>ClusterManager</code> &#x5B9E;&#x73B0; <code>jar</code> &#x5305;&#x3002;</p>
+<p>&#x5F53;&#x7136;&#x5728;&#x5185;&#x5D4C; Vert.x &#x65F6;&#xFF0C;&#x901A;&#x8FC7;&#x7F16;&#x7A0B;&#x7684;&#x65B9;&#x5F0F;&#x521B;&#x5EFA; Vert.x &#x96C6;&#x7FA4;&#x6A21;&#x5F0F;&#x5B9E;&#x4F8B;&#xFF0C;&#x8C03;&#x7528; <code>setClusterManager</code> &#x65B9;&#x6CD5;&#x663E;&#x5F0F;&#x6307;&#x5B9A;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x3002;</p>
+<pre><code class="lang-java">ClusterManager mgr = <span class="hljs-keyword">new</span> HazelcastClusterManager();<span class="hljs-comment">//&#x521B;&#x5EFA;ClusterManger&#x5BF9;&#x8C61;</span>
+
+VertxOptions options = <span class="hljs-keyword">new</span> VertxOptions().setClusterManager(mgr);<span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x5230;Vertx&#x542F;&#x52A8;&#x53C2;&#x6570;&#x4E2D;</span>
+
+Vertx.clusteredVertx(options, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    Vertx vertx = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// failed!</span>
+  }
+});
+</code></pre>
+<h2 id="&#x914D;&#x7F6E;-hazelcast-cluster-manager">&#x914D;&#x7F6E; Hazelcast cluster manager</h2>
+<p>&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x7684;&#x76F8;&#x5173;&#x914D;&#x7F6E;&#x662F;&#x7531;&#x6253;&#x5305;&#x7684;jar&#x4E2D;&#x7684;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x6587;&#x4EF6; <code>default-cluster.xml</code> &#x51B3;&#x5B9A;&#x7684;&#x3002;</p>
+<blockquote>
+<p><code>default-cluster.xml</code>  &#x8FD8;&#x662F;&#x4E0B;&#x9762;&#x9700;&#x8981;&#x63D0;&#x5230;&#x7684; <code>cluster.xml</code> &#x5FC5;&#x987B;&#x662F;&#x4E00;&#x4E2A; <code>Hazelcast</code> &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5728; <a href="http://hazelcast.org" target="_blank">Hazelcast</a> &#x7684;&#x5B98;&#x65B9;&#x7F51;&#x7AD9;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x5177;&#x4F53;&#x7684;&#x914D;&#x7F6E;&#x63CF;&#x8FF0;&#x3002;</p>
+</blockquote>
+<p>&#x5982;&#x679C;&#x8981;&#x8986;&#x76D6;&#x6B64;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x5728; <code>classpath</code> &#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A; <code>cluster.xml</code> &#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x60F3;&#x5728; fat jar &#x4E2D;&#x5185;&#x5D4C; <code>cluster.xml</code> &#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x5FC5;&#x987B;&#x5728; fat jar &#x7684;&#x6839;&#x76EE;&#x5F55;&#x4E2D;&#x3002;&#x5982;&#x679C;&#x6B64;&#x6587;&#x4EF6;&#x662F;&#x4E00;&#x4E2A;&#x5916;&#x90E8;&#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x5C06;&#x5176;&#x6DFB;&#x52A0;&#x81F3; <code>classpath</code> &#x4E2D;&#x3002;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># cluster.xml &#x5728;&#x5F53;&#x524D;&#x8DEF;&#x5F84;&#x4E2D;</span>
+java -jar ... -cp . -cluster
+vertx run MyVerticle -cp . -cluster
+
+<span class="hljs-comment"># cluster.xml &#x5728; conf &#x76EE;&#x5F55;&#x4E2D;</span>
+java -jar ... -cp conf -cluster
+</code></pre>
+<p>&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x65B9;&#x5F0F;&#x6765;&#x8986;&#x76D6;&#x9ED8;&#x8BA4;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x90A3;&#x5C31;&#x662F;&#x5229;&#x7528;&#x7CFB;&#x7EDF;&#x914D;&#x7F6E; <code>vertx.hazelcast.config</code> &#x6765;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># &#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5916;&#x90E8;&#x6587;&#x4EF6;&#x4E3A;&#x81EA;&#x5B9A;&#x4E49;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span>
+java -Dvertx.hazelcast.config=./config/my-cluster-config.xml -jar ... -cluster
+
+<span class="hljs-comment"># &#x4ECE; classpath &#x4E2D;&#x52A0;&#x8F7D;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x4E3A;&#x81EA;&#x5B9A;&#x4E49;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span>
+java -Dvertx.hazelcast.config=classpath:my/package/config/my-cluster-config.xml -jar ... -cluster
+</code></pre>
+<p>&#x5982;&#x679C; <code>vertx.hazelcast.config</code> &#x503C;&#x4E0D;&#x4E3A;&#x7A7A;&#x65F6;&#xFF0C;&#x5C06;&#x8986;&#x76D6; <code>classpath</code> &#x4E2D;&#x6240;&#x6709;&#x7684; <code>cluster.xml</code> &#x6587;&#x4EF6;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x52A0;&#x8F7D; <code>vertx.hazelcast.config</code> &#x5931;&#x8D25;&#x65F6;&#xFF0C;&#x7CFB;&#x7EDF;&#x5C06;&#x9009;&#x53D6; <code>classpath</code> &#x4EFB;&#x610F;&#x4E00;&#x4E2A; <code>cluster.xml</code> &#xFF0C;&#x751A;&#x81F3;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x3002;</p>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF1A;Vert.x &#x5E76;&#x4E0D;&#x652F;&#x6301; -Dhazelcast.config &#x8BBE;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x8BF7;&#x4E0D;&#x8981;&#x4F7F;&#x7528;&#x3002;</p>
+</blockquote>
+<p>&#x540C;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7F16;&#x7A0B;&#x7684;&#x5F62;&#x5F0F;&#x8FBE;&#x5230;&#x914D;&#x7F6E;&#x7684;&#x76EE;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-java">Config hazelcastConfig = <span class="hljs-keyword">new</span> Config(); <span class="hljs-comment">//&#x521B;&#x5EFA;hazelcast&#x914D;&#x7F6E;</span>
+
+<span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x76F8;&#x5173;&#x7684;hazlcast&#x914D;&#x7F6E;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x7701;&#x7565;&#x6389;&#xFF0C;&#x4E0D;&#x518D;&#x8D58;&#x8FF0;</span>
+
+ClusterManager mgr = <span class="hljs-keyword">new</span> HazelcastClusterManager(hazelcastConfig);
+
+VertxOptions options = <span class="hljs-keyword">new</span> VertxOptions().setClusterManager(mgr);
+
+Vertx.clusteredVertx(options, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    Vertx vertx = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// failed!</span>
+  }
+});
+</code></pre>
+<p>Hazelcast&#x652F;&#x6301;&#x591A;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#xFF0C;&#x5305;&#x62EC;&#x7EC4;&#x64AD;&#x548C;TCP&#x3002;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x4E2D;&#x91C7;&#x7528;&#x7EC4;&#x64AD;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#xFF0C;&#x56E0;&#x6B64;&#x60A8;&#x5FC5;&#x987B;&#x5728;&#x7F51;&#x7EDC;&#x4E0A;&#x542F;&#x7528;&#x7EC4;&#x64AD;&#x624D;&#x80FD;&#x4F7F;&#x5176;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x8BE6;&#x7EC6;&#x914D;&#x7F6E;&#xFF0C;&#x8BF7;&#x53C2;&#x9605; <a href="http://hazelcast.org" target="_blank">Hazelcast</a> &#x6587;&#x6863;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x5DF2;&#x5B58;&#x5728;&#x7684;-hazelcast-&#x96C6;&#x7FA4;">&#x4F7F;&#x7528;&#x5DF2;&#x5B58;&#x5728;&#x7684; Hazelcast &#x96C6;&#x7FA4;</h2>
+<p>&#x53EF;&#x4EE5;&#x5728;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E; <code>HazelcastInstance</code> &#x6765;&#x590D;&#x7528;&#x73B0;&#x6709;&#x96C6;&#x7FA4;&#xFF1A;</p>
+<pre><code class="lang-java">HazelcastInstance instance = HazelcastClient.newHazelcastClient(
+  <span class="hljs-keyword">new</span> ClientConfig()
+    .setGroupConfig(<span class="hljs-keyword">new</span> GroupConfig(<span class="hljs-string">&quot;groupname&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>)
+    .setNetworkConfig(<span class="hljs-keyword">new</span> ClientNetworkConfig().addAddress(<span class="hljs-string">&quot;hosts&quot;</span>)))); <span class="hljs-comment">//&#x521B;&#x5EFA;HazelcastClient</span>
+ClusterManager mgr = <span class="hljs-keyword">new</span> HazelcastClusterManager(hazelcastInstance);
+VertxOptions options = <span class="hljs-keyword">new</span> VertxOptions().setClusterManager(mgr);
+Vertx.clusteredVertx(options, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    Vertx vertx = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// failed!</span>
+  }
+});
+</code></pre>
+<p>&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Vert.x&#x4E0D;&#x662F; Hazelcast &#x7FA4;&#x96C6;&#x7684;&#x6240;&#x6709;&#x8005;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x8981;&#x5173;&#x95ED; Vert.x &#x65F6;&#x5173;&#x95ED; Hazlecast &#x96C6;&#x7FA4;&#x3002;</p>
+<p>&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x81EA;&#x5B9A;&#x4E49; Hazelcast &#x5B9E;&#x4F8B;&#x9700;&#x8981;&#x914D;&#x7F6E;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;hazelcast.shutdownhook.enabled&quot;</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">multimap</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;__vertx.subs&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">backup-count</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">backup-count</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">multimap</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">map</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;__vertx.haInfo&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">time-to-live-seconds</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">time-to-live-seconds</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">max-idle-seconds</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">max-idle-seconds</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">eviction-policy</span>&gt;</span>NONE<span class="hljs-tag">&lt;/<span class="hljs-name">eviction-policy</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">max-size</span> <span class="hljs-attr">policy</span>=<span class="hljs-string">&quot;PER_NODE&quot;</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">max-size</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">eviction-percentage</span>&gt;</span>25<span class="hljs-tag">&lt;/<span class="hljs-name">eviction-percentage</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">merge-policy</span>&gt;</span>com.hazelcast.map.merge.LatestUpdateMapMergePolicy<span class="hljs-tag">&lt;/<span class="hljs-name">merge-policy</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">map</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">semaphore</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;__vertx.*&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">initial-permits</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">initial-permits</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">semaphore</span>&gt;</span>
+</code></pre>
+<p><strong>&#x91CD;&#x8981;&#x63D0;&#x9192;</strong></p>
+<ul>
+<li>&#x5F53; Vert.x &#x96C6;&#x7FA4;&#x4F7F;&#x7528; HA&#xFF08;&#x9AD8;&#x53EF;&#x7528;&#x6216;&#x6545;&#x969C;&#x8F6C;&#x79FB;&#xFF09;&#x65F6;&#xFF0C;&#x8BF7;&#x4E0D;&#x8981;&#x4F7F;&#x7528; Hazelcast &#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x4EEC;&#x4E0D;&#x4F1A;&#x901A;&#x77E5;&#x4ED6;&#x4EEC;&#x4F55;&#x65F6;&#x79BB;&#x5F00;&#x96C6;&#x7FA4;&#xFF0C;&#x540C;&#x65F6;&#x6709;&#x53EF;&#x80FD;&#x4E22;&#x5931;&#x6570;&#x636E;&#xFF0C;&#x8FD8;&#x6709;&#x53EF;&#x80FD;&#x5C06;&#x96C6;&#x7FA4;&#x7F6E;&#x4E8E;&#x4E0D;&#x4E00;&#x81F4;&#x7684;&#x72B6;&#x6001;&#x3002;&#x66F4;&#x591A;&#x60C5;&#x51B5;&#x8BF7;&#x7FFB;&#x9605; <a href="https://github.com/vert-x3/vertx-hazelcast/issues/24" target="_blank">Issue 24</a></li>
+<li>&#x540C;&#x65F6;&#x8981;&#x786E;&#x4FDD; Hazelcast &#x96C6;&#x7FA4; &#x5148;&#x4E8E; Vert.x &#x96C6;&#x7FA4;&#x542F;&#x52A8;&#xFF0C;&#x540E;&#x4E8E; Vert.x &#x96C6;&#x7FA4;&#x5173;&#x95ED;&#x3002;&#x540C;&#x65F6;&#x9700;&#x8981;&#x7981;&#x7528; <code>shutdownhook</code>&#x3002;&#x53C2;&#x8003;&#x4E0A;&#x8FF0;&#x7684; xml &#x914D;&#x7F6E;&#xFF0C;&#x6216;&#x8005;&#x901A;&#x8FC7; &#x7CFB;&#x7EDF;&#x53D8;&#x91CF;&#x6765;&#x5B9E;&#x73B0;&#x3002;</li>
+</ul>
+<h2 id="&#x4F7F;&#x7528;-hazelcast-async-methods">&#x4F7F;&#x7528; Hazelcast async methods</h2>
+<p>Hazelcast &#x4E2D;&#x7684; <code>IMap</code> &#x3001; <code>IAtomicLong</code> &#x63A5;&#x53E3;(&#x6570;&#x636E;&#x7ED3;&#x6784;) &#x5747;&#x6709;&#x5F02;&#x6B65;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x8FD4;&#x56DE;&#x503C;&#x4E3A; <code>ICompletableFuture&lt;V&gt;</code>&#xFF0C;&#x8FD9;&#x4E0E; Vert.x &#x7684;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x5B8C;&#x7F8E;&#x5951;&#x5408;&#x3002;&#x4F46;&#x662F;&#x5373;&#x4F7F;&#x8FD9;&#x4E9B;&#x63A5;&#x53E3;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#xFF0C;&#x5374;&#x6CA1;&#x6709;&#x901A;&#x8FC7; <code>HazelcastInstance</code> &#x516C;&#x5171; API &#x66B4;&#x9732;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<code>HazelcastClusterManager</code> &#x4F7F;&#x7528;&#x516C;&#x5171; API&#x3002;&#x5F53;&#x5728;&#x7A0B;&#x5E8F;&#x542F;&#x52A8;&#x65F6;&#xFF0C;&#x8BBE;&#x7F6E;&#x9009;&#x9879;<code>-Dvertx.hazelcast.async-api=true</code> &#xFF0C;&#x5C06;&#x4EE3;&#x8868;&#x7CFB;&#x7EDF;&#x5728;&#x4E0E; Hazelcast &#x96C6;&#x7FA4;&#x901A;&#x8BAF;&#x4EA4;&#x4E92;&#x65F6;&#xFF0C;&#x5C06;&#x91C7;&#x7528; Hazelcast async API &#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#xFF0C;<code>Counter</code> &#x8BA1;&#x6570;&#x64CD;&#x4F5C;&#x3001;<code>AsyncMap</code>&#x7684; <code>get</code> <code>put</code> <code>remove</code> &#x64CD;&#x4F5C;&#x90FD;&#x5C06;&#x901A;&#x8FC7; Vert.x EventLoop &#x7EBF;&#x7A0B;&#x6765;&#x6267;&#x884C;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x901A;&#x8FC7; Woker &#x7EBF;&#x7A0B;&#x7684; <code>vertx.executeBlocking</code> &#x6267;&#x884C;&#x3002;</p>
+<h2 id="&#x6545;&#x969C;&#x6392;&#x9664;">&#x6545;&#x969C;&#x6392;&#x9664;</h2>
+<p>&#x5982;&#x679C;&#x9ED8;&#x8BA4;&#x7684;&#x7EC4;&#x64AD;&#x914D;&#x7F6E;&#x4E0D;&#x80FD;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#xFF0C;&#x901A;&#x5E38;&#x6709;&#x4EE5;&#x4E0B;&#x539F;&#x56E0;&#xFF1A;</p>
+<h3 id="&#x673A;&#x5668;&#x7981;&#x7528;&#x7EC4;&#x64AD;">&#x673A;&#x5668;&#x7981;&#x7528;&#x7EC4;&#x64AD;</h3>
+<p>MacOS &#x9ED8;&#x8BA4;&#x7981;&#x7528;&#x7EC4;&#x64AD;&#x3002;Google&#x4E00;&#x4E0B;&#x542F;&#x7528;&#x7EC4;&#x64AD;&#x3002;</p>
+<h3 id="&#x4F7F;&#x7528;&#x9519;&#x8BEF;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;">&#x4F7F;&#x7528;&#x9519;&#x8BEF;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;</h3>
+<p>&#x5982;&#x679C;&#x673A;&#x5668;&#x4E0A;&#x6709;&#x591A;&#x4E2A;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#xFF08;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x5728;&#x8FD0;&#x884C; VPN &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF09;&#xFF0C;&#x90A3;&#x4E48; Hazelcast &#x5F88;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x9519;&#x8BEF;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x786E;&#x4FDD; Hazelcast &#x4F7F;&#x7528;&#x6B63;&#x786E;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#xFF0C;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x5C06; <code>interface</code> &#x8BBE;&#x7F6E;&#x4E3A;&#x6307;&#x5B9A;IP&#x5730;&#x5740;&#xFF0C;&#x540C;&#x65F6;&#x786E;&#x4FDD; enabled &#x5C5E;&#x6027;&#x8BBE;&#x7F6E;&#x4E3A; true &#x3002; &#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">interfaces</span> <span class="hljs-attr">enabled</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">interface</span>&gt;</span>192.168.1.20<span class="hljs-tag">&lt;/<span class="hljs-name">interface</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">interfaces</span>&gt;</span>
+</code></pre>
+<p>&#x5F53;&#x8FD0;&#x884C;&#x96C6;&#x7FA4;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x786E;&#x4FDD; Vert.x &#x4F7F;&#x7528;&#x6B63;&#x786E;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x3002;&#x5F53;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E; <code>cluster-host</code> &#x53C2;&#x6570;&#xFF1A;</p>
+<pre><code class="lang-bash">vertx run myverticle.js -cluster -cluster-host your-ip-address
+</code></pre>
+<p>&#x5176;&#x4E2D; <code>your-ip-address</code> &#x5FC5;&#x987B;&#x4E0E; Hazelcast &#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</p>
+<p>&#x5F53;&#x901A;&#x8FC7;&#x7F16;&#x7A0B;&#x6A21;&#x5F0F;&#x4F7F;&#x7528; Vert.x &#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x65B9;&#x6CD5; <code>setClusterHost</code> &#x6765;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;</p>
+<h3 id="&#x4F7F;&#x7528;vpn">&#x4F7F;&#x7528;VPN</h3>
+<p>VPN &#x8F6F;&#x4EF6;&#x901A;&#x5E38;&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x4E0D;&#x652F;&#x6301;&#x7EC4;&#x64AD;&#x7684;&#x865A;&#x62DF;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x6765;&#x8FDB;&#x884C;&#x5DE5;&#x4F5C;&#x3002;&#x5728; VPN &#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x5982;&#x679C; Hazelcast &#x4E0E; Vert.x &#x4E0D;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x7684;&#x8BDD;&#xFF0C;VPN &#x63A5;&#x53E3;&#x5C06;&#x88AB;&#x9009;&#x62E9;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6B63;&#x786E;&#x7684;&#x63A5;&#x53E3;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x7684;&#x8F6F;&#x4EF6;&#x8FD0;&#x884C;&#x5728; VPN &#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x53C2;&#x8003;&#x4E0A;&#x8FF0;&#x7AE0;&#x8282;&#xFF0C;&#x8BBE;&#x7F6E;&#x6B63;&#x786E;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x3002;</p>
+<h3 id="&#x7EC4;&#x64AD;&#x4E0D;&#x53EF;&#x7528;">&#x7EC4;&#x64AD;&#x4E0D;&#x53EF;&#x7528;</h3>
+<p>&#x5728;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x56E0;&#x4E3A;&#x7279;&#x6B8A;&#x7684;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#xFF0C;&#x53EF;&#x80FD;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&#x7EC4;&#x64AD;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5E94;&#x8BE5;&#x914D;&#x7F6E;&#x5176;&#x4ED6;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#xFF0C;&#x4F8B;&#x5982;&#x5728; TCP &#x4E0A;&#x4F7F;&#x7528; TCP &#x5957;&#x63A5;&#x5B57;&#xFF0C;&#x5728;&#x4E9A;&#x9A6C;&#x900A;&#x4E91;&#x4E0A;&#x4F7F;&#x7528; EC2 &#x3002;</p>
+<p>&#x6709;&#x5173; Hazelcast &#x66F4;&#x591A;&#x4F20;&#x8F93;&#x65B9;&#x5F0F;&#xFF0C;&#x4EE5;&#x53CA;&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x5B83;&#x4EEC;&#xFF0C;&#x8BF7;&#x54A8;&#x8BE2; Hazelcast &#x6587;&#x6863;&#x3002;</p>
+<h3 id="&#x5F00;&#x542F;&#x65E5;&#x5FD7;">&#x5F00;&#x542F;&#x65E5;&#x5FD7;</h3>
+<p>&#x5728;&#x6392;&#x9664;&#x6545;&#x969C;&#x65F6;&#xFF0C;&#x5F00;&#x542F; Hazelcast &#x65E5;&#x5FD7;&#xFF0C;&#x5C06;&#x4F1A;&#x7ED9;&#x4E88;&#x5F88;&#x5927;&#x7684;&#x5E2E;&#x52A9;&#x3002;&#x5728; <code>classpath</code> &#x4E2D;&#x6DFB;&#x52A0; <code>vertx-default-jul-logging.properties</code> &#x6587;&#x4EF6;&#xFF08;&#x9ED8;&#x8BA4;&#x7684;JUL&#x8BB0;&#x5F55;&#x65F6;&#xFF09;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x6807;&#x51C6; java.util.loging&#xFF08;JUL&#xFF09; &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;&#x5177;&#x4F53;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>com.hazelcast.level=INFO
+java.util.logging.ConsoleHandler.level=INFO
+java.util.logging.FileHandler.level=INFO
+</code></pre><h2 id="hazelcast-&#x65E5;&#x5FD7;&#x914D;&#x7F6E;">Hazelcast &#x65E5;&#x5FD7;&#x914D;&#x7F6E;</h2>
+<p>Hazelcast &#x7684;&#x65E5;&#x5FD7;&#x9ED8;&#x8BA4;&#x91C7;&#x7528; JDK &#x5B9E;&#x73B0;&#xFF08;&#x53C2;&#x8003; JUL&#xFF09;&#x3002;&#x5982;&#x679C;&#x60F3;&#x5207;&#x6362;&#x81F3;&#x5176;&#x4ED6;&#x65E5;&#x5FD7;&#x5E93;&#xFF0C;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E; <code>azelcast.logging.type</code> &#x5373;&#x53EF;&#x8FBE;&#x5230;&#x76EE;&#x7684;&#x3002;</p>
+<pre><code class="lang-bash">-Dhazelcast.logging.type=slf4j
+</code></pre>
+<p>&#x8BE6;&#x7EC6;&#x6587;&#x6863;&#x8BF7;&#x53C2;&#x8003; <a href="http://docs.hazelcast.org/docs/3.6.1/manual/html-single/index.html#logging-configuration" target="_blank">hazelcast documentation</a>&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x5176;&#x4ED6;-hazelcast-&#x7248;&#x672C;">&#x4F7F;&#x7528;&#x5176;&#x4ED6; Hazelcast &#x7248;&#x672C;</h2>
+<p>&#x5F53;&#x524D;&#x7684; Vert.x HazelcastClusterManager &#x4F7F;&#x7528;&#x7684; Hazelcast &#x7248;&#x672C;&#x4E3A; <code>3.6.3</code> &#x3002;&#x5982;&#x679C;&#x5F00;&#x53D1;&#x8005;&#x60F3;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x7248;&#x672C;&#x7684; Hazelcast&#xFF0C;&#x9700;&#x8981;&#x505A;&#x4EE5;&#x4E0B;&#x5DE5;&#x4F5C;&#xFF1A;</p>
+<ul>
+<li>&#x5C06;&#x76EE;&#x6807;&#x7248;&#x672C;&#x7684; Hazelcast &#x4F9D;&#x8D56;&#x6DFB;&#x52A0;&#x81F3; classpath &#x4E2D; </li>
+<li>&#x5982;&#x679C;&#x662F; fat jar &#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x5728;&#x6784;&#x5EFA;&#x5DE5;&#x5177;&#x4E2D;&#x4F7F;&#x7528;&#x6B63;&#x786E;&#x7684;&#x7248;&#x672C;</li>
+</ul>
+<p>&#x53C2;&#x8003;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li>Maven(pom.xml)</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.hazelcast<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hazelcast<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>ENTER_YOUR_VERSION_HERE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-hazelcast<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle(build.gradle)</li>
+</ul>
+<pre><code class="lang-groovy">dependencies {
+ compile (<span class="hljs-string">&quot;io.vertx:vertx-hazelcast:3.4.1&quot;</span>){
+   exclude <span class="hljs-string">group:</span> <span class="hljs-string">&apos;com.hazelcast&apos;</span>, <span class="hljs-string">module:</span> <span class="hljs-string">&apos;hazelcast&apos;</span>
+ }
+ compile <span class="hljs-string">&quot;com.hazelcast:hazelcast:ENTER_YOUR_VERSION_HERE&quot;</span>
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Clustering.html" class="navigation navigation-prev " aria-label="Previous page: Clustering">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Infinispan.html" class="navigation navigation-next " aria-label="Next page: Infinispan">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Hazelcast","level":"1.14.1","depth":2,"next":{"title":"Infinispan","level":"1.14.2","depth":2,"path":"clustering/Infinispan.md","ref":"clustering/Infinispan.md","articles":[]},"previous":{"title":"Clustering","level":"1.14","depth":1,"path":"clustering/Clustering.md","ref":"clustering/Clustering.md","articles":[{"title":"Hazelcast","level":"1.14.1","depth":2,"path":"clustering/Hazelcast.md","ref":"clustering/Hazelcast.md","articles":[]},{"title":"Infinispan","level":"1.14.2","depth":2,"path":"clustering/Infinispan.md","ref":"clustering/Infinispan.md","articles":[]},{"title":"Apache Ignite","level":"1.14.3","depth":2,"path":"clustering/ApacheIgnite.md","ref":"clustering/ApacheIgnite.md","articles":[]},{"title":"Apache Zookeeper","level":"1.14.4","depth":2,"path":"clustering/ApacheZookeeper.md","ref":"clustering/ApacheZookeeper.md","articles":[]},{"title":"JGroups ","level":"1.14.5","depth":2,"path":"clustering/JGroups.md","ref":"clustering/JGroups.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"clustering/Hazelcast.md","mtime":"2017-05-20T07:08:01.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:45:55.385Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

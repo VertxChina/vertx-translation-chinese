@@ -1713,7 +1713,7 @@ vertx.deployVerticle("com.mycompany.MyVerticle", options);
 
 相反，它内部仅仅维护一个服务器实例。当传入新的连接时，它以轮询的方式将其分发给任意一个连接处理器处理。
 
-因此，Vert.x TCP 服务端可以水平扩展到多个核，并且每个实例保持单线程。
+因此，Vert.x TCP 服务端可以水平扩展到多个核，并且每个实例保持单线程环境不变。
 
 ### 创建 TCP 客户端
 

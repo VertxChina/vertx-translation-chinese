@@ -1,0 +1,36 @@
+{
+    "author": "Vert.x中国用户组",
+    "description": "这是针对 Vert.x 官方文档中文翻译的仓库。",
+    "extension": null,
+    "generator": "site",
+    "isbn": "",
+    "links": {
+        "sharing": {
+            "all": null,
+            "facebook": null,
+            "google": null,
+            "twitter": null,
+            "weibo": null
+        },
+        "sidebar": {
+            "Offical Site": "http://www.vertx.io"
+        }
+    },
+    "output": "docs",
+    "pdf": {
+        "fontSize": 12,
+        "footerTemplate": null,
+        "headerTemplate": null,
+        "margin": {
+            "bottom": 36,
+            "left": 62,
+            "right": 62,
+            "top": 36
+        },
+        "pageNumbers": false,
+        "paperSize": "a4"
+    },
+    "plugins": [],
+    "title": "Vert.x 官方文档中文翻译",
+    "variables": {}
+}

@@ -4,6 +4,8 @@
 
 当前文档翻译对应版本：**Vert.x 3.4.1**。
 
+在线地址：[https://vertxchina.github.io/vertx-translation-chinese](https://vertxchina.github.io/vertx-translation-chinese)
+
 ## 背景
 
 随着 Vert.x 在中国越来越受到关注，使用人数也越来越多，但相关的中文文档却寥寥可数，在这样的背景下，Vert.x 中国用户组发动社区内的志愿者翻译 [Vert.x 官方文档](http://vertx.io/docs)。
@@ -33,6 +35,31 @@
 ### 翻译计划
 
 具体见[翻译计划文档](PLAN.md)。
+
+## 构建方法
+
+本项目的在线版本部署在 Github Pages 上。使用 master 分支的 docs 目录作为生成的 gitbook 站点。以下是构建方法：
+
+**安装 nodejs 和 npm**
+
+[https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+
+**安装 gitbook 命令行工具**
+
+```
+sudo npm install gitbook-cli -g
+```
+
+**构建 gitbook**
+
+进入项目根目录
+```
+rm -rf docs && gitbook build ./ docs
+```
+
+构建之后将 docs 目录的所有更新提交
+
+> 注意一定要输出到 docs 目录，才能被 git pages 识别
 
 ## 归属与发布
 

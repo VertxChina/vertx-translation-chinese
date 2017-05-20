@@ -1,0 +1,1154 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Apache Ignite · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ApacheZookeeper.html" />
+    
+    
+    <link rel="prev" href="Infinispan.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clustering.html">
+            
+                <a href="Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="Hazelcast.html">
+            
+                <a href="Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="Infinispan.html">
+            
+                <a href="Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.14.3" data-path="ApacheIgnite.html">
+            
+                <a href="ApacheIgnite.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="ApacheZookeeper.html">
+            
+                <a href="ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="JGroups.html">
+            
+                <a href="JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Apache Ignite</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="ignite-cluster-manager">Ignite Cluster Manager</h1>
+<blockquote>
+<p>&#x7FFB;&#x8BD1;&#xFF1A;Ranger Tsao&#xFF0C;&#x6821;&#x5BF9; &#x5B8B;&#x5B50;&#x8C6A;&#x3001;&#x8D75;&#x4EAE;</p>
+</blockquote>
+<p><code>IgniteClusterManager</code> &#x662F;&#x57FA;&#x4E8E; <a href="https://ignite.apache.org" target="_blank">Apache Ignite</a> &#x5B9E;&#x73B0;&#x3002;&#x7531;&#x4E8E; Vert.x &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x7684;&#x53EF;&#x63D2;&#x62D4;&#x6027;&#xFF0C;&#x4E5F;&#x53EF;&#x8F7B;&#x6613;&#x5207;&#x6362;&#x81F3;&#x5176;&#x5B83;&#x7684;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x3002;</p>
+<p>Vert.x &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x5305;&#x542B;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x529F;&#x80FD;&#xFF1A;</p>
+<ol>
+<li>&#x53D1;&#x73B0;&#x5E76;&#x7BA1;&#x7406;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x8282;&#x70B9;</li>
+<li>&#x7BA1;&#x7406;&#x96C6;&#x7FA4;&#x7AEF;&#x7684;&#x4E3B;&#x9898;&#x8BA2;&#x9605;&#x6E05;&#x5355;&#xFF08;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x5F97;&#x77E5;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x90A3;&#x4E9B;&#x8282;&#x70B9;&#x8BA2;&#x9605;&#x4E86;&#x90A3;&#x4E9B; EventBus &#x5730;&#x5740;&#xFF09;</li>
+<li>&#x5206;&#x5E03;&#x5F0F; Map &#x652F;&#x6301;</li>
+<li>&#x5206;&#x5E03;&#x5F0F;&#x9501;</li>
+<li>&#x5206;&#x5E03;&#x5F0F;&#x8BA1;&#x6570;&#x5668;</li>
+</ol>
+<p><strong>&#x6CE8;&#x610F;&#x4E8B;&#x9879;</strong>
+Vert.x &#x96C6;&#x7FA4;&#x5668;&#x5E76;&#x4E0D;&#x5904;&#x7406;&#x8282;&#x70B9;&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x5728; Vert.x &#x4E2D;&#x8282;&#x70B9;&#x4E2D;&#x7684;&#x901A;&#x4FE1;&#x662F;&#x76F4;&#x63A5;&#x7531; TCP &#x94FE;&#x63A5;&#x5904;&#x7406;&#x7684;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;-ignite-cluster-manager">&#x4F7F;&#x7528; Ignite cluster manager</h2>
+<p>Vert.x &#x80FD;&#x591F;&#x4ECE; classpath &#x8DEF;&#x5F84;&#x7684; jar &#x81EA;&#x52A8;&#x68C0;&#x6D4B;&#x5E76;&#x4F7F;&#x7528;&#x51FA; <code>ClusterManager</code> &#x7684;&#x5B9E;&#x73B0;&#x3002;&#x4E0D;&#x8FC7;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x5728; classpath &#x6CA1;&#x6709;&#x5176;&#x4ED6;&#x7684; <code>ClusterManager</code> &#x5B9E;&#x73B0;&#x3002;</p>
+<p>&#x53E6;&#x5916; Vert.x &#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E; <code>-Dvertx.clusterManagerFactory=io.vertx.spi.cluster.ignite.IgniteClusterManager</code> &#x6765;&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684; &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x5B9E;&#x73B0;&#x3002;</p>
+<h3 id="&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x4F7F;&#x7528;">&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x4F7F;&#x7528;</h3>
+<p>&#x786E;&#x4FDD; <code>vertx-ignite-3.4.1.jar</code> &#x5728; Vert.x &#x7684;&#x5B89;&#x88C5;&#x8DEF;&#x5F84;&#x4E2D;&#x7684; lib &#x76EE;&#x5F55;&#x4E0B;&#x3002;</p>
+<h3 id="&#x901A;&#x8FC7;-maven-&#x6216;-gradle-&#x6784;&#x5EFA;&#x5DE5;&#x5177;&#x4F7F;&#x7528;">&#x901A;&#x8FC7; Maven &#x6216; Gradle &#x6784;&#x5EFA;&#x5DE5;&#x5177;&#x4F7F;&#x7528;</h3>
+<ul>
+<li>Maven(pom.xml)</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-ignite<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle(gradle.xml)</li>
+</ul>
+<pre><code class="lang-groovy">compile <span class="hljs-string">&apos;io.vertx:vertx-ignite:3.4.1&apos;</span>
+</code></pre>
+<h3 id="&#x7F16;&#x7A0B;&#x5F62;&#x5F0F;&#x8C03;&#x7528;">&#x7F16;&#x7A0B;&#x5F62;&#x5F0F;&#x8C03;&#x7528;</h3>
+<p>&#x901A;&#x8FC7;&#x7F16;&#x7801;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x8BBE;&#x7F6E;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x5B9E;&#x73B0;&#xFF0C;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-java">ClusterManager clusterManager = <span class="hljs-keyword">new</span> IgniteClusterManager();<span class="hljs-comment">//&#x521B;&#x5EFA; Ignite &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;</span>
+
+VertxOptions options = <span class="hljs-keyword">new</span> VertxOptions().setClusterManager(clusterManager);<span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5668;&#x5B9E;&#x73B0;</span>
+Vertx.clusteredVertx(options, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    Vertx vertx = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// failed!</span>
+  }
+});
+</code></pre>
+<h2 id="&#x914D;&#x7F6E;-ignite-cluster-manager">&#x914D;&#x7F6E; Ignite cluster manager</h2>
+<h3 id="&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h3>
+<p>&#x5728; <code>vertx-ignite</code> jar &#x4E2D;&#x5185;&#x5D4C;&#x4E86;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x6587;&#x4EF6; <code>default-ignite.xml</code>&#x3002;
+&#x5982;&#x679C;&#x9700;&#x8981;&#x8986;&#x76D6;&#x6B64;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x5728; classpath &#x8DEF;&#x5F84;&#x4E2D;&#x6DFB;&#x52A0; <code>ignite.xml</code></p>
+<p><code>default-ignite.xml</code> &#x4E0E; <code>ignite.xml</code> &#x5FC5;&#x987B;&#x662F;&#x4E00;&#x4E2A; <code>Apache Ignite</code> &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5728; <a href="https://www.zybuluo.com/liyuj/note/230739" target="_blank">Apache Ignite</a> &#x7684;&#x5B98;&#x65B9;&#x4E2D;&#x6587;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x5177;&#x4F53;&#x7684;&#x914D;&#x7F6E;&#x63CF;&#x8FF0;&#x3002;</p>
+<h3 id="&#x7F16;&#x7A0B;&#x914D;&#x7F6E;">&#x7F16;&#x7A0B;&#x914D;&#x7F6E;</h3>
+<pre><code class="lang-java">IgniteConfiguration cfg = <span class="hljs-keyword">new</span> IgniteConfiguration();
+<span class="hljs-comment">// &#x914D;&#x7F6E; Ignite &#xFF0C;&#x6B64;&#x5904;&#x7701;&#x7565;&#x914D;&#x7F6E;&#x4EE3;&#x7801;</span>
+
+ClusterManager clusterManager = <span class="hljs-keyword">new</span> IgniteClusterManager(cfg);
+
+VertxOptions options = <span class="hljs-keyword">new</span> VertxOptions().setClusterManager(clusterManager);
+Vertx.clusteredVertx(options, res -&gt; {
+  <span class="hljs-keyword">if</span> (res.succeeded()) {
+    Vertx vertx = res.result();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// failed!</span>
+  }
+});
+</code></pre>
+<h3 id="&#x81EA;&#x52A8;&#x53D1;&#x73B0;&#x53CA;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#x914D;&#x7F6E;">&#x81EA;&#x52A8;&#x53D1;&#x73B0;&#x53CA;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#x914D;&#x7F6E;</h3>
+<p>&#x5728;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x4E2D;&#x4F7F;&#x7528; <code>TcpDiscoveryMulticastIpFinder</code> &#x5B9E;&#x73B0;&#xFF0C;&#x8FD9;&#x7F51;&#x7EDC;&#x53D1;&#x73B0;&#x5B9E;&#x73B0;&#xFF0C;&#x9700;&#x8981;&#x5F00;&#x542F;&#x7EC4;&#x64AD;&#x3002;&#x5982;&#x679C;&#x7EC4;&#x64AD;&#x88AB;&#x7981;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x7528; <code>TcpDiscoveryVmIpFinder</code> &#x66FF;&#x4EE3;&#xFF0C;&#x524D;&#x63D0;&#x662F;&#x5728; <code>ignite.xml</code> &#x4E8B;&#x5148;&#x914D;&#x7F6E;&#x597D; IP &#x5730;&#x5740;&#x5217;&#x8868;&#x3002;&#x5177;&#x4F53; Ignite &#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6587;&#x6863; <a href="https://www.zybuluo.com/liyuj/note/230739" target="_blank">Apache Ignite</a>&#x3002;</p>
+<h2 id="&#x6545;&#x969C;&#x6392;&#x9664;">&#x6545;&#x969C;&#x6392;&#x9664;</h2>
+<h3 id="&#x7EC4;&#x64AD;&#x672A;&#x6B63;&#x5E38;&#x5F00;&#x542F;">&#x7EC4;&#x64AD;&#x672A;&#x6B63;&#x5E38;&#x5F00;&#x542F;</h3>
+<p>MacOS &#x9ED8;&#x8BA4;&#x7981;&#x7528;&#x7EC4;&#x64AD;&#x3002;Google&#x4E00;&#x4E0B;&#x542F;&#x7528;&#x7EC4;&#x64AD;&#x3002;</p>
+<h3 id="&#x4F7F;&#x7528;&#x9519;&#x8BEF;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;">&#x4F7F;&#x7528;&#x9519;&#x8BEF;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;</h3>
+<p>&#x5982;&#x679C;&#x673A;&#x5668;&#x4E0A;&#x6709;&#x591A;&#x4E2A;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#xFF08;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x5728;&#x8FD0;&#x884C; VPN &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF09;&#xFF0C;&#x90A3;&#x4E48; Ignite &#x5F88;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x9519;&#x8BEF;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x786E;&#x4FDD; Ignite &#x4F7F;&#x7528;&#x6B63;&#x786E;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#xFF0C;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x5C06; <code>IgniteConfiguration</code> &#x8BBE;&#x7F6E;&#x4E3A;&#x6307;&#x5B9A;IP&#x5730;&#x5740;&#x3002; &#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.apache.ignite.configuration.IgniteConfiguration&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;localHost&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;192.168.1.20&quot;</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>&#x5F53;&#x8FD0;&#x884C;&#x96C6;&#x7FA4;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x786E;&#x4FDD; Vert.x &#x4F7F;&#x7528;&#x6B63;&#x786E;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x3002;&#x5F53;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E; <code>cluster-host</code> &#x53C2;&#x6570;&#xFF1A;</p>
+<pre><code class="lang-bash">vertx run myverticle.js -cluster -cluster-host your-ip-address
+</code></pre>
+<p>&#x5176;&#x4E2D; <code>your-ip-address</code> &#x5FC5;&#x987B;&#x4E0E; Ignite &#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</p>
+<p>&#x5F53;&#x901A;&#x8FC7;&#x7F16;&#x7A0B;&#x6A21;&#x5F0F;&#x4F7F;&#x7528; Vert.x &#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x65B9;&#x6CD5; <code>setClusterHost</code> &#x6765;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;</p>
+<h3 id="&#x4F7F;&#x7528;vpn">&#x4F7F;&#x7528;VPN</h3>
+<p>VPN &#x8F6F;&#x4EF6;&#x901A;&#x5E38;&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x4E0D;&#x652F;&#x6301;&#x7EC4;&#x64AD;&#x7684;&#x865A;&#x62DF;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x6765;&#x8FDB;&#x884C;&#x5DE5;&#x4F5C;&#x3002;&#x5728; VPN &#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x5982;&#x679C; Ignite &#x4E0E; Vert.x &#x4E0D;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x7684;&#x8BDD;&#xFF0C;VPN &#x63A5;&#x53E3;&#x5C06;&#x88AB;&#x9009;&#x62E9;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6B63;&#x786E;&#x7684;&#x63A5;&#x53E3;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x7684;&#x8F6F;&#x4EF6;&#x8FD0;&#x884C;&#x5728; VPN &#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x53C2;&#x8003;&#x4E0A;&#x8FF0;&#x7AE0;&#x8282;&#xFF0C;&#x8BBE;&#x7F6E;&#x6B63;&#x786E;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x3002;</p>
+<h3 id="&#x7EC4;&#x64AD;&#x88AB;&#x7981;&#x7528;">&#x7EC4;&#x64AD;&#x88AB;&#x7981;&#x7528;</h3>
+<p>&#x5728;&#x4E00;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x65E0;&#x6CD5;&#x5F00;&#x542F;&#x7EC4;&#x64AD;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x5408;&#x9002;&#x7684; <code>IP finder</code>&#x3002;TCP sockets &#x53D1;&#x73B0;&#x5668;  <code>TcpDiscoveryVmIpFinder</code> &#xFF0C;&#x6216;&#x8005; Amazon S3 &#x53D1;&#x73B0;&#x5668; <code>TcpDiscoveryS3IpFinder</code> &#x3002;</p>
+<p>&#x5177;&#x4F53; Ignite &#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6587;&#x6863; <a href="https://www.zybuluo.com/liyuj/note/230739" target="_blank">Apache Ignite</a>&#x3002;</p>
+<h3 id="&#x5F00;&#x542F;&#x65E5;&#x5FD7;">&#x5F00;&#x542F;&#x65E5;&#x5FD7;</h3>
+<p>&#x5728;&#x6392;&#x9664;&#x6545;&#x969C;&#x65F6;&#xFF0C;&#x5F00;&#x542F; Ignite &#x65E5;&#x5FD7;&#xFF0C;&#x5C06;&#x4F1A;&#x7ED9;&#x4E88;&#x5F88;&#x5927;&#x7684;&#x5E2E;&#x52A9;&#x3002;&#x5728; <code>classpath</code> &#x4E2D;&#x6DFB;&#x52A0; <code>vertx-default-jul-logging.properties</code> &#x6587;&#x4EF6;&#xFF08;&#x9ED8;&#x8BA4;&#x7684;JUL&#x8BB0;&#x5F55;&#x65F6;&#xFF09;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x6807;&#x51C6; java.util.loging&#xFF08;JUL&#xFF09; &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;&#x5177;&#x4F53;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>org.apache.ignite.level=INFO
+java.util.logging.ConsoleHandler.level=INFO
+java.util.logging.FileHandler.level=INFO
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Infinispan.html" class="navigation navigation-prev " aria-label="Previous page: Infinispan">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ApacheZookeeper.html" class="navigation navigation-next " aria-label="Next page: Apache Zookeeper">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Apache Ignite","level":"1.14.3","depth":2,"next":{"title":"Apache Zookeeper","level":"1.14.4","depth":2,"path":"clustering/ApacheZookeeper.md","ref":"clustering/ApacheZookeeper.md","articles":[]},"previous":{"title":"Infinispan","level":"1.14.2","depth":2,"path":"clustering/Infinispan.md","ref":"clustering/Infinispan.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"clustering/ApacheIgnite.md","mtime":"2017-05-20T07:08:01.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:45:55.385Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

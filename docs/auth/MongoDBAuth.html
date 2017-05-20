@@ -1,0 +1,1152 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>MongoDB Auth · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Oauth2.html" />
+    
+    
+    <link rel="prev" href="ShiroAuth.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Eventbus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Auth.html">
+            
+                <a href="Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="AuthCommon.html">
+            
+                <a href="AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="JDBCAuth.html">
+            
+                <a href="JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="JWTAuth.html">
+            
+                <a href="JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="ShiroAuth.html">
+            
+                <a href="ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9.5" data-path="MongoDBAuth.html">
+            
+                <a href="MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="Oauth2.html">
+            
+                <a href="Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../clustering/ApacheIgnite.html">
+            
+                <a href="../clustering/ApacheIgnite.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../clustering/JGroups.html">
+            
+                <a href="../clustering/JGroups.html">
+            
+                    
+                    JGroups 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >MongoDB Auth</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-mongodb-auth">Vert.x MongoDB Auth</h1>
+<ul>
+<li>&#x5F15;&#x7528;&#xFF1A;<a href="http://vertx.io/docs/vertx-auth-mongo/java/" target="_blank">http://vertx.io/docs/vertx-auth-mongo/java/</a></li>
+</ul>
+<p><em>&#x57FA;&#x672C;&#x672F;&#x8BED;</em></p>
+<ul>
+<li><strong>Authentication</strong>&#xFF1A;&#x8BA4;&#x8BC1;</li>
+<li><strong>Authorisation</strong>&#xFF1A;&#x6388;&#x6743;</li>
+<li><strong>Authority</strong>&#xFF1A;&#x6743;&#x9650;</li>
+<li><strong>Permission</strong>&#xFF1A;&#x8BB8;&#x53EF;</li>
+<li><strong>Role</strong>&#xFF1A;&#x89D2;&#x8272;</li>
+<li><strong>User</strong>&#xFF1A;&#x7528;&#x6237;</li>
+<li><strong>Token</strong>&#xFF1A;&#x4EE4;&#x724C;</li>
+<li><strong>Principal</strong>&#xFF1A;&#x51ED;&#x8BC1;</li>
+<li><strong>Handler</strong>&#xFF1A;&#x5904;&#x7406;&#x5668;</li>
+<li><strong>Collection</strong>&#xFF1A;&#x96C6;&#x5408;&#xFF0C;MongoDB&#x4E13;&#x7528;&#xFF08;&#x6982;&#x5FF5;&#x7A0D;&#x540C;Database&#x7684;Table&#xFF09;</li>
+<li><strong>Document</strong>&#xFF1A;&#x6587;&#x6863;&#xFF0C;MongoDB&#x4E13;&#x7528;&#xFF08;&#x6982;&#x5FF5;&#x7A0D;&#x540C;Database&#x4E2D;Row&#xFF09;</li>
+</ul>
+<p>Vert.X&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/AuthProvider.html" target="_blank">AuthProvider</a>&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x8BA9;&#x4F60;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html" target="_blank">MongoClient</a>&#x9488;&#x5BF9;MongoDb&#x6570;&#x636E;&#x5E93;&#x6267;&#x884C;&#x8BA4;&#x8BC1;&#x548C;&#x6388;&#x6743;&#x3002;&#x82E5;&#x8981;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x5B83;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x5728;&#x6784;&#x5EFA;&#x63CF;&#x8FF0;&#x4FE1;&#x606F;&#x7684;<em>dependencies</em>&#x8282;&#x70B9;&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4FE1;&#x606F;&#xFF1A;</p>
+<ul>
+<li><p>Maven&#xFF08;&#x5728;<code>pom.xml</code>&#x6587;&#x4EF6;&#x4E2D;&#xFF09;</p>
+<pre><code>  &lt;dependency&gt;
+      &lt;groupId&gt;io.vertx&lt;/groupId&gt;
+      &lt;artifactId&gt;vertx-auth-mongo&lt;/artifactId&gt;
+      &lt;version&gt;3.2.1&lt;/version&gt;
+  &lt;/dependency&gt;
+</code></pre></li>
+<li><p>Gradle&#xFF08;&#x5728;<code>build.gradle</code>&#x6587;&#x4EF6;&#x4E2D;&#xFF09;</p>
+<pre><code>  compile io.vertx:vertx-auth-mongo:3.2.1
+</code></pre></li>
+</ul>
+<p>&#x5982;&#x679C;&#x8981;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#xFF0C;&#x4F60;&#x9996;&#x5148;&#x9700;&#x8981;&#x4E00;&#x4E2A;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html" target="_blank">MongoClient</a>&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x8981;&#x77E5;&#x9053;&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x8FD9;&#x4E2A;&#x5B9E;&#x4F8B;&#x53EF;&#x6309;&#x7167;&#x6587;&#x6863;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x5B9E;&#x65BD;&#x3002;</p>
+<p>&#x4E00;&#x65E6;&#x4F60;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/mongo/MongoClient.html" target="_blank">MongoClient</a>&#x5B9E;&#x4F8B;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4E0B;&#x8FB9;&#x7684;&#x4EE3;&#x7801;&#x521B;&#x5EFA;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html" target="_blank">MongoAuth</a>&#x5B9E;&#x4F8B;&#xFF1A;</p>
+<pre><code>MongoClient client = MongoClient.createShared(vertx, mongoClientConfig);
+JsonObject authProperties = new JsonObject();
+MongoAuth authProvider = MongoAuth.create(client, authProperties);
+</code></pre><p>&#x521B;&#x5EFA;&#x597D;&#x4E0A;&#x8FB9;&#x7684;&#x5B9E;&#x4F8B;&#x8FC7;&#x540E;&#xFF0C;&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EFB;&#x4F55;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/AuthProvider.html" target="_blank">AuthProvider</a>&#x9488;&#x5BF9;MongoDB&#x6267;&#x884C;&#x8BA4;&#x8BC1;&#x548C;&#x6388;&#x6743;&#x529F;&#x80FD;&#x4E86;&#x3002;</p>
+<p>Vert.X&#x7684;&#x9ED8;&#x8BA4;&#x6807;&#x51C6;&#x914D;&#x7F6E;&#xFF08;Out Of the Box&#xFF09;&#x4E2D;&#x5305;&#x542B;&#x4E86;&quot;user&quot;&#x96C6;&#x5408;&#xFF08;Collection&#xFF09;&#xFF0C;&#x7528;&#x6237;&#x540D;&#x5B57;&#x6BB5;&#x4F7F;&#x7528;&quot;username&quot;&#x8FDB;&#x884C;&#x5B58;&#x50A8;&#x548C;&#x8BFB;&#x53D6;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x5728;&quot;user&quot;&#x96C6;&#x5408;&#x4E2D;&#x51FA;&#x73B0;&#x91CD;&#x590D;&#x7684;&#x7528;&#x6237;&#x540D;&#xFF0C;&#x5E94;&#x8BE5;&#x5728;&quot;user&quot;&#x96C6;&#x5408;&#x4E2D;&#x7ED9;&quot;username&quot;&#x6DFB;&#x52A0;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#xFF08;Unique Index&#xFF09;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x5728;MongoDB&#x670D;&#x52A1;&#x5668;&#x4E2D;&#x8FD0;&#x884C;&#x4E0B;&#x8FB9;&#x7684;&#x7247;&#x6BB5;&#x6765;&#x5B8C;&#x6210;&#x6B64;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<pre><code>db.user.createIndex( { username: 1 }, { unique: true } )
+</code></pre><p>MongoDB&#x7684;&#x7279;&#x6027;&#x662F;&#x5148;&#x67E5;&#x8BE2;username&#x5B57;&#x6BB5;&#x4E2D;&#x7684;&#x503C;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#xFF0C;&#x7136;&#x540E;&#x4F1A;&#x63D2;&#x5165;&#x4E00;&#x4E2A;Document&#xFF0C;&#x5E76;&#x4E0D;&#x80FD;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x539F;&#x5B50;&#x6027;&#x64CD;&#x4F5C;&#xFF0C;&#x57FA;&#x4E8E;&#x8FD9;&#x4E2A;&#x539F;&#x56E0;&#x4F60;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E0A;&#x8FB9;&#x7684;&#x552F;&#x4E00;&#x7D22;&#x5F15;&#xFF0C;&#x4F7F;&#x7528;&#x4E86;&#x8FD9;&#x4E2A;&#x7D22;&#x5F15;&#x8FC7;&#x540E;&#x4F60;&#x7684;&#x4EE3;&#x7801;&#x4F1A;&#x5C1D;&#x8BD5;&#x5148;&#x63D2;&#x5165;&#x4E00;&#x884C;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x51FA;&#x73B0;&#x4E86;&#x91CD;&#x590D;&#x8BB0;&#x5F55;&#x5219;&#x4F1A;&#x5931;&#x8D25;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x4F60;&#x81EA;&#x5DF1;&#x7684;&#x9700;&#x8981;&#xFF0C;&#x4F60;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0B;&#x8FB9;&#x7684;&#x65B9;&#x6CD5;&#x6539;&#x53D8;MongoDB&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x9ED8;&#x8BA4;&#x96C6;&#x5408;&#xFF08;Collection&#xFF09;&#x548C;&#x5217;&#xFF08;Column&#xFF09;&#x540D;&#x79F0;&#x7B49;&#x4FE1;&#x606F;&#xFF1A;</p>
+<ul>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setCollectionName-java.lang.String-" target="_blank">setCollectionName</a></li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setUsernameField-java.lang.String-" target="_blank">setUsernameField</a></li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setPasswordField-java.lang.String-" target="_blank">setPasswordField</a></li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setPermissionField-java.lang.String-" target="_blank">setPermissionField</a></li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setRoleField-java.lang.String-" target="_blank">setRoleField</a></li>
+</ul>
+<p>Vert.X&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x4E2D;&#x7684;&#x5BC6;&#x7801;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;SHA-512&#x7B97;&#x6CD5;&#x52A0;&#x5BC6;&#x540E;&#x8FDB;&#x884C;&#x5B58;&#x50A8;&#xFF0C;&#x4E4B;&#x540E;&#x4F1A;&#x8FDE;&#x63A5;&#x5BF9;&#x5E94;&#x7684;<code>salt</code>&#x503C;&#xFF0C;&#x8FD9;&#x4E2A;<code>salt</code>&#x503C;&#x548C;&#x5BC6;&#x7801;&#x5B58;&#x50A8;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8868;&#x91CC;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x8C03;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setSaltField-java.lang.String-" target="_blank">setSaltField</a>&#x65B9;&#x6CD5;&#x6765;&#x6539;&#x53D8;&#x5B58;&#x50A8;<code>salt</code>&#x503C;&#x7684;&#x5B57;&#x6BB5;&#x540D;&#x79F0;&#xFF0C;&#x5B83;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x662F;&quot;salt&quot;&#xFF0C;&#x4F60;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/HashStrategy.html#setSaltStyle-io.vertx.ext.auth.mongo.HashSaltStyle-" target="_blank">setSaltStyle</a>&#x6765;&#x6539;&#x53D8;&#x4E00;&#x4E9B;&#x884C;&#x4E3A;&#x3002;&#x901A;&#x8FC7;&#x8C03;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#getHashStrategy--" target="_blank">getHashStrategy</a>&#x65B9;&#x6CD5;&#x8FD8;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;Hash&#x7B56;&#x7565;&#x8BBE;&#x7F6E;&#x3002;</p>
+<p>MongoDB&#x4E2D;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x4E0B;&#x8FB9;&#x51E0;&#x79CD;<code>SALT</code>&#x7684;&#x503C;&#xFF08;&#x53C2;&#x8003;&#x4E0B;&#x8FB9;WARNING&#xFF09;&#xFF1A;</p>
+<ul>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/HashSaltStyle.html#NO_SALT" target="_blank">NO_SALT</a>&#xFF1A;&#x5BC6;&#x7801;&#x5C31;&#x4E0D;&#x4F1A;&#x6267;&#x884C;&#x52A0;&#x5BC6;&#x4EE5;&#x660E;&#x6587;&#x7684;&#x65B9;&#x5F0F;&#x5B58;&#x50A8;&#x3002;</li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/HashSaltStyle.html#COLUMN" target="_blank">COLUMN</a>&#xFF1A;Vert.X&#x4F1A;&#x4E3A;&#x6BCF;&#x4E2A;&#x7528;&#x6237;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&quot;salt&#x201C;&#x503C;&#xFF0C;&#x5E76;&#x4E14;&#x5B58;&#x50A8;&#x5728;&#x7528;&#x6237;&#x8868;&#x5B9A;&#x4E49;&#x7684;&#x5217;&#x4E2D;&#xFF1B;</li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/HashSaltStyle.html#EXTERNAL" target="_blank">EXTERNAL</a>&#xFF1A;Vert.X&#x4EC5;&#x4EC5;&#x5C06;&#x5BC6;&#x7801;&#x6700;&#x7EC8;&#x52A0;&#x5BC6;&#x7ED3;&#x679C;&#x5B58;&#x50A8;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&quot;salt&#x201C;&#x503C;&#x53EF;&#x4EE5;&#x5728;&#x5916;&#x90E8;&#x4F7F;&#x7528;&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x8C03;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/HashStrategy.html#setExternalSalt-java.lang.String-" target="_blank">setExternalSalt</a>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x3002;</li>
+</ul>
+<p>&#x5982;&#x679C;&#x4F60;&#x60F3;&#x8981;&#x91CD;&#x5199;&#x4E0A;&#x8FF0;&#x884C;&#x4E3A;&#xFF0C;&#x5219;&#x4F60;&#x53EF;&#x4EE5;&#x8C03;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setHashStrategy-io.vertx.ext.auth.mongo.HashStrategy-" target="_blank">setHashStrategy</a>&#x65B9;&#x6CD5;&#x8BBE;&#x7F6E;&#x65B0;&#x7684;Hash&#x7B56;&#x7565;&#xFF0C;&#x5E76;&#x4E14;&#x63D0;&#x4F9B;&#x53D8;&#x66F4;&#x8FC7;&#x7684;Hash&#x7B56;&#x7565;&#x53CA;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;</p>
+<p><strong>&#xFF01;WARNING</strong></p>
+<p><em>&#x5F3A;&#x70C8;&#x5EFA;&#x8BAE;&#x5728;&#x8BBE;&#x7F6E;&#x201C;salt&quot;&#x503C;&#x65F6;&#x5019;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/HashSaltStyle.html#EXTERNAL" target="_blank">EXTERNAL</a>&#x9009;&#x9879;&#x3002;<code>NO_SALT</code>&#x9009;&#x9879;&#x4EC5;&#x4EC5;&#x63A8;&#x8350;&#x5728;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x4E0D;&#x4EC5;&#x4EC5;&#x5982;&#x6B64;&#xFF0C;<code>COLUMN</code>&#x65B9;&#x5F0F;&#x4E5F;&#x4E0D;&#x63A8;&#x8350;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4F1A;&#x5BFC;&#x81F4;<code>salt</code>&#x548C;&#x5BC6;&#x7801;&#x90FD;&#x5B58;&#x50A8;&#x5728;&#x4E86;&#x540C;&#x4E00;&#x4E2A;&#x5730;&#x65B9;&#xFF01;</em></p>
+<h2 id="&#x8BA4;&#x8BC1;">&#x8BA4;&#x8BC1;</h2>
+<p>&#x5982;&#x679C;&#x8BA4;&#x8BC1;&#x4F7F;&#x7528;&#x4E86;&#x9ED8;&#x8BA4;&#x7684;MongoDB&#x5B9E;&#x73B0;&#xFF0C;&#x8BA4;&#x8BC1;&#x4FE1;&#x606F;&#x4E2D;&#x7528;&#x4E86;<code>username</code>&#x548C;<code>password</code>&#x5B57;&#x6BB5;&#xFF1A;</p>
+<pre><code>JsonObject authInfo = new JsonObject()
+    .put(&quot;username&quot;, &quot;tim&quot;)
+    .put(&quot;password&quot;, &quot;sausages&quot;);
+authProvider.authenticate(authInfo, res -&gt; {
+    if (res.succeeded()) {
+        User user = res.result();
+    } else {
+        // Failed!
+    }
+});
+</code></pre><p>&#x5982;&#x679C;&#x60F3;&#x8981;&#x66FF;&#x6362;&#x4E0A;&#x8FB9;&#x7684;<code>username</code>&#x548C;<code>password</code>&#x4E24;&#x4E2A;&#x9ED8;&#x8BA4;&#x5B57;&#x6BB5;&#x540D;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0B;&#x8FB9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setUsernameCredentialField-java.lang.String-" target="_blank">setUsernameCredentialField</a></li>
+<li><a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/mongo/MongoAuth.html#setPasswordCredentialField-java.lang.String-" target="_blank">setPasswordCredentialField</a></li>
+</ul>
+<h2 id="&#x6388;&#x6743;---permissionrole&#x6A21;&#x578B;">&#x6388;&#x6743; - Permission/Role&#x6A21;&#x578B;</h2>
+<p>&#x5C3D;&#x7BA1;Vert.X&#x81EA;&#x8EAB;&#x5E76;&#x4E0D;&#x8981;&#x6C42;&#x4F7F;&#x7528;&#x7279;&#x5B9A;&#x7684;&#x8BB8;&#x53EF;&#x6A21;&#x578B;&#xFF08;&#x5B83;&#x672C;&#x8EAB;&#x53EA;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x4E0D;&#x900F;&#x660E;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF09;&#xFF0C;&#x4F46;MongoDB&#x8BA4;&#x8BC1;&#x4E2D;&#x7684;&#x5B9E;&#x73B0;&#x4F7F;&#x7528;&#x4E86;&#x6BD4;&#x8F83;&#x719F;&#x6089;&#x7684;&#xFF1A;&#x7528;&#x6237;/&#x89D2;&#x8272;/&#x8BB8;&#x53EF;&#x6A21;&#x578B;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x5E94;&#x7528;&#x91CC;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x89D2;&#x8272;&#xFF0C;&#x800C;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x4E5F;&#x53EF;&#x4EE5;&#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x8BB8;&#x53EF;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8981;&#x9A8C;&#x8BC1;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x662F;&#x5426;&#x62E5;&#x6709;&#x7279;&#x5B9A;&#x7684;&#x8BB8;&#x53EF;&#xFF0C;&#x5219;&#x8981;&#x5C06;&#x8BB8;&#x53EF;&#x4FE1;&#x606F;&#x4F20;&#x9012;&#x5230;<a href="http://vertx.io/docs/apidocs/io/vertx/ext/auth/User.html#isAuthorised-java.lang.String-io.vertx.core.Handler-" target="_blank">isAuthorised</a>&#x4E2D;&#xFF1A;</p>
+<pre><code>user.isAuthorised(&quot;commit_code&quot;, res -&gt; {
+    if (res.succeeded()) {
+        boolean hasPermission = res.result();
+    } else {
+        // Failed to
+    }
+});
+</code></pre><p>&#x5982;&#x679C;&#x8981;&#x9A8C;&#x8BC1;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x662F;&#x5426;&#x5C5E;&#x4E8E;&#x7279;&#x5B9A;&#x89D2;&#x8272;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;MongoDB&#x8BA4;&#x8BC1;&#x524D;&#x7F00;&#xFF08;MongoAuth.ROLE_PREFIX&#xFF09;&#x6CD5;&#x7ED9;&#x89D2;&#x8272;&#x5E26;&#x4E0A;&#x524D;&#x7F00;&#x8868;&#x793A;&#xFF1A;</p>
+<pre><code>user.isAuthorised(MongoAuth.ROLE_PREFIX + &quot;manager&quot;, res -&gt; {
+    if (res.succeeded()) {
+        boolean hasRole = res.result();
+    } else {
+        // Failed to
+    }
+});
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ShiroAuth.html" class="navigation navigation-prev " aria-label="Previous page: Shiro Auth">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Oauth2.html" class="navigation navigation-next " aria-label="Next page: OAuth 2">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"MongoDB Auth","level":"1.9.5","depth":2,"next":{"title":"OAuth 2","level":"1.9.6","depth":2,"path":"auth/Oauth2.md","ref":"auth/Oauth2.md","articles":[]},"previous":{"title":"Shiro Auth","level":"1.9.4","depth":2,"path":"auth/ShiroAuth.md","ref":"auth/ShiroAuth.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"auth/MongoDBAuth.md","mtime":"2017-05-20T07:08:01.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-20T07:45:55.385Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
