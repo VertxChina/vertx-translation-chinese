@@ -1,4 +1,4 @@
-# Vert.x MQTT Server
+# Vert.x MQTT Server 
 
 这个组件提供了一个服务器，它能处理远程[MQTT](http://mqtt.org/)客户端连接，通信和信息交换。
 它的API提供了,当接受到客户端发送的raw protocol消息时相应的事件和提供一些发送信息到客户端的功能。
