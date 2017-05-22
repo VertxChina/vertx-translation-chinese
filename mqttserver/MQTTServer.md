@@ -1,8 +1,8 @@
 # Vert.x MQTT Server
 
 这个组件提供了一个服务器，它能处理远程[MQTT](http://mqtt.org/)客户端连接，通信和信息交换。
-它的API提供了一些客户端事件raw protocol消息和提供一些功能发送信息到客户端。
-它不是一个功能齐全的broker，但可以用来建立类似的东西或者协议转换。
+它的API提供了,当接受到客户端发送的raw protocol消息时相应的事件和提供一些发送信息到客户端的功能。
+它不是一个功能齐全的MQTT broker，但可以用来建立类似的东西或者协议转换。
 
 ## 使用MQTT服务器
 
@@ -37,7 +37,7 @@ compile io.vertx:vertx-mqtt-server:3.4.1
 ### 处理客户端连接/断开
 这个例子展示了如何处理一个来自远程MQTT客户端的请求，首先，会创建一个[Mqttserver](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttServer.html)实例和使用[endpointHandler](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttServer.html#endpointHandler(io.vertx.core.Handler))方法选定一个处理器用于处理远程客户端发送的CONNECT信息。
 [MqttEndpoint](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html)实例,会被当做Handler的参数，它携带了所有主要的与CONNECT消息相关联的信息，例如客户端标识符，用户名/密码，"will"信息，清除session标志，协议版本和保活超时。
-在Handler内,endpoint实例提供accept方法以响应CONNACK回应远程客户端；通过该方式，连接会被建立。最终，服务器通过[listen](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttServer.html#listen(io.vertx.core.Handler))方法以默认行为的行为(运行在localhost和默认MQTT端口1883)启动。存在一个相同的方法，允许选定一个Handler去检查是否服务器是否已经正常启动。
+在Handler内,endpoint实例提供[accept](http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#accept-boolean-)方法以相应的CONNACK消息回应远程客户端；通过该方式，连接会被建立。最终，服务器通过[listen](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttServer.html#listen(io.vertx.core.Handler))方法以默认行为的行为(运行在localhost和默认MQTT端口1883)启动。存在一个相同的方法，允许选定一个Handler去检查是否服务器是否已经正常启动。
 
 ```java
 MqttServer mqttServer = MqttServer.create(vertx);
@@ -81,7 +81,7 @@ endpoint.disconnectHandler(v -> {
 ```
 
 ### 使用SSL / TLS支持处理客户端连接/断开连接
-服务端支持以SSL/TLS方式接受连接请求用来验证和加密。为了做到这一点，[MqttServerOptions](http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions)类提供了[ssl](http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions#setSsl(boolean))方法用来设置SSL/TLS的用法(传递`true`作为值)和一些其他提供了服务器验证和私钥(作为java键存储引用，PEM或PFX格式)。在以下例子，[keyCertOptions](http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions#setKeyCertOptions(io.vertx.core.net.KeyCertOptions))方法被用来传递一个PEM格式的证书。该方法需要一个实现了`KeyCertOptions`接口的实例，在这种情况下[PemKeyCertOptions](http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions)类被用来提供提供服务器证书和对应[certPath](http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions#setCertPath(java.lang.String))与[keyPath](http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions#setKeyPath(java.lang.String))方法的私钥路径。MQTT服务器通常以传递一个Vert.x实例启动和以下的MQTT选项实例作为创建方法。
+服务端支持通过SSL/TLS方式用来验证和加密客户端的连接请求。为了做到这一点，[MqttServerOptions](http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions)类提供了[setSsl](http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions#setSsl(boolean))方法用来设置SSL/TLS的用法(传递`true`作为值)和一些其他提供了服务器验证和私钥(作为java键存储引用，PEM或PFX格式)。在以下例子，[setKeyCertOptions](http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions#setKeyCertOptions(io.vertx.core.net.KeyCertOptions))方法被用来传递一个PEM格式的证书。该方法需要一个实现了[KeyCertOptions](http://vertx.io/docs/apidocs/io/vertx/core/net/KeyCertOptions.html)接口的实例，在这种情况下[PemKeyCertOptions](http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions)类被用来提供提供服务器证书和对应[setCertPath](http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions#setCertPath(java.lang.String))与[setKeyPath](http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions#setKeyPath(java.lang.String))方法的私钥路径。MQTT服务器通常以传递一个Vert.x实例启动和以上的MQTT选项实例作为创建方法的参数。
 ```java
 MqttServerOptions options = new MqttServerOptions()
   .setPort(8883)
@@ -126,7 +126,7 @@ mqttServer.endpointHandler(endpoint -> {
 
 ### 处理客户端订阅和退订请求
 在客户端和服务端的连接被建立后，客户端可以以指定的主题发送订阅消息。[MqttEndpoint](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html)接口允许使用[subscribeHandler](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html#subscribeHandler(io.vertx.core.Handler))处理到来的订阅请求。
-这样的Handler接受一个[MqttSubscribeMessage](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/messages/MqttSubscribeMessage.html******)接口的实例，which brings the list of topics with related QoS levels as desired by the client.最终，端点实例提供[subscribeAcknowledge](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html#subscribeAcknowledge(int,%20java.util.List))方法以包含了授予QoS级别的相关SUBACK消息回应客户端。
+这样的Handler接受一个[MqttSubscribeMessage](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/messages/MqttSubscribeMessage.html******)接口的实例，which brings the list of topics with related QoS levels as desired by the client.最终，端点实例提供[subscribeAcknowledge](http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html#subscribeAcknowledge(int,%20java.util.List))方法以包含了授予QoS级别的相关的SUBACK消息回应客户端。
 ```java
 endpoint.subscribeHandler(subscribe -> {
 
