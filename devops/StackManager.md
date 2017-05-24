@@ -95,8 +95,9 @@ Stack Manager 是一个管理 Vert.x 发行包的工具。
 
 ```json
 {
-"variables": {
-  "vertx.version": "3.4.1"
+  "variables": {
+    "vertx.version": "3.4.1"
+  }
 }
 ```
 
