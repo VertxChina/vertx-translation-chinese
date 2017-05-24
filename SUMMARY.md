@@ -17,10 +17,12 @@
   * [Mail Client](integration/MailClient.md)
   * [STOMP Client & Server](integration/STOMPClient&Server.md)
   * [JCA Adaptor](integration/JCAAdaptor.md)
+  * [RabbitMQ Client](integration/RabbitMQClient.md)
   * [Kafka Client](integration/KafkaClient.md)
+  * [Consul Client](integration/ConsulClient.md)
 * Event Bus Bridge
   * [Camel Bridge](eventbusbridge/CamelBridge.md)
-  * [TCP Eventbus Bridge](eventbusbridge/TCPEventbusBridge.md)
+  * [TCP Event Bus Bridge](eventbusbridge/TCPEventbusBridge.md)
 * [Authentication and Authorisation](auth/Auth.md)
   * [Auth Common](auth/AuthCommon.md)
   * [JDBC Auth](auth/JDBCAuth.md)
@@ -30,12 +32,14 @@
   * [OAuth 2](auth/Oauth2.md)
 * [Reactive](reactive/Reactive.md)
   * [Vert.x Rx](reactive/Rx.md)
-  * [Reactive streams](reactive/Reactivestreams.md)
+  * [Reactive Streams](reactive/Reactivestreams.md)
   * [Vert.x Sync](reactive/Sync.md)
 * Microservices
   * [Vert.x Service Discovery](microservices/ServiceDiscovery.md)
   * [Vert.x Circuit Breaker](microservices/CircuitBreaker.md)
   * [Vert.x Config](microservices/Config.md)
+* IoT
+  * [MQTT Server](iot/MQTTServer.md)
 * [Devops](devops/Devops.md)
   * [Metrics Using Dropwizard](devops/MetricsUsingDropwizard.md)
   * [Metrics Using Hawkular](devops/MetricsUsingHawkular.md)
@@ -48,7 +52,6 @@
   * [Infinispan](clustering/Infinispan.md)
   * [Apache Ignite](clustering/ApacheIgnite.md)
   * [Apache Zookeeper](clustering/ApacheZookeeper.md)
-  * [JGroups ](clustering/JGroups.md)
 * [Services](services/Services.md)
   * [Service Factories](services/ServiceFactories.md)
   * [Service Proxies](services/ServiceProxies.md)
@@ -59,4 +62,3 @@
   * [OpenShift Cartridge](cloud/OpenShiftCartridge.md)
   * [OpenShift Using DIY Cartridge](cloud/OpenShiftUsingDIYCartridge.md)
 * [翻译计划](PLAN.md)
-
