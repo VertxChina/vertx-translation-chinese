@@ -14,11 +14,11 @@ Stack Manager 是一个管理 Vert.x 发行包的工具。
 
 ```json
 {
- "groupId": "io.vertx",
- "artifactId": "vertx-sync",
- "version": "${vertx.version}",
- "included": true
-}
+  "groupId": "io.vertx",
+  "artifactId": "vertx-sync",
+  "version": "${vertx.version}",
+  "included": true
+  }
 ```
 
 此工具用 Maven 坐标来描述依赖。 其中 `groupId` 、`artifactId` 、版本属性是必需的。当然，也可以设置类型（默认为 jar ）和分类器（默认情况下为 none ）。
@@ -29,10 +29,10 @@ Stack Manager 是一个管理 Vert.x 发行包的工具。
 
 ```json
 {
- "groupId": "io.vertx",
- "artifactId": "vertx-sync",
- "version": "${vertx.version}",
- "included": false
+  "groupId": "io.vertx",
+  "artifactId": "vertx-sync",
+  "version": "${vertx.version}",
+  "included": false
 }
 ```
 
@@ -65,14 +65,16 @@ Stack Manager 是一个管理 Vert.x 发行包的工具。
 
 ```json
 {
- "groupId": "org.acme",
- "artifactId": "acme-lib",
- "version": "1.0.0",
- "included": true,
- "exclusions": [{
-   "groupId": "org.acme",
-   "artifactId": "acme-not-required"
- }]
+  "groupId": "org.acme",
+  "artifactId": "acme-lib",
+  "version": "1.0.0",
+  "included": true,
+  "exclusions": [
+    {
+      "groupId": "org.acme",
+      "artifactId": "acme-not-required"
+    }
+  ]
 }
 ```
 
@@ -80,12 +82,12 @@ Stack Manager 是一个管理 Vert.x 发行包的工具。
 
 ```json
 {
- "groupId": "io.vertx",
- "artifactId": "vertx-web-templ-thymeleaf",
- "version": "${vertx.version}",
- "included": true,
- "classifier": "shaded",
- "transitive": false
+  "groupId": "io.vertx",
+  "artifactId": "vertx-web-templ-thymeleaf",
+  "version": "${vertx.version}",
+  "included": true,
+  "classifier": "shaded",
+  "transitive": false
 }
 ```
 
