@@ -26,6 +26,7 @@
   - [x] **Vert.x Service Proxy**：已翻译校对完成
 - [ ] **Vert.x DevOps**
   - [x] **Vert.x Stack Manager**：已翻译校对完成
+  - [x] **Vert.x Docker**：已翻译校对完成
 - [x] **Vert.x Clustering**：已翻译校对完成
 - [x] **Vert.x IoT**
     - [x] **Vert.x MQTT Server**：已翻译校对完成
