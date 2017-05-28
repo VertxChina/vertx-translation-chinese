@@ -11,7 +11,7 @@ Vert.x 提供两个 Docker 镜像给开发人员运行部署程序，分别是�
 - `vertx/vertx3` 基础镜像，需要进行一些扩展才可以运行程序
 - `vertx/vertx3-exec` 给宿主系统提供 `vertx` 命令行
 
-这两个 Docker 镜像均发布在 [Docker Hub](https://hub.docker.com/u/vertx/)中。
+这两个 Docker 镜像均发布在 [Docker Hub](https://hub.docker.com/u/vertx/) 中。
 
 > 现在公开镜像的仓库已经更名为 Docker Store
 
@@ -39,7 +39,7 @@ vertx.createHttpServer().requestHandler(function (request) {
 # 继承 vert.x 镜像                          (1)
 FROM vertx/vertx3
 
-# 设置要部署的 Verticle 名字                 (2)
+# 设置要部署的 verticle 名字                 (2)
 ENV VERTICLE_NAME hello-verticle.js
 
 # 设置 verticles 存放路径                    (3)
@@ -59,7 +59,7 @@ CMD ["exec vertx run $VERTICLE_NAME -cp $VERTICLE_HOME/*"]
 步骤说明：
 
 1. 继承 vert.x 镜像
-2. 设置要部署的 Verticle 名字
+2. 设置要部署的 verticle 名字
 3. 设置 verticles 存放路径
 4. 拷贝 verticle 至容器中
 5. 启动 verticle
@@ -72,7 +72,7 @@ docker build -t sample/vertx-javascript .
 
 最后执行 `docker run -t -i -p 8080:8080 sample/vertx-javascript` 便可以启动应用了。
 
-这时候可以打开浏览器验证成果了，在浏览器输入地址 http://localhost:8080 （如果是 docker 引擎是  boot2docker 的话，则输入 http://192.168.59.103:8080 ）。
+这时候可以打开浏览器验证成果了，在浏览器输入地址 http://localhost:8080 （如果是 docker 引擎是 boot2docker 的话，则输入 http://192.168.59.103:8080 ）。
 
 > '-t -i' 参数意味着是互动模式。按 `CTRL + C` 可以停止容器。点击 [`Docker run reference`](https://docs.docker.com/engine/reference/run/) 查阅 Docker `run` 命令详细信息。
 
@@ -308,7 +308,7 @@ CMD ["exec vertx run $VERTICLE_NAME -cp $VERTICLE_HOME/*"]
 └── target
 ```
 
-与 Spotify 的 maven 插件不同，此插件以一个 `assembly.xml` 作为输入。该文件列出了需要复制到 docker 容器的所有文件，如：
+与 Spotify 的 maven 插件不同，此插件以一个 `assembly.xml` 作为打包描述文件。该文件列出了需要复制到 docker 容器的所有文件，如：
 
 ```xml
 <assembly>
@@ -370,7 +370,7 @@ CMD ["exec vertx run $VERTICLE_NAME -cp $VERTICLE_HOME/*"]
 
 > 在上面的 `pom.xml` 文件使用名为 `docker.image` 的属性来设置镜像名称。不要忘记将它添加至 `pom.xml` 文件中
 
-一旦有了这个配置，便需要一个第二个插件 [`fabric8-maven-plugin`](https://github.com/fabric8io/fabric8-maven-plugin) 来生成 Fabric8 所需的元数据：
+一旦有了这个配置，便需要 [`fabric8-maven-plugin`](https://github.com/fabric8io/fabric8-maven-plugin) 插件来生成 Fabric8 所需的元数据：
 
 ```xml
 <plugin>
@@ -426,7 +426,7 @@ docker run -i -t -p 8080:8080 \
 
 ## 自定义技术栈
 
-`vertx/vertx3-exec` 镜像提供默认的完整的 Vert.x 堆栈。如果需要自定义此堆栈，并创建自己的 exec 映像。首先，创建一个 `vertx-stack.json` 文件：
+`vertx/vertx3-exec` 镜像提供默认的完整的 Vert.x 堆栈。如果需要自定义此堆栈，并创建自己的 `exec` 映像。首先，创建一个 `vertx-stack.json` 文件：
 
 ```json
 {
@@ -483,7 +483,7 @@ docker run -i -t -p 8080:8080 \
 
 # 部署 fat jar
 
-可以将一个打包成 `Fat jar` 的 Vert.x 应用程序部署到 docker 容器中。为此，不需要 Vert.x 提供的图像，直接使用基本的 Java 镜像即可。举个栗子：
+可以将一个打包成 `Fat jar` 的 Vert.x 应用程序部署到 docker 容器中。为此，不需要 Vert.x 提供的镜像，直接使用基本的 Java 镜像即可。举个栗子：
 
 ```docker
 FROM openjdk:8-jre-alpine                                           (1)
@@ -505,12 +505,12 @@ CMD ["exec java -jar $VERTICLE_FILE"]                               (4)
 
 ```
 
-1. 扩展提供 OpenJDK 8 的镜像
+1. 扩展 OpenJDK 8 镜像
 2. 将 `VERTICLE_FILE` 设置为指向 *fat jar*
 3. 从 target 目录中复制 *fat jar* 。如果不使用 Maven ，请根据实际情况修改
 4. 使用 `java` 指令启动应用程序
 
-它基本上是与以前的 `Dockerfile` 类似。区别在于，这次我们扩展的是 `java:8` 而不是 `vertx/vertx3` 镜像。 然后我们将 fat jar 复制到容器中，并使用 `java` 指令来启动。当然，上述所有配置设置仍然有效的。
+它基本上是与以前的 `Dockerfile` 类似。区别在于，这次我们扩展的是 `java:8` 而不是 `vertx/vertx3` 镜像。 然后我们将 *fat jar* 复制到容器中，并使用 `java` 指令来启动。当然，上述所有配置设置仍然有效的。
 
 最后构建并启动容器：
 
