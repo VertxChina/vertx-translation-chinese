@@ -230,7 +230,7 @@ future.compose(message ->
 );
 //以上和以下两种写法是等效的
 future.compose(message ->{
-  Future<Message<String>> f = Future.future();
+  Future<Message<String>> f = Future.<Message<String>>future();
   vertx.eventBus().send("address",message.body(),f.completer());
   return f;
 });
