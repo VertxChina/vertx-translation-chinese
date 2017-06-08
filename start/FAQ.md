@@ -43,7 +43,7 @@ public class MyVerticle extends AbstractVerticle {
 
         vertx.createHttpServer().requestHandler(req->{
             System.out.println(i);
-	    req.response().end(“”+i);
+	    req.response().end(""+i);
         }).listen(8081);
     }
 }
