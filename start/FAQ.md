@@ -289,26 +289,28 @@ Future.<Message<String>>future(f ->
 
 [Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
-### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录自动映射到index.html文件该如何做？
+### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录/自动映射到index.html文件该如何做？
 
-答：需要用到其它的handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件，则需先定义static handler：
+答：需要用到其它的handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件，则需定义static handler：
 
 ```java
 router.route("/static/*").handler(StaticHandler.create());
 ```
 
+随后便可将根路径/映射为/static/index.html，从而映射到文件夹webroot下的index.html文件。
+
 forward方法用reroute方法：
 
 ```java
-router.route("/static/*").handler(StaticHandler.create());
 router.route("/").handler(ctx->ctx.reroute("/static/index.html"));
+router.route("/static/*").handler(StaticHandler.create());
 ```
 
 redirect方法本质上是设置响应状态码为302，同时设置响应头Location值，根据该原理便可实现：
 
 ```java
-router.route("/static/*").handler(StaticHandler.create());
 router.route("/").handler(ctx->ctx.response().putHeader("Location", "/static/index.html").setStatusCode(302).end());
+router.route("/static/*").handler(StaticHandler.create());
 ```
 
 ### 问：我之前有过Spring，Akka，Node.js或Go的经验，请问Vert.x的概念有我熟悉的吗？
