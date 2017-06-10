@@ -289,13 +289,28 @@ Future.<Message<String>>future(f ->
 
 [Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
-### 问：Vert.x Web中如何将根路径对应到某个特定的html文件？
+### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录自动映射到index.html文件该如何做？
 
-答：用reroute和staticHandler：
+答：需要用到handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件：
 
 ```java
+router.route("/static/*").handler(StaticHandler.create());
+```
+
+forward方法用reroute方法：
+
+```java
+router.route("/static/*").handler(StaticHandler.create());
 router.route("/").handler(ctx->ctx.reroute("/static/index.html"));
 ```
+
+redirect方法本质上是设置响应状态码为302，同时设置响应头Location值，根据该原理便可实现：
+
+```java
+router.route("/static/*").handler(StaticHandler.create());
+router.route("/").handler(ctx->ctx.response().putHeader("location", "/static/index.html").setStatusCode(302).end());
+```
+
 ### 问：我之前有过Spring，Akka，Node.js或Go的经验，请问Vert.x的概念有我熟悉的吗？
 
 答：严格说来，不同框架和语言之间的概念无法一一对应，但如果我们不那么严格地去深究细节，Vert.x定义的概念可以从其它框架以及语言中找到一些痕迹，以下是Vert.x中定义概念跟其它框架和语言定义概念的比较，同一行中的概念可被认为是相似的：
