@@ -291,7 +291,7 @@ Future.<Message<String>>future(f ->
 
 ### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录自动映射到index.html文件该如何做？
 
-答：需要用到handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件：
+答：需要用到其它的handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件，则需先定义static handler：
 
 ```java
 router.route("/static/*").handler(StaticHandler.create());
