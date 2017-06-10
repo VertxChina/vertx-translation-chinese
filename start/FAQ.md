@@ -308,7 +308,7 @@ redirect方法本质上是设置响应状态码为302，同时设置响应头Loc
 
 ```java
 router.route("/static/*").handler(StaticHandler.create());
-router.route("/").handler(ctx->ctx.response().putHeader("location", "/static/index.html").setStatusCode(302).end());
+router.route("/").handler(ctx->ctx.response().putHeader("Location", "/static/index.html").setStatusCode(302).end());
 ```
 
 ### 问：我之前有过Spring，Akka，Node.js或Go的经验，请问Vert.x的概念有我熟悉的吗？
