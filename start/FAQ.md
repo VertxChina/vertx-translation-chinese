@@ -291,7 +291,7 @@ Future.<Message<String>>future(f ->
 
 ### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录/自动映射到index.html文件该如何做？
 
-答：需要用到其它的handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件，则需定义static handler：
+答：需要用到其它的handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件，则需定义而StaticHandler：
 
 ```java
 router.route("/static/*").handler(StaticHandler.create());
@@ -310,6 +310,13 @@ redirect方法本质上是设置响应状态码为302，同时设置响应头Loc
 
 ```java
 router.route("/").handler(ctx->ctx.response().putHeader("Location", "/static/index.html").setStatusCode(302).end());
+router.route("/static/*").handler(StaticHandler.create());
+```
+
+另外reroute方法将会保留原Http方法，而StaticHandler只接受GET和HEAD方法，所以如果希望将POST方法reroute到一个静态文件，则需要改变Http方法：
+
+```java
+router.post("/").handler(ctx->ctx.reroute(HttpMethod.GET,"/static/index.html"));
 router.route("/static/*").handler(StaticHandler.create());
 ```
 
