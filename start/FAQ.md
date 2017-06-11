@@ -302,7 +302,14 @@ router.route("/static/*").handler(StaticHandler.create());
 forward方法用reroute方法：
 
 ```java
-router.route("/").handler(ctx->ctx.reroute("/static/index.html"));
+router.route("/").handler(ctx->ctx.reroute(HttpMethod.GET,"/static/index.html"));//加上HttpMethod.GET参数原因见下文
+router.route("/static/*").handler(StaticHandler.create());
+```
+
+reroute方法将会保留原Http方法，而StaticHandler只接受GET和HEAD方法，所以如果希望将POST方法reroute到一个静态文件，则需要改变Http方法：
+
+```java
+router.post("/").handler(ctx->ctx.reroute(HttpMethod.GET,"/static/index.html"));
 router.route("/static/*").handler(StaticHandler.create());
 ```
 
@@ -310,13 +317,6 @@ redirect方法本质上是设置响应状态码为302，同时设置响应头Loc
 
 ```java
 router.route("/").handler(ctx->ctx.response().putHeader("Location", "/static/index.html").setStatusCode(302).end());
-router.route("/static/*").handler(StaticHandler.create());
-```
-
-另外reroute方法将会保留原Http方法，而StaticHandler只接受GET和HEAD方法，所以如果希望将POST方法reroute到一个静态文件，则需要改变Http方法：
-
-```java
-router.post("/").handler(ctx->ctx.reroute(HttpMethod.GET,"/static/index.html"));
 router.route("/static/*").handler(StaticHandler.create());
 ```
 
