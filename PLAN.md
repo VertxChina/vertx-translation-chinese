@@ -2,14 +2,14 @@
 
 ## 当前进度
 
-截至：**2017-05-07**
+截至：**2017-05-24**
 
 对应版本：**Vert.x 3.4.1**
 
 - [x] **Vert.x Core**：已翻译校对完成
 - [x] **Vert.x Web**：已翻译校对完成
 - [x] **Vert.x Web Client**：已翻译校对完成
-- [x] **Vert.x Data Access**：已翻译校对完成
+- [x] **Vert.x Data Access**
   - [x] **Vert.x Mongo Client**：已翻译校对完成
   - [x] **Vert.x JDBC Client**：已翻译校对完成
   - [x] **Vert.x Common SQL Interface**：已翻译校对完成
@@ -22,11 +22,16 @@
   - [x] **Vert.x Service Discovery**：已翻译校对完成
   - [x] **Vert.x Config**：已翻译校对完成
 - [x] **Vert.x Reactive**：已翻译校对完成
-- [x] **Vert.x Service Proxy**：已重新翻译
+- [ ] **Vert.x Services**
+  - [x] **Vert.x Service Proxy**：已翻译校对完成
+- [ ] **Vert.x DevOps**
+  - [x] **Vert.x Stack Manager**：已翻译校对完成
+  - [x] **Vert.x Docker**：已翻译校对完成
 - [x] **Vert.x Clustering**：已翻译校对完成
+- [x] **Vert.x IoT**
+    - [x] **Vert.x MQTT Server**：已翻译校对完成
 - [ ] **Vert.x Testing**
   - [ ] **Vert.x Unit**：计划中
-- [ ] **Vert.x IoT**：计划中
 
 ## 翻译计划
 

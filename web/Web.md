@@ -1474,7 +1474,7 @@ Vert.x Web 会在响应里设置这些消息头：`cache-control`、`last-modifi
 
 这在开发时会导致一个问题，例如当您通过 IDE 的运行配置来启动您的应用时，如果您修改了文件，缓存的文件时不会被更新的。
 
-您可以通过设置系统属性 `vertx.disableFileCaching` 为 `false` 来禁用文件缓存。
+您可以通过设置系统属性 `vertx.disableFileCaching` 为 `true` 来禁用文件缓存。
 
 ## 处理跨域资源共享
 

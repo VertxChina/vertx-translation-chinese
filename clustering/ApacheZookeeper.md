@@ -149,7 +149,7 @@ Vertx.clusteredVertx(options, res -> {
 在排除故障时，开启 Zookeeper 日志，将会给予很大的帮助。在 `classpath` 中添加 `vertx-default-jul-logging.properties` 文件（默认的JUL记录时），这是一个标准 java.util.loging（JUL） 配置文件。具体配置如下：
 
 ```
-org.apache.ignite.level=INFO
+org.apache.zookeeper.level=INFO
 java.util.logging.ConsoleHandler.level=INFO
 java.util.logging.FileHandler.level=INFO
 ```

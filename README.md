@@ -38,28 +38,29 @@
 
 ## 构建方法
 
-本项目的在线版本部署在 Github Pages 上。使用 master 分支的 docs 目录作为生成的 gitbook 站点。以下是构建方法：
+本项目的在线版本部署在 Github Pages 上。使用 `master` 分支的 `docs` 目录作为生成的 GitBook 站点。以下是构建方法：
 
-**安装 nodejs 和 npm**
+**安装 Node.js 和 npm**
 
 [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
-**安装 gitbook 命令行工具**
+**安装 GitBook 命令行工具**
 
-```
+```bash
 sudo npm install gitbook-cli -g
 ```
 
-**构建 gitbook**
+**构建 GitBook**
 
-进入项目根目录
-```
+进入项目根目录，执行构建：
+
+```bash
 rm -rf docs && gitbook build ./ docs
 ```
 
-构建之后将 docs 目录的所有更新提交
+构建之后将 `docs` 目录的所有更新提交。
 
-> 注意一定要输出到 docs 目录，才能被 git pages 识别
+> 注意：一定要输出到 `docs` 目录，才能被 git pages 识别。
 
 ## 归属与发布
 

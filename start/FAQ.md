@@ -6,7 +6,7 @@
 
 答：Vert.x其实就是建立了一个Verticle内部的线程安全机制，让用户可以排除多线程并发冲突的干扰，专注于业务逻辑上的实现，用了Vert.x，您就不用操心多线程和并发的问题了。Verticle内部代码，除非声明Verticle是Worker Verticle，否则Verticle内部环境全部都是线程安全的，不会出现多个线程同时访问同一个Verticle内部代码的情况。
 
-> 请注意：*一般情况下，用了Vert.x的Verticle之后，原则上synchronized，Lock，volatile，static对象，java.util.concurrent, HashTable, Vector, Thread, Runnable, Callable, Executor, Task, ExecutorService等这些并发和线程相关的东西就不再需要使用了，可以由Verticle全面接管，如果您不得不在Vert.x代码中使用上诉内容，则多少暗示着您的设计或者使用Vert.x的姿势出现了问题，建议再斟酌商榷一下。*
+> 请注意：*一般情况下，用了Vert.x的Verticle之后，原则上synchronized，Lock，volatile，static对象，java.util.concurrent, HashTable, Vector, Thread, Runnable, Callable, Executor, Task, ExecutorService等这些并发和线程相关的东西就不再需要使用了，可以由Verticle全面接管，如果您不得不在Vert.x代码中使用上述内容，则多少暗示着您的设计或者使用Vert.x的姿势出现了问题，建议再斟酌商榷一下。*
 
 ### 问：Verticle对象和处理器（Handler）是什么关系？Vert.x如何保证Verticle内部线程安全？
 
@@ -43,7 +43,7 @@ public class MyVerticle extends AbstractVerticle {
 
         vertx.createHttpServer().requestHandler(req->{
             System.out.println(i);
-	    req.response().end(“”+i);
+	    req.response().end(""+i);
         }).listen(8081);
     }
 }
@@ -230,8 +230,8 @@ future.compose(message ->
 );
 //以上和以下两种写法是等效的
 future.compose(message ->{
-  Future<Message<String>> f = Future.future();
-  vertx.eventBus().send("address",message.body(),f.completer());
+  Future<Message<String>> f = Future.<Message<String>>future();//可简写为Future<Message<String>> f = Future.future();
+  vertx.eventBus().send("address",message.body(),f.completer());//可简写为vertx.eventBus().send("address",message.body(),f);
   return f;
 });
 ```
@@ -289,13 +289,37 @@ Future.<Message<String>>future(f ->
 
 [Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
-### 问：Vert.x Web中如何将根路径对应到某个特定的html文件？
+### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录/自动映射到index.html文件该如何做？
 
-答：用reroute和staticHandler：
+答：需要用到其它的handler予以配合，例如我们想将URI：/static/index.html定位到/webroot/index.html文件，则需定义而StaticHandler：
 
 ```java
-router.route("/").handler(ctx->ctx.reroute("/static/index.html"));
+router.route("/static/*").handler(StaticHandler.create());
 ```
+
+随后便可将根路径/映射为/static/index.html，从而映射到文件夹webroot下的index.html文件。
+
+forward方法用reroute方法：
+
+```java
+router.route("/").handler(ctx->ctx.reroute(HttpMethod.GET,"/static/index.html"));//加上HttpMethod.GET参数原因见下文
+router.route("/static/*").handler(StaticHandler.create());
+```
+
+reroute方法将会保留原Http方法，而StaticHandler只接受GET和HEAD方法，所以如果希望将POST方法reroute到一个静态文件，则需要改变Http方法：
+
+```java
+router.post("/").handler(ctx->ctx.reroute(HttpMethod.GET,"/static/index.html"));
+router.route("/static/*").handler(StaticHandler.create());
+```
+
+redirect方法本质上是设置响应状态码为302，同时设置响应头Location值，根据该原理便可实现：
+
+```java
+router.route("/").handler(ctx->ctx.response().putHeader("Location", "/static/index.html").setStatusCode(302).end());
+router.route("/static/*").handler(StaticHandler.create());
+```
+
 ### 问：我之前有过Spring，Akka，Node.js或Go的经验，请问Vert.x的概念有我熟悉的吗？
 
 答：严格说来，不同框架和语言之间的概念无法一一对应，但如果我们不那么严格地去深究细节，Vert.x定义的概念可以从其它框架以及语言中找到一些痕迹，以下是Vert.x中定义概念跟其它框架和语言定义概念的比较，同一行中的概念可被认为是相似的：
