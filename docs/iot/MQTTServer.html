@@ -1,0 +1,1306 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>MQTT Server · Vert.x 官方文档中文翻译</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Vert.x中国用户组">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../devops/Devops.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.vertx.io" target="_blank" class="custom-link">Offical Site</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../start/Start.html">
+            
+                <a href="../start/Start.html">
+            
+                    
+                    开始使用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../start/SimpleStart.html">
+            
+                <a href="../start/SimpleStart.html">
+            
+                    
+                    简易教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../start/FAQ.html">
+            
+                <a href="../start/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../core/Core.html">
+            
+                <a href="../core/Core.html">
+            
+                    
+                    Core
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web/Web.html">
+            
+                <a href="../web/Web.html">
+            
+                    
+                    Web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../webclient/WebClient.html">
+            
+                <a href="../webclient/WebClient.html">
+            
+                    
+                    Web Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../data/Data.html">
+            
+                <a href="../data/Data.html">
+            
+                    
+                    Data Access
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../data/MongoDBClient.html">
+            
+                <a href="../data/MongoDBClient.html">
+            
+                    
+                    MongoDB Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../data/JDBCClient.html">
+            
+                <a href="../data/JDBCClient.html">
+            
+                    
+                    JDBC Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../data/SQLCommon.html">
+            
+                <a href="../data/SQLCommon.html">
+            
+                    
+                    SQL Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../data/RedisClient.html">
+            
+                <a href="../data/RedisClient.html">
+            
+                    
+                    Redis Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../data/MySQL&PostgreSQLClient.html">
+            
+                <a href="../data/MySQL&PostgreSQLClient.html">
+            
+                    
+                    MySQL/PostgreSQL Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../integration/Integration.html">
+            
+                <a href="../integration/Integration.html">
+            
+                    
+                    Integration
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../integration/MailClient.html">
+            
+                <a href="../integration/MailClient.html">
+            
+                    
+                    Mail Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../integration/STOMPClient&Server.html">
+            
+                <a href="../integration/STOMPClient&Server.html">
+            
+                    
+                    STOMP Client & Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../integration/JCAAdaptor.html">
+            
+                <a href="../integration/JCAAdaptor.html">
+            
+                    
+                    JCA Adaptor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../integration/RabbitMQClient.html">
+            
+                <a href="../integration/RabbitMQClient.html">
+            
+                    
+                    RabbitMQ Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../integration/KafkaClient.html">
+            
+                <a href="../integration/KafkaClient.html">
+            
+                    
+                    Kafka Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../integration/ConsulClient.html">
+            
+                <a href="../integration/ConsulClient.html">
+            
+                    
+                    Consul Client
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Event Bus Bridge
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../eventbusbridge/CamelBridge.html">
+            
+                <a href="../eventbusbridge/CamelBridge.html">
+            
+                    
+                    Camel Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../eventbusbridge/TCPEventbusBridge.html">
+            
+                <a href="../eventbusbridge/TCPEventbusBridge.html">
+            
+                    
+                    TCP Event Bus Bridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../auth/Auth.html">
+            
+                <a href="../auth/Auth.html">
+            
+                    
+                    Authentication and Authorisation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../auth/AuthCommon.html">
+            
+                <a href="../auth/AuthCommon.html">
+            
+                    
+                    Auth Common
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../auth/JDBCAuth.html">
+            
+                <a href="../auth/JDBCAuth.html">
+            
+                    
+                    JDBC Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../auth/JWTAuth.html">
+            
+                <a href="../auth/JWTAuth.html">
+            
+                    
+                    JWT Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../auth/ShiroAuth.html">
+            
+                <a href="../auth/ShiroAuth.html">
+            
+                    
+                    Shiro Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../auth/MongoDBAuth.html">
+            
+                <a href="../auth/MongoDBAuth.html">
+            
+                    
+                    MongoDB Auth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../auth/Oauth2.html">
+            
+                <a href="../auth/Oauth2.html">
+            
+                    
+                    OAuth 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../reactive/Reactive.html">
+            
+                <a href="../reactive/Reactive.html">
+            
+                    
+                    Reactive
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../reactive/Rx.html">
+            
+                <a href="../reactive/Rx.html">
+            
+                    
+                    Vert.x Rx
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../reactive/Reactivestreams.html">
+            
+                <a href="../reactive/Reactivestreams.html">
+            
+                    
+                    Reactive Streams
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../reactive/Sync.html">
+            
+                <a href="../reactive/Sync.html">
+            
+                    
+                    Vert.x Sync
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Microservices
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../microservices/ServiceDiscovery.html">
+            
+                <a href="../microservices/ServiceDiscovery.html">
+            
+                    
+                    Vert.x Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../microservices/CircuitBreaker.html">
+            
+                <a href="../microservices/CircuitBreaker.html">
+            
+                    
+                    Vert.x Circuit Breaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../microservices/Config.html">
+            
+                <a href="../microservices/Config.html">
+            
+                    
+                    Vert.x Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    IoT
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.12.1" data-path="MQTTServer.html">
+            
+                <a href="MQTTServer.html">
+            
+                    
+                    MQTT Server
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../devops/Devops.html">
+            
+                <a href="../devops/Devops.html">
+            
+                    
+                    Devops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../devops/MetricsUsingDropwizard.html">
+            
+                <a href="../devops/MetricsUsingDropwizard.html">
+            
+                    
+                    Metrics Using Dropwizard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../devops/MetricsUsingHawkular.html">
+            
+                <a href="../devops/MetricsUsingHawkular.html">
+            
+                    
+                    Metrics Using Hawkular
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../devops/Shell.html">
+            
+                <a href="../devops/Shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../devops/Docker.html">
+            
+                <a href="../devops/Docker.html">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../devops/StackManager.html">
+            
+                <a href="../devops/StackManager.html">
+            
+                    
+                    Stack Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../testing/Testing.html">
+            
+                <a href="../testing/Testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../clustering/Clustering.html">
+            
+                <a href="../clustering/Clustering.html">
+            
+                    
+                    Clustering
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../clustering/Hazelcast.html">
+            
+                <a href="../clustering/Hazelcast.html">
+            
+                    
+                    Hazelcast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../clustering/Infinispan.html">
+            
+                <a href="../clustering/Infinispan.html">
+            
+                    
+                    Infinispan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../clustering/ApacheIgnite.html">
+            
+                <a href="../clustering/ApacheIgnite.html">
+            
+                    
+                    Apache Ignite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../clustering/ApacheZookeeper.html">
+            
+                <a href="../clustering/ApacheZookeeper.html">
+            
+                    
+                    Apache Zookeeper
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../services/Services.html">
+            
+                <a href="../services/Services.html">
+            
+                    
+                    Services
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../services/ServiceFactories.html">
+            
+                <a href="../services/ServiceFactories.html">
+            
+                    
+                    Service Factories
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../services/ServiceProxies.html">
+            
+                <a href="../services/ServiceProxies.html">
+            
+                    
+                    Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="../services/SockJSServiceProxies.html">
+            
+                <a href="../services/SockJSServiceProxies.html">
+            
+                    
+                    SockJS Service Proxies
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="../services/MavenServiceFactory.html">
+            
+                <a href="../services/MavenServiceFactory.html">
+            
+                    
+                    Maven Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="../services/HTTPServiceFactory.html">
+            
+                <a href="../services/HTTPServiceFactory.html">
+            
+                    
+                    HTTP Service Factory
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../cloud/Cloud.html">
+            
+                <a href="../cloud/Cloud.html">
+            
+                    
+                    Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="../cloud/OpenShiftCartridge.html">
+            
+                <a href="../cloud/OpenShiftCartridge.html">
+            
+                    
+                    OpenShift Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                <a href="../cloud/OpenShiftUsingDIYCartridge.html">
+            
+                    
+                    OpenShift Using DIY Cartridge
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="../PLAN.html">
+            
+                <a href="../PLAN.html">
+            
+                    
+                    翻译计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >MQTT Server</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="vertx-mqtt-server">Vert.x MQTT Server</h1>
+<p>&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5B83;&#x80FD;&#x5904;&#x7406;&#x8FDC;&#x7A0B;<a href="http://mqtt.org/" target="_blank"><code>MQTT</code></a>&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#xFF0C;&#x901A;&#x4FE1;&#x548C;&#x4FE1;&#x606F;&#x4EA4;&#x6362;&#x3002;
+&#x5B83;&#x7684;API&#x63D0;&#x4F9B;&#x4E86;,&#x5F53;&#x63A5;&#x53D7;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x7684;raw protocol&#x6D88;&#x606F;&#x65F6;&#x76F8;&#x5E94;&#x7684;&#x4E8B;&#x4EF6;&#x548C;&#x63D0;&#x4F9B;&#x4E00;&#x4E9B;&#x53D1;&#x9001;&#x4FE1;&#x606F;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x529F;&#x80FD;&#x3002;
+&#x5B83;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x529F;&#x80FD;&#x9F50;&#x5168;&#x7684;MQTT broker&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5EFA;&#x7ACB;&#x7C7B;&#x4F3C;&#x7684;&#x4E1C;&#x897F;&#x6216;&#x8005;&#x534F;&#x8BAE;&#x8F6C;&#x6362;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;mqtt&#x670D;&#x52A1;&#x5668;">&#x4F7F;&#x7528;MQTT&#x670D;&#x52A1;&#x5668;</h2>
+<p>&#x8981;&#x4F7F;&#x7528;Vert.x MQTT&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x589E;&#x52A0;&#x4EE5;&#x4E0B;&#x4F9D;&#x8D56;&#x5230;&#x6784;&#x5EFA;&#x63CF;&#x8FF0;&#x7B26;&#x4E2D;</p>
+<ul>
+<li>Maven (in your pom.xml):</li>
+</ul>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-mqtt-server<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Gradle (in your build.gradle file):</li>
+</ul>
+<pre><code class="lang-gradle"><span class="hljs-keyword">compile</span> io.vertx:vertx-mqtt-server:<span class="hljs-number">3.4</span>.<span class="hljs-number">1</span>
+</code></pre>
+<h2 id="&#x5F00;&#x59CB;">&#x5F00;&#x59CB;</h2>
+<h3 id="&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x65AD;&#x5F00;">&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;/&#x65AD;&#x5F00;</h3>
+<p>&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x5C55;&#x793A;&#x4E86;&#x5982;&#x4F55;&#x5904;&#x7406;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x8FDC;&#x7A0B;MQTT&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x9996;&#x5148;&#xFF0C;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<a href="http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttServer.html" target="_blank"><code>Mqttserver</code></a>&#x5B9E;&#x4F8B;&#x548C;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttServer.html#endpointHandler-io.vertx.core.Handler-" target="_blank"><code>endpointHandler</code></a>&#x65B9;&#x6CD5;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;&#x5904;&#x7406;&#x5668;&#x7528;&#x4E8E;&#x5904;&#x7406;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x7684;CONNECT&#x4FE1;&#x606F;&#x3002;
+<a href="http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html" target="_blank"><code>MqttEndpoint</code></a>&#x5B9E;&#x4F8B;,&#x4F1A;&#x88AB;&#x5F53;&#x505A;Handler&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5B83;&#x643A;&#x5E26;&#x4E86;&#x6240;&#x6709;&#x4E3B;&#x8981;&#x7684;&#x4E0E;CONNECT&#x6D88;&#x606F;&#x76F8;&#x5173;&#x8054;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x4F8B;&#x5982;&#x5BA2;&#x6237;&#x7AEF;&#x6807;&#x8BC6;&#x7B26;&#xFF0C;&#x7528;&#x6237;&#x540D;/&#x5BC6;&#x7801;&#xFF0C;&quot;will&quot;&#x4FE1;&#x606F;&#xFF0C;&#x6E05;&#x9664;session&#x6807;&#x5FD7;&#xFF0C;&#x534F;&#x8BAE;&#x7248;&#x672C;&#x548C;&#x4FDD;&#x6D3B;&#x8D85;&#x65F6;&#x3002;
+&#x5728;Handler&#x5185;,endpoint&#x5B9E;&#x4F8B;&#x63D0;&#x4F9B;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#accept-boolean-" target="_blank"><code>accept</code></a>&#x65B9;&#x6CD5;&#x4EE5;&#x76F8;&#x5E94;&#x7684;CONNACK&#x6D88;&#x606F;&#x56DE;&#x5E94;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#xFF1B;&#x901A;&#x8FC7;&#x8BE5;&#x65B9;&#x5F0F;&#xFF0C;&#x8FDE;&#x63A5;&#x4F1A;&#x88AB;&#x5EFA;&#x7ACB;&#x3002;&#x6700;&#x7EC8;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x901A;&#x8FC7;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttServer.html#listen-io.vertx.core.Handler-" target="_blank"><code>listen</code></a>&#x65B9;&#x6CD5;&#x4EE5;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#x7684;&#x884C;&#x4E3A;(&#x8FD0;&#x884C;&#x5728;localhost&#x548C;&#x9ED8;&#x8BA4;MQTT&#x7AEF;&#x53E3;1883)&#x542F;&#x52A8;&#x3002;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x76F8;&#x540C;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5141;&#x8BB8;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;Handler&#x53BB;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x670D;&#x52A1;&#x5668;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#x3002;</p>
+<pre><code class="lang-java">MqttServer mqttServer = MqttServer.create(vertx);
+mqttServer.endpointHandler(endpoint -&gt; {
+
+  <span class="hljs-comment">// &#x663E;&#x793A;&#x4E3B;&#x8981;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;</span>
+  System.out.println(<span class="hljs-string">&quot;MQTT client [&quot;</span> + endpoint.clientIdentifier() + <span class="hljs-string">&quot;] request to connect, clean session = &quot;</span> + endpoint.isCleanSession());
+
+  <span class="hljs-keyword">if</span> (endpoint.auth() != <span class="hljs-keyword">null</span>) {
+    System.out.println(<span class="hljs-string">&quot;[username = &quot;</span> + endpoint.auth().userName() + <span class="hljs-string">&quot;, password = &quot;</span> + endpoint.auth().password() + <span class="hljs-string">&quot;]&quot;</span>);
+  }
+  <span class="hljs-keyword">if</span> (endpoint.will() != <span class="hljs-keyword">null</span>) {
+    System.out.println(<span class="hljs-string">&quot;[will topic = &quot;</span> + endpoint.will().willTopic() + <span class="hljs-string">&quot; msg = &quot;</span> + endpoint.will().willMessage() +
+      <span class="hljs-string">&quot; QoS = &quot;</span> + endpoint.will().willQos() + <span class="hljs-string">&quot; isRetain = &quot;</span> + endpoint.will().isWillRetain() + <span class="hljs-string">&quot;]&quot;</span>);
+  }
+
+  System.out.println(<span class="hljs-string">&quot;[keep alive timeout = &quot;</span> + endpoint.keepAliveTimeSeconds() + <span class="hljs-string">&quot;]&quot;</span>);
+
+  <span class="hljs-comment">// &#x63A5;&#x53D7;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;</span>
+  endpoint.accept(<span class="hljs-keyword">false</span>);
+
+})
+  .listen(ar -&gt; {
+
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+
+      System.out.println(<span class="hljs-string">&quot;MQTT server is listening on port &quot;</span> + ar.result().actualPort());
+    } <span class="hljs-keyword">else</span> {
+
+      System.out.println(<span class="hljs-string">&quot;Error on starting the server&quot;</span>);
+      ar.cause().printStackTrace();
+    }
+  });
+</code></pre>
+<p><em>endpoint</em>&#x5B9E;&#x4F8B;&#x63D0;&#x4F9B;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#disconnectHandler-io.vertx.core.Handler-" target="_blank"><code>disconnectHandler</code></a>&#x7528;&#x4E8E;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;handler&#x5F53;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;DISCONNECT&#x6D88;&#x606F;&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x8BE5;handler&#x6CA1;&#x6709;&#x53C2;&#x6570;&#x3002;</p>
+<pre><code class="lang-java">endpoint.disconnectHandler(v -&gt; {
+
+  System.out.println(<span class="hljs-string">&quot;Received disconnect from client&quot;</span>);
+});
+</code></pre>
+<h3 id="&#x4F7F;&#x7528;ssl--tls&#x652F;&#x6301;&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;">&#x4F7F;&#x7528;SSL / TLS&#x652F;&#x6301;&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;/&#x65AD;&#x5F00;&#x8FDE;&#x63A5;</h3>
+<p>&#x670D;&#x52A1;&#x7AEF;&#x652F;&#x6301;&#x901A;&#x8FC7;SSL/TLS&#x65B9;&#x5F0F;&#x7528;&#x6765;&#x9A8C;&#x8BC1;&#x548C;&#x52A0;&#x5BC6;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x3002;&#x4E3A;&#x4E86;&#x505A;&#x5230;&#x8FD9;&#x4E00;&#x70B9;&#xFF0C;<a href="http://vertx.io/docs/vertx-mqtt-server/dataobjects.html#MqttServerOptions" target="_blank"><code>MqttServerOptions</code></a>&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttServerOptions.html#setSsl-boolean-" target="_blank"><code>setSsl</code></a>&#x65B9;&#x6CD5;&#x7528;&#x6765;&#x8BBE;&#x7F6E;SSL/TLS&#x7684;&#x7528;&#x6CD5;(&#x4F20;&#x9012;<code>true</code>&#x4F5C;&#x4E3A;&#x503C;)&#x548C;&#x4E00;&#x4E9B;&#x5176;&#x4ED6;&#x63D0;&#x4F9B;&#x4E86;&#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x548C;&#x79C1;&#x94A5;(&#x4F5C;&#x4E3A;java&#x952E;&#x5B58;&#x50A8;&#x5F15;&#x7528;&#xFF0C;PEM&#x6216;PFX&#x683C;&#x5F0F;)&#x3002;&#x5728;&#x4EE5;&#x4E0B;&#x4F8B;&#x5B50;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttServerOptions.html#setKeyCertOptions-io.vertx.core.net.KeyCertOptions-" target="_blank"><code>setKeyCertOptions</code></a>&#x65B9;&#x6CD5;&#x88AB;&#x7528;&#x6765;&#x4F20;&#x9012;&#x4E00;&#x4E2A;PEM&#x683C;&#x5F0F;&#x7684;&#x8BC1;&#x4E66;&#x3002;&#x8BE5;&#x65B9;&#x6CD5;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x4E86;<a href="http://vertx.io/docs/apidocs/io/vertx/core/net/KeyCertOptions.html" target="_blank"><code>KeyCertOptions</code></a>&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;<a href="http://vertx.io/docs/vertx-core/dataobjects.html#PemKeyCertOptions" target="_blank"><code>PemKeyCertOptions</code></a>&#x7C7B;&#x88AB;&#x7528;&#x6765;&#x63D0;&#x4F9B;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x5668;&#x8BC1;&#x4E66;&#x548C;&#x5BF9;&#x5E94;<a href="http://vertx.io/docs/apidocs/io/vertx/core/net/PemKeyCertOptions.html#setCertPath-java.lang.String-" target="_blank"><code>setCertPath</code></a>&#x4E0E;<a href="http://vertx.io/docs/apidocs/io/vertx/core/net/PemKeyCertOptions.html#setKeyPath-java.lang.String-" target="_blank"><code>setKeyPath</code></a>&#x65B9;&#x6CD5;&#x7684;&#x79C1;&#x94A5;&#x8DEF;&#x5F84;&#x3002;MQTT&#x670D;&#x52A1;&#x5668;&#x901A;&#x5E38;&#x4EE5;&#x4F20;&#x9012;&#x4E00;&#x4E2A;Vert.x&#x5B9E;&#x4F8B;&#x542F;&#x52A8;&#x548C;&#x4EE5;&#x4E0A;&#x7684;MQTT&#x9009;&#x9879;&#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x521B;&#x5EFA;&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x6570;&#x3002;</p>
+<pre><code class="lang-java">MqttServerOptions options = <span class="hljs-keyword">new</span> MqttServerOptions()
+  .setPort(<span class="hljs-number">8883</span>)
+  .setKeyCertOptions(<span class="hljs-keyword">new</span> PemKeyCertOptions()
+    .setKeyPath(<span class="hljs-string">&quot;./src/test/resources/tls/server-key.pem&quot;</span>)
+    .setCertPath(<span class="hljs-string">&quot;./src/test/resources/tls/server-cert.pem&quot;</span>))
+  .setSsl(<span class="hljs-keyword">true</span>);
+
+MqttServer mqttServer = MqttServer.create(vertx, options);
+mqttServer.endpointHandler(endpoint -&gt; {
+
+  <span class="hljs-comment">// &#x5C55;&#x793A;&#x4E3B;&#x8981;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;</span>
+  System.out.println(<span class="hljs-string">&quot;MQTT client [&quot;</span> + endpoint.clientIdentifier() + <span class="hljs-string">&quot;] request to connect, clean session = &quot;</span> + endpoint.isCleanSession());
+
+  <span class="hljs-keyword">if</span> (endpoint.auth() != <span class="hljs-keyword">null</span>) {
+    System.out.println(<span class="hljs-string">&quot;[username = &quot;</span> + endpoint.auth().userName() + <span class="hljs-string">&quot;, password = &quot;</span> + endpoint.auth().password() + <span class="hljs-string">&quot;]&quot;</span>);
+  }
+  <span class="hljs-keyword">if</span> (endpoint.will() != <span class="hljs-keyword">null</span>) {
+    System.out.println(<span class="hljs-string">&quot;[will topic = &quot;</span> + endpoint.will().willTopic() + <span class="hljs-string">&quot; msg = &quot;</span> + endpoint.will().willMessage() +
+      <span class="hljs-string">&quot; QoS = &quot;</span> + endpoint.will().willQos() + <span class="hljs-string">&quot; isRetain = &quot;</span> + endpoint.will().isWillRetain() + <span class="hljs-string">&quot;]&quot;</span>);
+  }
+
+  System.out.println(<span class="hljs-string">&quot;[keep alive timeout = &quot;</span> + endpoint.keepAliveTimeSeconds() + <span class="hljs-string">&quot;]&quot;</span>);
+
+  <span class="hljs-comment">// &#x63A5;&#x53D7;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;</span>
+  endpoint.accept(<span class="hljs-keyword">false</span>);
+
+})
+  .listen(ar -&gt; {
+
+    <span class="hljs-keyword">if</span> (ar.succeeded()) {
+
+      System.out.println(<span class="hljs-string">&quot;MQTT server is listening on port &quot;</span> + ar.result().actualPort());
+    } <span class="hljs-keyword">else</span> {
+
+      System.out.println(<span class="hljs-string">&quot;Error on starting the server&quot;</span>);
+      ar.cause().printStackTrace();
+    }
+  });
+</code></pre>
+<p>&#x6240;&#x6709;&#x5176;&#x4ED6;&#x4E0E;&#x5904;&#x7406;&#x7AEF;&#x70B9;&#x8FDE;&#x63A5;&#x548C;&#x65AD;&#x5F00;&#x76F8;&#x5173;&#x5728;&#x6CA1;&#x6709;SSL/TLS&#x652F;&#x6301;&#x4E0B;&#x4F7F;&#x7528;&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x7BA1;&#x7406;&#x3002;</p>
+<h3 id="&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x8BA2;&#x9605;&#x548C;&#x9000;&#x8BA2;&#x8BF7;&#x6C42;">&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x8BA2;&#x9605;&#x548C;&#x9000;&#x8BA2;&#x8BF7;&#x6C42;</h3>
+<p>&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;&#x88AB;&#x5EFA;&#x7ACB;&#x540E;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x4EE5;&#x4EE5;&#x6307;&#x5B9A;&#x7684;&#x4E3B;&#x9898;&#x53D1;&#x9001;&#x8BA2;&#x9605;&#x6D88;&#x606F;&#x3002;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html" target="_blank"><code>MqttEndpoint</code></a>&#x63A5;&#x53E3;&#x5141;&#x8BB8;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#subscribeHandler-io.vertx.core.Handler-" target="_blank"><code>subscribeHandler</code></a>&#x5904;&#x7406;&#x5230;&#x6765;&#x7684;&#x8BA2;&#x9605;&#x8BF7;&#x6C42;&#x3002;
+&#x8FD9;&#x6837;&#x7684;Handler&#x63A5;&#x53D7;&#x4E00;&#x4E2A;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/messages/MqttSubscribeMessage.html" target="_blank"><code>MqttSubscribeMessage</code></a>&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;which brings the list of topics with related QoS levels as desired by the client.&#x6700;&#x7EC8;&#xFF0C;&#x7AEF;&#x70B9;&#x5B9E;&#x4F8B;&#x63D0;&#x4F9B;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#subscribeAcknowledge-int-java.util.List-" target="_blank"><code>subscribeAcknowledge</code></a>&#x65B9;&#x6CD5;&#x4EE5;&#x5305;&#x542B;&#x4E86;&#x6388;&#x4E88;QoS&#x7EA7;&#x522B;&#x7684;&#x76F8;&#x5173;&#x7684;SUBACK&#x6D88;&#x606F;&#x56DE;&#x5E94;&#x5BA2;&#x6237;&#x7AEF;&#x3002;</p>
+<pre><code class="lang-java">endpoint.subscribeHandler(subscribe -&gt; {
+
+  List&lt;MqttQoS&gt; grantedQosLevels = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+  <span class="hljs-keyword">for</span> (MqttTopicSubscription s: subscribe.topicSubscriptions()) {
+    System.out.println(<span class="hljs-string">&quot;Subscription for &quot;</span> + s.topicName() + <span class="hljs-string">&quot; with QoS &quot;</span> + s.qualityOfService());
+    grantedQosLevels.add(s.qualityOfService());
+  }
+  <span class="hljs-comment">// &#x786E;&#x8BA4;&#x8BA2;&#x9605;&#x8BF7;&#x6C42;</span>
+  endpoint.subscribeAcknowledge(subscribe.messageId(), grantedQosLevels);
+
+});
+</code></pre>
+<p>&#x4EE5;&#x76F8;&#x540C;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#unsubscribeAcknowledge-int-" target="_blank"><code>unsubscribeHandler</code></a>&#x65B9;&#x6CD5;&#x5728;&#x7AEF;&#x70B9;&#x4E0A;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;handler&#xFF0C;&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;UNSUBSCRIBE&#x6D88;&#x606F;&#x65F6;&#x8BE5;handler&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x4E2A;handler&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x4E86;<a href="http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/messages/MqttUnsubscribeMessage.html" target="_blank"><code>MqttUnsubscribeMessage</code></a>&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#xFF0C;&#x5B83;&#x643A;&#x5E26;&#x4E86;&#x4E00;&#x4E2A;&#x9000;&#x8BA2;&#x5217;&#x8868;&#x3002;&#x6700;&#x7EC8;&#xFF0C;&#x7AEF;&#x70B9;&#x5B9E;&#x4F8B;&#x63D0;&#x4F9B;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#unsubscribeAcknowledge-int-" target="_blank"><code>unsubscribeAcknowledge</code></a>&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x4EE5;&#x76F8;&#x5173;&#x7684;UNSUBACK&#x6D88;&#x606F;&#x56DE;&#x5E94;&#x5BA2;&#x6237;&#x3002;</p>
+<pre><code class="lang-java">endpoint.unsubscribeHandler(unsubscribe -&gt; {
+
+  <span class="hljs-keyword">for</span> (String t: unsubscribe.topics()) {
+    System.out.println(<span class="hljs-string">&quot;Unsubscription for &quot;</span> + t);
+  }
+  <span class="hljs-comment">// &#x786E;&#x8BA4;&#x8BA2;&#x9605;&#x8BF7;&#x6C42;</span>
+  endpoint.unsubscribeAcknowledge(unsubscribe.messageId());
+});
+</code></pre>
+<h3 id="&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x5E03;&#x6D88;&#x606F;">&#x5904;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x5E03;&#x6D88;&#x606F;</h3>
+<p>&#x4E3A;&#x4E86;&#x5904;&#x7406;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x5E03;&#x7684;&#x6D88;&#x606F;&#xFF0C;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html" target="_blank"><code>MqttEndpoint</code></a>&#x63A5;&#x53E3;&#x63D0;&#x4F9B;&#x4E86;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishHandler-io.vertx.core.Handler-" target="_blank"><code>publishHandler</code></a>&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;handler&#xFF0C;&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x4E00;&#x4E2A;PUBLISH&#x6D88;&#x606F;&#x65F6;&#x4F1A;&#x8C03;&#x7528;&#x8BE5;handler&#x3002;
+&#x8FD9;&#x4E2A;handler&#x63A5;&#x53D7;&#x4E00;&#x4E2A;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/messages/MqttPublishMessage.html" target="_blank"><code>MqttPublishMessage</code></a>&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x4F8B;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#xFF0C;with the payload, the QoS level, the duplicate and retain flags.</p>
+<p>&#x5047;&#x5982;QoS&#x7EA7;&#x522B;&#x662F;0(&#x6700;&#x591A;&#x4E00;&#x6B21;)&#xFF0C;&#x5C31;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x54CD;&#x5E94;&#x3002;</p>
+<p>&#x5047;&#x5982;QoS&#x7EA7;&#x522B;&#x662F;1(&#x81F3;&#x5C11;&#x4E00;&#x6B21;)&#xFF0C;&#x7AEF;&#x70B9;&#x9700;&#x8981;&#x901A;&#x8FC7;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishAcknowledge-int-" target="_blank"><code>publishAcknowledge</code></a>&#x65B9;&#x6CD5;&#x56DE;&#x5E94;&#x4E00;&#x4E2A;PUBACK&#x6D88;&#x606F;</p>
+<p>&#x5047;&#x5982;QoS&#x7EA7;&#x522B;&#x662F;2(&#x6B63;&#x597D;&#x4E00;&#x6B21;)&#xFF0C;&#x7AEF;&#x70B9;&#x9700;&#x8981;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishReceived-int-" target="_blank"><code>publishReceived</code></a>&#x65B9;&#x6CD5;&#x56DE;&#x5E94;&#x4E00;&#x4E2A;PUBREC&#x6D88;&#x606F;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x7AEF;&#x70B9;&#x5E94;&#x8BE5;&#x5904;&#x7406;&#x6765;&#x81EA;&#x4E8E;&#x5BA2;&#x6237;&#x7AEF;&#x7684;PUBREL&#x6D88;&#x606F;&#x5E76;&#x4E14;(&#x5F53;&#x6536;&#x5230;&#x6765;&#x8D44;&#x6E90;&#x7AEF;&#x70B9;&#x7684;PUBREC&#x6D88;&#x606F;&#xFF0C;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x5C31;&#x4F1A;&#x53D1;&#x9001;&#x5B83;)&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishReleaseHandler-io.vertx.core.Handler-" target="_blank"><code>publishReleaseHandler</code></a>&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x3002;&#x4E3A;&#x4E86;&#x5173;&#x95ED;QoS&#x7EA7;&#x522B;2&#x4F20;&#x9012;&#xFF0C;&#x7AEF;&#x70B9;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishComplete-int-" target="_blank">publishComplete</a>&#x65B9;&#x6CD5;&#x7528;&#x6765;&#x53D1;&#x9001;PUBCOMP&#x6D88;&#x606F;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x3002;</p>
+<pre><code class="lang-java">endpoint.publishHandler(message -&gt; {
+
+  System.out.println(<span class="hljs-string">&quot;Just received message [&quot;</span> + message.payload().toString(Charset.defaultCharset()) + <span class="hljs-string">&quot;] with QoS [&quot;</span> + message.qosLevel() + <span class="hljs-string">&quot;]&quot;</span>);
+
+  <span class="hljs-keyword">if</span> (message.qosLevel() == MqttQoS.AT_LEAST_ONCE) {
+    endpoint.publishAcknowledge(message.messageId());
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (message.qosLevel() == MqttQoS.EXACTLY_ONCE) {
+    endpoint.publishRelease(message.messageId());
+  }
+
+}).publishReleaseHandler(messageId -&gt; {
+
+  endpoint.publishComplete(messageId);
+});
+</code></pre>
+<h3 id="&#x53D1;&#x5E03;&#x6D88;&#x606F;&#x5230;&#x5BA2;&#x6237;&#x7AEF;">&#x53D1;&#x5E03;&#x6D88;&#x606F;&#x5230;&#x5BA2;&#x6237;&#x7AEF;</h3>
+<p>&#x901A;&#x8FC7;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publish-java.lang.String-io.vertx.core.buffer.Buffer-io.netty.handler.codec.mqtt.MqttQoS-boolean-boolean-" target="_blank"><code>publish</code></a>&#x65B9;&#x6CD5;&#x7AEF;&#x70B9;&#x53EF;&#x4EE5;&#x53D1;&#x5E03;&#x4E00;&#x4E2A;&#x6D88;&#x606F;&#x5230;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;(&#x53D1;&#x9001;&#x4E00;&#x4E2A;PUBLISH&#x6D88;&#x606F;)&#xFF0C;&#x5B83;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x5165;&#x53C2;&#xFF0C;&#x8981;&#x53D1;&#x5E03;&#x7684;&#x4E3B;&#x9898;&#xFF0C;&#x8D1F;&#x8F7D;&#xFF0C;QoS&#x7EA7;&#x522B;&#xFF0C;&#x590D;&#x5236;&#x548C;&#x4FDD;&#x7559;&#x6807;&#x5FD7;&#x3002;</p>
+<p>&#x5047;&#x5982;QoS&#x7EA7;&#x522B;&#x662F;0(&#x6700;&#x591A;&#x4E00;&#x6B21;)&#xFF0C;&#x7AEF;&#x70B9;&#x4E0D;&#x4F1A;&#x6536;&#x5230;&#x4EFB;&#x4F55;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x54CD;&#x5E94;&#x3002;</p>
+<p>&#x5047;&#x5982;QoS&#x7EA7;&#x522B;&#x662F;1(&#x6700;&#x591A;&#x4E00;&#x6B21;)&#xFF0C;&#x7AEF;&#x70B9;&#x9700;&#x8981;&#x53BB;&#x5904;&#x7406;&#x6765;&#x81EA;&#x5BA2;&#x6237;&#x7AEF;&#x7684;PUBACK&#x6D88;&#x606F;&#xFF0C;&#x4E3A;&#x4E86;&#x6536;&#x5230;&#x6700;&#x540E;&#x7684;&#x786E;&#x8BA4;&#x6D88;&#x606F;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishAcknowledgeHandler-io.vertx.core.Handler-" target="_blank"><code>publishAcknowledgeHandler</code></a>&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x5047;&#x5982;QoS&#x7EA7;&#x522B;&#x662F;2(&#x6B63;&#x597D;&#x4E00;&#x6B21;)&#xFF0C;&#x7AEF;&#x70B9;&#x9700;&#x8981;&#x53BB;&#x5904;&#x7406;&#x6765;&#x81EA;&#x5BA2;&#x6237;&#x7AEF;&#x7684;PUBREC&#x6D88;&#x606F;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishReceivedHandler-io.vertx.core.Handler-" target="_blank"><code>publishReceivedHandler</code></a>&#x65B9;&#x6CD5;&#x6765;&#x5B8C;&#x6210;&#x8BE5;&#x64CD;&#x4F5C;&#x3002;
+&#x5728;&#x8BE5;Handler&#x5185;&#xFF0C;&#x7AEF;&#x70B9;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishRelease-int-" target="_blank"><code>publishRelease</code></a>&#x65B9;&#x6CD5;&#x54CD;&#x5E94;PUBREL&#x6D88;&#x606F;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x3002;&#x6700;&#x540E;&#x4E00;&#x6B65;&#x662F;&#x5904;&#x7406;&#x6765;&#x81EA;&#x5BA2;&#x6237;&#x7AEF;&#x7684;PUBCOMP&#x6D88;&#x606F;&#xFF1B;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#publishCompleteHandler-io.vertx.core.Handler-" target="_blank"><code>publishCompleteHandler</code></a>&#x6765;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;handler&#x5F53;&#x6536;&#x5230;PUBCOMP&#x6D88;&#x606F;&#x65F6;&#x5019;&#x8C03;&#x7528;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-comment">// &#x4F8B;&#x5B50;, &#x53D1;&#x5E03;&#x4E00;&#x4E2A;QoS&#x7EA7;&#x522B;&#x4E3A;2&#x7684;&#x6D88;&#x606F;</span>
+endpoint.publish(<span class="hljs-string">&quot;my_topic&quot;</span>, Buffer.buffer(<span class="hljs-string">&quot;Hello from the Vert.x MQTT server&quot;</span>), MqttQoS.EXACTLY_ONCE, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">false</span>)
+
+<span class="hljs-comment">// &#x9009;&#x5B9A;handlers&#x5904;&#x7406;QoS 1&#x4E0E;QoS 2</span>
+endpoint.publishAcknowledgeHandler((messageId: java.lang.Integer) =&gt; {
+
+  println(s<span class="hljs-string">&quot;Received ack for message = ${messageId}&quot;</span>)
+
+}).publishReceivedHandler((messageId: java.lang.Integer) =&gt; {
+
+  endpoint.publishRelease(messageId)
+
+}).publishCompleteHandler((messageId: java.lang.Integer) =&gt; {
+
+  println(s<span class="hljs-string">&quot;Received ack for message = ${messageId}&quot;</span>)
+})
+</code></pre>
+<h3 id="&#x88AB;&#x5BA2;&#x6237;&#x7AEF;&#x4FDD;&#x6D3B;&#x901A;&#x77E5;">&#x88AB;&#x5BA2;&#x6237;&#x7AEF;&#x4FDD;&#x6D3B;&#x901A;&#x77E5;</h3>
+<p>&#x5E95;&#x5C42;&#x7684;MQTT&#x4FDD;&#x6D3B;&#x673A;&#x5236;&#x662F;&#x7531;&#x670D;&#x52A1;&#x5668;&#x5185;&#x90E8;&#x5904;&#x7406;&#x7684;&#x3002;&#x5F53;&#x63A5;&#x6536;&#x5230;&#x8FDE;&#x63A5;&#x6D88;&#x606F;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x5173;&#x6CE8;&#x5728;&#x8BE5;&#x6D88;&#x606F;&#x5185;&#x7684;&#x4FDD;&#x6D3B;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x7528;&#x6765;&#x68C0;&#x67E5;&#x5BA2;&#x6237;&#x7AEF;&#x662F;&#x5426;&#x5728;&#x8BE5;&#x8D85;&#x5E02;&#x65F6;&#x95F4;&#x5185;&#x6CA1;&#x6709;&#x53D1;&#x9001;&#x4EFB;&#x4F55;&#x6D88;&#x606F;&#x3002;&#x540C;&#x65F6;&#xFF0C;&#x5BF9;&#x4E8E;&#x63A5;&#x6536;&#x5230;&#x6BCF;&#x4E2A;PINGREQ&#x6D88;&#x606F;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4F1A;&#x4EE5;PINGRESP&#x54CD;&#x5E94;&#x3002;</p>
+<p>&#x5373;&#x4FBF;&#x5BF9;&#x4E8E;&#x9AD8;&#x7B49;&#x7EA7;&#x5E94;&#x7528;&#x4E0D;&#x9700;&#x8981;&#x5904;&#x7406;&#x5B83;&#xFF0C;<a href="http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttEndpoint.html" target="_blank"><code>MqttEndpoint</code></a>&#x63A5;&#x53E3;&#x4F9D;&#x7136;&#x63D0;&#x4F9B;&#x4E86;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttEndpoint.html#pingHandler-io.vertx.core.Handler-" target="_blank"><code>pingHandler</code></a>&#x65B9;&#x6CD5;&#x7528;&#x6765;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;handler&#xFF0C;&#x5F53;&#x6536;&#x5230;&#x6765;&#x81EA;&#x5BA2;&#x6237;&#x7AEF;&#x7684;PINGREQ&#x6D88;&#x606F;&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#x3002;
+&#x5BF9;&#x4E8E;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6765;&#x8BF4;&#x8FD9;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x901A;&#x77E5;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x5E76;&#x6CA1;&#x6709;&#x53D1;&#x9001;&#x4EFB;&#x4F55;&#x6709;&#x610F;&#x4E49;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;&#x68C0;&#x6D4B;&#x4FDD;&#x6D3B;&#x7684;ping&#x6D88;&#x606F;&#x3002;&#x5728;&#x4EFB;&#x4F55;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;PINGRESP&#x4F1A;&#x88AB;&#x670D;&#x52A1;&#x5668;&#x81EA;&#x52A8;&#x53D1;&#x9001;&#x3002;</p>
+<h3 id="&#x5173;&#x95ED;&#x670D;&#x52A1;&#x5668;">&#x5173;&#x95ED;&#x670D;&#x52A1;&#x5668;</h3>
+<p><a href="http://vertx.io/docs/scaladocs/io/vertx/scala/mqtt/MqttServer.html" target="_blank"><code>MqttServer</code></a>&#x63A5;&#x53E3;&#x63D0;&#x4F9B;&#x4E86;<a href="http://vertx.io/docs/apidocs/io/vertx/mqtt/MqttServer.html#close-io.vertx.core.Handler-" target="_blank"><code>close</code></a>&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x5173;&#x95ED;&#x670D;&#x52A1;&#x5668;&#x3002;&#x5B83;&#x505C;&#x6B62;&#x76D1;&#x542C;&#x5230;&#x6765;&#x7684;&#x8FDE;&#x63A5;&#x548C;&#x5173;&#x95ED;&#x6240;&#x6709;&#x8FDC;&#x7A0B;&#x5BA2;&#x6237;&#x7AEF;&#x6D3B;&#x8DC3;&#x7684;&#x8FDE;&#x63A5;&#x3002;&#x8BE5;&#x65B9;&#x6CD5;&#x662F;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x65B9;&#x6CD5;&#x5E76;&#x4E14;&#x6709;&#x4E2A;&#x91CD;&#x8F7D;&#x65B9;&#x6CD5;&#x63D0;&#x4F9B;&#x4E86;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;&#x5B8C;&#x6210;handler&#x5F53;&#x670D;&#x52A1;&#x5668;&#x771F;&#x6B63;&#x5173;&#x95ED;&#x65F6;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x3002;</p>
+<pre><code class="lang-java">mqttServer.closeFuture().onComplete{
+  <span class="hljs-function"><span class="hljs-keyword">case</span> <span class="hljs-title">Success</span><span class="hljs-params">(result)</span> </span>=&gt; println(<span class="hljs-string">&quot;Success&quot;</span>)
+  <span class="hljs-function"><span class="hljs-keyword">case</span> <span class="hljs-title">Failure</span><span class="hljs-params">(cause)</span> </span>=&gt; println(<span class="hljs-string">&quot;Failure&quot;</span>)
+}
+</code></pre>
+<h3 id="&#x5728;verticles&#x4E2D;&#x81EA;&#x52A8;&#x6E05;&#x7406;">&#x5728;verticles&#x4E2D;&#x81EA;&#x52A8;&#x6E05;&#x7406;</h3>
+<p>&#x5047;&#x5982;&#x4F60;&#x662F;&#x5728;verticles&#x4E2D;&#x521B;&#x5EFA;&#x7684;MQTT&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5F53;verticle&#x53D6;&#x6D88;&#x90E8;&#x7F72;&#x8FD9;&#x4E9B;&#x670D;&#x52A1;&#x5668;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x5173;&#x95ED;&#x3002;</p>
+<h3 id="&#x6269;&#x5C55;&#xFF1A;&#x5171;&#x4EAB;mqtt&#x670D;&#x52A1;&#x5668;">&#x6269;&#x5C55;&#xFF1A;&#x5171;&#x4EAB;MQTT&#x670D;&#x52A1;&#x5668;</h3>
+<p>&#x4E0E;MQTT&#x670D;&#x52A1;&#x5668;&#x76F8;&#x5173;&#x7684;handler&#x603B;&#x662F;&#x5728;event loop&#x7EBF;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5728;&#x4E00;&#x4E2A;&#x591A;&#x6838;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x4EC5;&#x6709;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x88AB;&#x90E8;&#x7F72;&#xFF0C;&#x4E00;&#x4E2A;&#x6838;&#x88AB;&#x4F7F;&#x7528;&#x3002;&#x4E3A;&#x4E86;&#x4F7F;&#x7528;&#x66F4;&#x591A;&#x7684;&#x6838;&#xFF0C;&#x53EF;&#x4EE5;&#x90E8;&#x7F72;&#x66F4;&#x591A;&#x7684;MQTT&#x670D;&#x52A1;&#x5668;&#x5B9E;&#x4F8B;
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7F16;&#x7A0B;&#x65B9;&#x5F0F;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">for</span> ( i &lt;- <span class="hljs-number">0</span> until <span class="hljs-number">10</span>) {
+
+  var mqttServer = MqttServer.create(vertx)
+  mqttServer.endpointHandler((endpoint: io.vertx.scala.mqtt.MqttEndpoint) =&gt; {
+    <span class="hljs-comment">// &#x5904;&#x7406;&#x7AEF;&#x70B9;</span>
+  }).listenFuture().onComplete{
+    <span class="hljs-function"><span class="hljs-keyword">case</span> <span class="hljs-title">Success</span><span class="hljs-params">(result)</span> </span>=&gt; println(<span class="hljs-string">&quot;Success&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">case</span> <span class="hljs-title">Failure</span><span class="hljs-params">(cause)</span> </span>=&gt; println(<span class="hljs-string">&quot;Failure&quot;</span>)
+  }
+
+}
+</code></pre>
+<p>&#x6216;&#x8005;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;verticle&#x6307;&#x5B9A;&#x5B9E;&#x4F8B;&#x7684;&#x6570;&#x91CF;&#xFF1A;</p>
+<pre><code class="lang-java">var options = DeploymentOptions()
+  .setInstances(<span class="hljs-number">10</span>)
+
+vertx.deployVerticle(<span class="hljs-string">&quot;com.mycompany.MyVerticle&quot;</span>, options)
+</code></pre>
+<p>&#x771F;&#x6B63;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF0C;&#x4EC5;&#x6709;&#x4E00;&#x4E2A;MQTT&#x670D;&#x52A1;&#x5668;&#x88AB;&#x90E8;&#x7F72;&#xFF0C;&#x4F46;&#x5230;&#x6765;&#x7684;&#x8FDE;&#x63A5;&#x4F1A;&#x88AB;Vert.x&#x4F7F;&#x7528;&#x8F6E;&#x8F6C;&#x7B97;&#x6CD5;&#x5206;&#x53D1;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x8FDE;&#x63A5;handlers&#x4E0A;&#xFF0C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x6838;&#x4E0A;&#x6267;&#x884C;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="../devops/Devops.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Devops">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"MQTT Server","level":"1.12.1","depth":2,"next":{"title":"Devops","level":"1.13","depth":1,"path":"devops/Devops.md","ref":"devops/Devops.md","articles":[{"title":"Metrics Using Dropwizard","level":"1.13.1","depth":2,"path":"devops/MetricsUsingDropwizard.md","ref":"devops/MetricsUsingDropwizard.md","articles":[]},{"title":"Metrics Using Hawkular","level":"1.13.2","depth":2,"path":"devops/MetricsUsingHawkular.md","ref":"devops/MetricsUsingHawkular.md","articles":[]},{"title":"Shell","level":"1.13.3","depth":2,"path":"devops/Shell.md","ref":"devops/Shell.md","articles":[]},{"title":"Docker","level":"1.13.4","depth":2,"path":"devops/Docker.md","ref":"devops/Docker.md","articles":[]},{"title":"Stack Manager","level":"1.13.5","depth":2,"path":"devops/StackManager.md","ref":"devops/StackManager.md","articles":[]}]},"previous":{"title":"IoT","level":"1.12","depth":1,"ref":"","articles":[{"title":"MQTT Server","level":"1.12.1","depth":2,"path":"iot/MQTTServer.md","ref":"iot/MQTTServer.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"iot/MQTTServer.md","mtime":"2017-06-13T05:35:34.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T05:35:57.214Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
