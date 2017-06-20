@@ -40,7 +40,7 @@ Web Client使得发送 HTTP 请求以及从 Web 服务器接收 HTTP 响应变�
   <dependency>
     <groupId>io.vertx</groupId>
     <artifactId>vertx-web-client</artifactId>
-    <version>3.4.1</version>
+    <version>3.4.2</version>
   </dependency>
   ```
 
@@ -48,7 +48,7 @@ Web Client使得发送 HTTP 请求以及从 Web 服务器接收 HTTP 响应变�
 
   ```gradle
   dependencies {
-    compile 'io.vertx:vertx-web-client:3.4.1'
+    compile 'io.vertx:vertx-web-client:3.4.2'
   }
   ```
 
@@ -313,7 +313,8 @@ get.send(ar -> {
 
 ```
 
-当您需要更改请求时，可用 [`copy`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#copy--) 方法复制一份请求的拷贝：
+请注意，[`HttpRequest`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html) 对象是可变的。
+所以在修改缓存中的对象之前，您应当使用 [`copy`](http://vertx.io/docs/apidocs/io/vertx/ext/web/client/HttpRequest.html#copy--) 方法先复制一份拷贝：
 
 ```java
 HttpRequest<Buffer> get = client.get(8080, "myserver.mycompany.com", "/some-uri");
