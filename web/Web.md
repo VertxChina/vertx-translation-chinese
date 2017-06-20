@@ -777,6 +777,28 @@ router.get().failureHandler(ctx -> {
 });
 ```
 
+需要澄清的是，重定向是基于`路径`的。也就是说，如果您需要在重定向的过程中添加或者保持状态，您需要使用 `RoutingContext` 对象。例如您希望使用一个新的参数重定向到另外一个路径：
+
+```java
+router.get("/final-target").handler(ctx -> {
+  // 继续做某些事情
+});
+
+// 错误的方式! (会重定向到 /final-target 路径，但不包含查询参数)
+router.get().handler(ctx -> {
+  ctx.reroute("/final-target?variable=value");
+});
+
+// 正确的方式
+router.get().handler(ctx -> {
+  ctx
+    .put("variable", "value")
+    .reroute("/final-target");
+});
+```
+
+虽然在重定向时会警告您查询参数会丢失，但是重定向的过程仍然会执行。并且会从路径上裁剪掉所有的查询参数或 HTML 锚点。
+
 ## 子路由
 
 当您有很多处理器的情况下，合理的方式是将它们分隔为多个 `Router`。这也有利于您在多个不用的应用中通过设置不同的根路径来复用处理器。
@@ -1472,9 +1494,9 @@ Vert.x Web 会在响应里设置这些消息头：`cache-control`、`last-modifi
 
 默认情况下，Vert.x 会使用当前工作目录的子目录 `.vertx` 来在磁盘上缓存通过 classpath 服务的静态资源。这对于在生产环境中通过 fat-jar 来部署的服务是很重要的。因为每一次都通过 classpath 来提取文件是低效的。
 
-这在开发时会导致一个问题，例如当您通过 IDE 的运行配置来启动您的应用时，如果您修改了文件，缓存的文件时不会被更新的。
+这在开发时会导致一个问题，当您在服务运行过程中修改了静态内容，缓存的文件是不会被更新的。
 
-您可以通过设置系统属性 `vertx.disableFileCaching` 为 `true` 来禁用文件缓存。
+您可以设置 vert.x 的 `fileResolverCachingEnabled` 选项为 `true` 来禁用文件缓存。为了向后兼容，它会从 `vertx.disableFileCaching` 这个系统属性里来提取默认值。例如，您如果从 IDE 来启动您的应用程序，可以在 IDE 的运行配置中来配置这个属性。
 
 ## 处理跨域资源共享
 
@@ -1659,6 +1681,12 @@ router.get("/dynamic/").handler(handler);
 ```
 
 关于如何编写 Pebble 模板，请参考 [Pebble 文档](http://www.mitchellbosecke.com/pebble/home/)。
+
+## 禁用缓存
+
+在开发时，为了让每一次请求可以重新读取模板内容，您可能希望禁用模板的缓存。这可以通过设置系统属性 `io.vertx.ext.web.TemplateEngine.disableCache` 为 `true` 来实现。
+
+默认的这个值为 `false`，也就是开启模板缓存。
 
 ## 错误处理
 
@@ -1913,6 +1941,20 @@ var eb = new EventBus('http://localhost:8080/eventbus');
 
 在连接打开之前，我们什么也做不了。当它打开后，会回调 `onopen` 函数处理。
 
+*注意，无论是 SockJS 或是 EventBusBridge 都不支持自动重连*
+
+当你的服务器关闭时，你需要重新创建一个 EventBus 实例：
+
+```javascript
+function setupEventBus() {
+  var eb = new EventBus();
+  eb.onclose = function (e) {
+    setTimeout(setupEventBus, 1000); //等待服务器重启
+  };
+  // 在这里设置处理器
+}
+```
+
 您可以通过依赖管理器来获取客户端库：
 
 - Maven （在您的 `pom.xml` 文件里）
@@ -1933,7 +1975,11 @@ var eb = new EventBus('http://localhost:8080/eventbus');
 compile 'io.vertx:vertx-web:3.4.1:client'
 ```
 
-这个库也可以通过 [NPM](https://www.npmjs.com/package/vertx3-eventbus-client) 和 [Bower](https://github.com/vert-x3/vertx-bus-bower) 来获取。
+这个库也可以通过以下方式来获取：
+
+* [NPM](https://www.npmjs.com/package/vertx3-eventbus-client)
+* [Bower](https://github.com/vert-x3/vertx-bus-bower)
+* [cdnjs](https://cdnjs.com/libraries/vertx)
 
 *注意， 这个 API 在 3.0.0 和 3.1.0 版本之间发生了变化，请检查变更日志。老版本的客户端仍然兼容，但新版本提供了更多的特性，并且更接近服务端的 Vert.x Event Bus API。*
 
@@ -2155,21 +2201,21 @@ router.route("/eventbus").handler(sockJSHandler);
 下面的例子展示了如何配置并处理 `SOCKET_IDDLE` 事件。注意，`setPingTimeout(5000)` 的作用是当 ping 消息在 5 秒内没有从客户端返回时触发 SOCKET_IDLE 事件。
 
 ```java
-// 初始化 SockJS 处理器
 Router router = Router.router(vertx);
 
+// 初始化 SockJS 处理器
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
 BridgeOptions options = new BridgeOptions().addInboundPermitted(inboundPermitted).setPingTimeout(5000);
 
 sockJSHandler.bridge(options, be -> {
-	if (be.type() == BridgeEventType.SOCKET_IDLE) {
-	    // 执行某些处理
-	}
+  if (be.type() == BridgeEventType.SOCKET_IDLE) {
+    // 执行某些处理
+  }
 
- be.complete(true);
+  be.complete(true);
 });
 
-router.route("/eventbus").handler(sockJSHandler);
+router.route("/eventbus/*").handler(sockJSHandler);
 ```
 
 在客户端 JavaScript 环境里您使用 `vertx-eventbus.js` 来创建到 Event Bus 的连接并发送和接收消息：
