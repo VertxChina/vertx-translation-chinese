@@ -38,7 +38,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <vertx.version>3.4.1</vertx.version>
+        <vertx.version>3.4.2</vertx.version>
         <main.class>io.example.Main</main.class>
     </properties>
 
@@ -90,7 +90,7 @@
 </project>
 ```
 
-跟其它Maven项目一样，我们首先定义了项目的GroupId，ArtifactId以及版本号，随后我们定义了两个属性，分别是：`vertx.version`，也就是Vert.x的版本号，此处我们使用最新的Vert.x版本，也就是3.4.1；以及`main.class`，也就是我们要使用的包含有main函数的主类。之后我们引入了两个Maven插件，分别是`maven-compiler-plugin`和`maven-shade-plugin`，前者用来将.java的源文件编译成.class的字节码文件，后者可将编译后的.class字节码文件打包成可执行的jar文件，俗称`fat-jar`。
+跟其它Maven项目一样，我们首先定义了项目的GroupId，ArtifactId以及版本号，随后我们定义了两个属性，分别是：`vertx.version`，也就是Vert.x的版本号，此处我们使用最新的Vert.x版本，也就是3.4.2；以及`main.class`，也就是我们要使用的包含有main函数的主类。之后我们引入了两个Maven插件，分别是`maven-compiler-plugin`和`maven-shade-plugin`，前者用来将.java的源文件编译成.class的字节码文件，后者可将编译后的.class字节码文件打包成可执行的jar文件，俗称`fat-jar`。
 
 然后我们在`src/main/java/io/example`目录下新建两个java文件，分别是`Main.java`和`MyFirstVerticle.java`，代码如下：
 
@@ -154,7 +154,7 @@ public class MyFirstVerticle extends AbstractVerticle {
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <vertx.version>3.4.1</vertx.version>
+        <vertx.version>3.4.2</vertx.version>
         <main.class>io.vertx.core.Launcher</main.class>
         <main.verticle>io.example.MainVerticle</main.verticle>
     </properties>
@@ -245,7 +245,7 @@ public class MainVerticle extends AbstractVerticle {
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <vertx.version>3.4.1</vertx.version>
+        <vertx.version>3.4.2</vertx.version>
         <main.class>io.vertx.core.Launcher</main.class>
         <main.verticle>io.example.MainVerticle</main.verticle>
     </properties>
