@@ -87,7 +87,7 @@ Vert.x Web 的大多数特性被实现为了处理器（Handler），因此您�
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-web</artifactId>
-  <version>3.4.1</version>
+  <version>3.4.2</version>
 </dependency>
 ```
 
@@ -95,7 +95,7 @@ Vert.x Web 的大多数特性被实现为了处理器（Handler），因此您�
 
 ```groovy
 dependencies {
-  compile 'io.vertx:vertx-web:3.4.1'
+  compile 'io.vertx:vertx-web:3.4.2'
 }
 ```
 
@@ -1548,7 +1548,7 @@ router.getWithRegex(".+\\.hbs").handler(handler);
 
 ### MVEL 模板引擎
 
-您需要在您的项目中添加这些依赖来使用 MVEL 模板引擎：`io.vertx:vertx-web-templ-mvel:3.4.1`。通过这个方法来创建 MVEL 模板引擎的实例：`io.vertx.ext.web.templ.MVELTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 MVEL 模板引擎：`io.vertx:vertx-web-templ-mvel:3.4.2`。通过这个方法来创建 MVEL 模板引擎的实例：`io.vertx.ext.web.templ.MVELTemplateEngine#create()`。
 
 在使用 MVEL 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.templ` 的文件。
 
@@ -1570,7 +1570,7 @@ The value 'bar' from the context data is @{context.get('bar')}
 
 > 译者注：Jade 已更名为 Pug。
 
-您需要在您的项目中添加这些依赖来使用 Jade 模板引擎：`io.vertx:vertx-web-templ-jade:3.4.1`。通过这个方法来创建 Jade 模板引擎的实例：`io.vertx.ext.web.templ.JadeTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Jade 模板引擎：`io.vertx:vertx-web-templ-jade:3.4.2`。通过这个方法来创建 Jade 模板引擎的实例：`io.vertx.ext.web.templ.JadeTemplateEngine#create()`。
 
 在使用 Jade 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.jade` 的文件。
 
@@ -1590,7 +1590,7 @@ html
 
 ### Handlebars 模板引擎
 
-您需要在您的项目中添加这些依赖来使用 Handlebars：`io.vertx:vertx-web-templ-handlebars:3.4.1`。通过这个方法来创建 Handlebars 模板引擎的实例：`io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Handlebars：`io.vertx:vertx-web-templ-handlebars:3.4.2`。通过这个方法来创建 Handlebars 模板引擎的实例：`io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()`。
 
 在使用 Handlebars 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.hbs` 的文件。
 
@@ -1618,7 +1618,7 @@ router.get("/dynamic/").handler(handler);
 
 ### Thymeleaf 模板引擎
 
-您需要在您的项目中添加这些依赖来使用 Thymeleaf：`io.vertx:vertx-web-templ-thymeleaf:3.4.1`。通过这个方法来创建 Thymeleaf 模板引擎的实例：`io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Thymeleaf：`io.vertx:vertx-web-templ-thymeleaf:3.4.2`。通过这个方法来创建 Thymeleaf 模板引擎的实例：`io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()`。
 
 在使用 Thymeleaf 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.html` 的文件。
 
@@ -1640,7 +1640,7 @@ router.get("/dynamic/").handler(handler);
 
 ### Apache FreeMarker 模板引擎
 
-您需要在您的项目中添加这些依赖来使用 Apache FreeMarker：`io.vertx:vertx-web-templ-freemarker:3.4.1`。通过这个方法来创建 Apache FreeMarker 模板引擎的实例：`io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()`。
+您需要在您的项目中添加这些依赖来使用 Apache FreeMarker：`io.vertx:vertx-web-templ-freemarker:3.4.2`。通过这个方法来创建 Apache FreeMarker 模板引擎的实例：`io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()`。
 
 在使用 Apache FreeMarker 模板引擎时，如果不指定模板文件的扩展名，则默认会查找扩展名为 `.ftl` 的文件。
 
@@ -1963,7 +1963,7 @@ function setupEventBus() {
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-web</artifactId>
-  <version>3.4.1</version>
+  <version>3.4.2</version>
   <classifier>client</classifier>
   <type>js</type>
 </dependency>
@@ -1972,7 +1972,7 @@ function setupEventBus() {
 - Gradle（在您的 `build.gradle` 文件里）
 
 ```gradle
-compile 'io.vertx:vertx-web:3.4.1:client'
+compile 'io.vertx:vertx-web:3.4.2:client'
 ```
 
 这个库也可以通过以下方式来获取：
