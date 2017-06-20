@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.vertx:vertx-core:3.4.1'//新增 vert.x core的依赖
+    compile 'io.vertx:vertx-core:3.4.2'//新增 vert.x core的依赖
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -121,7 +121,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.vertx:vertx-core:3.4.1'
+    compile 'io.vertx:vertx-core:3.4.2'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
