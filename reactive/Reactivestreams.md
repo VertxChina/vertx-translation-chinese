@@ -30,7 +30,7 @@
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-reactive-streams</artifactId>
-  <version>3.4.1</version>
+  <version>3.4.2</version>
 </dependency>
 
 ```
@@ -38,7 +38,7 @@
 * Gradle（在 `build.gradle` 文件中）：
 
 ```groovy
-compile 'io.vertx:vertx-reactive-streams:3.4.1'
+compile 'io.vertx:vertx-reactive-streams:3.4.2'
 ```
 
 ## Reactive Read Stream
