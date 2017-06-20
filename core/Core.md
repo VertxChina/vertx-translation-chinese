@@ -83,7 +83,7 @@ Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库�
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-core</artifactId>
-  <version>3.4.1</version>
+  <version>3.4.2</version>
 </dependency>
 ```
 
@@ -91,7 +91,7 @@ Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库�
 
 ```gradle
 dependencies {
-    compile 'io.vertx:vertx-core:3.4.1'
+    compile 'io.vertx:vertx-core:3.4.2'
 }
 ```
 
