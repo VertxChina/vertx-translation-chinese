@@ -99,8 +99,6 @@ dependencies {
 
 ## 故事从 Vert.x 开始
 
-> 请注意：*本文大部分内容专用于 Java 语言——若有需要可以切换到语言特定部分（手册中）。*
-
 除非您拿到 [`Vertx`](http://vertx.io/docs/apidocs/io/vertx/core/Vertx.html) 对象，否则在Vert.x领域中您做不了太多的事情。它是 Vert.x 的控制中心，也是您做几乎一切事情的基础，包括创建客户端和服务器、获取事件总线的引用、设置定时器等等。
 
 那么如何获取它的实例呢？
@@ -110,8 +108,6 @@ dependencies {
 ```java
 Vertx vertx = Vertx.vertx();
 ```
-
-如果您使用 Verticle，在 Verticle 中会有一个内置的 `vertx` 对象，您可直接使用该内置对象，无需重新创建。
 
 > 请注意：*大部分应用将只会需要一个Vert.x实例，但如果您有需要也可创建多个Vert.x实例，如：隔离的事件总线或不同组的客户端和服务器。*
 
@@ -5625,11 +5621,11 @@ java io.vertx.core.Launcher run org.acme.MyVerticle --redeploy="**/*.class"  --l
 .Launcher -cp ...
 ```
 
-重新部署过程如下执行。首先，您的应用程序作为后台应用程序启动（使用`start`命令）。当发现文件更改时，该进程将停止并重新启动该应用、这样可避免泄露。
+重新部署过程如下执行。首先，您的应用程序作为后台应用程序启动（使用`start`命令）。当发现文件更改时，该进程将停止并重新启动该应用。这样可避免泄露。
 
 要启用实时重新部署，请将 `--redeploy` 选项传递给 `run` 命令。`--redeploy` 表示要监视的文件集，这个集合可使用 `Ant` 样式模式（使用 `**`，`*` 和 `?`），您也可以使用逗号（`,`）分隔它们来指定多个集合。模式相当于当前工作目录。
 
-传递给 `run` 命令的参数最终会传递给应用程序，可使用 `--java-opts` 配置JVM虚拟机选项。
+传递给 `run` 命令的参数最终会传递给应用程序，可使用 `--java-opts` 配置JVM虚拟机选项。例如，如果想传入一个 `conf` 参数或是系统属性，您可以使用 `--java-opts="-conf=my-conf.json -Dkey=value"`。
 
 `--launcher-class` 选项确定应用程序的主类启动器。它通常是一个 [`Launcher`](http://vertx.io/docs/apidocs/io/vertx/core/Launcher.html)，单您已使用了您自己的主类。
 
@@ -5647,7 +5643,12 @@ java -jar target/my-fat-jar.jar --redeploy="**/*.java" --on-redeploy="mvn packag
 java -jar build/libs/my-fat-jar.jar --redeploy="src/**/*.java" --on-redeploy='./gradlew shadowJar'
 ```
 
-"on-redeploy"选项指定在应用程序关闭后和重新启动之前调用的命令。因此，如果更新某些运行时工作，则可以钩住构建工具。例如，您可以启动`gulp`或`grunt`来更新您的资源。
+"on-redeploy"选项指定在应用程序关闭后和重新启动之前调用的命令。因此，如果更新某些运行时工作，则可以钩住构建工具。例如，您可以启动`gulp`或`grunt`来更新您的资源。如果您的应用需要 `--java-opts`，不要忘记将它添加到命令参数里：
+
+```
+java -jar target/my-fat-jar.jar --redeploy="**/*.java" --on-redeploy="mvn package" --java-opts="-Dkey=val"
+java -jar build/libs/my-fat-jar.jar --redeploy="src/**/*.java" --on-redeploy='./gradlew shadowJar' --java-opts="-Dkey=val"
+```
 
 重新部署功能还支持以下设置：
 
@@ -5709,6 +5710,8 @@ Logger logger = LoggerFactory.getLogger(className);
 logger.info("something happened");
 logger.error("oops!", exception);
 ```
+
+> 注意，不同的日志实现会使用不同的占位符。这意味着，如果你使用了 Vert.x 的参数化的日志记录方法，当你切换日志的实现时，你可能需要修改你的代码。
 
 ### Netty日志记录
 
