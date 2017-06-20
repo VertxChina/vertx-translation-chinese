@@ -59,6 +59,37 @@ fs.open("/data.txt", new OpenOptions(), result -> {
 ```
 
 这样的 `Observable` 是所谓 **hot** observable，即不管是否有订阅，它们都会产生通知。
+`ReadStream` 是否能自发地发射数据，这取决于它的具体实现：
+当订阅动作发生时，适配器会调用 [handler](http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-) 来设置它的 handler 。
+某些 `ReadStream` 实现会在这个调用之后开始发射事件，而其他的则无关于 handler 是否设置：
+* `AsyncFile` 在 handler 设置后开始产生 buffer 事件
+* `HttpServerRequest` 则不依赖于此（即 如果 handler 未设置，buffer 可能会丢失）
+
+在上述所有情形中，订阅 `Observable` 都是安全的。原因在于不管 event loop 还是 worker verticle 都不会被并发执行，所以订阅一定是在 handler 开始发射数据之前发生。
+
+当你想延迟订阅时，需要先暂停 `ReadStream` ，并在之后恢复它。
+```java
+server.requestHandler(request -> {
+  if (request.method() == HttpMethod.POST) {
+
+    // 暂停接收 buffer
+    request.pause();
+
+    checkAuth(res -> {
+
+      // 现在可以重新接收 buffer
+      request.resume();
+
+      if (res.succeeded()) {
+        Observable<Buffer> observable = request.toObservable();
+        observable.subscribe(buff -> {
+          // 获得 buffer
+        });
+      }
+    });
+  }
+});
+```
 
 > 译者注：在 RxJava 里，`Observable` 有“冷热”(cold/hot)之分。区别在于 cold observable 只有当订阅发生时，才会开始发射数据，而 hot observable 在创建完成后就会开始发射数据。更进一步的信息请查阅[ RxJava 关于 Observable 的文档](http://reactivex.io/documentation/observable.html)。
 
