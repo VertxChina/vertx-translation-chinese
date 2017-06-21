@@ -2,6 +2,37 @@
 
 ## 当前进度
 
+截至：**2017-06-21**
+
+对应版本：**Vert.x 3.4.2**
+
+- [x] **Vert.x Core**：已翻译校对至最新版
+- [x] **Vert.x Web**：已翻译校对至最新版
+- [x] **Vert.x Web Client**：已翻译校对至最新版
+- [ ] **Vert.x Data Access**
+  - [ ] **Vert.x Mongo Client**：待校对
+  - [ ] **Vert.x JDBC Client**：待校对
+  - [ ] **Vert.x Common SQL Interface**：待校对
+  - [ ] **Vert.x Redis Client**：待校对
+  - [ ] **Vert.x MySQL/PostgreSQL Client**：待校对
+- [ ] **Vert.x Integration**
+  - [ ] **Vert.x Kafka Client**：待校对
+- [ ] **Vert.x Microservices**
+  - [ ] **Vert.x Circuit Breaker**：待校对
+  - [ ] **Vert.x Service Discovery**：待校对
+  - [ ] **Vert.x Config**：待校对
+- [x] **Vert.x Reactive**：已翻译校对至最新版
+- [ ] **Vert.x Services**
+  - [ ] **Vert.x Service Proxy**：待校对
+- [ ] **Vert.x DevOps**
+  - [ ] **Vert.x Stack Manager**：待校对
+  - [ ] **Vert.x Docker**：待校对
+- [ ] **Vert.x Clustering**：待校对
+- [ ] **Vert.x IoT**
+    - [ ] **Vert.x MQTT Server**：待校对
+- [ ] **Vert.x Testing**
+  - [ ] **Vert.x Unit**：计划中
+
 截至：**2017-05-24**
 
 对应版本：**Vert.x 3.4.1**
@@ -34,10 +65,6 @@
   - [ ] **Vert.x Unit**：计划中
 
 ## 翻译计划
-
-### 2017-06
-
-待 Vert.x 3.4.2 发布后，更新相应的文档翻译。
 
 ### 2017-05
 
