@@ -10,8 +10,8 @@
 - [x] **Vert.x Web**：已翻译校对至最新版
 - [x] **Vert.x Web Client**：已翻译校对至最新版
 - [ ] **Vert.x Data Access**
-  - [ ] **Vert.x Mongo Client**：待校对
-  - [ ] **Vert.x JDBC Client**：待校对
+  - [ ] **Vert.x Mongo Client**：待校对
+  - [ ] **Vert.x JDBC Client**：待校对
   - [ ] **Vert.x Common SQL Interface**：待校对
   - [ ] **Vert.x Redis Client**：待校对
   - [ ] **Vert.x MySQL/PostgreSQL Client**：待校对
