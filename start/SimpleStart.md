@@ -13,7 +13,7 @@ Stay Hungry. Stay Foolish. 如果您是Java新手，对于命令行感到发怵�
 
 首先去JetBrain官方网站：www.jetbrains.com 免费下载集成开发环境（IDE）IntelliJ IDEA，有两个版本，社区版（Community）和终极版（Ultimate），后者需要付费使用，相比起前者而言，多了很多Java EE的支持，幸运的是，我们不需要使用这些貌似很牛逼其实无用的功能，用社区版就好了。下载后安装。
 
-然后启动IntelliJ IDEA，选择创建新项目->Gradle项目->next->填入GroupId（也就是你所在组织的名字，例如io.example）和ArtifactID（也就是项目的名字，例如VertxExample）->next->勾选Use auto-import（自动引入）以及Create directories for empty content roots automatically（为空内容建立文件夹结构）->next ...-> finish，随后会建立以下文件结构，跟Maven文件夹结构几乎一样：
+然后启动IntelliJ IDEA，选择创建新项目->Gradle项目->next->填入GroupId（也就是你所在组织的名字，例如io.example）和ArtifactID（也就是项目的名字，例如vertxExample）->next->勾选Use auto-import（自动引入）以及Create directories for empty content roots automatically（为空内容建立文件夹结构）->next ...-> finish，随后会建立以下文件结构，跟Maven文件夹结构几乎一样：
 
 ```
 ├── src
@@ -100,7 +100,7 @@ public class MyFirstVerticle extends AbstractVerticle {
 }
 ```
 
-随后点开IDE右边的Gradle窗口->Tasks->build->jar，双击执行，便可在build/libs文件夹下生成可执行的jar文件，我生成的是`VertxExample-1.0-SNAPSHOT.jar`，在有图形界面的操作系统中，您可双击执行，或者用以下命令：`java -jar VertxExample-1.0-SNAPSHOT.jar`执行。
+随后点开IDE右边的Gradle窗口->Tasks->build->jar，双击执行，便可在build/libs文件夹下生成可执行的jar文件，我生成的是`vertxExample-1.0-SNAPSHOT.jar`，在有图形界面的操作系统中，您可双击执行，或者用以下命令：`java -jar vertxExample-1.0-SNAPSHOT.jar`执行。
 
 随后打开浏览器，在浏览器的地址栏中输入：http://localhost:8080/ 便可看到熟悉的Hello World!啦。
 
