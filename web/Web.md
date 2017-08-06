@@ -1107,7 +1107,7 @@ SessionStore store1 = LocalSessionStore.create(vertx);
 SessionStore store2 = LocalSessionStore.create(vertx, "myapp3.sessionmap");
 
 // 通过指定的 Map 名称创建了一个本地会话存储
-// 设置了会话的过期时间为 10 秒
+// 设置了检查过期 Session 的周期为 10 秒
 SessionStore store3 = LocalSessionStore.create(vertx, "myapp3.sessionmap", 10000);
 ```
 
