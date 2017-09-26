@@ -760,7 +760,7 @@ vertx run my-verticle.js -ha
 
 当启用高可用方式时，不需要追加 `-cluster` 参数。
 
-关于高可用的功能和配置的更多细节可参考 [高可用和故障转移](#高可用和故障转移) 章节。
+关于高可用的功能和配置的更多细节可参考 [高可用和故障转移](##高可用和故障转移) 章节。
 
 ### 从命令行运行Verticle
 
@@ -846,7 +846,7 @@ context.runOnContext((v) -> {
 });
 ```
 
-您还可以通过 [`config`](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--) 方法访问 Verticle 的配置信息。查看 [向 Verticle 传入配置](#向verticle传入配置) 章节了解更多配置信息。
+您还可以通过 [`config`](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--) 方法访问 Verticle 的配置信息。查看 [向 Verticle 传入配置](###向verticle传入配置) 章节了解更多配置信息。
 
 ### 执行周期性/延迟性操作
 
@@ -5825,7 +5825,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 
 当使用搜索域列表时，点数的阈值为`1`，或从Linux上的`/etc/resolv.conf`加载，也可使用 [`setNdots`](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setNdots-int-) 方法配置特定值。
 
-## 高可用/故障转移
+## 高可用和故障转移
 
 Vert.x允许您运行支持高可用（HA，High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然挂掉时，该Veritlce将迁移到另一个Vert.x 实例。这个Vert.x 实例必须在同一个集群中。
 
