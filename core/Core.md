@@ -846,7 +846,7 @@ context.runOnContext((v) -> {
 });
 ```
 
-您还可以通过 [`config`](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--) 方法访问 Verticle 的配置信息。查看 [向 Verticle 传入配置](#向verticle传入配置) 章节了解更多配置信息。
+您还可以通过 [`config`](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--) 方法访问 Verticle 的配置信息。查看 [向 Verticle 传入配置](#向-verticle-传入配置) 章节了解更多配置信息。
 
 ### 执行周期性/延迟性操作
 
@@ -3053,7 +3053,7 @@ Vert.x 支持 HTTP 压缩。
 
 当启用HTTP 压缩时，服务器将检查客户端请求头中是否包含了 `Accept-Encoding` 并支持常用的 deflate 和 gzip 压缩算法。Vert.x 两者都支持。若找到这样的请求头，服务器将使用所支持的压缩算法之一自动压缩响应正文并发送回客户端。
 
-注意：压缩可以减少网络流量，单是CPU密集度会更高。
+注意：压缩可以减少网络流量，但是CPU密集度会更高。
 
 为了解决后边一个问题，Vert.x也允许您调整原始的 gzip/deflate 压缩算法的 “压缩级别” 参数
 
@@ -5825,7 +5825,7 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 
 当使用搜索域列表时，点数的阈值为`1`，或从Linux上的`/etc/resolv.conf`加载，也可使用 [`setNdots`](http://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setNdots-int-) 方法配置特定值。
 
-## 高可用/故障转移
+## 高可用和故障转移
 
 Vert.x允许您运行支持高可用（HA，High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然挂掉时，该Veritlce将迁移到另一个Vert.x 实例。这个Vert.x 实例必须在同一个集群中。
 

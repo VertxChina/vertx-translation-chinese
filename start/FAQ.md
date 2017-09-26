@@ -282,12 +282,12 @@ Future.<Message<String>>future(f ->
 1. 首先通过 eventbus 发送消息 `message` 到 `address1`
 2. 如果第一步成功，则发送第一步的消息的返回值到 `address2`
 3. 如果第二步成功，则发送第二部的消息的返回值到 `address3`
-4. **如果以上任何一步失败**，则不会继续执行下一个异步流程，直接执行最终的 Handler ，并且 `res.successed()` 为 `false`，可以通过 `res.cause()` 来获得异常对象
-5. 如果以上三步全都成功，则同样执行 Handler，`res.successed()` 为 `true`，可以通过 `res.result()` 获取最后一步的结果。
+4. **如果以上任何一步失败**，则不会继续执行下一个异步流程，直接执行最终的 Handler ，并且 `res.succeeded()` 为 `false`，可以通过 `res.cause()` 来获得异常对象
+5. 如果以上三步全都成功，则同样执行 Handler，`res.succeeded()` 为 `true`，可以通过 `res.result()` 获取最后一步的结果。
 
 通过 `compose` 方法来组织代码最大的价值在于可以 **让异步代码的执行顺序和代码的编写顺序看起来一致**，并在任何一步抛出异常时直接退出到最后一个 handler 来处理，**不需要针对每一个异步操作都编写异常处理的逻辑**。这对于编写复杂的异步流程时是非常有用的。
 
-[Future.compose](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
+[Future.compose()](http://vertx.io/docs/apidocs/io/vertx/core/Future.html#compose-java.util.function.Function-) 这个方法的行为现在非常接近于 JDK1.8 提供的 [CompletableFuture.thenCompose()](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html#thenCompose-java.util.function.Function-)，也很接近于 EcmaScript6 的 [Promise API](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise) 的的接口约定，其实都是关于 Promise 模式的应用。关于更多 Promise 模式的信息还可以参考这里 [https://en.wikipedia.org/wiki/Futures_and_promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
 ### 问：Vert.x Web中如何实现Servlet和JSP中的forward和redirect方法？我想将根目录/自动映射到index.html文件该如何做？
 
