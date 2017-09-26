@@ -1098,14 +1098,14 @@
 <pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
 </code></pre>
 <ul>
 <li>Gradle&#xFF08;&#x5728; <code>build.gradle</code> &#x6587;&#x4EF6;&#x4E2D;&#xFF09;&#xFF1A;</li>
 </ul>
 <pre><code class="lang-groovy">dependencies {
-  compile <span class="hljs-string">&apos;io.vertx:vertx-web:3.4.1&apos;</span>
+  compile <span class="hljs-string">&apos;io.vertx:vertx-web:3.4.2&apos;</span>
 }
 </code></pre>
 <h2 id="&#x56DE;&#x987E;-vertx-core-&#x7684;-http-&#x670D;&#x52A1;&#x7AEF;">&#x56DE;&#x987E; Vert.x Core &#x7684; HTTP &#x670D;&#x52A1;&#x7AEF;</h2>
@@ -1597,6 +1597,24 @@ router.get().failureHandler(ctx -&gt; {
   }
 });
 </code></pre>
+<p>&#x9700;&#x8981;&#x6F84;&#x6E05;&#x7684;&#x662F;&#xFF0C;&#x91CD;&#x5B9A;&#x5411;&#x662F;&#x57FA;&#x4E8E;<code>&#x8DEF;&#x5F84;</code>&#x7684;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5982;&#x679C;&#x60A8;&#x9700;&#x8981;&#x5728;&#x91CD;&#x5B9A;&#x5411;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x6DFB;&#x52A0;&#x6216;&#x8005;&#x4FDD;&#x6301;&#x72B6;&#x6001;&#xFF0C;&#x60A8;&#x9700;&#x8981;&#x4F7F;&#x7528; <code>RoutingContext</code> &#x5BF9;&#x8C61;&#x3002;&#x4F8B;&#x5982;&#x60A8;&#x5E0C;&#x671B;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x53C2;&#x6570;&#x91CD;&#x5B9A;&#x5411;&#x5230;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x8DEF;&#x5F84;&#xFF1A;</p>
+<pre><code class="lang-java">router.get(<span class="hljs-string">&quot;/final-target&quot;</span>).handler(ctx -&gt; {
+  <span class="hljs-comment">// &#x7EE7;&#x7EED;&#x505A;&#x67D0;&#x4E9B;&#x4E8B;&#x60C5;</span>
+});
+
+<span class="hljs-comment">// &#x9519;&#x8BEF;&#x7684;&#x65B9;&#x5F0F;! (&#x4F1A;&#x91CD;&#x5B9A;&#x5411;&#x5230; /final-target &#x8DEF;&#x5F84;&#xFF0C;&#x4F46;&#x4E0D;&#x5305;&#x542B;&#x67E5;&#x8BE2;&#x53C2;&#x6570;)</span>
+router.get().handler(ctx -&gt; {
+  ctx.reroute(<span class="hljs-string">&quot;/final-target?variable=value&quot;</span>);
+});
+
+<span class="hljs-comment">// &#x6B63;&#x786E;&#x7684;&#x65B9;&#x5F0F;</span>
+router.get().handler(ctx -&gt; {
+  ctx
+    .put(<span class="hljs-string">&quot;variable&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>)
+    .reroute(<span class="hljs-string">&quot;/final-target&quot;</span>);
+});
+</code></pre>
+<p>&#x867D;&#x7136;&#x5728;&#x91CD;&#x5B9A;&#x5411;&#x65F6;&#x4F1A;&#x8B66;&#x544A;&#x60A8;&#x67E5;&#x8BE2;&#x53C2;&#x6570;&#x4F1A;&#x4E22;&#x5931;&#xFF0C;&#x4F46;&#x662F;&#x91CD;&#x5B9A;&#x5411;&#x7684;&#x8FC7;&#x7A0B;&#x4ECD;&#x7136;&#x4F1A;&#x6267;&#x884C;&#x3002;&#x5E76;&#x4E14;&#x4F1A;&#x4ECE;&#x8DEF;&#x5F84;&#x4E0A;&#x88C1;&#x526A;&#x6389;&#x6240;&#x6709;&#x7684;&#x67E5;&#x8BE2;&#x53C2;&#x6570;&#x6216; HTML &#x951A;&#x70B9;&#x3002;</p>
 <h2 id="&#x5B50;&#x8DEF;&#x7531;">&#x5B50;&#x8DEF;&#x7531;</h2>
 <p>&#x5F53;&#x60A8;&#x6709;&#x5F88;&#x591A;&#x5904;&#x7406;&#x5668;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5408;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x5C06;&#x5B83;&#x4EEC;&#x5206;&#x9694;&#x4E3A;&#x591A;&#x4E2A; <code>Router</code>&#x3002;&#x8FD9;&#x4E5F;&#x6709;&#x5229;&#x4E8E;&#x60A8;&#x5728;&#x591A;&#x4E2A;&#x4E0D;&#x7528;&#x7684;&#x5E94;&#x7528;&#x4E2D;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x4E0D;&#x540C;&#x7684;&#x6839;&#x8DEF;&#x5F84;&#x6765;&#x590D;&#x7528;&#x5904;&#x7406;&#x5668;&#x3002;</p>
 <p>&#x60A8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5C06;&#x4E00;&#x4E2A; <code>Router</code> &#x6302;&#x8F7D;&#x5230;&#x53E6;&#x4E00;&#x4E2A; <code>Router</code> &#x7684;&#x6302;&#x8F7D;&#x70B9;&#x4E0A;&#x6765;&#x5B9E;&#x73B0;&#x3002;&#x6302;&#x8F7D;&#x7684; Router &#x88AB;&#x79F0;&#x4E3A;&#x5B50;&#x8DEF;&#x7531;&#xFF08;Sub Router&#xFF09;&#x3002;Sub router &#x4E0A;&#x4E5F;&#x53EF;&#x4EE5;&#x6302;&#x8F7D;&#x5176;&#x4ED6;&#x7684; sub router&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x60A8;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x82E5;&#x5E72;&#x7EA7;&#x522B;&#x7684; sub router&#x3002;</p>
@@ -1809,7 +1827,7 @@ router.route(<span class="hljs-string">&quot;some/path/&quot;</span>).handler(ro
 SessionStore store2 = LocalSessionStore.create(vertx, <span class="hljs-string">&quot;myapp3.sessionmap&quot;</span>);
 
 <span class="hljs-comment">// &#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x7684; Map &#x540D;&#x79F0;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x672C;&#x5730;&#x4F1A;&#x8BDD;&#x5B58;&#x50A8;</span>
-<span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x4E86;&#x4F1A;&#x8BDD;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x4E3A; 10 &#x79D2;</span>
+<span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x4E86;&#x68C0;&#x67E5;&#x8FC7;&#x671F; Session &#x7684;&#x5468;&#x671F;&#x4E3A; 10 &#x79D2;</span>
 SessionStore store3 = LocalSessionStore.create(vertx, <span class="hljs-string">&quot;myapp3.sessionmap&quot;</span>, <span class="hljs-number">10000</span>);
 </code></pre>
 <h4 id="&#x96C6;&#x7FA4;&#x4F1A;&#x8BDD;&#x5B58;&#x50A8;">&#x96C6;&#x7FA4;&#x4F1A;&#x8BDD;&#x5B58;&#x50A8;</h4>
@@ -2080,8 +2098,8 @@ router.route(<span class="hljs-string">&quot;/private/settings/*&quot;</span>).h
 <p>&#x4F8B;&#x5982;&#x5BF9;&#x4E8E; <code>text/html</code> &#x6807;&#x793A;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x4F1A;&#x4F7F;&#x7528;&#x901A;&#x8FC7; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/StaticHandler.html#setDirectoryTemplate-java.lang.String-" target="_blank"><code>setDirectoryTemplate</code></a> &#x65B9;&#x6CD5;&#x8BBE;&#x7F6E;&#x7684;&#x6A21;&#x677F;&#x6765;&#x6E32;&#x67D3;&#x6587;&#x4EF6;&#x5217;&#x8868;&#x3002;</p>
 <h3 id="&#x7981;&#x7528;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x7F13;&#x5B58;">&#x7981;&#x7528;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x7F13;&#x5B58;</h3>
 <p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Vert.x &#x4F1A;&#x4F7F;&#x7528;&#x5F53;&#x524D;&#x5DE5;&#x4F5C;&#x76EE;&#x5F55;&#x7684;&#x5B50;&#x76EE;&#x5F55; <code>.vertx</code> &#x6765;&#x5728;&#x78C1;&#x76D8;&#x4E0A;&#x7F13;&#x5B58;&#x901A;&#x8FC7; classpath &#x670D;&#x52A1;&#x7684;&#x9759;&#x6001;&#x8D44;&#x6E90;&#x3002;&#x8FD9;&#x5BF9;&#x4E8E;&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#x901A;&#x8FC7; fat-jar &#x6765;&#x90E8;&#x7F72;&#x7684;&#x670D;&#x52A1;&#x662F;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#x6BCF;&#x4E00;&#x6B21;&#x90FD;&#x901A;&#x8FC7; classpath &#x6765;&#x63D0;&#x53D6;&#x6587;&#x4EF6;&#x662F;&#x4F4E;&#x6548;&#x7684;&#x3002;</p>
-<p>&#x8FD9;&#x5728;&#x5F00;&#x53D1;&#x65F6;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x4F8B;&#x5982;&#x5F53;&#x60A8;&#x901A;&#x8FC7; IDE &#x7684;&#x8FD0;&#x884C;&#x914D;&#x7F6E;&#x6765;&#x542F;&#x52A8;&#x60A8;&#x7684;&#x5E94;&#x7528;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x60A8;&#x4FEE;&#x6539;&#x4E86;&#x6587;&#x4EF6;&#xFF0C;&#x7F13;&#x5B58;&#x7684;&#x6587;&#x4EF6;&#x65F6;&#x4E0D;&#x4F1A;&#x88AB;&#x66F4;&#x65B0;&#x7684;&#x3002;</p>
-<p>&#x60A8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027; <code>vertx.disableFileCaching</code> &#x4E3A; <code>true</code> &#x6765;&#x7981;&#x7528;&#x6587;&#x4EF6;&#x7F13;&#x5B58;&#x3002;</p>
+<p>&#x8FD9;&#x5728;&#x5F00;&#x53D1;&#x65F6;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5F53;&#x60A8;&#x5728;&#x670D;&#x52A1;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x4FEE;&#x6539;&#x4E86;&#x9759;&#x6001;&#x5185;&#x5BB9;&#xFF0C;&#x7F13;&#x5B58;&#x7684;&#x6587;&#x4EF6;&#x662F;&#x4E0D;&#x4F1A;&#x88AB;&#x66F4;&#x65B0;&#x7684;&#x3002;</p>
+<p>&#x60A8;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E; vert.x &#x7684; <code>fileResolverCachingEnabled</code> &#x9009;&#x9879;&#x4E3A; <code>true</code> &#x6765;&#x7981;&#x7528;&#x6587;&#x4EF6;&#x7F13;&#x5B58;&#x3002;&#x4E3A;&#x4E86;&#x5411;&#x540E;&#x517C;&#x5BB9;&#xFF0C;&#x5B83;&#x4F1A;&#x4ECE; <code>vertx.disableFileCaching</code> &#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;&#x91CC;&#x6765;&#x63D0;&#x53D6;&#x9ED8;&#x8BA4;&#x503C;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x60A8;&#x5982;&#x679C;&#x4ECE; IDE &#x6765;&#x542F;&#x52A8;&#x60A8;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#xFF0C;&#x53EF;&#x4EE5;&#x5728; IDE &#x7684;&#x8FD0;&#x884C;&#x914D;&#x7F6E;&#x4E2D;&#x6765;&#x914D;&#x7F6E;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x3002;</p>
 <h2 id="&#x5904;&#x7406;&#x8DE8;&#x57DF;&#x8D44;&#x6E90;&#x5171;&#x4EAB;">&#x5904;&#x7406;&#x8DE8;&#x57DF;&#x8D44;&#x6E90;&#x5171;&#x4EAB;</h2>
 <p>&#x8DE8;&#x57DF;&#x8D44;&#x6E90;&#x5171;&#x4EAB;&#xFF08;CORS&#xFF0C;<a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_blank">Cross Origin Resource Sharing</a>&#xFF09;&#x662F;&#x4E00;&#x4E2A;&#x5B89;&#x5168;&#x673A;&#x5236;&#x3002;&#x8BE5;&#x673A;&#x5236;&#x5141;&#x8BB8;&#x4E86;&#x6D4F;&#x89C8;&#x5668;&#x5728;&#x4E00;&#x4E2A;&#x57DF;&#x540D;&#x4E0B;&#x8BBF;&#x95EE;&#x53E6;&#x4E00;&#x4E2A;&#x57DF;&#x540D;&#x7684;&#x8D44;&#x6E90;&#x3002;</p>
 <p>Vert.x Web &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x5904;&#x7406;&#x5668; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/CorsHandler.html" target="_blank"><code>CorsHandler</code></a> &#x6765;&#x4E3A;&#x60A8;&#x5904;&#x7406; CORS &#x534F;&#x8BAE;&#x3002;</p>
@@ -2114,7 +2132,7 @@ router.get(<span class="hljs-string">&quot;/dynamic/*&quot;</span>).handler(hand
 router.getWithRegex(<span class="hljs-string">&quot;.+\\.hbs&quot;</span>).handler(handler);
 </code></pre>
 <h3 id="mvel-&#x6A21;&#x677F;&#x5F15;&#x64CE;">MVEL &#x6A21;&#x677F;&#x5F15;&#x64CE;</h3>
-<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; MVEL &#x6A21;&#x677F;&#x5F15;&#x64CE;&#xFF1A;<code>io.vertx:vertx-web-templ-mvel:3.4.1</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; MVEL &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.MVELTemplateEngine#create()</code>&#x3002;</p>
+<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; MVEL &#x6A21;&#x677F;&#x5F15;&#x64CE;&#xFF1A;<code>io.vertx:vertx-web-templ-mvel:3.4.2</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; MVEL &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.MVELTemplateEngine#create()</code>&#x3002;</p>
 <p>&#x5728;&#x4F7F;&#x7528; MVEL &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x7684;&#x6269;&#x5C55;&#x540D;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4F1A;&#x67E5;&#x627E;&#x6269;&#x5C55;&#x540D;&#x4E3A; <code>.templ</code> &#x7684;&#x6587;&#x4EF6;&#x3002;</p>
 <p>&#x5728; MVEL &#x6A21;&#x677F;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>context</code> &#x53D8;&#x91CF;&#x6765;&#x8BBF;&#x95EE;&#x8DEF;&#x7531;&#x4E0A;&#x4E0B;&#x6587; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html" target="_blank"><code>RoutingContext</code></a> &#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x60A8;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x4E0A;&#x4E0B;&#x6587;&#x91CC;&#x7684;&#x4EFB;&#x4F55;&#x4FE1;&#x606F;&#x6765;&#x6E32;&#x67D3;&#x6A21;&#x677F;&#xFF0C;&#x5305;&#x62EC;&#x8BF7;&#x6C42;&#x3001;&#x54CD;&#x5E94;&#x3001;&#x4F1A;&#x8BDD;&#x6216;&#x8005;&#x4E0A;&#x4E0B;&#x6587;&#x6570;&#x636E;&#x3002;</p>
 <p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
@@ -2129,7 +2147,7 @@ The value &apos;bar&apos; from the context data is @{context.get(&apos;bar&apos;
 <blockquote>
 <p>&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;Jade &#x5DF2;&#x66F4;&#x540D;&#x4E3A; Pug&#x3002;</p>
 </blockquote>
-<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Jade &#x6A21;&#x677F;&#x5F15;&#x64CE;&#xFF1A;<code>io.vertx:vertx-web-templ-jade:3.4.1</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Jade &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.JadeTemplateEngine#create()</code>&#x3002;</p>
+<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Jade &#x6A21;&#x677F;&#x5F15;&#x64CE;&#xFF1A;<code>io.vertx:vertx-web-templ-jade:3.4.2</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Jade &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.JadeTemplateEngine#create()</code>&#x3002;</p>
 <p>&#x5728;&#x4F7F;&#x7528; Jade &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x7684;&#x6269;&#x5C55;&#x540D;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4F1A;&#x67E5;&#x627E;&#x6269;&#x5C55;&#x540D;&#x4E3A; <code>.jade</code> &#x7684;&#x6587;&#x4EF6;&#x3002;</p>
 <p>&#x5728; Jade &#x6A21;&#x677F;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>context</code> &#x53D8;&#x91CF;&#x6765;&#x8BBF;&#x95EE;&#x8DEF;&#x7531;&#x4E0A;&#x4E0B;&#x6587; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html" target="_blank"><code>RoutingContext</code></a> &#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x60A8;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x4E0A;&#x4E0B;&#x6587;&#x91CC;&#x7684;&#x4EFB;&#x4F55;&#x4FE1;&#x606F;&#x6765;&#x6E32;&#x67D3;&#x6A21;&#x677F;&#xFF0C;&#x5305;&#x62EC;&#x8BF7;&#x6C42;&#x3001;&#x54CD;&#x5E94;&#x3001;&#x4F1A;&#x8BDD;&#x6216;&#x8005;&#x4E0A;&#x4E0B;&#x6587;&#x6570;&#x636E;&#x3002;</p>
 <p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
@@ -2141,7 +2159,7 @@ html
 </code></pre>
 <p>&#x5173;&#x4E8E;&#x5982;&#x4F55;&#x7F16;&#x5199; Jade &#x6A21;&#x677F;&#xFF0C;&#x8BF7;&#x53C2;&#x8003; <a href="https://github.com/neuland/jade4j" target="_blank">Jade4j &#x6587;&#x6863;</a>&#x3002;</p>
 <h3 id="handlebars-&#x6A21;&#x677F;&#x5F15;&#x64CE;">Handlebars &#x6A21;&#x677F;&#x5F15;&#x64CE;</h3>
-<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Handlebars&#xFF1A;<code>io.vertx:vertx-web-templ-handlebars:3.4.1</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Handlebars &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()</code>&#x3002;</p>
+<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Handlebars&#xFF1A;<code>io.vertx:vertx-web-templ-handlebars:3.4.2</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Handlebars &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.HandlebarsTemplateEngine#create()</code>&#x3002;</p>
 <p>&#x5728;&#x4F7F;&#x7528; Handlebars &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x7684;&#x6269;&#x5C55;&#x540D;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4F1A;&#x67E5;&#x627E;&#x6269;&#x5C55;&#x540D;&#x4E3A; <code>.hbs</code> &#x7684;&#x6587;&#x4EF6;&#x3002;</p>
 <p>Handlebars &#x4E0D;&#x5141;&#x8BB8;&#x5728;&#x6A21;&#x677F;&#x4E2D;&#x968F;&#x610F;&#x5730;&#x8C03;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x50CF;&#x5BF9;&#x5F85;&#x5176;&#x4ED6;&#x6A21;&#x677F;&#x5F15;&#x64CE;&#x4E00;&#x6837;&#x5C06;&#x8DEF;&#x7531;&#x4E0A;&#x4E0B;&#x6587;&#x4F20;&#x9012;&#x5230;&#x5F15;&#x64CE;&#x91CC;&#x5E76;&#x8BA9;&#x6A21;&#x677F;&#x6765;&#x8BC6;&#x522B;&#x5B83;&#x3002;</p>
 <p>&#x66FF;&#x4EE3;&#x65B9;&#x6848;&#x662F;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html#data--" target="_blank"><code>data</code></a> &#x6765;&#x8BBF;&#x95EE;&#x4E0A;&#x4E0B;&#x6587;&#x6570;&#x636E;&#x3002;</p>
@@ -2160,7 +2178,7 @@ router.get(&quot;/dynamic/&quot;).handler(handler);
 </span></code></pre>
 <p>&#x5173;&#x4E8E;&#x5982;&#x4F55;&#x7F16;&#x5199; Handlebars &#x6A21;&#x677F;&#xFF0C;&#x8BF7;&#x53C2;&#x8003; <a href="https://github.com/jknack/handlebars.java" target="_blank">Handlebars Java &#x6587;&#x6863;</a>&#x3002;</p>
 <h3 id="thymeleaf-&#x6A21;&#x677F;&#x5F15;&#x64CE;">Thymeleaf &#x6A21;&#x677F;&#x5F15;&#x64CE;</h3>
-<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Thymeleaf&#xFF1A;<code>io.vertx:vertx-web-templ-thymeleaf:3.4.1</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Thymeleaf &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()</code>&#x3002;</p>
+<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Thymeleaf&#xFF1A;<code>io.vertx:vertx-web-templ-thymeleaf:3.4.2</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Thymeleaf &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.ThymeleafTemplateEngine#create()</code>&#x3002;</p>
 <p>&#x5728;&#x4F7F;&#x7528; Thymeleaf &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x7684;&#x6269;&#x5C55;&#x540D;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4F1A;&#x67E5;&#x627E;&#x6269;&#x5C55;&#x540D;&#x4E3A; <code>.html</code> &#x7684;&#x6587;&#x4EF6;&#x3002;</p>
 <p>&#x5728; Thymeleaf &#x6A21;&#x677F;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>context</code> &#x53D8;&#x91CF;&#x6765;&#x8BBF;&#x95EE;&#x8DEF;&#x7531;&#x4E0A;&#x4E0B;&#x6587; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html" target="_blank"><code>RoutingContext</code></a> &#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x60A8;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x4E0A;&#x4E0B;&#x6587;&#x91CC;&#x7684;&#x4EFB;&#x4F55;&#x4FE1;&#x606F;&#x6765;&#x6E32;&#x67D3;&#x6A21;&#x677F;&#xFF0C;&#x5305;&#x62EC;&#x8BF7;&#x6C42;&#x3001;&#x54CD;&#x5E94;&#x3001;&#x4F1A;&#x8BDD;&#x6216;&#x8005;&#x4E0A;&#x4E0B;&#x6587;&#x6570;&#x636E;&#x3002;</p>
 <p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
@@ -2174,7 +2192,7 @@ router.get(&quot;/dynamic/&quot;).handler(handler);
 </code></pre>
 <p>&#x5173;&#x4E8E;&#x5982;&#x4F55;&#x7F16;&#x5199; Thymeleaf &#x6A21;&#x677F;&#xFF0C;&#x8BF7;&#x53C2;&#x8003; <a href="http://www.thymeleaf.org/" target="_blank">Thymeleaf &#x6587;&#x6863;</a>&#x3002;</p>
 <h3 id="apache-freemarker-&#x6A21;&#x677F;&#x5F15;&#x64CE;">Apache FreeMarker &#x6A21;&#x677F;&#x5F15;&#x64CE;</h3>
-<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Apache FreeMarker&#xFF1A;<code>io.vertx:vertx-web-templ-freemarker:3.4.1</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Apache FreeMarker &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()</code>&#x3002;</p>
+<p>&#x60A8;&#x9700;&#x8981;&#x5728;&#x60A8;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x6DFB;&#x52A0;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x6765;&#x4F7F;&#x7528; Apache FreeMarker&#xFF1A;<code>io.vertx:vertx-web-templ-freemarker:3.4.2</code>&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Apache FreeMarker &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;<code>io.vertx.ext.web.templ.FreeMarkerTemplateEngine#create()</code>&#x3002;</p>
 <p>&#x5728;&#x4F7F;&#x7528; Apache FreeMarker &#x6A21;&#x677F;&#x5F15;&#x64CE;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x7684;&#x6269;&#x5C55;&#x540D;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4F1A;&#x67E5;&#x627E;&#x6269;&#x5C55;&#x540D;&#x4E3A; <code>.ftl</code> &#x7684;&#x6587;&#x4EF6;&#x3002;</p>
 <p>&#x5728; Apache FreeMarker &#x6A21;&#x677F;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>context</code> &#x53D8;&#x91CF;&#x6765;&#x8BBF;&#x95EE;&#x8DEF;&#x7531;&#x4E0A;&#x4E0B;&#x6587; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/RoutingContext.html" target="_blank"><code>RoutingContext</code></a> &#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x60A8;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x4E0A;&#x4E0B;&#x6587;&#x91CC;&#x7684;&#x4EFB;&#x4F55;&#x4FE1;&#x606F;&#x6765;&#x6E32;&#x67D3;&#x6A21;&#x677F;&#xFF0C;&#x5305;&#x62EC;&#x8BF7;&#x6C42;&#x3001;&#x54CD;&#x5E94;&#x3001;&#x4F1A;&#x8BDD;&#x6216;&#x8005;&#x4E0A;&#x4E0B;&#x6587;&#x6570;&#x636E;&#x3002;</p>
 <p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
@@ -2201,6 +2219,9 @@ router.get(&quot;/dynamic/&quot;).handler(handler);
 [snip]
 </code></pre>
 <p>&#x5173;&#x4E8E;&#x5982;&#x4F55;&#x7F16;&#x5199; Pebble &#x6A21;&#x677F;&#xFF0C;&#x8BF7;&#x53C2;&#x8003; <a href="http://www.mitchellbosecke.com/pebble/home/" target="_blank">Pebble &#x6587;&#x6863;</a>&#x3002;</p>
+<h2 id="&#x7981;&#x7528;&#x7F13;&#x5B58;">&#x7981;&#x7528;&#x7F13;&#x5B58;</h2>
+<p>&#x5728;&#x5F00;&#x53D1;&#x65F6;&#xFF0C;&#x4E3A;&#x4E86;&#x8BA9;&#x6BCF;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x8BFB;&#x53D6;&#x6A21;&#x677F;&#x5185;&#x5BB9;&#xFF0C;&#x60A8;&#x53EF;&#x80FD;&#x5E0C;&#x671B;&#x7981;&#x7528;&#x6A21;&#x677F;&#x7684;&#x7F13;&#x5B58;&#x3002;&#x8FD9;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027; <code>io.vertx.ext.web.TemplateEngine.disableCache</code> &#x4E3A; <code>true</code> &#x6765;&#x5B9E;&#x73B0;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x7684;&#x8FD9;&#x4E2A;&#x503C;&#x4E3A; <code>false</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5F00;&#x542F;&#x6A21;&#x677F;&#x7F13;&#x5B58;&#x3002;</p>
 <h2 id="&#x9519;&#x8BEF;&#x5904;&#x7406;">&#x9519;&#x8BEF;&#x5904;&#x7406;</h2>
 <p>&#x60A8;&#x53EF;&#x4EE5;&#x7528;&#x6A21;&#x677F;&#x5904;&#x7406;&#x5668;&#x6765;&#x6E32;&#x67D3;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#xFF0C;&#x6216;&#x8005;&#x4F7F;&#x7528; Vert.x Web &#x5185;&#x7F6E;&#x7684;&#x4E00;&#x4E2A; &#x201D;&#x6F02;&#x4EAE;&#x201C; &#x7684;&#x3001;&#x5F00;&#x7BB1;&#x5373;&#x7528;&#x7684;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x5668;&#x6765;&#x6E32;&#x67D3;&#x9519;&#x8BEF;&#x9875;&#x9762;&#x3002;</p>
 <p>&#x8FD9;&#x4E2A;&#x5904;&#x7406;&#x5668;&#x662F; <a href="http://vertx.io/docs/apidocs/io/vertx/ext/web/handler/ErrorHandler.html" target="_blank"><code>ErrorHandler</code></a>&#x3002;&#x60A8;&#x53EA;&#x9700;&#x8981;&#x5728;&#x9700;&#x8981;&#x8986;&#x76D6;&#x5230;&#x7684;&#x8DEF;&#x5F84;&#x4E0A;&#x5C06;&#x5B83;&#x8BBE;&#x7F6E;&#x4E3A;&#x5931;&#x8D25;&#x5904;&#x7406;&#x5668;(9)&#x6765;&#x4F7F;&#x7528;&#x5B83;&#x3002;</p>
@@ -2383,6 +2404,16 @@ eb.onopen = function() {
 </code></pre>
 <p>&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x662F;&#x8FDE;&#x63A5;&#x5230; Event Bus &#x4F7F;&#x7528;&#x7684; URI&#x3002;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x7684;&#x6865;&#x63A5;&#x5668;&#x662F;&#x4EE5; <code>eventbus</code> &#x4F5C;&#x4E3A;&#x524D;&#x7F00;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06; URI &#x6307;&#x5411;&#x8FD9;&#x91CC;&#x3002;</p>
 <p>&#x5728;&#x8FDE;&#x63A5;&#x6253;&#x5F00;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x4EC0;&#x4E48;&#x4E5F;&#x505A;&#x4E0D;&#x4E86;&#x3002;&#x5F53;&#x5B83;&#x6253;&#x5F00;&#x540E;&#xFF0C;&#x4F1A;&#x56DE;&#x8C03; <code>onopen</code> &#x51FD;&#x6570;&#x5904;&#x7406;&#x3002;</p>
+<p><em>&#x6CE8;&#x610F;&#xFF0C;&#x65E0;&#x8BBA;&#x662F; SockJS &#x6216;&#x662F; EventBusBridge &#x90FD;&#x4E0D;&#x652F;&#x6301;&#x81EA;&#x52A8;&#x91CD;&#x8FDE;</em></p>
+<p>&#x5F53;&#x4F60;&#x7684;&#x670D;&#x52A1;&#x5668;&#x5173;&#x95ED;&#x65F6;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; EventBus &#x5B9E;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setupEventBus</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> eb = <span class="hljs-keyword">new</span> EventBus();
+  eb.onclose = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    setTimeout(setupEventBus, <span class="hljs-number">1000</span>); <span class="hljs-comment">//&#x7B49;&#x5F85;&#x670D;&#x52A1;&#x5668;&#x91CD;&#x542F;</span>
+  };
+  <span class="hljs-comment">// &#x5728;&#x8FD9;&#x91CC;&#x8BBE;&#x7F6E;&#x5904;&#x7406;&#x5668;</span>
+}
+</code></pre>
 <p>&#x60A8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F9D;&#x8D56;&#x7BA1;&#x7406;&#x5668;&#x6765;&#x83B7;&#x53D6;&#x5BA2;&#x6237;&#x7AEF;&#x5E93;&#xFF1A;</p>
 <ul>
 <li>Maven &#xFF08;&#x5728;&#x60A8;&#x7684; <code>pom.xml</code> &#x6587;&#x4EF6;&#x91CC;&#xFF09;</li>
@@ -2390,7 +2421,7 @@ eb.onopen = function() {
 <pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.vertx<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vertx-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.4.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">classifier</span>&gt;</span>client<span class="hljs-tag">&lt;/<span class="hljs-name">classifier</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>js<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
@@ -2398,9 +2429,14 @@ eb.onopen = function() {
 <ul>
 <li>Gradle&#xFF08;&#x5728;&#x60A8;&#x7684; <code>build.gradle</code> &#x6587;&#x4EF6;&#x91CC;&#xFF09;</li>
 </ul>
-<pre><code class="lang-gradle"><span class="hljs-keyword">compile</span> <span class="hljs-string">&apos;io.vertx:vertx-web:3.4.1:client&apos;</span>
+<pre><code class="lang-gradle"><span class="hljs-keyword">compile</span> <span class="hljs-string">&apos;io.vertx:vertx-web:3.4.2:client&apos;</span>
 </code></pre>
-<p>&#x8FD9;&#x4E2A;&#x5E93;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <a href="https://www.npmjs.com/package/vertx3-eventbus-client" target="_blank">NPM</a> &#x548C; <a href="https://github.com/vert-x3/vertx-bus-bower" target="_blank">Bower</a> &#x6765;&#x83B7;&#x53D6;&#x3002;</p>
+<p>&#x8FD9;&#x4E2A;&#x5E93;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x65B9;&#x5F0F;&#x6765;&#x83B7;&#x53D6;&#xFF1A;</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/vertx3-eventbus-client" target="_blank">NPM</a></li>
+<li><a href="https://github.com/vert-x3/vertx-bus-bower" target="_blank">Bower</a></li>
+<li><a href="https://cdnjs.com/libraries/vertx" target="_blank">cdnjs</a></li>
+</ul>
 <p><em>&#x6CE8;&#x610F;&#xFF0C; &#x8FD9;&#x4E2A; API &#x5728; 3.0.0 &#x548C; 3.1.0 &#x7248;&#x672C;&#x4E4B;&#x95F4;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#xFF0C;&#x8BF7;&#x68C0;&#x67E5;&#x53D8;&#x66F4;&#x65E5;&#x5FD7;&#x3002;&#x8001;&#x7248;&#x672C;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x4ECD;&#x7136;&#x517C;&#x5BB9;&#xFF0C;&#x4F46;&#x65B0;&#x7248;&#x672C;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x591A;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x5E76;&#x4E14;&#x66F4;&#x63A5;&#x8FD1;&#x670D;&#x52A1;&#x7AEF;&#x7684; Vert.x Event Bus API&#x3002;</em></p>
 <h3 id="&#x5B89;&#x5168;&#x7684;&#x6865;&#x63A5;">&#x5B89;&#x5168;&#x7684;&#x6865;&#x63A5;</h3>
 <p>&#x5982;&#x679C;&#x60A8;&#x50CF;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x4E00;&#x6837;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x6865;&#x63A5;&#x5668;&#xFF0C;&#x5E76;&#x8BD5;&#x56FE;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x60A8;&#x4F1A;&#x53D1;&#x73B0;&#x60A8;&#x7684;&#x6D88;&#x606F;&#x795E;&#x79D8;&#x5730;&#x5931;&#x8E2A;&#x4E86;&#x3002;&#x53D1;&#x751F;&#x4E86;&#x4EC0;&#x4E48;&#xFF1F;</p>
@@ -2564,21 +2600,21 @@ sockJSHandler.bridge(options, be -&gt; {
 router.route(<span class="hljs-string">&quot;/eventbus&quot;</span>).handler(sockJSHandler);
 </code></pre>
 <p>&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x5C55;&#x793A;&#x4E86;&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x5E76;&#x5904;&#x7406; <code>SOCKET_IDDLE</code> &#x4E8B;&#x4EF6;&#x3002;&#x6CE8;&#x610F;&#xFF0C;<code>setPingTimeout(5000)</code> &#x7684;&#x4F5C;&#x7528;&#x662F;&#x5F53; ping &#x6D88;&#x606F;&#x5728; 5 &#x79D2;&#x5185;&#x6CA1;&#x6709;&#x4ECE;&#x5BA2;&#x6237;&#x7AEF;&#x8FD4;&#x56DE;&#x65F6;&#x89E6;&#x53D1; SOCKET_IDLE &#x4E8B;&#x4EF6;&#x3002;</p>
-<pre><code class="lang-java"><span class="hljs-comment">// &#x521D;&#x59CB;&#x5316; SockJS &#x5904;&#x7406;&#x5668;</span>
-Router router = Router.router(vertx);
+<pre><code class="lang-java">Router router = Router.router(vertx);
 
+<span class="hljs-comment">// &#x521D;&#x59CB;&#x5316; SockJS &#x5904;&#x7406;&#x5668;</span>
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
 BridgeOptions options = <span class="hljs-keyword">new</span> BridgeOptions().addInboundPermitted(inboundPermitted).setPingTimeout(<span class="hljs-number">5000</span>);
 
 sockJSHandler.bridge(options, be -&gt; {
-    <span class="hljs-keyword">if</span> (be.type() == BridgeEventType.SOCKET_IDLE) {
-        <span class="hljs-comment">// &#x6267;&#x884C;&#x67D0;&#x4E9B;&#x5904;&#x7406;</span>
-    }
+  <span class="hljs-keyword">if</span> (be.type() == BridgeEventType.SOCKET_IDLE) {
+    <span class="hljs-comment">// &#x6267;&#x884C;&#x67D0;&#x4E9B;&#x5904;&#x7406;</span>
+  }
 
- be.complete(<span class="hljs-keyword">true</span>);
+  be.complete(<span class="hljs-keyword">true</span>);
 });
 
-router.route(<span class="hljs-string">&quot;/eventbus&quot;</span>).handler(sockJSHandler);
+router.route(<span class="hljs-string">&quot;/eventbus/*&quot;</span>).handler(sockJSHandler);
 </code></pre>
 <p>&#x5728;&#x5BA2;&#x6237;&#x7AEF; JavaScript &#x73AF;&#x5883;&#x91CC;&#x60A8;&#x4F7F;&#x7528; <code>vertx-eventbus.js</code> &#x6765;&#x521B;&#x5EFA;&#x5230; Event Bus &#x7684;&#x8FDE;&#x63A5;&#x5E76;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#x6D88;&#x606F;&#xFF1A;</p>
 <pre><code class="lang-javascript">&lt;script src=&quot;http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js&quot;&gt;&lt;/script&gt;
@@ -2792,7 +2828,7 @@ oauth2.setupCallback(router.route());
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Web","level":"1.4","depth":1,"next":{"title":"Web Client","level":"1.5","depth":1,"path":"webclient/WebClient.md","ref":"webclient/WebClient.md","articles":[]},"previous":{"title":"Core","level":"1.3","depth":1,"path":"core/Core.md","ref":"core/Core.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"web/Web.md","mtime":"2017-06-13T05:35:34.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T05:35:57.214Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Web","level":"1.4","depth":1,"next":{"title":"Web Client","level":"1.5","depth":1,"path":"webclient/WebClient.md","ref":"webclient/WebClient.md","articles":[]},"previous":{"title":"Core","level":"1.3","depth":1,"path":"core/Core.md","ref":"core/Core.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"web/Web.md","mtime":"2017-08-06T08:51:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-06T08:52:39.417Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1070,7 +1070,37 @@ fs.open(<span class="hljs-string">&quot;/data.txt&quot;</span>, <span class="hlj
   observable.forEach(data -&gt; System.out.println(<span class="hljs-string">&quot;Read data: &quot;</span> + data.toString(<span class="hljs-string">&quot;UTF-8&quot;</span>)));
 });
 </code></pre>
-<p>&#x8FD9;&#x6837;&#x7684; <code>Observable</code> &#x662F;&#x6240;&#x8C13; <strong>hot</strong> observable&#xFF0C;&#x5373;&#x4E0D;&#x7BA1;&#x662F;&#x5426;&#x6709;&#x8BA2;&#x9605;&#xFF0C;&#x5B83;&#x4EEC;&#x90FD;&#x4F1A;&#x4EA7;&#x751F;&#x901A;&#x77E5;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x7684; <code>Observable</code> &#x662F;&#x6240;&#x8C13; <strong>hot</strong> observable&#xFF0C;&#x5373;&#x4E0D;&#x7BA1;&#x662F;&#x5426;&#x6709;&#x8BA2;&#x9605;&#xFF0C;&#x5B83;&#x4EEC;&#x90FD;&#x4F1A;&#x4EA7;&#x751F;&#x901A;&#x77E5;&#x3002;
+<code>ReadStream</code> &#x662F;&#x5426;&#x80FD;&#x81EA;&#x53D1;&#x5730;&#x53D1;&#x5C04;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x53D6;&#x51B3;&#x4E8E;&#x5B83;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#xFF1A;
+&#x5F53;&#x8BA2;&#x9605;&#x52A8;&#x4F5C;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x9002;&#x914D;&#x5668;&#x4F1A;&#x8C03;&#x7528; <a href="http://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-" target="_blank">handler</a> &#x6765;&#x8BBE;&#x7F6E;&#x5B83;&#x7684; handler &#x3002;
+&#x67D0;&#x4E9B; <code>ReadStream</code> &#x5B9E;&#x73B0;&#x4F1A;&#x5728;&#x8FD9;&#x4E2A;&#x8C03;&#x7528;&#x4E4B;&#x540E;&#x5F00;&#x59CB;&#x53D1;&#x5C04;&#x4E8B;&#x4EF6;&#xFF0C;&#x800C;&#x5176;&#x4ED6;&#x7684;&#x5219;&#x65E0;&#x5173;&#x4E8E; handler &#x662F;&#x5426;&#x8BBE;&#x7F6E;&#xFF1A;</p>
+<ul>
+<li><code>AsyncFile</code> &#x5728; handler &#x8BBE;&#x7F6E;&#x540E;&#x5F00;&#x59CB;&#x4EA7;&#x751F; buffer &#x4E8B;&#x4EF6;</li>
+<li><code>HttpServerRequest</code> &#x5219;&#x4E0D;&#x4F9D;&#x8D56;&#x4E8E;&#x6B64;&#xFF08;&#x5373; &#x5982;&#x679C; handler &#x672A;&#x8BBE;&#x7F6E;&#xFF0C;buffer &#x53EF;&#x80FD;&#x4F1A;&#x4E22;&#x5931;&#xFF09;</li>
+</ul>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x6240;&#x6709;&#x60C5;&#x5F62;&#x4E2D;&#xFF0C;&#x8BA2;&#x9605; <code>Observable</code> &#x90FD;&#x662F;&#x5B89;&#x5168;&#x7684;&#x3002;&#x539F;&#x56E0;&#x5728;&#x4E8E;&#x4E0D;&#x7BA1; event loop &#x8FD8;&#x662F; worker verticle &#x90FD;&#x4E0D;&#x4F1A;&#x88AB;&#x5E76;&#x53D1;&#x6267;&#x884C;&#xFF0C;&#x6240;&#x4EE5;&#x8BA2;&#x9605;&#x4E00;&#x5B9A;&#x662F;&#x5728; handler &#x5F00;&#x59CB;&#x53D1;&#x5C04;&#x6570;&#x636E;&#x4E4B;&#x524D;&#x53D1;&#x751F;&#x3002;</p>
+<p>&#x5F53;&#x4F60;&#x60F3;&#x5EF6;&#x8FDF;&#x8BA2;&#x9605;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x6682;&#x505C; <code>ReadStream</code> &#xFF0C;&#x5E76;&#x5728;&#x4E4B;&#x540E;&#x6062;&#x590D;&#x5B83;&#x3002;</p>
+<pre><code class="lang-java">server.requestHandler(request -&gt; {
+  <span class="hljs-keyword">if</span> (request.method() == HttpMethod.POST) {
+
+    <span class="hljs-comment">// &#x6682;&#x505C;&#x63A5;&#x6536; buffer</span>
+    request.pause();
+
+    checkAuth(res -&gt; {
+
+      <span class="hljs-comment">// &#x73B0;&#x5728;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x63A5;&#x6536; buffer</span>
+      request.resume();
+
+      <span class="hljs-keyword">if</span> (res.succeeded()) {
+        Observable&lt;Buffer&gt; observable = request.toObservable();
+        observable.subscribe(buff -&gt; {
+          <span class="hljs-comment">// &#x83B7;&#x5F97; buffer</span>
+        });
+      }
+    });
+  }
+});
+</code></pre>
 <blockquote>
 <p>&#x8BD1;&#x8005;&#x6CE8;&#xFF1A;&#x5728; RxJava &#x91CC;&#xFF0C;<code>Observable</code> &#x6709;&#x201C;&#x51B7;&#x70ED;&#x201D;(cold/hot)&#x4E4B;&#x5206;&#x3002;&#x533A;&#x522B;&#x5728;&#x4E8E; cold observable &#x53EA;&#x6709;&#x5F53;&#x8BA2;&#x9605;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x624D;&#x4F1A;&#x5F00;&#x59CB;&#x53D1;&#x5C04;&#x6570;&#x636E;&#xFF0C;&#x800C; hot observable &#x5728;&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x540E;&#x5C31;&#x4F1A;&#x5F00;&#x59CB;&#x53D1;&#x5C04;&#x6570;&#x636E;&#x3002;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x4FE1;&#x606F;&#x8BF7;&#x67E5;&#x9605;<a href="http://reactivex.io/documentation/observable.html" target="_blank"> RxJava &#x5173;&#x4E8E; Observable &#x7684;&#x6587;&#x6863;</a>&#x3002;</p>
 </blockquote>
@@ -1476,7 +1506,7 @@ socketObservable.subscribe(
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Vert.x Rx","level":"1.10.1","depth":2,"next":{"title":"Reactive Streams","level":"1.10.2","depth":2,"path":"reactive/Reactivestreams.md","ref":"reactive/Reactivestreams.md","articles":[]},"previous":{"title":"Reactive","level":"1.10","depth":1,"path":"reactive/Reactive.md","ref":"reactive/Reactive.md","articles":[{"title":"Vert.x Rx","level":"1.10.1","depth":2,"path":"reactive/Rx.md","ref":"reactive/Rx.md","articles":[]},{"title":"Reactive Streams","level":"1.10.2","depth":2,"path":"reactive/Reactivestreams.md","ref":"reactive/Reactivestreams.md","articles":[]},{"title":"Vert.x Sync","level":"1.10.3","depth":2,"path":"reactive/Sync.md","ref":"reactive/Sync.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"reactive/Rx.md","mtime":"2017-06-13T05:33:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T05:35:57.214Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Vert.x Rx","level":"1.10.1","depth":2,"next":{"title":"Reactive Streams","level":"1.10.2","depth":2,"path":"reactive/Reactivestreams.md","ref":"reactive/Reactivestreams.md","articles":[]},"previous":{"title":"Reactive","level":"1.10","depth":1,"path":"reactive/Reactive.md","ref":"reactive/Reactive.md","articles":[{"title":"Vert.x Rx","level":"1.10.1","depth":2,"path":"reactive/Rx.md","ref":"reactive/Rx.md","articles":[]},{"title":"Reactive Streams","level":"1.10.2","depth":2,"path":"reactive/Reactivestreams.md","ref":"reactive/Reactivestreams.md","articles":[]},{"title":"Vert.x Sync","level":"1.10.3","depth":2,"path":"reactive/Sync.md","ref":"reactive/Sync.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Vert.x中国用户组","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"Vert.x 官方文档中文翻译","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Offical Site":"http://www.vertx.io"}},"gitbook":"*","description":"这是针对 Vert.x 官方文档中文翻译的仓库。","extension":null},"file":{"path":"reactive/Rx.md","mtime":"2017-08-06T08:51:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-06T08:52:39.417Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
