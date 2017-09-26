@@ -760,7 +760,7 @@ vertx run my-verticle.js -ha
 
 当启用高可用方式时，不需要追加 `-cluster` 参数。
 
-关于高可用的功能和配置的更多细节可参考 [高可用和故障转移](##高可用和故障转移) 章节。
+关于高可用的功能和配置的更多细节可参考 [高可用和故障转移](#高可用和故障转移) 章节。
 
 ### 从命令行运行Verticle
 
@@ -846,7 +846,7 @@ context.runOnContext((v) -> {
 });
 ```
 
-您还可以通过 [`config`](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--) 方法访问 Verticle 的配置信息。查看 [向 Verticle 传入配置](###向verticle传入配置) 章节了解更多配置信息。
+您还可以通过 [`config`](http://vertx.io/docs/apidocs/io/vertx/core/Context.html#config--) 方法访问 Verticle 的配置信息。查看 [向 Verticle 传入配置](#向verticle传入配置) 章节了解更多配置信息。
 
 ### 执行周期性/延迟性操作
 
