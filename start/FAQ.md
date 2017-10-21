@@ -329,4 +329,5 @@ router.route("/static/*").handler(StaticHandler.create());
 |Standard Verticle|-|-|-|Reactor|-|
 |Worker Verticle|-|-|Stateless Session Bean|-|-|
 |Multiple Threaded<br>Worker Verticle|-|Bean(Singleton)|-|-|-|
-|Handler|Actor|-|-|-|Goroutine|
+|Handler|Actor|-|-|-|-|
+|Coroutine|-|-|-|-|Goroutine|
