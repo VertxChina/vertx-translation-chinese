@@ -301,6 +301,12 @@ public class MainVerticle extends AbstractVerticle {
                                         <Main-Verticle>${main.verticle}</Main-Verticle>
                                     </manifestEntries>
                                 </transformer>
+                                
+                                <!--多语言支持在打包时需加入以下转换器-->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/io.vertx.core.spi.VerticleFactory</resource>
+                                </transformer>
+                                
                             </transformers>
                             <artifactSet />
                             <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-prod.jar</outputFile>
