@@ -1361,7 +1361,7 @@ router.route("/login").handler(ctx -> {
 });
 ```
 
-注意，对于持有令牌的客户端，唯一需要做的是在 **所有** 后续的的 HTTP 请求中包含消息头 `Authoriztion` 并写入 `Bearer <token> `，例如：
+注意，对于持有令牌的客户端，唯一需要做的是在 **所有** 后续的的 HTTP 请求中包含消息头 `Authorization` 并写入 `Bearer <token> `，例如：
 
 ```java
 Router router = Router.router(vertx);
