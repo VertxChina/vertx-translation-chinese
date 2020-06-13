@@ -56,7 +56,7 @@ JWT主要的优点有：
 	
 JWT用法的典型流程是，在您的应用程序有一个终点颁发令牌，这个终点应在SSL模式下运行，终点这通过用户名和密码验证完请求用户之后，表示你将这样做生成令牌：
 
-	JsonObjetc config = new JsonObject().put("keyStore", new JsonObject()
+	JsonObject config = new JsonObject().put("keyStore", new JsonObject()
 		.put("path", "keystore.jceks")
 		.put("type", "jceks")
 		.put("password", "secret"));
