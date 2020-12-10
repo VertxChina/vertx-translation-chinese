@@ -50,14 +50,14 @@ Vert.x 提供了一个服务发现的基础组件，用来发布和发现各种�
 <dependency>
    <groupId>io.vertx</groupId>
    <artifactId>vertx-service-discovery</artifactId>
-   <version>3.4.1</version>
+   <version>3.5.2</version>
 </dependency>
 ```
 
 + Gradle (`build.gradle` 文件中)：
 
 ```groovy
-compile 'io.vertx:vertx-service-discovery:3.4.1'
+compile 'io.vertx:vertx-service-discovery:3.5.2'
 ```
 
 ## 基本概念
@@ -68,7 +68,7 @@ compile 'io.vertx:vertx-service-discovery:3.4.1'
 
 我们用服务记录 （[`Record`](http://vertx.io/docs/apidocs/io/vertx/servicediscovery/Record.html) 对象）来描述服务提供者提供的服务，它包含了服务名称、一些元数据和一个描述服务所在位置的位置对象。
 
-服务记录的元数据、甚至位置的格式，都有赖于服务的类型（详见后续章节）。
+服务记录的元数据、甚至位置的格式，都有赖于`服务的类型`（详见后续章节）。
 
 当服务提供者准备好可以提供服务时，会发布一条服务记录，在服务停止的时候，会收回这条服务记录。
 
@@ -109,7 +109,7 @@ compile 'io.vertx:vertx-service-discovery:3.4.1'
 
 服务发现组件使用Vert.x的分布式数据结构来存储服务记录。所以，集群中所有的成员都可以访问到所有的服务记录，这是服务后端的默认实现。你也可以实现自己的服务记录存储后端，只要实现 `ServiceDiscoveryBackend` 接口就可以了。比如，Vert.x还通过实现该接口提供了基于Redis的存储后端。
 
-注意服务发现模块并不需要运行在Vert.x 集群模式下。在单机模式下，服务记录存储于本地，并且可以通过 `ServiceImporter` 来导入。
+注意服务发现模块并不需要运行在Vert.x 集群模式下。在单机模式下，服务记录存储于本地，并且可以通过 `ServiceImporter` 来导入。从 3.5.0 版本开始，你甚至可以在集群模式下采用本地结构储存，通过设置 `vertx-service-discovery-backend-local` 为 `true`(或者设置环境变量 `VERTX-SERVICE-DISCOVERY-BACKEND-LOCAL` 为 `true`)
 
 ## 创建Service Discovery实例
 
@@ -132,6 +132,8 @@ discovery.close();
 在默认情况下，服务事件发送到Event Bus中的地址是 `vertx.discovery.announce`，你可以自己配置一个（查看服务使用章节）。
 
 当你不再需要 `ServiceDiscovery` 对象时，不要忘记关掉它（通过 `close` 方法）。它会把你配置的不同的服务导入/导出模块都关掉，并且释放服务引用。
+
+你应该禁止在实例中共享 `ServiceDiscovery` 对象。
 
 ## 发布服务
 
@@ -908,7 +910,7 @@ MongoDataSource.<JsonObject>getMongoClient(discovery,
 
 需要提醒的是，在一个集群中，只需要有一个节点注册了服务桥接器，集群中所有成员就都能使用了。
 
-## 可用的服务发现桥接器
+## 其他服务发现桥接器
 
 Vert.x 服务发现组件除了支持桥接器机制以外，还提供了一些现成的桥接器。
 
@@ -936,13 +938,13 @@ Consul 桥接器可以将 [Consul](http://consul.io/) 中的服务导入到Vert.
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-bridge-consul</artifactId>
-  <version>3.4.1</version>
+  <version>3.5.2</version>
 </dependency>
 ```
 
 + Gradle（在 `build.gradle` 文件中）：
 ```groovy
-compile 'io.vertx:vertx-service-discovery-bridge-consul:3.4.1'
+compile 'io.vertx:vertx-service-discovery-bridge-consul:3.5.2'
 ```
 
 然后，在创建服务发现对象的时候，像下面这样注册桥接器：
@@ -960,6 +962,7 @@ ServiceDiscovery.create(vertx)
 
 + `host` 属性，配置 agent 的地址，默认是`localhost`
 + `port` 属性，配置 agent 的端口，默认的端口是 8500
++ `acl_token` 属性，配置 agent 的访问控制令牌，默认值是 null
 + `scan-period` 属性，配置扫描的频率，扫描的单位是毫秒（ms），默认是 2000 ms
 
 ### Kubernetes 桥接器
@@ -980,13 +983,13 @@ Kubernetes中的服务，在导入到Vert.x后都会创建对应的服务记录�
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-bridge-kubernetes</artifactId>
-  <version>3.4.1</version>
+  <version>3.5.2</version>
 </dependency>
 ```
 
 + Gradle（在 `build.gradle` 文件中）：
 ```groovy
-compile 'io.vertx:vertx-service-discovery-bridge-kubernetes:3.4.1'
+compile 'io.vertx:vertx-service-discovery-bridge-kubernetes:3.5.2'
 ```
 
 #### 桥接器的配置
@@ -1034,13 +1037,13 @@ Docker Links 桥接器可以从 Docker Links 中导入服务到 Vert.x 的服务
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-bridge-docker-links</artifactId>
-  <version>3.4.1</version>
+  <version>3.5.2</version>
 </dependency>
 ```
 
 + Gradle（在 `build.gradle` 文件中）：
 ```groovy
-compile 'io.vertx:vertx-service-discovery-bridge-docker-links:3.4.1'
+compile 'io.vertx:vertx-service-discovery-bridge-docker-links:3.5.2'
 ```
 
 然后，在创建服务发现对象的时候，像下面这样注册桥接器：
@@ -1073,13 +1076,13 @@ Vert.x Service Discovery Redis Backend组件是基于Redis的后端存储实现�
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-service-discovery-backend-redis</artifactId>
-  <version>3.4.1</version>
+  <version>3.5.2</version>
 </dependency>
 ```
 
 + Gradle（在 `build.gradle` 文件中）：
 ```groovy
-compile 'io.vertx:vertx-service-discovery-backend-redis:3.4.1'
+compile 'io.vertx:vertx-service-discovery-backend-redis:3.5.2'
 ```
 
 需要注意的是，你只能在 `classpath` 中指定一个SPI的实现；如果没有指定，那么将使用默认的存储后端。
@@ -1099,9 +1102,19 @@ ServiceDiscovery.create(vertx, new ServiceDiscoveryOptions()
     ));
 ```
 
+值得注意的一点是，配置是在 `setBackendConfiguration` 方法中传入的（如果使用JSON，则传递给backendConfiguration 对象:
+
+```java
+ServiceDiscovery.create(vertx,
+  new ServiceDiscoveryOptions(new JsonObject()
+    .put("backendConfiguration",
+      new JsonObject().put("host", "localhost").put("port", 1234).put("key", "my-records")
+)));
+```
+
 ---
 
-> [原文档](http://vertx.io/docs/vertx-service-discovery/java/)最后更新于 2017-03-15 15:54:14 CET
+> [原文档](http://vertx.io/docs/vertx-service-discovery/java/)最后更新于 2018-06-04 18:02:22 CEST
 
 [1]: http://vertx.io/docs/vertx-service-discovery/java/
 [2]: https://github.com/vert-x3/vertx-service-discovery
