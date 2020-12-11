@@ -55,6 +55,8 @@
 
 **Vert.x 的核心 Java API 被我们称为 Vert.x Core**。
 
+[Github仓库](https://github.com/eclipse/vert.x)
+
 Vert.x Core 提供了下列功能:
 
 * 编写 TCP 客户端和服务端
@@ -67,9 +69,10 @@ Vert.x Core 提供了下列功能:
 * DNS客户端
 * 文件系统访问
 * 高可用性
+* 本地传输
 * 集群
 
-Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库访问、授权或高层Web应用的功能。您可以在**Vert.x ext** （扩展包）（译者注：Vert.x的扩展包是Vert.x的子项目集合，类似[Web](http://vertx.io/docs/#web)、[Web Client](http://vertx.io/docs/#web-client)、[Data Access](http://vertx.io/docs/#data_access)等）中找到这些功能。
+Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库访问、授权或高层Web应用的功能。您可以在**Vert.x ext** （扩展包）（译者注：Vert.x的扩展包是Vert.x的子项目集合，类似[Web](https://vertx.io/docs/vertx-web/java/)、[Web Client](https://vertx.io/docs/vertx-web-client/java/)、[Databases](https://vertx.io/docs/#databases)等）中找到这些功能。
 
 **Vert.x Core** 小而轻，您可以只使用您需要的部分。它可整体嵌入现存应用中。我们并不会强迫您用特定的方式构造您的应用。
 
@@ -83,7 +86,7 @@ Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库�
 <dependency>
   <groupId>io.vertx</groupId>
   <artifactId>vertx-core</artifactId>
-  <version>3.4.2</version>
+  <version>4.0.0</version>
 </dependency>
 ```
 
@@ -91,7 +94,7 @@ Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库�
 
 ```gradle
 dependencies {
-    compile 'io.vertx:vertx-core:3.4.2'
+    compile 'io.vertx:vertx-core:4.0.0'
 }
 ```
 
