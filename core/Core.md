@@ -5385,8 +5385,8 @@ src.pipe()
 
 `ReadStream`有`flowing`和`fetch`两个模式：
 
-- 最初 stream是` flowing` 模式
-- 当 stream 处于 `flowing`模式，stream中的元素被传输到`handler`
+- 最初 stream是`flowing` 模式
+- 当 stream 处于`flowing`模式，stream中的元素被传输到`handler`
 - 当stream处于`fetch`模式，只有指定数量的元素才被传输到`handler`
 
 [pause](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--),[resume](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--) 和 [fetch](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#fetch-long-) 会改变`ReadStream`的模式
@@ -5555,20 +5555,16 @@ parser.handler(event -> {
   // Start the object
   switch (event.type()) {
     case START_OBJECT:
-      // Set object value mode to handle each entry, from now on the parser won't emit start object events
       // 设置为 value-mode，自此开始，解析器则不会触发start-object事件
       parser.objectValueMode();
       break;
     case VALUE:
-      // Handle each object
-      // Get the field in which this object was parsed
       // 处理每一个对象
       // 获得从对象中解析出来的字段
       String id = event.fieldName();
       System.out.println("User with id " + id + " : " + event.value());
       break;
     case END_OBJECT:
-      // Set the object event mode so the parser emits start/end object events again
       // 设置为 event mode，所以解析器重新触发 start/end 事件
       parser.objectEventMode();
       break;
@@ -5589,19 +5585,15 @@ parser.handler(event -> {
 
   switch (event.type()) {
     case START_OBJECT:
-      // Set array value mode to handle each entry, from now on the parser won't emit start array events
       // 设置为value mode来处理每个元素，自此开始，解析器不会触发 start-array 事件
       parser.arrayValueMode();
       break;
     case VALUE:
-      // Handle each array
-      // Get the field in which this object was parsed
       // 处理每一个数组
       // 获取对象中的字段
       System.out.println("Value : " + event.value());
       break;
     case END_OBJECT:
-      // Set the array event mode so the parser emits start/end object events again
       // 设置为 event mode，从而解析器会重新触发 start/end 事件
       parser.arrayEventMode();
       break;
@@ -5616,8 +5608,6 @@ parser.end();
 
 ```java
 parser.handler(event -> {
-  // Handle each object
-  // Get the field in which this object was parsed
   // 获取每个对象
   // 获取对象中的字段
   String id = event.fieldName();
@@ -5633,7 +5623,6 @@ parser.handler(event -> {
 JsonParser parser = JsonParser.newParser();
 
 parser.exceptionHandler(err -> {
-  // Catch any parsing or decoding error
   // 捕捉所有的解析/反解析异常
 });
 ```
