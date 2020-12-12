@@ -882,67 +882,83 @@ Event Bus 是 Vert.x 的神经系统。
 
 每一个 Vert.x 实例都有一个单独的 Event Bus 实例。您可以通过 `Vertx` 实例的 [`eventBus`](https://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#eventBus--) 方法来获得对应的 `EventBus` 实例。
 
-您的应用中的不同部分通过 Event Bus 相互通信，无论它们使用哪一种语言实现，无论它们在同一个 Vert.x 实例中或在不同的 Vert.x 实例中。
+应用中的不同组成部分可以通过 Event Bus 相互通信，您无需关心它们由哪一种语言实现，也无需关心它们是否在同一个 Vert.x 实例中。
 
-甚至可以通过桥接的方式允许在浏览器中运行的客户端JavaScript在相同的Event Bus上相互通信。
+您甚至可以通过桥接的方式让浏览器中运行的多个JavaScript客户端在同一个 Event Bus 上相互通信。
 
-Event Bus可形成跨越多个服务器节点和多个浏览器的点对点的分布式消息系统。
+Event Bus构建了一个跨越多个服务器节点和多个浏览器的分布式点对点消息系统。
 
-Event Bus支持发布/订阅、点对点、请求/响应的消息通信方式。
+Event Bus支持发布/订阅、点对点、请求-响应的消息传递方式。
 
-Event Bus的API很简单。基本上只涉及注册处理器、撤销处理器和发送和发布消息。
+Event Bus的API很简单。基本上只涉及注册处理器、注销处理器以及发送和发布(publish)消息。
 
-首先来看些基本概念和理论。
+先来看一些基本概念和理论。
 
 ### 基本概念
 
 #### 寻址
 
-消息会被 Event Bus 发送到一个 **地址(address)**。
+消息的发送目标被称作 **地址(address)**。
 
-同任何花哨的寻址方案相比，Vert.x的地址格式并不麻烦。Vert.x中的地址是一个简单的字符串，任意字符串都合法。当然，使用某种模式来命名仍然是明智的。如：使用点号来划分命名空间。
+Vert.x的地址格式并不花哨。Vert.x中的地址就是一个简单的字符串，任何字符串都合法。不过还是建议使用某种规范来进行地址的命名。例如使用点号(`.`)来划分命名空间。
 
-一些合法的地址形如：`europe.news.feed1`、`acme.games.pacman`、`sausages`和`X`。
+一些合法的地址形如：`europe.news.feed1`、`acme.games.pacman`、`sausages`以及`X`。
 
 #### 处理器
 
-消息在处理器（`Handler`）中被接收。您可以在某个地址上注册一个处理器来接收消息。
+消息需由处理器（`Handler`）来接收。您需要将处理器注册在某个地址上。
 
-同一个地址可以注册许多不同的处理器，一个处理器也可以注册在多个不同的地址上。
+同一个地址可以注册许多不同的处理器。
+
+一个处理器也可以注册在多个不同的地址上。
 
 #### 发布/订阅消息
 
-Event Bus支持 **发布消息** 功能。
+Event Bus支持 **发布(publish)消息** 功能。
 
-消息将被发布到一个地址中，发布意味着会将信息传递给 **所有** 注册在该地址上的处理器。这和 **发布/订阅模式** 很类似。
+消息将被发布到一个地址上。发布意味着信息会被传递给所有注册在该地址上的处理器。
 
-#### 点对点模式/请求-响应模式
+即我们熟悉的 **发布/订阅** 消息传递模式。
 
-Event Bus也支持 **点对点消息模式**。
+#### 点对点消息传递 与 请求-响应消息传递
 
-消息将被发送到一个地址中，Vert.x将会把消息分发到某个注册在该地址上的处理器。若这个地址上有不止一个注册过的处理器，它将使用 **不严格的轮询算法** 选择其中一个。
+Event Bus也支持 **点对点** 消息模式。
+
+消息将被发送到一个地址上，Vert.x仅会把消息发给注册在该地址上的处理器中的其中一个。
+
+若这个地址上注册有不止一个处理器，那么Vert.x将使用 **不严格的轮询算法** 选择其中一个。
 
 点对点消息传递模式下，可在消息发送的时候指定一个应答处理器（可选）。
 
-当接收者收到消息并且已经被处理时，它可以选择性决定回复该消息，若选择回复则绑定的应答处理器将会被调用。当发送者收到回复消息时，它也可以回复，这个过程可以不断重复。通过这种方式可以允许在两个不同的 Verticle 之间设置一个对话窗口。这种消息模式被称作 **请求-响应** 模式。
+当接收者收到消息并且处理完成时，它可以选择性地回复该消息。若回复，则关联的应答处理器将会被调用。
+
+当发送者收到应答消息时，发送者还可以继续回复这个“应答”，这个过程可以不断重复。通过这种方式可以在两个不同的 Verticle 之间建立一个对话窗口。
+
+这也是一个常见的消息传递模式：**请求-响应** 模式。
 
 #### 尽力传输
 
 Vert.x会尽它最大努力去传递消息，并且不会主动丢弃消息。这种方式称为 **尽力传输(Best-effort delivery)**。
 
-但是，当 Event Bus 中的全部或部分发生故障时，则可能会丢失消息。
+但是，当 Event Bus 发生故障时，消息可能会丢失。
 
-若您的应用关心丢失的消息，您应该编写具有幂等性的处理器，并且您的发送者可以在恢复后重试。
+若您的应用关心消息丢失，那么您应当编写具有幂等性的处理器，并且您的发送者应当在故障恢复后重试。
 
 > 译者注：RPC通信通常情况下有三种语义：**at least once**、**at most once** 和 **exactly once**。不同语义情况下要考虑的情况不同。
 
+> 本小节中文档建议开发者通过重试来实现at least once语义，并通过幂等设计来规避重复接收消息的影响。  
+
 #### 消息类型
 
-Vert.x 默认允许任何基本/简单类型、`String` 或 [`Buffer`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html) 作为消息发送。不过在 Vert.x 中的通常做法是使用 [JSON](http://json.org/) 格式来发送消息。
+Vert.x 默认允许任何基本/简单类型、`String` 类型、 [`Buffer`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html) 类型的值作为消息发送。
 
-JSON 对于 Vert.x 支持的所有语言都是非常容易创建、读取和解析的，因此它已经成为了Vert.x中的通用语(*lingua franca*)。但是若您不想用 JSON，我们并不强制您使用它。
+不过在 Vert.x 中更规范且更通用的做法是使用 [JSON](https://json.org/) 格式来发送消息。
 
-Event Bus 非常灵活，它支持在 Event Bus 中发送任意对象。您可以通过为您想要发送的对象自定义一个 [`MessageCodec`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageCodec.html) 来实现。
+对于 Vert.x 支持的所有语言来说，JSON都是非常容易创建、读取和解析的，因此JSON已经成为了Vert.x中的通用语(*lingua franca*)。
+
+但是若您不想用 JSON，我们也不强制您使用它。
+
+Event Bus 非常灵活，您可以通过自定义 [`codec`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageCodec.html) 来实现任何类型对象在 Event Bus 上的传输。
 
 ### Event Bus API
 
@@ -956,7 +972,7 @@ Event Bus 非常灵活，它支持在 Event Bus 中发送任意对象。您可�
 EventBus eb = vertx.eventBus();
 ```
 
-对于每一个 Vert.x 实例来说它是单例的。
+每一个 Vertx.x 实例仅有一个 Event Bus 实例。
 
 #### 注册处理器
 
@@ -970,11 +986,13 @@ eb.consumer("news.uk.sport", message -> {
 });
 ```
 
-当一个消息达到您的处理器，该处理器会以 [`message`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html) 为参数被调用。
+当消息达到您的处理器时，该消息会被放入 [`message`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html) 参数进行处理器的调用。
 
-调用 `consumer` 方法会返回一个 [`MessageConsumer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html) 对象。该对象随后可用于撤销处理器、或将处理器用作流式处理。
+调用 `consumer` 方法会返回一个 [`MessageConsumer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html) 对象。
 
-您也可以不设置处理器而使用 [`consumer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBus.html#consumer-java.lang.String-io.vertx.core.Handler-) 方法直接返回一个 `MessageConsumer`，之后再来设置处理器。如：
+该对象后续可用于注销处理器，或者流式地处理该对象。
+
+您也可以使用 [`consumer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBus.html#consumer-java.lang.String-io.vertx.core.Handler-) 方法直接返回一个不带处理器的 `MessageConsumer`，之后再在这个返回的对象上设置处理器。如：
 
 ```java
 EventBus eb = vertx.eventBus();
@@ -985,7 +1003,7 @@ consumer.handler(message -> {
 });
 ```
 
-在集群模式下的Event Bus上注册处理器时，注册信息会花费一些时间才能传播到集群中的所有节点。
+在向集群模式下的 Event Bus 注册处理器时，注册信息会花费一些时间才能传播到集群中的所有节点。
 
 若您希望在完成注册后收到通知，您可以在 `MessageConsumer` 对象上注册一个 [`completion handler`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html#completionHandler-io.vertx.core.Handler-)。
 
@@ -1003,7 +1021,7 @@ consumer.completionHandler(res -> {
 
 您可以通过 [`unregister()`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html#unregister--) 方法来注销处理器。
 
-若您在集群模式下的 Event Bus 中撤销处理器，则同样会花费一些时间在节点中传播。若您想在完成后收到通知，可以使用[`unregister(handler)`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html#unregister-io.vertx.core.Handler-) 方法注册处理器：
+若您在使用集群模式的 Event Bus，注销处理器的动作会花费一些时间在节点中传播。若您想在完成后收到通知，可以使用[`unregister(handler)`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html#unregister-io.vertx.core.Handler-) 方法注册回调：
 
 ```java
 consumer.unregister(res -> {
@@ -1027,7 +1045,7 @@ eventBus.publish("news.uk.sport", "Yay! Someone kicked a ball");
 
 #### 发送消息
 
-与发布消息的不同之处在于，发送(`send`)的消息只会传递给在该地址注册的其中一个处理器，这就是点对点模式。Vert.x 使用不严格的轮询算法来选择绑定的处理器。
+在对应地址上注册过的所有处理器中，仅一个处理器能够接收到发送的消息。这是一种点对点消息传递模式。Vert.x 使用不严格的轮询算法来选择绑定的处理器。
 
 您可以使用 [`send`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBus.html#send-java.lang.String-java.lang.Object-) 方法来发送消息：
 
@@ -1037,7 +1055,7 @@ eventBus.send("news.uk.sport", "Yay! Someone kicked a ball");
 
 #### 设置消息头
 
-在 Event Bus 上发送的消息可包含头信息。这可通过在发送或发布时提供的 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 来指定。例如：
+在 Event Bus 上发送的消息可包含头信息。您可以在发送或发布(publish)时提供一个 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 来指定头信息。例如：
 
 ```java
 DeliveryOptions options = new DeliveryOptions();
@@ -1047,21 +1065,25 @@ eventBus.send("news.uk.sport", "Yay! Someone kicked a ball", options);
 
 #### 消息顺序
 
-Vert.x将按照特定发送者发送消息的顺序来传递消息给特定处理器。
+Vert.x会按照发送者发送消息的顺序，将消息以同样的顺序传递给处理器。
 
 #### 消息对象
 
 您在消息处理器中接收到的对象的类型是 [`Message`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html)。
 
-消息的 [`body`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#body--) 对应发送或发布的对象。消息的头信息可以通过 [`headers`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#headers--) 方法获取。
+消息的 [`body`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#body--) 对应发送或发布(publish)的对象。
+
+消息的头信息可以通过 [`headers`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#headers--) 方法获取。
 
 #### 应答消息/发送回复
 
-当使用 [`send`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBus.html#send-java.lang.String-java.lang.Object-) 方法发送消息时，Event Bus会尝试将消息传递到注册在Event Bus上的 [`MessageConsumer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html)中。在某些情况下，发送者需要知道消费者何时收到消息并 *处理* 了消息。
+当使用 [`send`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBus.html#send-java.lang.String-java.lang.Object-) 方法发送消息时，Event Bus会尝试将消息传递到注册在Event Bus上的 [`MessageConsumer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageConsumer.html)中。
 
-消费者可以通过调用 [`reply`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#reply-java.lang.Object-) 方法来应答这个消息。
+某些情况下，发送者可以通过 `请求/响应` 模式来得知消费者已经收到并 *处理* 了该消息。
 
-当这种情况发生时，它会将消息回复给发送者并且在发送者中调用应答处理器来处理回复的消息。
+消费者可以通过调用 [`reply`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#reply-java.lang.Object-) 方法来应答这个消息，确认该消息已被处理。
+
+此时，它会将一个应答消息返回给发送者并调用发送者的应答处理器。
 
 看这个例子会更清楚：
 
@@ -1085,19 +1107,23 @@ eventBus.send("news.uk.sport", "Yay! Someone kicked a ball across a patch of gra
 });
 ```
 
-在应答的消息体中可以包含有用的信息。
+在应答的消息体中可以包含一些有用的信息。
 
-关于 *处理中* 的含义实际上是由应用程序来定义的。这完全取决于消费者如何执行，Event Bus 对此并不关心。
+“处理中”的实际含义应当由应用程序来定义。这完全取决于消费者如何执行，Event Bus 对此并不关心。
 
 一些例子：
 
 * 一个简单地实现了返回当天时间的服务，在应答的消息里会包含当天时间信息。
-* 一个实现了持久化队列的消息消费者，当消息成功持久化到存储时，可以使用`true`来应答消息，或`false`表示失败。
-* 一个处理订单的消息消费者也许会用`true`确认这个订单已经成功处理并且可以从数据库中删除。
+* 一个实现了持久化队列的消息消费者，可以回复`true`来表示消息已成功持久化到存储设备中，或回复`false`表示失败。
+* 一个处理订单的消息消费者可以使用`true`确认这个订单已经成功处理并且可以从数据库中删除。
 
 #### 带超时的发送
 
-当发送带有应答处理器的消息时，可以在 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 中指定一个超时时间。如果在这个时间之内没有收到应答，则会以失败为参数调用应答处理器。默认超时是 **30 秒**。
+当发送带有应答处理器的消息时，可以在 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 中指定一个超时时间。
+
+如果在这个时间之内没有收到应答，则会以“失败的结果”为参数调用应答处理器。
+
+默认超时是 **30 秒**。
 
 #### 发送失败
 
@@ -1106,11 +1132,13 @@ eventBus.send("news.uk.sport", "Yay! Someone kicked a ball across a patch of gra
 * 没有可用的处理器来接收消息
 * 接收者调用了 [`fail`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/Message.html#fail-int-java.lang.String-) 方法显式声明失败
 
-发生这些情况时，应答处理器将会以这些失败为参数被调用。
+发生这些情况时，应答处理器将会以这些异常失败结果为参数进行调用。
 
 #### 消息编解码器
 
-您可以在 Event Bus 中发送任何对象，只要你为这个对象类型注册一个编解码器 [`MessageCodec`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageCodec.html)。消息编解码器有一个名称，您需要在发送或发布消息时通过 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 来指定：
+您可以在 Event Bus 中发送任何对象，只需为这个对象类型注册一个编解码器 [`message codec`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageCodec.html) 即可。
+
+每个消息编解码器都有一个名称，您需要在发送或发布消息时通过 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 来指定：
 
 ```java
 eventBus.registerCodec(myCodec);
@@ -1120,7 +1148,7 @@ DeliveryOptions options = new DeliveryOptions().setCodecName(myCodec.name());
 eventBus.send("orders", new MyPOJO(), options);
 ```
 
-若您总是希望某个类使用将特定的编解码器，那么您可以为这个类注册默认编解码器。这样您就不需要在每次发送的时候使用 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 来指定了：
+若您希望某个类总是使用特定的编解码器，那么您可以为这个类注册默认编解码器。这样您就不需要在每次发送的时候使用 [`DeliveryOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/DeliveryOptions.html) 来指定了：
 
 ```java
 eventBus.registerDefaultCodec(MyPOJO.class, myCodec);
@@ -1130,11 +1158,11 @@ eventBus.send("orders", new MyPOJO());
 
 您可以通过 [`unregisterCodec`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBus.html#unregisterCodec-java.lang.String-) 方法注销某个消息编解码器。
 
-消息编解码器的编码和解码不一定使用同一个类型。例如您可以编写一个编解码器来发送 MyPOJO 类的对象，但是当消息发送给处理器后解码成 MyOtherPOJO 对象。
+消息编解码器的编码输入和解码输出不一定使用同一个类型。例如您可以编写一个编解码器来发送 MyPOJO 类的对象，但是当消息发送给处理器后解码成 MyOtherPOJO 对象。
 
 #### 集群模式的 Event Bus
 
-Event Bus 不仅仅存在于单个 Vert.x 实例中。通过您在网络上将不同的 Vert.x 实例集群在一起，它可以形成一个单一的、分布式的Event Bus。
+Event Bus 不仅仅只存在于单个 Vert.x 实例中。将网络上不同的 Vert.x 实例组合成集群，就可以在这些实例间形成一个单一的、分布式的Event Bus。
 
 #### 通过代码的方式启用集群模式
 
@@ -1153,7 +1181,7 @@ Vertx.clusteredVertx(options, res -> {
 });
 ```
 
-您需要确在您的 classpath 中（或构建工具的依赖中）包含 [`ClusterManager`](https://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html) 的实现类，如默认的 `HazelcastClusterManager`。
+您需要确保在您的 classpath 中（或构建工具的依赖中）包含 [`ClusterManager`](https://vertx.io/docs/apidocs/io/vertx/core/spi/cluster/ClusterManager.html) 的实现类，如默认的 `HazelcastClusterManager`。
 
 #### 通过命令行启用集群模式
 
@@ -1165,11 +1193,11 @@ vertx run my-verticle.js -cluster
 
 ### Verticle 中的自动清理
 
-若您在 Verticle 中注册了 Event Bus 的处理器，那么这些处理器在 Verticle 被撤销的时候会自动被注销。
+若您在 Verticle 中注册了 Event Bus 的处理器，那么这些处理器在 Verticle 被撤销（undeploy）的时候会自动被注销。
 
 ### 配置 Event Bus
 
-Event Bus 是可以配置的，这对于以集群模式运行的 Event Bus 是非常有用的。Event Bus 使用 TCP 连接发送和接收消息，因此可以通过 [`EventBusOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html) 对TCP连接进行全面的配置。由于 Event Bus 同时用作客户端和服务器，因此这些配置近似于 [`NetClientOptions`](https://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html) 和 [`NetServerOptions`](https://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html)。
+Event Bus 是可配置的，这对于以集群模式运行的 Event Bus 来说非常有用。Event Bus 使用 TCP 连接发送和接收消息，因此可以通过 [`EventBusOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html) 对TCP连接进行全面的配置。由于 Event Bus 既可以用作客户端又可以用作服务端，因此这些配置近似于 [`NetClientOptions`](https://vertx.io/docs/apidocs/io/vertx/core/net/NetClientOptions.html) 和 [`NetServerOptions`](https://vertx.io/docs/apidocs/io/vertx/core/net/NetServerOptions.html)。
 
 ```java
 VertxOptions options = new VertxOptions()
@@ -1191,15 +1219,15 @@ Vertx.clusteredVertx(options, res -> {
 });
 ```
 
-上边代码段描述了如何在Event Bus中使用SSL连接替换传统的TCP连接。
+上边代码段描述了如何在Event Bus中使用SSL连接替换明文的TCP连接。
 
-> **警告：** 若要在集群模式下保证安全性，您 **必须** 将集群管理器配置成加密的或强制安全的。参考集群管理器的文档获取更多细节。
+> **警告：** 若要在集群模式下保证安全性，您 **必须** 将集群管理器配置成加密的或者加强安全规则。参考集群管理器的文档获取更多细节。
 
-Event Bus 的配置需要在所有集群节点中保持一致性。
+Event Bus 的配置需要在集群的所有节点中保持一致。
 
-[`EventBusOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html)还允许您指定 Event Bus 是否运行在集群模式下，以及它的主机信息和端口。您可使用 [`setClustered`](https://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setClustered-boolean-)、[`getClusterHost`](https://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#getClusterHost--)和 [`getClusterPort`](https://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#getClusterPort--) 方法来设置。
+[`EventBusOptions`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/EventBusOptions.html)还允许您指定 Event Bus 是否运行在集群模式下，以及它的端口和主机信息（译者注：host，这里指网络socket绑定的地址）。
 
-在容器中使用时，您也可以配置公共主机和端口号：
+在容器中使用时，您还可以配置公共主机和端口号：
 
 ```java
 VertxOptions options = new VertxOptions()
@@ -1219,9 +1247,12 @@ Vertx.clusteredVertx(options, res -> {
 });
 ```
 
+> 译者注：setClusterPublicHost 和 setClusterPublicPort 的功能在原文档上描述得不清晰，但是API文档上有详细描述。  
+> 在某些容器、云环境等场景下，本节点监听的地址，和其他节点连接本节点时使用的地址，是不同的。这种情况下则可以利用上面两个配置区分监听地址和公开暴露的地址。  
+
 ## JSON
 
-和其他一些语言不同，Java 没有对 JSON 的原生支持（first class support），因此我们提供了两个类，以便在 Vert.x 应用中处理 JSON 更容易。
+和其他一些语言不同，Java 没有对 JSON 做原生支持（first class support），因此我们提供了两个类，以便在 Vert.x 应用中更方便地处理 JSON。
 
 ### JSON 对象
 
@@ -1242,7 +1273,7 @@ String jsonString = "{\"foo\":\"bar\"}";
 JsonObject object = new JsonObject(jsonString);
 ```
 
-您可以从通过一个Map创建JSON对象：
+您可以根据Map创建JSON对象：
 
 ```java
 Map<String, Object> map = new HashMap<>();
@@ -1273,9 +1304,13 @@ int intVal = jsonObject.getInteger("some-other-key");
 
 #### JSON 对象和 Java 对象间的映射
 
-您可以从 Java 对象的字段创建一个JSON 对象，如下所示：
+您可以根据 Java 对象的字段创建一个JSON 对象，如下所示：
 
-你可以通过一个JSON 对象来实例化一个Java 对象并填充字段值。如下所示：
+```java
+// TODO
+```
+
+你可以根据一个 JSON 对象来实例化一个Java 对象并填充字段值。如下所示：
 
 ```java
 request.bodyHandler(buff -> {
@@ -1288,7 +1323,7 @@ request.bodyHandler(buff -> {
 
 在最简单的情况下，如果 Java 类中所有的字段都是 `public`（或者有 `public` 的 getter/setter）时，并且有一个 `public` 的默认构造函数（或不定义构造函数），`mapFrom` 和 `mapTo` 都应该成功。
 
-只要不存在对象的循环引用，嵌套的 Java 对象可以被序列化/反序列化为嵌套的JSON对象。
+只要不存在对象的循环引用，嵌套的 Java 对象就可以和嵌套的 JSON 对象相互序列化/反序列化。
 
 #### 将 JSON 对象编码成字符串
 
@@ -1308,7 +1343,7 @@ JSON 数组同样可以包含 `null` 值。
 
 可以使用默认构造函数创建空的JSON数组。
 
-您可以从JSON格式的字符串创建一个JSON数组：
+您可以根据JSON格式的字符串创建一个JSON数组：
 
 ```java
 String jsonString = "[\"foo\",\"bar\"]";
@@ -1336,13 +1371,61 @@ Boolean boolVal = array.getBoolean(2);
 
 #### 将 JSON 数组编码成字符串
 
-您可使用 [`encode`](https://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html#encode--) 将一个 `JsonArray` 编码成字符串格式。
+您可以使用 [`encode`](https://vertx.io/docs/apidocs/io/vertx/core/json/JsonArray.html#encode--) 将一个 `JsonArray` 编码成字符串格式。
+
+#### 创建任意类型的 JSON
+
+创建 JSON 对象或数组的前提是，你需要事先已知其输入是合法的字符串。
+
+> 译者注：这里说的“合法”指的是，你在使用`JsonObject`时，需要事先知道构造函数输入的字符串是一个json object `{...}`，同理，使用`JsonArray`时，字符串需要是一个json array `[...]`，否则即使输入了一个规范的Json字符串，也没有办法成功解析。  
+
+当你不确定字符串是否合法时，你应当转而使用 [Json.decodeValue](https://vertx.io/docs/apidocs/io/vertx/core/json/Json.html#decodeValue-java.lang.String-) 方法。
+
+```java
+Object object = Json.decodeValue(arbitraryJson);
+if (object instanceof JsonObject) {
+  // 是一个合法的json对象
+} else if (object instanceof JsonArray) {
+  // 是一个合法的json数组
+} else if (object instanceof String) {
+  // 是一个合法的字符串
+} else {
+  // 以此类推...
+}
+```
+
+## Json 指针（Json Pointers）
+
+Vert.x 提供了一个 [Json指针 RFC6901](https://tools.ietf.org/html/rfc6901) 的实现。无论是查询还是写入，你都可以使用Json指针来完成。你可以基于字符串、URI，或者通过手动追加路径(path)的方式，来构建 [JsonPointer](https://vertx.io/docs/apidocs/io/vertx/core/json/pointer/JsonPointer.html) 对象：
+
+```java
+JsonPointer pointer1 = JsonPointer.from("/hello/world");
+// 手动构造一个Json指针
+JsonPointer pointer2 = JsonPointer.create()
+  .append("hello")
+  .append("world");
+```
+
+在初始化Json指针后，你可以使用 [queryJson](https://vertx.io/docs/apidocs/io/vertx/core/json/pointer/JsonPointer.html#queryJson-java.lang.Object-) 方法做查询，也可以使用 [writeJson](https://vertx.io/docs/apidocs/io/vertx/core/json/pointer/JsonPointer.html#writeJson-java.lang.Object-java.lang.Object-) 方法修改JSON的值。
+
+```java
+// 查询JsonObject
+Object result1 = objectPointer.queryJson(jsonObject);
+// 查询JsonArray
+Object result2 = arrayPointer.queryJson(jsonArray);
+// 从开头写入JsonObject
+objectPointer.writeJson(jsonObject, "new element");
+// 从开头写入JsonArray
+arrayPointer.writeJson(jsonArray, "new element");
+```
+
+你可以将Vert.x的Json指针功能应用在任何类型的对象上，只需实现一个自定义的 [JsonPointerIterator](https://vertx.io/docs/apidocs/io/vertx/core/json/pointer/JsonPointerIterator.html) 即可。
 
 ## Buffer
 
 在 Vert.x 内部，大部分数据被重新组织（shuffle，表意为洗牌）成 `Buffer` 格式。
 
-一个 `Buffer` 是可以读取或写入的0个或多个字节序列，并且根据需要可以自动扩容、将任意字节写入 `Buffer`。您也可以将 `Buffer` 想象成字节数组（译者注：类似于 JDK 中的 `ByteBuffer`）。
+`Buffer` 是一个可以被读取或写入的，包含0个或多个字节的序列，并且能够根据写入的字节自动扩容。您也可以将 `Buffer` 想象成一个智能的字节数组。
 
 ### 创建 Buffer
 
@@ -1364,7 +1447,7 @@ Buffer buff = Buffer.buffer();
 Buffer buff = Buffer.buffer("some string");
 ```
 
-从字符串创建一个 `Buffer`，这个字符串可以用指定的编码方式编码，例如：
+从字符串创建一个 `Buffer`，这个字符串会以指定的编码方式编码，例如：
 
 ```java
 Buffer buff = Buffer.buffer("some string", "UTF-16");
@@ -1377,15 +1460,19 @@ byte[] bytes = new byte[] {1, 3, 5};
 Buffer buff = Buffer.buffer(bytes);
 ```
 
-创建一个指定初始大小的 `Buffer`。若您知道您的 `Buffer` 会写入一定量的数据，您可以创建 `Buffer` 并指定它的大小。这使得这个 `Buffer` 初始化时分配了更多的内存，比数据写入时重新调整大小的效率更高。注意以这种方式创建的 `Buffer` 是 **空的**。它不会创建一个填满了 0 的Buffer。代码如下：
+创建一个指定初始大小的 `Buffer`。若您知道您的 `Buffer` 会写入一定量的数据，您可以在创建 `Buffer` 时指定它的大小，使这个 `Buffer` 在初始化时就分配了更多的内存，比数据写入时重新调整大小效率更高。
+
+注意以这种方式创建的 `Buffer` 是 **空的**。它不会创建一个填满了 0 的Buffer。代码如下：
 
 ```java
 Buffer buff = Buffer.buffer(10000);
 ```
 
+> 译者注：这里说的“空的”、“不会填满0”，指的是buffer内部的游标会从头开始，并不是在说内存布局。这种实现方式和使用直觉是一致的，只不过明确通过文档进行描述有点奇怪。
+
 ### 向Buffer写入数据
 
-向 `Buffer` 写入数据的方式有两种：追加和随机写入。任何一种情况下 `Buffer` 都会自动进行扩容，所以不可能在使用 `Buffer` 时遇到 `IndexOutOfBoundsException`。
+向 `Buffer` 写入数据的方式有两种：追加和随机访问。任何一种情况下 `Buffer` 都会自动进行扩容，所以你不会在使用 `Buffer` 时遇到 `IndexOutOfBoundsException`。
 
 #### 追加到Buffer
 
@@ -1403,7 +1490,9 @@ socket.write(buff);
 
 #### 随机访问写Buffer
 
-您还可以指定一个索引值，通过 `setXXX` 方法写入数据到 `Buffer`，它也存在各种不同数据类型的方法。所有的 set 方法都会将索引值作为第一个参数 —— 这表示 `Buffer` 中开始写入数据的位置。`Buffer` 始终根据需要进行自动扩容。
+您还可以指定一个索引值，通过 `setXXX` 方法写入数据到 `Buffer`。`setXXX` 也为各种不同数据类型提供了对应的方法。所有的 set 方法都会将索引值作为第一个参数 —— 这表示 `Buffer` 中开始写入数据的位置。
+
+`Buffer` 始终根据需要进行自动扩容。
 
 ```java
 Buffer buff = Buffer.buffer();
@@ -1414,7 +1503,7 @@ buff.setString(0, "hello");
 
 ### 从Buffer中读取
 
-可使用 `getXXX` 方法从 Buffer 中读取数据，它存在各种不同数据类型的方法，这些方法的第一个参数是从哪里获取数据的索引（获取位置）。
+可使用 `getXXX` 方法从 Buffer 中读取数据，`getXXX` 为各种不同数据类型提供了对应的方法，这些方法的第一个参数是 `Buffer` 中待获取的数据的索引位置。
 
 ```java
 Buffer buff = Buffer.buffer();
@@ -1425,7 +1514,7 @@ for (int i = 0; i < buff.length(); i += 4) {
 
 ### 使用无符号数
 
-可使用 `getUnsignedXXX`、`appendUnsignedXXX` 和 `setUnsignedXXX` 方法将无符号数从 `Buffer` 中读取或追加/设置到 `Buffer` 里。这对以优化网络协议和最小化带宽消耗为目的实现的编解码器是很有用的。
+可使用 `getUnsignedXXX`、`appendUnsignedXXX` 和 `setUnsignedXXX` 方法将无符号数从 `Buffer` 中读取或追加/设置到 `Buffer` 里。这对于实现一个致力于优化带宽占用的网络协议的编解码器是非常有用的。
 
 下边例子中，值 200 被设置到了仅占用一个字节的特定位置：
 
@@ -1435,6 +1524,7 @@ int pos = 15;
 buff.setUnsignedByte(pos, (short) 200);
 System.out.println(buff.getUnsignedByte(pos));
 ```
+
 控制台中显示 `200`。
 
 ### Buffer长度
@@ -1447,7 +1537,7 @@ System.out.println(buff.getUnsignedByte(pos));
 
 #### 裁剪Buffer
 
-裁剪得到的Buffer是基于原始Buffer的一个新的Buffer。它不会拷贝实际的数据。使用 [`slice`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#slice--) 方法裁剪一个Buffer。
+裁剪得到的Buffer是完全依赖于原始Buffer的一个新的Buffer，换句话说，它不会对 `Buffer` 中的数据做拷贝。使用 [`slice`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html#slice--) 方法裁剪一个Buffer。
 
 #### Buffer 重用
 
