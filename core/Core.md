@@ -4943,7 +4943,28 @@ socket.blockMulticastGroup("230.0.0.1", "10.0.0.2", asyncResult -> {
 DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 ```
 
-请注意，您可以传入 `InetSocketAddress` 参数的变量，以指定多个的DNS服务器来尝试查询解析DNS。它将按照此处指定的相同顺序查询DNS服务器，若在使用上一个DNS服务器解析时出现了错误，下一个将会被继续调用。
+你亦可通过`options`来创建`DnsClient`从而配置查询的过期时间。
+
+```java
+DnsClient client = vertx.createDnsClient(new DnsClientOptions()
+  .setPort(53)
+  .setHost("10.0.0.1")
+  .setQueryTimeout(10000)
+);
+```
+
+Creating the client with no arguments or omitting the server address will use the address of the server used internally for non blocking address resolution.
+
+创建`DnsClient`的时候，不指定`options`参数或者不指定服务器地址的话，`DnsClient`则会使用服务器内部地址 来进行非阻塞的域名解析。
+
+```java
+DnsClient client1 = vertx.createDnsClient();
+
+// Just the same but with a different query timeout
+DnsClient client2 = vertx.createDnsClient(new DnsClientOptions().setQueryTimeout(10000));
+```
+
+
 
 ### lookup
 
@@ -4952,7 +4973,7 @@ DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
 要为 `vertx.io` 获取 A/AAAA 记录，您需要像下面那样做：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.lookup("vertx.io", ar -> {
   if (ar.succeeded()) {
     System.out.println(ar.result());
@@ -4969,7 +4990,7 @@ client.lookup("vertx.io", ar -> {
 要查找 `vertx.io` 的A记录，您需要像下面那样做：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.lookup4("vertx.io", ar -> {
   if (ar.succeeded()) {
     System.out.println(ar.result());
@@ -4986,7 +5007,7 @@ client.lookup4("vertx.io", ar -> {
 要查找 `vertx.io` 的 AAAA记录，您需要像下面那样做：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.lookup6("vertx.io", ar -> {
   if (ar.succeeded()) {
     System.out.println(ar.result());
@@ -5003,7 +5024,7 @@ client.lookup6("vertx.io", ar -> {
 要查找`vertx.io`的所有A记录，您通常会执行以下操作：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveA("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<String> records = ar.result();
@@ -5023,7 +5044,7 @@ client.resolveA("vertx.io", ar -> {
 要查找`vertx.io`的所有AAAA记录，您通常会执行以下操作：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveAAAA("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<String> records = ar.result();
@@ -5043,7 +5064,7 @@ client.resolveAAAA("vertx.io", ar -> {
 要查找`vertx.io`的所有CNAME记录，您通常会执行以下操作：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveCNAME("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<String> records = ar.result();
@@ -5058,12 +5079,12 @@ client.resolveCNAME("vertx.io", ar -> {
 
 ### resolveMX
 
-尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器接受给定域的电子邮件。
+尝试解析给定名称的所有MX记录，MX记录用于定义哪个邮件服务器去接受`指定域`的电子邮件。
 
 要查找您常用执行的`vertx.io`的所有MX记录：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveMX("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<MxRecord> records = ar.result();
@@ -5087,12 +5108,12 @@ record.name();
 
 ### resolveTXT
 
-尝试解析给定名称的所有TXT记录，TXT记录通常用于定义域的额外信息。
+尝试解析给定名称的所有TXT记录，TXT记录通常用于定义`域`的额外信息。
 
-要解析`vertx.io`的所有TXT记录，您可以使用下边几行：
+要解析`vertx.io`的所有TXT记录，您可以使用下边几行代码：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveTXT("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<String> records = ar.result();
@@ -5107,12 +5128,12 @@ client.resolveTXT("vertx.io", ar -> {
 
 ### resolveNS
 
-尝试解析给定名称的所有NS记录，NS记录指定哪个DNS服务器托管给定域的DNS信息。
+尝试解析给定名称的所有`NS记录`，`NS记录`指定一个DNS服务器，这个服务器管理`指定域`的DNS信息。
 
 要解析`vertx.io`的所有NS记录，您可以使用下边几行：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveNS("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<String> records = ar.result();
@@ -5127,12 +5148,12 @@ client.resolveNS("vertx.io", ar -> {
 
 ### resolveSRV
 
-尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这个额外信息。
+尝试解析给定名称的所有SRV记录，SRV记录用于定义服务端口和主机名等额外信息。一些协议需要这些额外信息。
 
 要查找`vertx.io`的所有SRV记录，您通常会执行以下操作：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolveSRV("vertx.io", ar -> {
   if (ar.succeeded()) {
     List<SrvRecord> records = ar.result();
@@ -5168,7 +5189,7 @@ record.target();
 要解析IP地址`10.0.0.1`的PTR记录，您将使用`1.0.0.10.in-addr.arpa`的PTR概念。
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
   if (ar.succeeded()) {
     String record = ar.result();
@@ -5181,12 +5202,12 @@ client.resolvePTR("1.0.0.10.in-addr.arpa", ar -> {
 
 ### reverseLookup
 
-尝试对ipaddress进行反向查找，这与解析PTR记录类似，但是允许您只传递ipaddress，而不是有效的PTR查询字符串。
+尝试对ipaddress进行反向查找，这与解析PTR记录类似。但是允许您传递`非有效PTR查询字符串的ipaddress`。
 
 要做ipaddress 10.0.0.1的反向查找类似的事：
 
 ```java
-DnsClient client = vertx.createDnsClient(53, "10.0.0.1");
+DnsClient client = vertx.createDnsClient(53, "9.9.9.9");
 client.reverseLookup("10.0.0.1", ar -> {
   if (ar.succeeded()) {
     String record = ar.result();
@@ -5212,7 +5233,7 @@ client.reverseLookup("10.0.0.1", ar -> {
 * [`NOTIMPL`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTIMPL) DNS 服务器没实现
 * [`REFUSED`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#REFUSED) DNS 服务器拒绝查询
 * [`YXDOMAIN`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXDOMAIN) 域名不应该存在
-* [`YXRESET`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXRRSET) 资源记录不应该存在
+* [`YXRRESET`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#YXRRSET) 资源记录不应该存在
 * [`NXRRSET`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NXRRSET) RRSET不存在
 * [`NOTZONE`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#NOTZONE) 名称不在区域内
 * [`BADVERS`](https://vertx.io/docs/apidocs/io/vertx/core/dns/DnsResponseCode.html#BADVERS) 版本的扩展机制不好
@@ -5245,13 +5266,11 @@ client.lookup("nonexisting.vert.xio", ar -> {
 
 Vert.x有多个对象可以用于文件的读取和写入。
 
-在以前的版本中，只能通过操作指定的 [`Buffer`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html) 对象来实现文件读写。从现在开始，流不再与 `Buffer` 耦合，它们可以和任意类型的对象一起工作。
-
 在 Vert.x 中，写调用是立即返回的，而写操作的实际是在内部队列中排队写入。
 
 不难看出，若写入对象的速度比实际写入底层数据资源速度快，那么写入队列就会无限增长，最终导致内存耗尽。
 
-为了解决这个问题，Vert.x API中的一些对象提供了简单的流程控制（回压）功能。
+为了解决这个问题，Vert.x API中的一些对象提供了简单的流程控制（回压 back-pressure）功能。
 
 任何可控制的写入流对象都实现了 [`WriteStream`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html) 接口，相应的，任何可控制的读取流对象都实现了 [`ReadStream`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html) 接口。
 
@@ -5268,13 +5287,13 @@ NetServer server = vertx.createNetServer(
 server.connectHandler(sock -> {
   sock.handler(buffer -> {
     // Write the data straight back
-	// 直接写入数据
+	  // 直接写入数据
     sock.write(buffer);
   });
 }).listen();
 ```
 
-上面的例子有一个问题：如果从Socket读取数据的速度比写回Socket的速度快，那么它将在`NetSocket`的写队列中不断堆积，最终耗尽内存。这是有可能会发生，例如，若Socket另一端的客户端读取速度不够快，无法快速地向连接的另一端回压。
+上面的例子有一个问题：如果从Socket读取数据的速度比写回Socket的速度快，那么它将在`NetSocket`的写队列中不断堆积，最终耗尽内存。这是有可能会发生的，例如，若Socket另一端的客户端读取速度不够快，无法快速地向连接的另一端回压。
 
 由于 `NetSocket` 实现了 `WriteStream` 接口，我们可以在写入之前检查 `WriteStream` 是否已满：
 
@@ -5329,18 +5348,113 @@ server.connectHandler(sock -> {
 
 在这里，我们的目标实现了。当写队列准备好接收更多的数据时，[`drainHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)事件处理器将被调用，它会恢复`NetSocket`的状态，允许读取更多的数据。
 
-在编写Vert.x 应用程序时，这样做是很常见的，因此我们提供了一个名为[`Pump`](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html)的帮助类，它为您完成所有这些艰苦的工作。您只需要给 `ReadStream` 追加上 `WriteStream`，然后启动它：
+在编写Vert.x 应用程序时，这样做是很常见的，因此我们提供了一个名为[`pipTo`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pipeTo-io.vertx.core.streams.WriteStream-)方法，它为您完成所有这些艰苦的工作。您只需要把 `WriteStream`传给它 ，然后使用它：
 
 ```java
 NetServer server = vertx.createNetServer(
-    new NetServerOptions().setPort(1234).setHost("localhost")
+  new NetServerOptions().setPort(1234).setHost("localhost")
 );
 server.connectHandler(sock -> {
-  Pump.pump(sock, sock).start();
+  sock.pipeTo(sock);
 }).listen();
 ```
 
-这和更加详细的例子完全一样。
+以上和下面更详细的例子完全一样，额外加上stream对于`失败`和`结束`的处理：最终 当`pipe`处于`success`或者`failure`这种结束状态时，`WriteStream`就会停止。
+
+当读写操作结束时，你会收到提示：
+
+```java
+server.connectHandler(sock -> {
+
+  // Pipe the socket providing an handler to be notified of the result
+  // pipe和socket传输数据时，提供一个对于通知结果的handler
+  sock.pipeTo(sock, ar -> {
+    if (ar.succeeded()) {
+      System.out.println("Pipe succeeded");
+    } else {
+      System.out.println("Pipe failed");
+    }
+  });
+}).listen();
+```
+
+当你想要异步处理`源文件`时，你可以创建一个[Pipe](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pipe.html)对象，这个对象会暂停`源文件流`，并在`源文件流`通过pipe传输到目标时恢复`源文件流`：
+
+```java
+server.connectHandler(sock -> {
+
+  // Create a pipe to use asynchronously
+  // 创建用于一步操作的pipe
+  Pipe<Buffer> pipe = sock.pipe();
+
+  // Open a destination file
+  // 开启源文件流
+  fs.open("/path/to/file", new OpenOptions(), ar -> {
+    if (ar.succeeded()) {
+      AsyncFile file = ar.result();
+
+      // Pipe the socket to the file and close the file at the end
+      // 用管道传输socket当中的信息到源文件流 并最终关闭源文件流
+      pipe.to(file);
+    } else {
+      sock.close();
+    }
+  });
+}).listen();
+```
+
+当你想取消传输操作，你需要关闭pipe：
+
+```java
+vertx.createHttpServer()
+  .requestHandler(request -> {
+
+    // Create a pipe that to use asynchronously
+    // 创建异步操作管道
+    Pipe<Buffer> pipe = request.pipe();
+
+    // Open a destination file
+    // 打开源文件流
+    fs.open("/path/to/file", new OpenOptions(), ar -> {
+      if (ar.succeeded()) {
+        AsyncFile file = ar.result();
+
+        // Pipe the socket to the file and close the file at the end
+        // 用管道传输socket当中的信息到源文件流 并最终关闭源文件流
+        pipe.to(file);
+      } else {
+        // Close the pipe and resume the request, the body buffers will be discarded
+        // 关闭管道，恢复请求，body当中的缓冲数据被丢弃
+        pipe.close();
+
+        // Send an error response
+        // 返回错误
+        request.response().setStatusCode(500).end();
+      }
+    });
+  }).listen(8080);
+```
+
+当`pipe`关闭，`steams handlers`会被重置，`ReadStream`恢复工作。
+
+由以上看来，默认情况下，stream穿谁完毕之后，`源文件流`都会停止。你可以用`pipe`对象控制这些行为：
+
++ [endOnFailure](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pipe.html#endOnFailure-boolean-) 控制失败时的操作
++ [endOnSuccess](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pipe.html#endOnSuccess-boolean-) 控制stream结束时的操作
++ [endOnComplete](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pipe.html#endOnComplete-boolean-) 控制所有情况下的操作
+
+如下是一个例子
+
+```java
+src.pipe()
+  .endOnSuccess(false)
+  .to(dst, rs -> {
+    // Append some text and close the file
+    dst.end(Buffer.buffer("done"));
+});
+```
+
+
 
 现在我们来看看 `ReadStream` 和 `WriteStream` 的方法。
 
@@ -5350,37 +5464,40 @@ server.connectHandler(sock -> {
 
 函数：
 
-* [`handler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-)：设置一个处理器，它将从`ReadStream`读取项
-* [`pause`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--)：暂停处理器，暂停时，处理器中将不会受到任何项
-* [`resume`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--)：恢复处理器，若任何项到达则处理器将被调用
-* [`exceptionHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#exceptionHandler-io.vertx.core.Handler-)若ReadStream发生异常，将被调用
-* [`endHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#endHandler-io.vertx.core.Handler-)：当流到达时将被调用。这有可能是到达了描述文件的EOF、达到HTTP请求的请求结束、或TCP Socket的连接被关闭
+* [`handler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#handler-io.vertx.core.Handler-)：设置一个处理器，它将从`ReadStream`读取对象
+* [`pause`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--)：暂停处理器，暂停时，处理器中将不会受到任何对象
+* [`fetch`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#fetch-long-):  从stream中抓取指定数量的对象，这些对象中任意一个到达目的地之后，都会触发handler，fetch操作是累积的。
+* [`resume`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--)：恢复处理器，若任何对象到达目的地则handler将被触发
+* [`exceptionHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#exceptionHandler-io.vertx.core.Handler-)：若ReadStream发生异常，将被调用
+* [`endHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#endHandler-io.vertx.core.Handler-)：当流的数据读取完毕时将被调用。触发原因是读取到了`EOF`，可能分别来自如下：与`ReadStream`关联的文件、HTTP请求、或TCP Socket的连接被关闭
+
+
+
+`ReadStream`有`flowing`和`fetch`两个模式：
+
+- 最初 stream是`flowing` 模式
+- 当 stream 处于`flowing`模式，stream中的元素被传输到`handler`
+- 当stream处于`fetch`模式，只有指定数量的元素才被传输到`handler`
+
+[pause](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#pause--),[resume](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#resume--) 和 [fetch](https://vertx.io/docs/apidocs/io/vertx/core/streams/ReadStream.html#fetch-long-) 会改变`ReadStream`的模式
+
+- `resume()` ：设置`ReadStream` 为 `flowing`模式
+- `pause()` ：设置`ReadStream` 为 `fetch`模式 并设置demand值为0
+- `fetch(long)` ：请求指定数量的stream元素并将该数量加到目前的demand值当中
 
 ### WriteStream
 
-`WriteStream`（可写流）接口的实现类包括：[`HttpClientRequest`](https://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html), [`HttpServerResponse`](https://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html)，[`WebSocket`](https://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html), [`NetSocket`](https://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html), [`AsyncFile`](https://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html), [`MessageProducer`](https://vertx.io/docs/apidocs/io/vertx/core/eventbus/MessageProducer.html)
+`WriteStream`（可写流）接口的实现类包括：[`HttpClientRequest`](https://vertx.io/docs/apidocs/io/vertx/core/http/HttpClientRequest.html), [`HttpServerResponse`](https://vertx.io/docs/apidocs/io/vertx/core/http/HttpServerResponse.html)，[`WebSocket`](https://vertx.io/docs/apidocs/io/vertx/core/http/WebSocket.html), [`NetSocket`](https://vertx.io/docs/apidocs/io/vertx/core/net/NetSocket.html), [`AsyncFile`](https://vertx.io/docs/apidocs/io/vertx/core/file/AsyncFile.html)
 
 函数：
 
 * [`write`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#write-java.lang.Object-)：写入一个对象到 `WriteStream`，该方法将永远不会阻塞，内部是排队写入并且底层资源是异步写入。
-* [`setWriteQueueMaxSize`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-)：设置写入队列被认为是 *full* 的对象的数量——方法`writeQueueFull`返回`true`。注意，当写队列被认为已满时，若写（操作）被调用则数据依然会被接收和排队。实际数量取决于流的实现，对于[`Buffer`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)，尺寸代表实际写入的字节数，而并非缓冲区的数量。
+* [`setWriteQueueMaxSize`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-)：设置写入队列容量——`writeQueueFull`在队列写满时返回`true`。注意，当写队列已满时，调用写（操作）时 数据依然会被接收和排队。实际数量取决于流的实现，对于[`Buffer`](https://vertx.io/docs/apidocs/io/vertx/core/buffer/Buffer.html)，`size`代表实际写入的字节数，而并非缓冲区的数量。
 * [`writeQueueFull`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#writeQueueFull--)：若写队列被认为已满，则返回`true`。
 * [`exceptionHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#exceptionHandler-io.vertx.core.Handler-)：若`WriteStream`发生异常，则被调用。
 * [`drainHandler`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#drainHandler-io.vertx.core.Handler-)：若`WriteStream`被认为不再满，则处理器将被调用。
 
-### 泵
-
-泵（Pump）的实例有以下几种方法：
-
-* [`start`](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#start--)：启动泵。
-* [`stop`](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#stop--)：停止泵，当泵启动时它要处于停止模式。
-* [`setWriteQueueMaxSize`](https://vertx.io/docs/apidocs/io/vertx/core/streams/Pump.html#setWriteQueueMaxSize-int-)：与 `WriteStream` 接口的 [`setWriteQueueMaxSize`](https://vertx.io/docs/apidocs/io/vertx/core/streams/WriteStream.html#setWriteQueueMaxSize-int-) 方法相同。
-
-一个泵可以启动和停止多次。
-
-当泵首次创建时，它不会启动，您需要调用 `start()` 方法来启动它。
-
-## 记录解析器
+## 记录解析器（Record Parser）
 
 记录解析器（Record Parser）允许您轻松解析由字节序列或固定尺寸带分隔符的记录的协议。
 
@@ -5426,6 +5543,187 @@ RecordParser.newFixed(4, h -> {
 
 有关更多详细信息，请查看[`RecordParser`](https://vertx.io/docs/apidocs/io/vertx/core/parsetools/RecordParser.html)类。
 
+## Json 解析器
+你可以很容易的解析JSON格式的内容，但是这就要求一次性提供整个JSON内容，而如果你要提供一个非常大的JSON，JSON解析器恐怕就不是个方便的方式。
+
+`non-blocking` JSON解析器 则是一个事件驱动的解析器, 它可以处理体量非常大的JSON。它将传输一系列`input buffer`到一系列JSON解析器事件。
+
+```java
+JsonParser parser = JsonParser.newParser();
+
+// Set handlers for various events
+// 设置不同事件的handler
+parser.handler(event -> {
+  switch (event.type()) {
+    case START_OBJECT:
+      // Start an objet
+      break;
+    case END_OBJECT:
+      // End an objet
+      break;
+    case START_ARRAY:
+      // Start an array
+      break;
+    case END_ARRAY:
+      // End an array
+      break;
+    case VALUE:
+      // Handle a value
+      String field = event.fieldName();
+      if (field != null) {
+        // In an object
+      } else {
+        // In an array or top level
+        if (event.isString()) {
+
+        } else {
+          // ...
+        }
+      }
+      break;
+  }
+});
+```
+该解析器是非阻塞的，并且由`input buffer`驱动触发的事件
+
+```java
+JsonParser parser = JsonParser.newParser();
+
+// start array event
+// start object event
+// "firstName":"Bob" event
+parser.handle(Buffer.buffer("[{\"firstName\":\"Bob\","));
+
+// "lastName":"Morane" event
+// end object event
+parser.handle(Buffer.buffer("\"lastName\":\"Morane\"},"));
+
+// start object event
+// "firstName":"Luke" event
+// "lastName":"Lucky" event
+// end object event
+parser.handle(Buffer.buffer("{\"firstName\":\"Luke\",\"lastName\":\"Lucky\"}"));
+
+// end array event
+parser.handle(Buffer.buffer("]"));
+
+// Always call end
+parser.end();
+```
+
+事件驱动的解析操作提供了更多的控制，但代价就是要处理非常细粒度的事件（`event-mode`），这有时是不方便的。当你需要的时候，JSON解析器允许你将JSON做为值(`value-mode`)处理。
+
+```java
+JsonParser parser = JsonParser.newParser();
+
+parser.objectValueMode();
+
+parser.handler(event -> {
+  switch (event.type()) {
+    case START_ARRAY:
+      // Start the array
+      break;
+    case END_ARRAY:
+      // End the array
+      break;
+    case VALUE:
+      // Handle each object
+      break;
+  }
+});
+
+parser.handle(Buffer.buffer("[{\"firstName\":\"Bob\"},\"lastName\":\"Morane\"),...]"));
+parser.end();
+```
+
+`value-mode`可以在解析时启用或停用，并允许你在`event-mode`事件和 JSONObject的`value-mode`事件之间自由切换
+
+```java
+JsonParser parser = JsonParser.newParser();
+
+parser.handler(event -> {
+  // Start the object
+  switch (event.type()) {
+    case START_OBJECT:
+      // 设置为 value-mode，自此开始，解析器则不会触发start-object事件
+      parser.objectValueMode();
+      break;
+    case VALUE:
+      // 处理每一个对象
+      // 获得从对象中解析出来的字段
+      String id = event.fieldName();
+      System.out.println("User with id " + id + " : " + event.value());
+      break;
+    case END_OBJECT:
+      // 设置为 event mode，所以解析器重新触发 start/end 事件
+      parser.objectEventMode();
+      break;
+  }
+});
+
+parser.handle(Buffer.buffer("{\"39877483847\":{\"firstName\":\"Bob\"},\"lastName\":\"Morane\"),...}"));
+parser.end();
+```
+
+你也可以对数组做同样的事情
+
+```java
+JsonParser parser = JsonParser.newParser();
+
+parser.handler(event -> {
+  // Start the object
+
+  switch (event.type()) {
+    case START_OBJECT:
+      // 设置为value mode来处理每个元素，自此开始，解析器不会触发 start-array 事件
+      parser.arrayValueMode();
+      break;
+    case VALUE:
+      // 处理每一个数组
+      // 获取对象中的字段
+      System.out.println("Value : " + event.value());
+      break;
+    case END_OBJECT:
+      // 设置为 event mode，从而解析器会重新触发 start/end 事件
+      parser.arrayEventMode();
+      break;
+  }
+});
+
+parser.handle(Buffer.buffer("[0,1,2,3,4,...]"));
+parser.end();
+```
+
+你也可以反解析到POJOs。
+
+```java
+parser.handler(event -> {
+  // 获取每个对象
+  // 获取对象中的字段
+  String id = event.fieldName();
+  User user = event.mapTo(User.class);
+  System.out.println("User with id " + id + " : " + user.firstName + " " + user.lastName);
+});
+```
+
+无论何时，解析器解析buffer失败之后，会抛出异常，除非你设置`exception handler`：
+
+
+```java
+JsonParser parser = JsonParser.newParser();
+
+parser.exceptionHandler(err -> {
+  // 捕捉所有的解析/反解析异常
+});
+```
+
+解析器也可以解析JSON流：
+
+- 连续的JSON流： `{"temperature":30}{"temperature":50}`
+- 行分割的JSON流： `{"an":"object"}\r\n3\r\n"a string"\r\nnull`
+
+更多细节，详见[JsonParser](https://vertx.io/docs/apidocs/io/vertx/core/parsetools/JsonParser.html)
+
 ## 线程安全
 
 大多数Vert.x 对象可以从被不同的线程安全地访问，但在相同的上下文中访问它们时，性能才是最优的。
@@ -5458,6 +5756,10 @@ vertx.executeBlocking(future -> {
 });
 ```
 
+>Warning：
+阻塞代码因为某些原因 要阻塞很长时间（即，不多余几秒钟）。要杜绝长时间的阻塞操作或者polling操作（即，一个线程陷入一个循环当以阻塞模式获取事件）。当阻塞时间超过了10秒，thread checker 会在console当中打印一条信息。长时间阻塞的操作需要交给额外的线程，这个线程由应用所管理，这个应用可以和verticles通过event-bus 或 [`runOnContext`](https://vertx.io/docs/apidocs/io/vertx/core/Context.html#runOnContext-io.vertx.core.Handler-) 交互
+
+
 默认情况下，如果 `executeBlocking` 在同一个上下文环境中（如：同一个 Verticle 实例）被调用了多次，那么这些不同的 `executeBlocking` 代码块会 **顺序执行**（一个接一个）。
 
 若您不需要关心您调用 [`executeBlocking`](https://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#executeBlocking-io.vertx.core.Handler-boolean-io.vertx.core.Handler-) 的顺序，可以将 `ordered` 参数的值设为 `false`。这样任何 `executeBlocking` 都会在 Worker Pool 中并行执行。
@@ -5466,16 +5768,16 @@ vertx.executeBlocking(future -> {
 
 一个 Worker Verticle 始终会使用 Worker Pool 中的某个线程来执行。
 
-默认的阻塞式代码会在 Vert.x 的 Worker Pool 中执行，通过 [`setWorkerPoolSize`](https://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setWorkerPoolSize-int-) 配置。
+默认情况下，阻塞式代码会在 Vert.x 的 Worker Pool 中执行，通过 [`setWorkerPoolSize`](https://vertx.io/docs/apidocs/io/vertx/core/VertxOptions.html#setWorkerPoolSize-int-) 配置。
 
-可以为不同的用途创建不同的池：
+可以为不同的用途创建不同的Worker Pool：
 
 ```java
 WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool");
-executor.executeBlocking(future -> {
-  // 调用一些需要耗费显著执行时间返回结果的阻塞式API
+executor.executeBlocking(promise -> {
+  // 调用一些需要耗费显著执行时间返回结果的阻塞式API
   String result = someAPI.blockingMethod("hello");
-  future.complete(result);
+  promise.complete(result);
 }, res -> {
   System.out.println("The result is: " + res.result());
 });
@@ -5496,14 +5798,14 @@ Worker Executor 可以在创建的时候配置：
 ```java
 int poolSize = 10;
 
-// 2分钟
-long maxExecuteTime = 120000;
+// 2 minutes
+long maxExecuteTime = 2;
+TimeUnit maxExecuteTimeUnit = TimeUnit.MINUTES;
 
-WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool", poolSize, maxExecuteTime);
+WorkerExecutor executor = vertx.createSharedWorkerExecutor("my-worker-pool", poolSize, maxExecuteTime, maxExecuteTimeUnit);
 ```
 
 > 请注意：*这个配置信息在 worker pool 创建的时候设置。*
-
 ## Metrics SPI
 
 默认情况下，Vert.x不会记录任何指标。相反，它为其他人提供了一个SPI，可以将其添加到类路径中。SPI是一项高级功能，允许实施者从Vert.x捕获事件以收集指标。有关详细信息，请参阅 [API 文档](https://vertx.io/docs/apidocs/io/vertx/core/spi/metrics/VertxMetrics.html)。
