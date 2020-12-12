@@ -6702,11 +6702,11 @@ AnnotatedCli instance = new AnnotatedCli();
 CLIConfigurator.inject(commandLine, instance);
 ```
 
-## Vert.x Launcher
+## Vert.x 启动器（Launcher）
 
-Vert.x [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 在 fat-jar 中作为主类，由 `vertx` 命令行实用程序调用。它可执行一组命令，如`run`、`bare` 和 `start`等
+Vert.x [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 在 fat-jar 中作为主类，由 `vertx` 命令行程序调用。它可执行一组命令，如`run`、`bare` 和 `start`等
 
-### 扩展 Vert.x 启动器
+### 扩展 Vert.x 启动器（Launcher）
 
 您可以通过实现自己的 [`Command`](https://vertx.io/docs/apidocs/io/vertx/core/spi/launcher/Command.html) 类来扩展命令集（仅限于Java）：
 
@@ -6753,39 +6753,39 @@ io.vertx.core.launcher.example.HelloCommandFactory
 vertx hello vert.x
 java -jar my-fat-jar.jar hello vert.x
 ```
-### 在 fat-jar 中使用启动器
+### 在 fat-jar 中使用启动器（Launcher）
 
 要在 fat-jar 中使用 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类，只需要将 *MANIFEST* 的 `Main-Class` 设置为 `io.vertx.core.Launcher`。另外，将 *MANIFEST* 中 `Main-Verticle` 条目设置为您的Main Verticle的名称。
 
-默认情况下，它会执行 `run` 命令。但是，您可以通过设置 *MANIFEST* 的`Main-Command`条目来配置默认命令。若在没有命令的情况下启动 fat-jar，则使用默认命令。
+默认情况下，它会执行 `run` 命令。但是，您可以通过设置 *MANIFEST* 的`Main-Command`条目来配置默认命令。若在没有命令的情况下启动 fat-jar使用默认命令。
 
-### 启动器子类
+### 启动器（Launcher）子类
 
 您还可以创建 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 的子类来启动您的应用程序。这个类被设计成易于扩展的。
 
-一个 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 子类可以：
+一个启动器 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 子类可以：
 
 * 在 [`beforeStartingVertx`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#beforeStartingVertx-io.vertx.core.VertxOptions-) 中自定义 Vert.x 配置
-* 通过覆盖 [`afterStartingVertx`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#afterStartingVertx-io.vertx.core.Vertx-) 来读取由“run”或“bare”命令创建的Vert.x实例
+* 通过重写 [`afterStartingVertx`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html#afterStartingVertx-io.vertx.core.Vertx-) 来检索由“run”或“bare”命令创建的Vert.x实例
 * 使用 [`getMainVerticle`](https://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#getMainVerticle--) 和 [`getDefaultCommand`](https://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#getDefaultCommand--) 方法配置默认的Verticle和命令
 * 使用 [`register`](https://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#register-java.lang.Class-) 和 [`unregister`](https://vertx.io/docs/apidocs/io/vertx/core/impl/launcher/VertxCommandLauncher.html#unregister-java.lang.String-) 方法添加/删除命令
 
-### 启动器和退出代码
+### 启动器（Launcher）和退出代码
 
 当您使用 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类作为主类时，它使用以下退出代码：
 
-* 若进程顺利结束，或抛出未捕获的错误：`0`
-* 用于通用错误：`1`
-* 若Vert.x无法初始化：`11`
-* 若生成的进程无法启动、发现或停止：`12`，该错误代码一般由`start`和`stop`命令使用
-* 若系统配置不符合系统要求（如找不到 `java` 命令）：`14`
-* 若主Verticle不能被部署：`15`
+* `0` :进程顺利结束，或抛出未捕获的错误；
+* `1` :用于通用错误；
+* `11`:Vert.x无法初始化；
+* `12`:生成的进程无法启动、发现或停止，该错误代码一般由`start`和`stop`命令使用；
+* `14`:系统配置不符合系统要求（如找不到 `java` 命令）；
+* `15`:主Verticle不能被部署；
 
 ## 配置 Vert.x 缓存
 
-当 Vert.x 需要从类路径中读取文件（嵌入在 fat-jar 中，类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从 jar 或从输入流读取文件是阻塞的。所以为了避免每次都付出代价，Vert.x 会将文件复制到其缓存目录中，并随后读取该文件。这个行为也可配置。
+当 Vert.x 需要从类路径中读取文件（嵌入在 fat-jar 中，在类路径中jar文件或其他文件）时，它会把文件复制到缓存目录。背后原因很简单：从 jar 或从输入流读取文件是阻塞的。所以为了避免每次都付出损耗，Vert.x 会将文件复制到其缓存目录中，并随后读取该文件。也可以配置此行为。
 
-首先，默认情况下，Vert.x 使用 `$CWD/.vertx` 作为缓存目录，它在此之间创建一个唯一的目录，以避免冲突。可以使用 `vertx.cacheDirBase` 系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器上下文环境中），请使用以下命令启动应用程序：
+首先，默认情况下，Vert.x 使用 `$CWD/.vertx` 作为缓存目录，它在此目录创建一个唯一的目录，以避免冲突。可以使用 `vertx.cacheDirBase` 系统属性配置该位置。如，若当前工作目录不可写（例如在不可变容器中），请使用以下命令启动应用程序：
 
 ```java
 vertx run my.Verticle -Dvertx.cacheDirBase=/tmp/vertx-cache
@@ -6795,9 +6795,9 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 
 > 重要提示： *该目录必须是可写的。*
 
-当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，若您想重新加载页面，则不会看到您的编辑改变）。要避免此行为，请使用 `-Dvertx.disableFileCaching=true` 启动应用程序。使用此设置，Vert.x 仍然使用缓存，但始终使用原始源刷新存储在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x 会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
+当您编辑资源（如HTML、CSS或JavaScript）时，这种缓存机制可能令人讨厌，因为它仅仅提供文件的第一个版本（因此，如果您想重新加载页面，不会显示到您的编辑改变）。要避免此情况，请使用 `-Dvertx.disableFileCaching=true` 启动应用程序。使用此设置，Vert.x 仍然使用缓存，但会始终读取原文件然后刷新在缓存中的版本。因此，如果您编辑从类路径提供的文件并刷新浏览器，Vert.x 会从类路径读取它，将其复制到缓存目录并从中提供。不要在生产环境使用这个设置，它很有可能影响性能。
 
-最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存。这个设置不是没有后果的。Vert.x将无法从类路径中读取任何文件（仅从文件系统）。使用此设置时要非常小心。
+最后，您可以使用`-Dvertx.disableFileCPResolving=true`完全禁用高速缓存。这个设置有影响。Vert.x将无法从类路径中读取任何文件（仅从文件系统中读取）。使用此设置时要非常小心。
 
 ---
 
