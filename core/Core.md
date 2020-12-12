@@ -73,13 +73,13 @@ Vert.x Core 提供了下列功能:
 * 本地传输
 * 集群
 
-Vert.x Core中的功能相当底层 —— 您在此不会找到诸如数据库访问、授权或高层Web应用的功能。您可以在**Vert.x ext** （扩展包）（译者注：Vert.x的扩展包是Vert.x的子项目集合，类似[Web](https://vertx.io/docs/vertx-web/java/)、[Web Client](https://vertx.io/docs/vertx-web-client/java/)、[Databases](https://vertx.io/docs/#databases)等）中找到这些功能。
+Vert.x Core中的功能相当底层，不包含诸如数据库访问、授权或高层Web应用的功能。您可以在**Vert.x ext** （扩展包）（译者注：Vert.x的扩展包是Vert.x的子项目集合，类似[Web](https://vertx.io/docs/vertx-web/java/)、[Web Client](https://vertx.io/docs/vertx-web-client/java/)、[Databases](https://vertx.io/docs/#databases)等）中找到这些功能。
 
-**Vert.x Core** 小而轻，您可以只使用您需要的部分。它可整体嵌入现存应用中。我们并不会强迫您用特定的方式构造您的应用。
+**Vert.x Core** 小而轻，您可以只使用您需要的部分，它可整体嵌入现存应用中。Vert.x没有强制要求使用特定的方式构造应用。
 
-您亦可在其它Vert.x支持的语言中使用Vert.x Core。很酷的是：我们并不强迫您在书写诸如 JavaScript 或 Ruby 时直接调用 Java API，毕竟不同的语言有不同的代码风格，若强行让 Ruby 开发人员遵循 Java 的代码风格会很怪异，所以我们根据 Java API 自动生成了适应不同语言代码风格的 API。
+Vert.x也支持在其他语言中使用Vert.x Core，而且在使用诸如 JavaScript 或 Ruby 等语言编写Vert.x代码时，无需直接调用 Java的API；毕竟不同的语言有不同的代码风格，若强行让 Ruby 开发人员遵循 Java 的代码风格会很怪异，所以我们根据 Java API 自动生成了适应不同语言代码风格的 API。
 
-如果您在使用 Maven 或 Gradle（译者注：两种常用的项目构建工具），将以下依赖项添加到您的项目描述文件的 `dependencies` 节点中以使用 **Vert.x Core** 的API：
+如果您在使用 Maven 或 Gradle（译者注：两种常用的项目构建工具），将以下依赖项添加到项目描述文件的 `dependencies` 节点即可使用 **Vert.x Core** 的API：
 
 * Maven（您的 `pom.xml` 中）
 
@@ -99,7 +99,7 @@ dependencies {
 }
 ```
 
-接下来讨论 Vert.x Core 中不同的概念和特性。
+接下来讨论 Vert.x Core 的概念和特性。
 
 ---
 ## 故事从 Vert.x 开始
@@ -128,9 +128,9 @@ Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(40));
 
 ### 创建集群模式的 Vert.x 对象
 
-如果您想创建一个集群模式的 `Vertx` 对象（参考 [Event Bus](#event_bus) 章节了解更多事件总线集群细节），那么通常情况下您将需要使用另一种异步的方式来创建 `Vertx` 对象。
+如果您想创建一个集群模式的 `Vertx` 对象（参考 [Event Bus](#Event-Bus) 章节了解更多事件总线集群细节），那么通常情况下您将需要使用另一种异步的方式来创建 `Vertx` 对象。
 
-这是因为让不同的 Vert.x 实例组成一个集群需要一些时间（也许是几秒钟）。在这段时间内，我们不想去阻塞调用线程，所以我们将结果异步返回给您。
+不同的 Vert.x 实例组成一个集群需要一些时间（也许是几秒钟）,在这段时间内，我们不想去阻塞调用线程，所以我们将结果异步返回给您。
 
 > 译者注：这里给个示例：
 ```java
@@ -160,7 +160,7 @@ request.response().putHeader("Content-Type", "text/plain").write("some text").en
 
 这是贯穿 Vert.x API 中的一个通用模式，所以请适应这种代码风格。
 
-这样的链式调用会让您的代码更为简洁。当然，如果您不喜欢流式风格，我们不强制您用这种方式书写代码。如果您更倾向于用以下方式编码，您可以忽略它：
+流式调用可以让代码更为简洁。当然，Vert.x并不强制您用这种方式书写代码，如果您更倾向于用以下非流式编码，您可以忽略它：
 
 ```java
 HttpServerResponse response = request.response();
@@ -173,7 +173,7 @@ response.end();
 
 ## Don’t call us, we’ll call you
 
-Vert.x 的 API 大部分都是事件驱动的。这意味着当您感兴趣的事情发生时，它会以事件的形式发送给您。
+Vert.x 的 API 大部分都是事件驱动的。这意味着当您感兴趣的事情发生时，会以事件的形式发送给您。
 
 以下是一些事件的例子：
 
@@ -183,7 +183,7 @@ Vert.x 的 API 大部分都是事件驱动的。这意味着当您感兴趣的�
 * 发生了一个异常
 * HTTP 服务器收到了一个请求
 
-您提供处理器给Vert.x API来处理事件。例如每隔一秒发送一个事件的计时器：
+Vert.x API调用您提供的处理器来处理事件。例如每隔一秒发送一个事件的计时器：
 
 ```java
 vertx.setPeriodic(1000, id -> {
@@ -193,7 +193,7 @@ vertx.setPeriodic(1000, id -> {
 });
 ```
 
-又或者收到一个HTTP请求：
+又比如收到一个HTTP请求：
 
 ```java
 server.requestHandler(request -> {
@@ -203,17 +203,17 @@ server.requestHandler(request -> {
 });
 ```
 
-稍后当Vert.x有一个事件要传给您的处理器时，它会 **异步地** 调用这个处理器。
+稍后当Vert.x有事件要传给您的处理器时，它会 **异步地** 调用这个处理器。
 
-由此引入了下面一些Vert.x中的重要概念。
+由此，下面会引入Vert.x中一些重要的概念。
 
 ---
 
 ## 不要阻塞我！
 
-除了很少的特例（如以 "Sync" 结尾的某些文件系统操作），Vert.x中的所有API都不会阻塞调用线程。
+Vert.x中的几乎所有API都不会阻塞调用线程，除了个别特例（如以 "Sync" 结尾的某些文件系统操作）。
 
-如果可以立即提供结果，它将立即返回，否则您需要提供一个处理器（`Handler`）来接收稍后回调的事件。
+可以立即提供结果的API会立即返回，否则您需要提供一个处理器（`Handler`）来接收稍后回调的事件。
 
 因为Vert.x API不会阻塞线程，所以通过Vert.x您可以只使用少量的线程来处理大量的并发。
 
@@ -224,31 +224,21 @@ server.requestHandler(request -> {
 * 发送消息给接收者并等待回复
 * 其他很多情况
 
-在上述所有情况下，当您的线程在等待处理结果时它不能做任何事，此时这些线程并无实际用处。这意味着如果您使用阻塞式API处理大量并发，您需要大量线程来防止应用程序逐步停止运转。所需的内存（例如它们的栈）和上下文切换都是线程的开销。这意味着，阻塞式的方式对于现代应用程序所需要的并发级别来说是难于扩展的。
+在上述情况下，线程在等待处理结果时它不能做任何事，此时这些线程并无实际用处。这意味着如果使用阻塞式API处理大量并发，需要大量线程来防止应用程序停止运转，而这些线程使用的内存（例如它们的栈）和线程上下文切换开销很可观。这意味着，阻塞式的方式对于现代应用程序所需要的并发级别来说是难于扩展的。
 
 ---
 
 ## Reactor 模式和 Multi-Reactor 模式
 
-我们前边提过 Vert.x 的 API 都是事件驱动的，当有事件时 Vert.x 会将事件传给处理器来处理。
-
-在多数情况下，Vert.x使用被称为 **Event Loop** 的线程来调用您的处理器。
-
-由于Vert.x或应用程序的代码块中没有阻塞，**Event Loop** 可以在事件到达时快速地分发到不同的处理器中。
-
-由于没有阻塞，Event Loop 可在短时间内分发大量的事件。例如，一个单独的 **Event Loop** 可以非常迅速地处理数千个 HTTP 请求。
+我们前边提过 Vert.x 的 API 都是事件驱动的，当有事件时 Vert.x 会将事件传给处理器来处理。在多数情况下，Vert.x使用被称为 **Event Loop** 的线程来调用您的处理器。由于Vert.x或应用程序的代码块中没有阻塞，**Event Loop** 可以在事件到达时快速地分发到不同的处理器中。由于没有阻塞，Event Loop 可在短时间内分发大量的事件。例如，一个单独的 **Event Loop** 可以非常迅速地处理数千个 HTTP 请求。
 
 我们称之为 [Reactor 模式](https://en.wikipedia.org/wiki/Reactor_pattern)（译者注：Reactor Pattern 翻译成了[反应器模式](https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%BA%94%E5%99%A8%E6%A8%A1%E5%BC%8F)）。
 
 您之前也许听说过它，例如 Node.js 实现了这种模式。
 
-在一个标准的反应器实现中，有 **一个独立的 Event Loop** 会循环执行，处理所有到达的事件并传递给处理器处理。
+在一个标准的Reactor实现中，有 **一个独立的 Event Loop** 会循环执行，处理所有到达的事件并传递给处理器处理。单一线程的问题在于它在任意时刻只能运行在一个核上，如果您希望单线程反应器应用（如您的 Node.js 应用）扩展到多核服务器上，则需要启动并且管理多个不同的进程。
 
-单一线程的问题在于它在任意时刻只能运行在一个核上。如果您希望单线程反应器应用（如您的 Node.js 应用）扩展到多核服务器上，则需要启动并且管理多个不同的进程。
-
-Vert.x的工作方式有所不同。每个 `Vertx` 实例维护的是 **多个Event Loop 线程**。默认情况下，我们会根据机器上可用的核数量来设置 Event Loop 的数量，您亦可自行设置。
-
-这意味着 Vertx 进程能够在您的服务器上扩展，与 Node.js 不同。
+Vert.x的工作方式有所不同。每个 `Vertx` 实例维护的是 **多个Event Loop 线程**。默认情况下，我们会根据机器上可用的核数量来设置 Event Loop 的数量，您亦可自行设置。这意味着 Vertx 进程能够在您的服务器上扩展，与 Node.js 不同。
 
 我们将这种模式称为 **Multi-Reactor 模式**（多反应器模式），区别于单线程的 Reactor 模式（反应器模式）。
 
@@ -258,9 +248,7 @@ Vert.x的工作方式有所不同。每个 `Vertx` 实例维护的是 **多个Ev
 
 ## 黄金法则：不要阻塞Event Loop
 
-尽管我们已经知道，Vert.x 的 API 都是非阻塞式的并且不会阻塞 Event Loop，但是这并不能帮您避免在您自己的处理器中阻塞 Event Loop 的情况发生。
-
-如果这样做，该 Event Loop 在被阻塞时就不能做任何事情。如果您阻塞了 `Vertx` 实例中的所有 Event Loop，那么您的应用就会完全停止！
+尽管Vert.x 的 API 都是非阻塞式的，且不会阻塞 Event Loop，但是用户编写的处理器中可能会阻塞 Event Loop。如果这样做，该 Event Loop 在被阻塞时就不能做任何事情；如果您阻塞了 `Vertx` 实例中的所有 Event Loop，那么您的应用就会完全停止！
 
 所以不要这样做！**这是一个警告!**
 
@@ -273,7 +261,7 @@ Vert.x的工作方式有所不同。每个 `Vertx` 实例维护的是 **多个Ev
 * 执行一个复杂的计算，占用了可感知的时长
 * 在循环语句中长时间逗留
 
-如果上述任何一种情况停止了 Event Loop 并占用了 **显著执行时间** ，那您应该去罚站（译者注：原文此处为 Naughy Step，英国父母会在家里选择一个角落作为小孩罚站或静坐的地方，被称为 naughty corner 或 naughty step），等待下一步的指示。
+如果上述任何一种情况停止了 Event Loop 并占用了 **显著执行时间** ，那您应该去面壁（译者注：原文此处为 Naughy Step，英国父母会在家里选择一个角落作为小孩罚站或静坐的地方，被称为 naughty corner 或 naughty step），等待下一步的指示。
 
 所以，什么是 **显著执行时间** ？
 
@@ -296,12 +284,12 @@ Vert.x 还将提供堆栈跟踪，以精确定位发生阻塞的位置。
 ---
 
 ## Future的异步结果
-//TODO 
+
 Vert.x 4使用future承载异步结果。 
 
-异步的方法会返回一个[`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html)对象，其包含成功和失败的异步结果。
+异步的方法会返回一个[`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html)对象，其包含成功或失败的异步结果。
 
-我们不能直接操作future的异步结果，而应该设置future的handler：当future执行完毕，结果可用时，会调用handler进行处理。
+我们不能直接操作future的异步结果，而应该设置future的handler；当future执行完毕，结果可用时，会调用handler进行处理。
 
 ```java
 FileSystem fs = vertx.fileSystem();
@@ -318,7 +306,7 @@ future.onComplete((AsyncResult<FileProps> ar) -> {
 });
 ```
 
-> 请注意：Vert.x 3的API只提供了回调模式；为了能更方便地从Vert.x 3迁移到Vert.x 4，Vert.x 4为每个异步方法都提供了回调版本。如上面样例代码的`props`方法，提供了带回调参数的版本[`props`](https://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html#props-java.lang.String-io.vertx.core.Handler-)
+> 请注意：Vert.x 3的API只提供了回调模式；为了减少从Vert.x 3迁移到Vert.x 4的工作量，Vert.x 4为每个异步方法都保留了回调版本。如上面样例代码的`props`方法，提供了带回调参数的版本[`props`](https://vertx.io/docs/apidocs/io/vertx/core/file/FileSystem.html#props-java.lang.String-io.vertx.core.Handler-)
 
 ---
 
@@ -353,17 +341,17 @@ Future<Void> future = fs
 
 如果这三个步骤全部成功，则最终的 `Future`（`future`）会是成功的；其中任何一步失败，则最终 `Future` 就是失败的。
 
-除了上述方法，[`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html)还提供了更多方法：`map`，`recover`，`otherwise`，以及`flatMap`（作为`compose`方法的别名）。
+除了上述方法，[`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html)还提供了更多方法：`map`，`recover`，`otherwise`，以及`flatMap`（等同`compose`方法）。
 
 ---
 
 ## Future协作
 
-Vert.x 中的 [`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html) 可以用来协调多个Future。它支持并发组合（并行执行多个异步调用）和顺序组合（依次执行异步调用）。
+Vert.x 中的 [`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html) 支持协调多个Future，支持并发组合（并行执行多个异步调用）和顺序组合（依次执行异步调用）。
 
 > 译者注：Vert.x 中的 [`Future`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html) 即异步开发模式中的 Future/Promise 模式的实现。
 
-[`CompositeFuture.all`](https://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-) 方法接受多个 `Future` 对象作为参数（最多6个，或者传入 `List`）。当所有的 `Future` 都成功完成，该方法将返回一个 *成功的* `Future`；当任一个 `Future` 执行失败，则返回一个 *失败的* `Future`：
+[`CompositeFuture.all`](https://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#all-io.vertx.core.Future-io.vertx.core.Future-) 方法接受多个 `Future` 对象作为参数（最多6个，或者传入 `List`）。当所有的 `Future` 都成功完成，该方法将返回一个*成功的* `Future`；当任一个 `Future` 执行失败，则返回一个*失败的* `Future`：
 
 ```java
 Future<HttpServer> httpServerFuture = httpServer.listen();
@@ -379,7 +367,7 @@ CompositeFuture.all(httpServerFuture, netServerFuture).onComplete(ar -> {
 });
 ```
 
-所有被合并的 `Future` 中的操作同时运行。当组合的处理操作完成时，该方法返回的 `Future` 上绑定的处理器（[`Handler`](https://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。当一个操作失败（其中的某一个 `Future` 的状态被标记成失败），则返回的 `Future` 会被标记为失败。当所有的操作都成功时，返回的 `Future` 将会成功完成。
+所有被合并的 `Future` 中的操作同时运行。当组合的处理操作完成时，该方法返回的 `Future` 上绑定的处理器（[`Handler`](https://vertx.io/docs/apidocs/io/vertx/core/Handler.html)）会被调用。只要有一个操作失败（其中的某一个 `Future` 的状态被标记成失败），则返回的 `Future` 会被标记为失败。如果所有的操作都成功，则返回的 `Future` 将会成功完成。
 
 您可以传入一个 `Future` 列表（可能为空）：
 
@@ -387,7 +375,7 @@ CompositeFuture.all(httpServerFuture, netServerFuture).onComplete(ar -> {
 CompositeFuture.all(Arrays.asList(future1, future2, future3));
 ```
 
-不同于 `all` 方法的合并会等待所有的 Future 成功执行（或任一失败），`any` 方法的合并会等待第一个成功执行的Future。[`CompositeFuture.any`](https://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-) 方法接受多个 `Future` 作为参数（最多6个，或传入 `List`）。当任意一个 `Future` 成功得到结果，则该 `Future` 成功；当所有的 `Future` 都执行失败，则该 `Future` 失败。
+ `all` 方法的合并会等待所有的 Future 成功执行（或任一失败），而`any` 方法的合并会等待第一个成功执行的Future。[`CompositeFuture.any`](https://vertx.io/docs/apidocs/io/vertx/core/CompositeFuture.html#any-io.vertx.core.Future-io.vertx.core.Future-) 方法接受多个 `Future` 作为参数（最多6个，或传入 `List`）。当任意一个 `Future` 成功得到结果，则该 `Future` 成功；当所有的 `Future` 都执行失败，则该 `Future` 失败。
 
 ```java
 CompositeFuture.any(future1, future2).onComplete(ar -> {
@@ -425,7 +413,7 @@ CompositeFuture.join(Arrays.asList(future1, future2, future3));
 
 ### 兼容CompletionStage
 
-Vert.x的`Future` API兼容了JDK的`CompletionStage`接口，该接口用于组合异步操作。
+JDK的`CompletionStage`接口用于组合异步操作，Vert.x的`Future` API可兼容`CompletionStage`。
 
 我们可以用[`toCompletionStage`](https://vertx.io/docs/apidocs/io/vertx/core/Future.html#toCompletionStage--)方法将Vert.x的`Future`对象转为`CompletionStage`对象，如：
 
@@ -446,7 +434,7 @@ future.toCompletionStage().whenComplete((ip, err) -> {
 1. 第一个重载方法只接收一个`CompletionStage`参数，会在执行`CompletionStage`实例的线程中调用`Future`的方法；
 2. 第二个重载方法额外多接收一个[`Context`](https://vertx.io/docs/apidocs/io/vertx/core/Context.html)参数，会在Vert.x的Context中调用`Future`的方法。
 
-> 重要提示：由于Vert.x的`Future`通常会与Vert.x的代码、库以及客户端等一起使用，为了与Vert.x的线程模型更好地配合，大部分场景下应使用`Future.fromCompletionStage(CompletionStage, Context)`的重载方法。
+> 重要提示：由于Vert.x的`Future`通常会与Vert.x的代码、库以及客户端等一起使用，为了与Vert.x的线程模型更好地配合，大部分场景下应使用`Future.fromCompletionStage(CompletionStage, Context)`方法。
 
 下面的例子展示了如何将`CompletionStage`对象转为Vert.x的`Future`对象，这里选择使用Vert.x的Context执行:
 
@@ -471,11 +459,11 @@ Future.fromCompletionStage(completionStage, vertx.getOrCreateContext())
 
 Vert.x 通过开箱即用的方式提供了一个简单便捷的、可扩展的、类似 [Actor Model](https://en.wikipedia.org/wiki/Actor_model) 的部署和并发模型机制。您可以用此模型机制来保管您自己的代码组件。
 
-**这个模型是可选的，如果您不想这样做，Vert.x 不会强迫您用这种方式创建您的应用程序。**
+**这个模型是可选的，Vert.x 并不强制使用这种方式创建应用程序。**
 
-这个模型不能说是严格的 Actor 模式的实现，但它确实有相似之处，特别是在并发、扩展性和部署等方面。
+这个模型并不是严格的 Actor 模式实现，但它确实有相似之处，特别是在并发、扩展性和部署等方面。
 
-要使用该模型，您需要将您的代码组织成一系列的 **Verticle**。
+使用该模型，需要将应用代码编写成多个 **Verticle**。
 
 Verticle 是由 Vert.x 部署和运行的代码块。默认情况一个 Vert.x 实例维护了N（默认情况下N = CPU核数 x 2）个 Event Loop 线程。Verticle 实例可使用任意 Vert.x 支持的编程语言编写，而且一个简单的应用程序也可以包含多种语言编写的 Verticle。
 
@@ -521,7 +509,7 @@ public class MyVerticle extends AbstractVerticle {
 
 所以您要怎么做？
 
-您可以实现 **异步版本** 的 `start` 方法来做这个事。这个版本的方法会以一个 `Future` 作参数被调用。方法执行完时，Verticle 实例**并没有**部署好（状态不是 deployed）。稍后，您完成了所有您需要做的事（如：启动其他Verticle），您就可以调用 `Future` 的 `complete`（或 `fail` ）方法来标记启动完成或失败了。
+您可以实现 **异步版本** 的 `start` 方法来实现，它接收一个 `Future` 参数。方法执行完时，Verticle 实例**并没有**部署好（状态不是 deployed）。当所有您需要做的事（如：启动HTTP服务）完成后，就可以调用 `Future` 的 `complete`（或 `fail` ）方法来标记启动完成或失败了。
 
 这儿有一个例子：
 
@@ -583,7 +571,7 @@ public class MyVerticle extends AbstractVerticle {
 
 当 Standard Verticle 被创建时，它会被分派给一个 Event Loop 线程，并在这个 Event Loop 中执行它的 `start` 方法。当您在一个 Event Loop 上调用了 Core API 中的方法并传入了处理器时，Vert.x 将保证用与调用该方法时相同的 Event Loop 来执行这些处理器。
 
-这意味着我们可以保证您的 Verticle 实例中 **所有的代码都是在相同Event Loop中执行**（只要您不创建自己的线程并调用它！）
+这意味着我们可以保证您的 Verticle 实例中 **所有的代码都是在相同Event Loop中执行**（只要您不创建自己的线程来调用它！）
 
 同样意味着您可以将您的应用中的所有代码用单线程方式编写，让 Vert.x 去考虑线程和扩展问题。您不用再考虑 synchronized 和 volatile 的问题，也可以避免传统的多线程应用经常会遇到的竞态条件和死锁的问题。
 
@@ -591,11 +579,11 @@ public class MyVerticle extends AbstractVerticle {
 
 Worker Verticle 和 Standard Verticle 很像，但它并不是由一个 Event Loop 来执行，而是由Vert.x中的 Worker Pool 中的线程执行。
 
-Worker Verticle 是设计用于调用阻塞式代码，它不会阻塞任何 Event Loop。
+Worker Verticle 设计用于调用阻塞式代码，它不会阻塞任何 Event Loop。
 
 如果您不想使用 Worker Verticle 来运行阻塞式代码，您还可以在一个Event Loop中直接使用 [内联阻塞式代码](#运行阻塞式代码)。
 
-若您想要将 Verticle 部署成一个 Worker Verticle，您可以通过 [`setWorker`](https://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setWorker-boolean-) 方法来设置：
+您需要通过 [`setWorker`](https://vertx.io/docs/apidocs/io/vertx/core/DeploymentOptions.html#setWorker-boolean-) 方法来将 Verticle 部署成一个 Worker Verticle：
 
 ```java
 DeploymentOptions options = new DeploymentOptions().setWorker(true);
@@ -615,13 +603,9 @@ Verticle myVerticle = new MyVerticle();
 vertx.deployVerticle(myVerticle);
 ```
 
-您同样可以指定 Verticle 的 **名称** 来部署它。
+您同样可以指定 Verticle 的 **名称** 来部署它。这个 Verticle 的名称会用于查找实例化 Verticle 的特定 [`VerticleFactory`](https://vertx.io/docs/apidocs/io/vertx/core/spi/VerticleFactory.html)。
 
-这个 Verticle 的名称会用于查找实例化 Verticle 的特定 [`VerticleFactory`](https://vertx.io/docs/apidocs/io/vertx/core/spi/VerticleFactory.html)。
-
-不同的 Verticle Factory 可用于实例化不同语言的 Verticle，也可用于其他目的，例如加载服务、运行时从Maven中获取Verticle实例等。
-
-因此任何使用Vert.x支持的语言编写的Verticle，都可以部署。
+不同的 Verticle Factory 可用于实例化不同语言的 Verticle，也可用于其他目的，例如加载服务、运行时从Maven中获取Verticle实例等。因此可以部署任何使用Vert.x支持的语言编写的Verticle。
 
 下面的例子展示了如何部署多个不同语言编写的 Verticle ：
 
@@ -754,7 +738,7 @@ vertx run my-verticle.js -ha
 
 为此，您需要下载并安装 Vert.x 的发行版，并且将安装的 `bin` 目录添加到您的 `PATH` 环境变量中，并确保您的 `PATH` 中设置了Java 8的JDK环境。
 
-> 请注意：* `PATH`中的JDK是为了支持Java代码的运行时编译（on the fly compilation）。*
+> 请注意：* 在`PATH`设置JDK是为了支持Java代码的运行时编译（on the fly compilation）。*
 
 现在您可以使用 `vertx run` 命令运行Verticle了，这儿是一些例子：
 
