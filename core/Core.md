@@ -6188,7 +6188,7 @@ SEVERE: java.io.IOException: Connection reset by peer
 
 > 译者注：*通常情况下，这是正常的，无需担心，如果您打开浏览器，按快捷键不停滴刷新页面，就能看到该SEVERE日志。*
 
-##  主机名解析
+## 主机名解析
 
 Vert.x 使用自带的网络地址解析器来执行主机名解析的工作（将主机名解析为IP地址），而没有使用JVM内置的阻塞式解析器。
 
@@ -6218,7 +6218,7 @@ DNS服务器的默认端口为 53 ，当服务器使用不同的端口时，可�
 > 
 > 如果某些场景之下必须要使用JVM内置的解析器，此时可以通过在启动时设置系统属性 `-Dvertx.disableDnsResolver=true` 来激活JVM内置的解析器。
 
-###  故障转移
+### 故障转移
 
  当一个服务器没有及时响应时，解析器会从列表中取出下一个服务器进行查询，该故障转移操作的次数限制可以通过 [`setMaxQueries
 `](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setMaxQueries-int-) 来设置（默认设置是4次）。
