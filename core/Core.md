@@ -75,7 +75,7 @@ Vert.x Core 提供了下列功能:
 
 Vert.x Core中的功能相当底层，不包含诸如数据库访问、授权或高层Web应用的功能。您可以在**Vert.x ext** （扩展包）（译者注：Vert.x的扩展包是Vert.x的子项目集合，类似[Web](https://vertx.io/docs/vertx-web/java/)、[Web Client](https://vertx.io/docs/vertx-web-client/java/)、[Databases](https://vertx.io/docs/#databases)等）中找到这些功能。
 
-**Vert.x Core** 小而轻，您可以只使用您需要的部分，它可整体嵌入现存应用中。Vert.x没有强制要求使用特定的方式构造应用。
+**Vert.x Core** 小巧而轻便，您可以只使用您需要的部分，它可整体嵌入现存应用中。Vert.x没有强制要求使用特定的方式构造应用。
 
 Vert.x也支持在其他语言中使用Vert.x Core，而且在使用诸如 JavaScript 或 Ruby 等语言编写Vert.x代码时，无需直接调用 Java的API；毕竟不同的语言有不同的代码风格，若强行让 Ruby 开发人员遵循 Java 的代码风格会很怪异，所以我们根据 Java API 自动生成了适应不同语言代码风格的 API。
 
@@ -6961,4 +6961,4 @@ java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 
 ---
 
-> [原文档](https://vertx.io/docs/vertx-core/java/)更新于2017-03-15 15:54:14 CET
+> [原文档](https://vertx.io/docs/vertx-core/java/)更新于2020-12-15 11:25:15 CET
