@@ -6188,18 +6188,19 @@ SEVERE: java.io.IOException: Connection reset by peer
 
 > 译者注：*通常情况下，这是正常的，无需担心，如果您打开浏览器，按快捷键不停滴刷新页面，就能看到该SEVERE日志。*
 
-## 主机名解析
+##  主机名解析
 
-Vert.x使用地址解析器将主机名解析为IP地址，而不是JVM内置的阻塞解析器。
+Vert.x 使用自带的网络地址解析器来执行主机名解析的工作（将主机名解析为IP地址），而没有使用JVM内置的阻塞式解析器。
 
-主机名使用以下方式解析为IP地址：
+把主机名解析成IP地址的操作将会使用到：
 
-* 操作系统的hosts文件
-* DNS查询服务器列表
+- 操作系统的 *hosts* 文件
+- DNS查询服务器列表
 
-默认情况下，它将使用环境中系统DNS服务器地址的列表，若该列表无法检索，将使用Google的公共DNS服务器 `8.8.8.8` 和 `8.8.4.4`。
+默认情况下它使用系统环境中设定的DNS服务器地址列表，如果无法获取该列表，则会使用谷歌的公用DNS服务器地址 `8.8.8.8` 以及 `8.8.4.4` 。
 
-创建 [`Vertx`](https://vertx.io/docs/apidocs/io/vertx/core/Vertx.html) 实例时也可配置DNS 服务器：
+也可以在创建 [`Vertx`
+](https://vertx.io/docs/apidocs/io/vertx/core/Vertx.html) 实例的时候配置DNS服务器：
 
 ```java
 Vertx vertx = Vertx.vertx(new VertxOptions().
@@ -6210,29 +6211,31 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 );
 ```
 
-DNS 服务器的默认端口为`53`，当服务器使用不同的端口时，可以使用冒号分隔符设置该端口：`192.168.0.2:40000`。
+DNS服务器的默认端口为 53 ，当服务器使用不同的端口时，可以使用半角冒号作为分隔符来指定端口，例如： `192.168.0.2:40000` 。
 
-> 请注意：有时可能需要使用JVM内置解析器。可以在启动的时候加上JVM系统属性 `-Dvertx.disableDnsResolver=true` 激活该行为。
 
-### 故障转移
+> **请注意：**
+> 
+> 如果某些场景之下必须要使用JVM内置的解析器，此时可以通过在启动时设置系统属性 `-Dvertx.disableDnsResolver=true` 来激活JVM内置的解析器。
 
-当服务器没有及时回应时，尝试从列表中选择下一个解析器，搜索（数量）的限制由[`setMaxQueries`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setMaxQueries-int-)设置（默认值是4个查询）
+###  故障转移
 
-若解析器在[`getQueryTimeout`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#getQueryTimeout--)毫秒内没有收到正确答案（默认为5秒），DNS查询被视为失败。
+ 当一个服务器没有及时响应时，解析器会从列表中取出下一个服务器进行查询，该故障转移操作的次数限制可以通过 [`setMaxQueries
+`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setMaxQueries-int-) 来设置（默认设置是4次）。
 
-#### 服务器列表轮询
+### 服务器列表轮询
 
-默认情况下，DNS服务器选择使用第一个，其余的服务器用于故障转移。
+默认情况下，解析器总是使用服务器列表中的第一个服务器，剩下的服务器用于故障转移。
 
-您可以配置 [`setRotateServers`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-) 为 `true`，让解析器使用轮询选择。它会在服务器之间传播查询负载，并避免所有的查找都找到列表中的第一个服务器。
+您可以将 [`setRotateServers`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setRotateServers-boolean-) 设置为 `true`，此时解析器将会使用 round-robin 风格的轮询操作，将查询的负担分摊到列表中的每一个服务器上，从而避免所有的查询负担都落在列表中的第一个服务器上。
 
-故障转移仍然适用，并将使用列表中的下一个服务器。
+此时故障转移机制仍然有效，当某个服务器没有及时响应时，解析器会使用列表中的下一个服务器。
 
 ### 主机映射
 
-操作系统的hosts文件用于对ipaddress执行主机名查找。
+操作系统自身的 *hosts* 文件用于查找主机名对应的IP地址。
 
-可替换主机文件：
+除此之外也可以使用另外的 *hosts* 文件来代替操作系统自身的 *hosts* 文件：
 
 ```java
 Vertx vertx = Vertx.vertx(new VertxOptions().
@@ -6242,9 +6245,9 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 );
 ```
 
-### 搜索域名
+### DNS搜索域
 
-默认情况下，解析器将使用环境中的系统DNS搜索域，或者，可提供明确的显示搜索域列表：
+默认情况下，解析器使用系统环境中设置的DNS搜索域。如果要使用显式指定的搜索域，可以使用以下方式：
 
 ```java
 Vertx vertx = Vertx.vertx(new VertxOptions().
@@ -6253,163 +6256,305 @@ Vertx vertx = Vertx.vertx(new VertxOptions().
 );
 ```
 
-当使用搜索域列表时，点数的阈值为`1`，或从Linux上的`/etc/resolv.conf`加载，也可使用 [`setNdots`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setNdots-int-) 方法配置特定值。
+当使用搜索域列表时， “.” 符号数量的阈值一般为1，在Linux操作系统里该阈值由 `/etc/resolv.conf` 文件来指定，通过 [`setNdots`](https://vertx.io/docs/apidocs/io/vertx/core/dns/AddressResolverOptions.html#setNdots-int-) 可以人为指定该阈值的大小。
 
-## 高可用和故障转移
+## 高可用与故障转移
 
-Vert.x允许您运行支持高可用（HA，High Availability）的Verticle。这种情况下，当运行Verticle的Vert.x实例突然挂掉时，该Veritlce将迁移到另一个Vert.x 实例。这个Vert.x 实例必须在同一个集群中。
+Vert.x 可以支持 verticle 运行于高可用（HA）模式。这种模式之下，如果一个 vert.x 实例所运行的 verticle 突然宕掉，该 verticle 将会被迁移到其他的 vert.x 实例中（该 vert.x 实例必须处于同一个集群之中）。
 
 ### 自动故障转移
 
-当Vert.x启用HA运行时，若一个运行了Verticle的Vert.x 实例失败或挂掉，则此Verticle将自动重新部署到集群中的另一个Vert.x 实例中。我们称这个为 Verticle 故障转移（failover）。
+当运行 vert.x 时开启了高可用（HA）选项，此时如果某个 vert.x 实例中的某个 verticle 运行失败或者宕掉，该 verticle 将会被自动重新部署于集群中的另一个 vert.x 实例中。我们把这种机制称为 verticle故障转移。
 
-若要启用HA模式，在启动 Vert.x 应用的时候需要添加`-ha`参数到命令行：
+只要在运行 vert.x 的命令行中追加 `-ha` 参数，就可以开启高可用模式：
 
 ```
 vertx run my-verticle.js -ha
 ```
 
-现在开启了HA环境，在集群中需要多添加一个Vert.x 实例，所以假设您已经有另一个已经启动的Vert.x 实例，例如：
+要让高可用机制起作用，您需要在集群中开启至少2个 Vert.x 实例，现在假设您已经在集群中运行了一个 Vert.x 实例，例如：
 
 ```
 vertx run my-other-verticle.js -ha
 ```
 
-如果运行了`my-verticle.js`的Vert.x 实例现在死了（您可以通过执行`kill -9`杀死进程来测试），运行`my-other-verticle.js`的Vert.x 实例将自动重新部署`my-verticle.js`，所以现在这个Vert.x 实例正在运行两个Verticle。
+此时如果运行 my-verticle.js 的 Vert.x 实例宕掉了（例如您可以使用 `kill -9` 命令强行杀掉这个进程来模拟此场景），运行 my-other-verticle.js 的 Vert.x 实例会自动地部署 my-verticle.js ，此时该 Vert.x 实例同时运行了这两个 verticle （my-other-verticle.js 和 my-verticle.js）。
 
-> 请注意：只有当第二个Vert.x 实例可访问对应的 verticle 文件（这里是 `my-verticle.js`）时，迁移才是可能的。
 
-> 重要提示：请注意，干净地关闭Vert.x实例不会导致故障转移发生，例如：**CTRL-C** 或 **kill -SIGNINT**。
+> **请注意：**
+> 
+> 如果要使得这种迁移机制起作用，则必须保证第二个 vert.x 实例可以访问到该 verticle 对应的文件（在此场景中指的是 my-verticle.js）。
+> 
+> 
+> **重要提示：**
+> 
+> 请注意，通过正常方式退出的 Vert.x 实例（例如使用 `CTRL-C` 组合键或者 `kill -SIGINT` 命令）不会触发故障转移操作。
 
-您也可以启动裸的Vert.x 实例 —— 即最初不运行任何Verticle的实例，它们也将为集群中的节点进行故障转移。要启动一个裸实例，您只需做：
+您也可以启动若干个空白的 Vert.x 实例————指的是它们在启动时没有加载任何 verticle，此时，它们一样可以对集群中的其他节点起到故障转移的作用。启动一个空白的 Vert.x 实例很简单，只需要执行以下命令：
 
 ```
 vertx run -ha
 ```
 
-当使用`-ha`开关时，您不需要提供`-cluster`开关，因为若要使用HA就假定是集群。
+当使用 `-ha` 参数时， 可以不需要再追加 `-cluster` 参数，因为高可用模式是假定了您需要运行在集群模式之下的。
 
-> 请注意： 根据您的集群配置，可能需要自定义集群管理器配置（默认为Hazelcast）和/或添加集群主机 `cluster-host` 和集群端口 `cluster-port` 参数。
+> **请注意：**
+> 依据您的集群配置选项，您可能还是需要自定义集群管理器（默认使用 Hazelcast），以及追加集群主机（`cluster-host`）和集群端口（`cluster-port`）等参数。
 
-### HA组
+### 高可用组
 
-当使用Vert.x运行实例时，还可以选择指定的HA组。HA组表示集群中的逻辑节点组。只有具有相同HA组的节点能执行故障转移。若不指定HA组，则使用默认组`__DEFAULT__`。
+当 Vert.x 实例运行于高可用模式时，您还可以对其进行高可用分组，这里称之为*高可用组*。此处的*高可用组*指的是一个集群之中的节点的一种逻辑分组，被分配了高可用组的节点只会对同一个高可用组之下的其他节点执行故障转移操作。如果没有指定高可用组，系统会自动将节点分配到默认的`__DEFAULT__`高可用组。
 
-要指定一个HA组，您可以在运行该Verticle时使用`-hagroup`开关。
+在运行 verticle 时可以使用`-hagroup`参数指定高可用分组，例如：
 
 ```
 vertx run my-verticle.js -ha -hagroup my-group
 ```
 
-我们来看一个例子：
+举个例子：
 
-在第一个终端运行：
+在第一个终端里运行：
 
 ```
 vertx run my-verticle.js -ha -hagroup g1
 ```
 
-在第二个终端中，让我们使用相同组运行另一个Verticle：
+在第二个终端里，我们以同一个高可用组运行另一个 verticle :
 
 ```
 vertx run my-other-verticle.js -ha -hagroup g1
 ```
 
-最后，在第三个终端中，使用不同组启动另一个Verticle：
+最后，在第三个终端里，我们以不同的高可用组再运行一个其他的 verticle ：
 
 ```
 vertx run yet-another-verticle.js -ha -hagroup g2
 ```
 
-如果终端1中的实例被杀掉，则它将故障转移到终端2中的实例，而不是具有不同组的终端3中的实例。
+如果我们杀掉第一个终端里的实例，这里面的 verticle 将会通过故障转移机制迁移到第二个终端里的实例中，而不是第三个终端里的实例中，因为第三个终端里的实例被分配了不同的高可用组。
 
-若终端3中的实例被杀掉，因为这个组中没有其他Vert.x实例，则它不会故障转移。
+如果杀掉第三个终端里的实例，则不会发生故障转移操作，因为此终端里的 vert.x 实例被分配了不同的高可用组。
+
 
 ### 处理网络分区 - Quora
 
-高可用HA实现同样支持 Quora（多数派机制）。Quorum 是分布式事务必须获得的最小票数才能被允许在分布式系统中执行操作的一个参数。
+高可用实现也支持 `quora` （一种多数派机制）。在分布式系统中， Quorum 是指一种投票机制，在这种投票机制之下，某个分布式事务只有获得不少于指定投票数量的票数，才允许执行某个操作。
 
-在启动 Vert.x 实例时，您可以指示它在部署任何HA部署之前需要一个`quorum`。该上下文环境中，一个 quorum 是集群中特定组的最小节点数。通常您选择 quorum 大小为`Q = 1 + N / 2`，其中N是组中节点数。若集群中的Q节点少于HA节点，HA部署将被撤销。如果/当 quorum 重新获取时，他们将重新部署。通过这样做您可以防止网络分区，也就是脑裂（split brain）。
+启动 Vert.x 实例的时候，您可以将其设置成在进行高可用（HA）部署之前需要一个 `quorum` 。在这个语境之下， `quorum` 指的是集群中某个特定的分组内的节点数量的下限。典型的例如您将 `quorum` 的数值设置为 `1 + N/2` （现在以 Q 指代该数值，其中的 N 代表分组中的节点总数），那么如果集群中少于 Q 个节点的情况下，该高可用（HA）部署将被取消，待到节点数量达到这个 Q 数值的时候，会再次进行部署。这种机制可以防止出现网络分区（亦称“脑裂”）。
 
-更多关于Quorum（多数派机制）的信息，请参考 [`这里`](http://en.wikipedia.org/wiki/Quorum_(distributed_computing)。
+关于 `quora` 的更多信息请参考 [Quorum_(distributed_computing)](http://en.wikipedia.org/wiki/Quorum_(distributed_computing)) 。
 
-若要使用 quorum 运行Vert.x实例，您可以在命令行中指定`-quorum`，例如：
+要在运行 vert.x 实例的时候启用 `quorum` ，您只需要在命令行中指定 `-quorum` 参数，例如
 
-在第一个终端：
+在第一个终端中执行：
 
 ```
 vertx run my-verticle.js -ha -quorum 3
 ```
-此时，Vert.x实例将启动但不部署模块（尚未）因为目前集群中只有1个节点，而不是3个。
 
-在第二个终端：
+此时 Vert.x 实例将会启动，但是并不会部署这个模块，因为现在只有1个节点，而不是3个。
+
+
+在第二个终端中执行：
 
 ```
 vertx run my-other-verticle.js -ha -quorum 3
 ```
-此时，Vert.x实例将启动但不部署模块（尚未）因为目前集群中只有2个节点，而不是3个。
 
-在第三个控制台，您可以启动另一个Vert.x的实例：
+此时 Vert.x 实例将会启动，但是并不会部署这个模块，因为现在只有2个节点，而不是3个。
+
+在第三个终端中，您可以启动另一个 vert.x 实例：
 
 ```
 vertx run yet-another-verticle.js -ha -quorum 3
 ```
 
-妙极！—— 我们有三个节点，这是 quorum 设置的值，此时，模块将自动部署在所有实例上。
+哇！————我们有了3个节点，这正是 `quorum` 的数值。此时此刻这些模块将会被自动地部署到所有实例上。
 
-若我们现在关闭或杀死其中一个节点，那么这些模块将在其他节点上自动撤销，因为不再满足 quorum（法定人数）。
+如果我们关闭或者强行杀死其中一个节点，那么这些模块将会被自动卸载，因为节点数量已经不满足 `quorum` 数值条件。
 
-Quora 也可以与HA组合使用，在这种情况下，每个特定组会解决 Quora。
+Quora 也可以和高可用分组联合使用，此时 quora 仅在指定的分组中起作用。
 
-## 安全注意事项
+## 本地传输
 
-Vert.x 是一个工具包，而不是来强迫您以某种方式做事情的框架。这赋予了开发人员以更强大的能力，同时也伴随着更大的责任（译者注：能力越大，责任越大，小蜘蛛他叔叔说的）。
+在BSD（OSX）和Linux操作系统中运行 Vert.x 的时候，如果条件允许，可以启用[本地传输](http://netty.io/wiki/native-transports.html)这种特性：
 
-搭配其它工具包，使得编写不安全的应用程序成为可能，因此在开发时需谨慎，尤其是当您将其对公众发布的时候（如在互联网上发布）。
+```java
+Vertx vertx = Vertx.vertx(new VertxOptions().
+  setPreferNativeTransport(true)
+);
+
+// 如果本地传输已启用，则返回 true 
+boolean usingNative = vertx.isNativeTransportEnabled();
+System.out.println("Running with native: " + usingNative);
+```
+> **请注意：**
+> 如果倾向于启用本地传输而相关条件却不满足的时候（例如相关JAR包缺失），程序依然可以运行。如果您要求您的程序必须启用本地传输，您必须首先通过[`isNativeTransportEnabled`](https://vertx.io/docs/apidocs/io/vertx/core/Vertx.html#isNativeTransportEnabled--)来确认是否启用了本地传输。
+
+
+
+### Linux 下的本地传输
+
+您需要在 `classpath` 中加入以下依赖：
+
+```xml
+<dependency>
+ <groupId>io.netty</groupId>
+ <artifactId>netty-transport-native-epoll</artifactId>
+ <classifier>linux-x86_64</classifier>
+ <!--<version>Should align with netty version that Vert.x uses</version>-->
+</dependency>
+```
+
+Linux下的本地传输可以设置更多的网络选项：
+
+- SO_REUSEPORT
+- TCP_QUICKACK
+- TCP_CORK
+- TCP_FASTOPEN
+
+```java
+vertx.createHttpServer(new HttpServerOptions()
+  .setTcpFastOpen(fastOpen)
+  .setTcpCork(cork)
+  .setTcpQuickAck(quickAck)
+  .setReusePort(reusePort)
+);
+```
+
+### BSD 下的本地传输
+
+您需要在 `classpath` 中加入以下依赖：
+
+```xml
+<dependency>
+ <groupId>io.netty</groupId>
+ <artifactId>netty-transport-native-kqueue</artifactId>
+ <classifier>osx-x86_64</classifier>
+ <!--<version>必须和 Vert.x 所使用的 netty 的版本一致</version>-->
+</dependency>
+```
+
+MacOS 中， `Sierra` 及以上的版本支持这种特性。
+
+BSD 下的本地传输可以启用以下额外的网络选项：
+
+- SO_REUSEPORT
+
+```java
+vertx.createHttpServer(new HttpServerOptions().setReusePort(reusePort));
+```
+
+### 域套接字
+
+通过本地传输，网络服务可以使用域套接字：
+
+```java
+vertx.createNetServer().connectHandler(so -> {
+  // 处理请求
+}).listen(SocketAddress.domainSocketAddress("/var/tmp/myservice.sock"));
+```
+
+http服务示例：
+
+```java
+vertx.createHttpServer().requestHandler(req -> {
+  // 处理请求
+}).listen(SocketAddress.domainSocketAddress("/var/tmp/myservice.sock"), ar -> {
+  if (ar.succeeded()) {
+    // 绑定到 socket
+  } else {
+    ar.cause().printStackTrace();
+  }
+});
+```
+
+也适用于网络客户端：
+
+```java
+NetClient netClient = vertx.createNetClient();
+
+// 仅在 Linux 和 BSD 中可以使用
+SocketAddress addr = SocketAddress.domainSocketAddress("/var/tmp/myservice.sock");
+
+// 连接到服务器
+netClient.connect(addr, ar -> {
+  if (ar.succeeded()) {
+    // 连接成功
+  } else {
+    ar.cause().printStackTrace();
+  }
+});
+```
+
+http客户端示例：
+
+```java
+HttpClient httpClient = vertx.createHttpClient();
+
+// 仅在 Linux 和 BSD 中可以使用
+SocketAddress addr = SocketAddress.domainSocketAddress("/var/tmp/myservice.sock");
+
+// 向服务器发送请求
+httpClient.request(new RequestOptions()
+  .setServer(addr)
+  .setHost("localhost")
+  .setPort(8080)
+  .setURI("/"))
+  .onSuccess(request -> {
+    request.send().onComplete(response -> {
+      // 处理响应信息
+    });
+  });
+```
+
+## 安全提示
+
+Vert.x 是一套工具集，而不是一种强迫人们使用指定方式行事的框架，对于开发者而言，这赋予了你们强大的力量，但也使得你们必须负起不小的责任。
+
+与任何一种工具集一样，写出不安全的程序是难以避免的，所以您在开发程序时需要时刻小心，特别是这个程序是暴露于毫无保护的公共场合（例如互联网）的情况下。
 
 ### Web 应用
 
-如果编写Web 应用程序，强烈建议您直接使用Vert.x Web而非直接使用Vert.x Core以提供资源或处理文件上传。
+如果要编写一个 web 应用程序，这里强烈建议您使用 Vert.x-Web 来实现资源服务和文件上传功能，而不是直接使用 Vert.x core 。
 
-Vert.x Web对请求中的路径进行了规范，以防止恶意客户端通过伪造URL来访问Web根目录以外的资源。
+Vert.x-Web 会对请求路径进行规整化，这可以阻止那些不怀好意的人利用精心构建的特殊URL来访问web应用根目录之外的资源的企图。
 
-类似地，对于文件上传Vert.x Web提供上传到磁盘上已知位置的功能，且不依赖客户端提供的文件名，客户端提供的文件名可被恶意伪装成上传到硬盘上的不同位置。
+在文件上传方面也是如此， Vert.x-Web 不会完全信赖客户所端提供的文件名，因为客户端有可能精心设置一个特殊的文件名，使得上传的文件被保存到磁盘上某个意料之外的位置上。 Vert.x-Web 可以保证上传的文件是被存放到磁盘上确切可知道位置的。
 
-Vert.x Core 本身不提供这样的检查，所以这取决于开发者您自身如何实现了。
+### 集群模式事件总线流量
 
-### 集群模式 Event Bus 流量
+在网络上使用集群模式的事件总线连接不同的 Vert.x 节点时，总线里的流量是未经加密的，因此，若您的 Vert.x 节点处于不可信任的网络之上，则应该避免使用这种方式向这样的 Vert.x 节点发送信息。
 
-当在网络上的不同Vert.x 节点之间创建集群模式下的 Event Bus 时，流量将通过未加密报文发送，因此若您有要发送的机密数据，而您的Vert.x 节点不在授信的网络上，请勿使用。
 
-### 标准安全最佳实践
 
-任何服务都可能存在潜在的漏洞，无论是使用Vert.x还是任何其他工具包，因此始终遵循安全最佳实践，特别是当您的服务面向公众。
+### 安全方面的标准最佳实践
 
-例如，您应该始终在DMZ中运行它们，并使用具有受限权限的用户账户，以限制服务受到损害的程度。
+任何服务都可能存在潜在的漏洞，无论是使用 Vert.x 还是任何其他工具包来进行编写，因此始终应该遵循安全最佳实践，特别是当您的服务面向公众时。
 
-## Vert.x 命令行接口API
+例如，您应该始终在DMZ（隔离区）中运行它们，并使用权限受限的用户账户，以确保服务被渗透以后只会遭受有限的破坏。
 
-Vert.x Core提供了一个用于解析传递给程序的命令行参数API。
+## Vert.x 命令行界面（CLI）API
 
-它还可以打印帮助信息——详细说明命令行工具可用的选项。即使这些功能远离Vert.x Core主题，该API也可在 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类中使用，可以在 fat-jar 和 `vertx` 命令行工具中使用。另外，它支持多语言（可用于任何支持的语言），并可在Vert.x Shell中使用。
+Vert.x Core 提供了一套用于解析传递给程序的命令行参数的API。这套API也可以用与打印命令行相关参数、选项的详细帮助信息。即使这些功能远离Vert.x Core主题，该API已在 [`Launcher`](https://vertx.io/docs/apidocs/io/vertx/core/Launcher.html) 类中使用，因此您可以在 *fat-jar* 和 `vertx` 命令行工具中使用它们。此外，它支持多语言（可用于任何已支持的语言），并可在 Vert.x Shell 中使用。
 
-Vert.x CLI提供了一个描述命令行界面的模型，同时也是一个解析器，这个解析器可支持不同的语法：
+Vert.x CLI 提供了一个编程模型用以描述命令行界面，这个编程模型也可以视为一种语法解析器，这个语法解析器支持不同类型的语法：
 
-* 类似POSIX选项（即`tar -zxvf foo.tar.gz`）
-* 类似GNU选项（即`du --human-readable --max-depth=1`）
-* 类似Java属性（即`java -Djava.awt.headless=true -Djava.net.useSystemProxies=true Foo`）
-* 具有附加值的短选项（即`gcc -O2 foo.c`）
-* 单个连字符的长选项（即`ant -projecthelp`）
+- POSIX 风格的选项参数 （例如： `tar -zxvf foo.tar.gz`）
+- GNU 的长字符串风格的选项参数 （例如： `du --human-readable --max-depth=1`）
+- Java 风格的属性参数 （例如： `java -Djava.awt.headless=true -Djava.net.useSystemProxies=true Foo`）
+- 附带选项值的简短风格的选项参数 （例如： `gcc -O2 foo.c`）
+- 包含单个连接符的长字符串风格的选项参数 (例如： `ant -projecthelp`）
 
-使用CLI API的三个步骤如下：
+使用这个命令行API只需要三个步骤：
 
 1. 定义命令行接口
-2. 解析用户命令行
-3. 查询/审问
+2. 解析用户输入的命令行
+3. 进行查询/问答交互操作
 
 ### 定义阶段
 
-每个命令行界面必须定义将要使用的选项和参数集合。它也需要一个名字。CLI API使用 [`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 和 [`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html) 类来描述选项和参数：
+每个命令行界面都必须定义所要使用的选项和参数集合。这些选项和参数也需命名。命令行API使用 [`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 和 [`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html) 类来描述选项和参数：
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6429,11 +6574,11 @@ CLI cli = CLI.create("copy")
         .setArgName("target"));
 ```
 
-您可以看到，您可以使用[`CLI.create`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#create-java.lang.String-)创建一个新的[`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)。传递的字符串是CLI的名称。创建后，您可以设置摘要和描述，摘要的目的是简短（一行），而描述可以包含更多细节。每个选项和参数也使用[`addArgument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addArgument-io.vertx.core.cli.Argument-)和[`addOption`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addOption-io.vertx.core.cli.Option-)方法添加到CLI对象上。
+正如您所见到的一样，您可以通过  [`CLI.create`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#create-java.lang.String-) 方法来创建一个新的 [`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html) 。此处传入的字符串参数就是这个CLI的名称。创建之后，可以给它设置摘要和描述。一般来说，摘要是指一行简短的文字说明，描述是指篇幅较长的详细说明。每个选项和参数可以使用[`addArgument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addArgument-io.vertx.core.cli.Argument-)和[`addOption`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#addOption-io.vertx.core.cli.Option-)方法加入到`CLI`对象中。
 
-#### 选项
+### 选项列表
 
-[`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 是由用户命令行中存在的 *键* 标识的命令行参数。选项至少必须有一个长名或一个短名。长名称通常使用 `--` 前缀，而短名称与单个 `-` 一起使用。选项可以获取用法中显示的描述（见下文）。选项可以接受0、1或几个值。接受0值的选项是一个标志(`flag`)，必须使用 [`setFlag`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-) 声明。默认情况下，选项会接受一个值，但是您可以使用 [`setMultiValued`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-) 方法配置该选项接收多个值：
+[`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)是指用户输入的命令行中出现的以 *键* 来标识的命令行参数。选项必须至少有一个长名称或一个短名称。通常情况下，长名称使用`--`前缀，短名称使用单个`-`前缀。这些名称都是大小写敏感的；但是，在查询/问答交互的环节中，如果输入的名称无法精确匹配，则会使用大小写不敏感的方式进行匹配。选项可以在用法说明的部分显示出相关的描述（见下文）。选项可以接收0个，1个或者若干个选项值。接收0个选项值的选项称作**标识（flag）**，标识必须使用[`setFlag`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setFlag-boolean-)来声明。缺省情况想，选项接收单个选项值，但是您也可以使用[`setMultiValued`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setMultiValued-boolean-)将其设置成接收多个选项值：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6447,7 +6592,7 @@ CLI cli = CLI.create("some-name")
         .setDescription("a multi-valued option"));
 ```
 
-选项可以标记为必填项，在用户命令行中未设置必填选项在解析阶段会引发异常：
+选项可以标记必填。用户如果没有输入必填选项，则会在命令行解析的过程中抛出异常：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6457,7 +6602,7 @@ CLI cli = CLI.create("some-name")
         .setDescription("a mandatory option"));
 ```
 
-非必填选项可以具有默认值，如果用户没有在命令行中设置该选项，即将使用该值：
+非必填选项可以拥有一个默认选项值，在用户没有输入对应的选项值时，则会启用这个默认选项值：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6467,9 +6612,15 @@ CLI cli = CLI.create("some-name")
         .setDescription("an optional option with a default value"));
 ```
 
-可以使用 [`setHidden`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-) 方法隐藏选项，隐藏选项不在用法中列出，但仍可在用户命令行中使用（针对高级用户）。
+选项也可以通过[`setHidden`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html#setHidden-boolean-)方法设置成隐藏的。隐藏的选项不会在使用说明中显示出来，但是仍然可以起作用（提供给高级用户使用）。
 
-如果选项值被限制为一个固定集合，您可以设置不同的可接受选项：
+如果选项值是一组固定的集合，您可以为其设置哪些输入内容的允许的：
+
+An option can be hidden using the 
+setHidden
+ method. Hidden option are not listed in the usage, but can still be used in the user command line (for power-users).
+
+If the option value is contrained to a fixed set, you can set the different acceptable choices:
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6478,15 +6629,18 @@ CLI cli = CLI.create("some-name")
         .setDefaultValue("green")
         .addChoice("blue").addChoice("red").addChoice("green")
         .setDescription("a color"));
+Options can also be instantiated from their JSON form.
 ```
 
-也可以从JSON表单中实例化选项。
+### 参数
 
-#### 参数
+和选项不一样，参数不以 *键* 进行标识而是以其 *索引* 作为标识。例如，在 **`java com.acme.Foo`** 里， **`com.acme.Foo`** 就是一个参数。
 
-和选项不同，参数不具有 *键* 并由其索引标识。例如，在`java com.acme.Foo`中，`com.acme.Foo`是一个参数。
+参数没有名称，它们是以从 `0` 开始计数的索引为标识。第一个参数的索引为 `0`：
 
-参数没有名称，使用基于 0 的索引进行标识。第一个参数的索引为 0：
+Unlike options, arguments do not have a key and are identified by their index. For example, in java com.acme.Foo, com.acme.Foo is an argument.
+
+Arguments do not have a name, there are identified using a 0-based index. The first parameter has the index 0:
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6500,34 +6654,37 @@ CLI cli = CLI.create("some-name")
         .setArgName("arg2"));
 ```
 
-如果不设置参数索引，则基于声明顺序会自动计算。
+如果不设置参数的索引，则基于声明顺序自动计算索引值。
 
 ```java
 CLI cli = CLI.create("some-name")
-	// 索引为0
+    // 索引将被设置成0
     .addArgument(new Argument()
         .setDescription("the first argument")
         .setArgName("arg1"))
-	// 索引为1
+    // 索引将被设置成1
     .addArgument(new Argument()
         .setDescription("the second argument")
         .setArgName("arg2"));
 ```
 
-`argName` 是可选的，并在消息中使用。
+`argName` 是可选的，并且能在使用说明信息中使用。
 
-相比选项，[`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)可以：
+和选项一样，[`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)也可以：
 
-* 使用[`setHidden`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setHidden-boolean-)隐藏
-* 使用[`setRequired`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setRequired-boolean-)设置必填
-* 使用[`setDefaultValue`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setDefaultValue-java.lang.String-)设置默认值
-* 使用[`setMultiValued`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setMultiValued-boolean-)设置接收多个值——只有最后一个参数可以是多值的。
+- 使用[`setHidden`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setHidden-boolean-)设置为隐藏的
 
-参数也可以从JSON表单中实例化。
+- 使用[`setRequired`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setRequired-boolean-)设置为必填的
 
-#### 生成 usage 信息
+- 使用[`setDefaultValue`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setDefaultValue-java.lang.String-)设置默认参数值
 
-一旦您的[`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置好后，您可以生成 *usage* 信息：
+- 使用[`setMultiValued`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html#setMultiValued-boolean-)来接收多个参数值————只有最后一个参数才允许设置成接收多个参数值。
+
+参数也可以通过其对应格式的 JSON 数据来创建。
+
+### 生成使用说明信息
+
+当[`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)实例配置完成之后，您可以用它来生成使用说明信息：
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6550,33 +6707,33 @@ StringBuilder builder = new StringBuilder();
 cli.usage(builder);
 ```
 
-上边生成的 *usage* 信息如下：
+这可以生成诸如此类的使用说明信息：
 
 ```
 Usage: copy [-R] source target
 
 A command line interface to copy files.
 
-  -R,--directory   enables directory support
+ -R,--directory   enables directory support
 ```
 
-若需要调整 usage 信息，请查阅 [`UsageMessageFormatter`](https://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html) 类的文档。
+如果需要调整这个使用说明信息，请参考 [`UsageMessageFormatter`](https://vertx.io/docs/apidocs/io/vertx/core/cli/UsageMessageFormatter.html) 类。
 
 ### 解析阶段
 
-一旦您的 [`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html) 实例配置好后，您可以解析用户命令行来解析每个选项和参数：
+[`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html) 配置完成以后，您可以解析用户输入的命令行，并以此处理每个参数和选项：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
 ```
 
-[`parse`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-)解析方法返回包含值的[`CommandLine`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象。默认情况下，它验证用户命令行，并检查每个必填选项和参数的设置以及每个选项接收的值的数量。您可以通过传递 `false` 作为[`parse`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-)的第二个参数来禁用验证。如果要检查参数或选项，即使解析的命令行无效，这也是有用的。
+[`parse`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-) 方法返回一个包含了这些值的 [`CommandLine`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html) 对象。默认情况下，它会对用户输入的命令行进行检查校验，并确认哪些必填选项和必填参数有无缺失，以及每个选项值的数量是否符合要求。您可以将 [`parse`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-boolean-) 方法中的第二个参数传入 `false ` 值来禁用这项校验功能。这可以用来检查某个参数或选项是否存在，无论命令行输入是否合规。
 
-您可以使用[`isValid`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html#isValid--)来检查[`CommandLine`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)是否有效。
+您可以使用 [`isValid`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html#isValid--) 方法来检查 [`CommandLine`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html) 对象是否合规。
 
-### 查询/审问阶段
+### 查询/问答交互阶段
 
-解析后，您可以从解析方法返回的[`CommandLine`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html)对象中读取选项和参数的值：
+命令行解析完成之后，您可以从 [`parse`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html#parse-java.util.List-) 方法返回的 [`CommandLine`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CommandLine.html) 对象中获取到选项值和参数值：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
@@ -6585,7 +6742,7 @@ boolean flag = commandLine.isFlagEnabled("my-flag");
 String arg0 = commandLine.getArgumentValue(0);
 ```
 
-您的一个选项可以被标记为“帮助”。如果用户命令行启用“帮助”选项，验证将不会失败，但是可以让您有机会检查用户是否需要帮助：
+其中一个选项可以标记为“帮助”。如果命令行启用了“帮助”选项，命令行的校验不会失败，而是有机会检查用户是否在寻求帮助：
 
 ```java
 CLI cli = CLI.create("test")
@@ -6596,7 +6753,7 @@ CLI cli = CLI.create("test")
 
 CommandLine line = cli.parse(Collections.singletonList("-h"));
 
-// 解析不会失败，您可以做：
+// 此时不会视作解析失败，并且可以进行以下操作：
 if (!line.isValid() && line.isAskingForHelp()) {
   StringBuilder builder = new StringBuilder();
   cli.usage(builder);
@@ -6604,13 +6761,11 @@ if (!line.isValid() && line.isAskingForHelp()) {
 }
 ```
 
-### 有类型选项和参数
+### 类型化的选项和参数
 
-描述[`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)类是无类型的，这意味着仅读取String值。
+上述的 [`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 和 [`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html) 类是无类型的，意味着只能从中获取到字符串类型的值。 [`TypedOption`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html) 和 [`TypedArgument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html) 能让您对其赋予一个类型，这样（字符串类型的）原始值将被转换成对应的类型。
 
-[`TypedOption`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html)和[`TypedArgument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html)可以指定一个类型，因此（String）原始值将转换为指定的类型。
-
-在[`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)定义中使用[`TypedOption`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html)和[`TypedArgument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html)，而不是[`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html)和[`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html)。
+在 [`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html) 对象的定义中使用 [`TypedOption`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedOption.html) 和 [`TypedArgument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/TypedArgument.html) 来取代 [`Option`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Option.html) 和 [`Argument`](https://vertx.io/docs/apidocs/io/vertx/core/cli/Argument.html) ：
 
 ```java
 CLI cli = CLI.create("copy")
@@ -6633,7 +6788,7 @@ CLI cli = CLI.create("copy")
         .setArgName("target"));
 ```
 
-然后，您可以按下边方式获取转换的值：
+这时您就可以通过如下方式获取转换后的值：
 
 ```java
 CommandLine commandLine = cli.parse(userCommandLineArguments);
@@ -6642,13 +6797,13 @@ File source = commandLine.getArgumentValue("source");
 File target = commandLine.getArgumentValue("target");
 ```
 
-Vert.x CLI可以转换的类：
+Vert.x CLI 可以转换具有如下特征的类：
 
-* 具有单个[`String`](https://vertx.io/docs/apidocs/java/lang/String.html)参数的构造函数，例如[`File`](https://vertx.io/docs/apidocs/java/io/File.html)或[`JsonObject`](https://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)
-* 使用静态的`from`或`fromString`方法
-* 使用静态`valueOf`方法，如基础类型和枚举
+- 拥有参数签名为一个 [`String`](https://vertx.io/docs/apidocs/java/lang/String.html) 类型的构造函数，例如[`File`](https://vertx.io/docs/apidocs/java/io/File.html) 或者 [`JsonObject`](https://vertx.io/docs/apidocs/io/vertx/core/json/JsonObject.html)
+- 拥有一个名为 `from` 或者 `fromString` 的静态方法
+- 拥有一个静态的 `valueOf` 方法，例如原始类型和枚举类型
 
-此外，您可以实现自己的转换器（[`Converter`](https://vertx.io/docs/apidocs/io/vertx/core/cli/converters/Converter.html)）并指定CLI使用此转换器：
+此外您也可以实现自定义的 [`Converter`](https://vertx.io/docs/apidocs/io/vertx/core/cli/converters/Converter.html) 并在 `CLI` 对象使用它：
 
 ```java
 CLI cli = CLI.create("some-name")
@@ -6658,13 +6813,14 @@ CLI cli = CLI.create("some-name")
         .setLongName("person"));
 ```
 
-对于布尔值，布尔值将被评定为`true`:`on`，`yes`，`1`，`true`。
+对于布尔类型而言，这些值将被视为 `true` ：`on`， `yes`， `1`， `true` 。
 
-若您的一个选项是 `enum` 类型，则（系统）会自动计算一组选项。
+如果您的命令行选项存在 `enum` 类型，则会自动计算出一组选择范围。
+If one of your option has an enum as type, it computes the set of choices automatically.
 
-### 使用注解
+### 注解的使用
 
-您还可以使用注解定义CLI。在类和 *setter* 方法上使用注解来定义：
+您也可以使用注解来定义 `CLI` 对象。可以通过在类和 `setter` 方法上使用注解来完成定义：
 
 ```java
 @Name("some-name")
@@ -6676,24 +6832,24 @@ public class AnnotatedCli {
   private String name;
   private String arg;
 
- @Option(shortName = "f", flag = true)
- public void setFlag(boolean flag) {
-   this.flag = flag;
- }
+  @Option(shortName = "f", flag = true)
+  public void setFlag(boolean flag) {
+    this.flag = flag;
+  }
 
- @Option(longName = "name")
- public void setName(String name) {
-   this.name = name;
- }
+  @Option(longName = "name")
+  public void setName(String name) {
+    this.name = name;
+  }
 
- @Argument(index = 0)
- public void setArg(String arg) {
-  this.arg = arg;
- }
+  @Argument(index = 0)
+  public void setArg(String arg) {
+   this.arg = arg;
+  }
 }
 ```
 
-注解后，您可以使用以下命令来定义[`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html)并注入值：
+加上注解之后，您就可以使用以下方法来定义 [`CLI`](https://vertx.io/docs/apidocs/io/vertx/core/cli/CLI.html) 对象并将对应的值注入进去：
 
 ```java
 CLI cli = CLI.create(AnnotatedCli.class);
