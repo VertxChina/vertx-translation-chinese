@@ -2,7 +2,7 @@
 
 这是针对 Vert.x 官方文档中文翻译的仓库。
 
-当前文档翻译对应版本：**Vert.x 3.4.1**。
+当前文档翻译对应版本：**Vert.x 4.0.0**。
 
 在线地址：[https://vertxchina.github.io/vertx-translation-chinese](https://vertxchina.github.io/vertx-translation-chinese)
 
