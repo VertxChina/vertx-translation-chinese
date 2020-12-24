@@ -1,3 +1,8 @@
+# 新翻译项目地址：
+https://github.com/vertx-china/vertx-china.github.io
+
+# 本仓库已归档，不再更新，以下是原说明
+
 # Vert.x 官方文档中文翻译
 
 这是针对 Vert.x 官方文档中文翻译的仓库。
