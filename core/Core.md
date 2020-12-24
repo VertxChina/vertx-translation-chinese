@@ -564,7 +564,7 @@ public class MyVerticle extends AbstractVerticle {
 
 这儿有两种 Verticle：
 
-* **Stardand Verticle**：这是最常用的一类 Verticle —— 它们永远运行在 Event Loop 线程上。更多讨论详见稍后的章节。
+* **Standard Verticle**：这是最常用的一类 Verticle —— 它们永远运行在 Event Loop 线程上。更多讨论详见稍后的章节。
 * **Worker Verticle**：这类 Verticle 会运行在 Worker Pool 中的线程上。一个实例绝对不会被多个线程同时执行。
 
 ### Standard Verticle
